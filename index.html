@@ -2511,21 +2511,11 @@ function renderMainInquiryAnswerChart(rows){
   });
   const maxVolume=Math.max(...volumeData, 0);
   const yMax=Math.max(1600, Math.ceil((maxVolume*1.12)/200)*200);
-  // 조회기간의 날짜 수에 따라 총 문의량 막대 폭을 자동 조절
-  const mainBarMaxThickness = rows.length <= 7 ? 38
-    : rows.length <= 14 ? 30
-    : rows.length <= 21 ? 22
-    : rows.length <= 31 ? 16
-    : rows.length <= 45 ? 12
-    : 9;
-  const mainBarCategoryPercentage = rows.length >= 21 ? 0.90 : 0.78;
-  const mainBarPercentage = rows.length >= 21 ? 0.82 : 0.90;
-  const minRate=Math.min(...answerRateData);
-  const minIdx=answerRateData.indexOf(minRate);
-
+  const showMainChartLabels = rows.length <= 30;
   const mainChartPlugin={
-    id:"mainInquiryAnswerDecor",
+    id:"mainInquiryAnswerLabels",
     afterDatasetsDraw(chart){
+      if(!showMainChartLabels) return;
       const {ctx}=chart;
       ctx.save();
 
@@ -2541,17 +2531,22 @@ function renderMainInquiryAnswerChart(rows){
 
       const lineMeta=chart.getDatasetMeta(1);
       ctx.fillStyle="#1b2d47";
-      ctx.font="700 11px 'Noto Sans KR','Malgun Gothic',sans-serif";
-      ctx.textBaseline="bottom";
       lineMeta.data.forEach((pt,idx)=>{
         const val=(Number(answerRateData[idx])||0).toFixed(1)+"%";
-        // 모든 답변률 수치는 실선/포인트 위쪽에 표시
         ctx.fillText(val, pt.x, pt.y-10);
       });
       ctx.restore();
-    },
+    }
   };
-
+  // 조회기간의 날짜 수에 따라 총 문의량 막대 폭을 자동 조절
+  const mainBarMaxThickness = rows.length <= 7 ? 38
+    : rows.length <= 14 ? 30
+    : rows.length <= 21 ? 22
+    : rows.length <= 31 ? 16
+    : rows.length <= 45 ? 12
+    : 9;
+  const mainBarCategoryPercentage = rows.length >= 21 ? 0.90 : 0.78;
+  const mainBarPercentage = rows.length >= 21 ? 0.82 : 0.90;
   charts["mainBar"]=new Chart($("mainBar"),{
     data:{
       labels,
@@ -2575,7 +2570,7 @@ function renderMainInquiryAnswerChart(rows){
           borderColor:"#f4b000",
           backgroundColor:"#f4b000",
           borderWidth:2.5,
-          tension:0.28,
+          tension:0.42,
           fill:false,
           pointRadius:4,
           pointHoverRadius:4,
@@ -2589,7 +2584,7 @@ function renderMainInquiryAnswerChart(rows){
     options:{
       responsive:true,
       maintainAspectRatio:false,
-      layout:{padding:{top:18,right:8,left:4,bottom: useDiagonalDateTicks(labels) ? 8 : 0}},
+      layout:{padding:{top: showMainChartLabels ? 18 : 6,right:8,left:4,bottom: useDiagonalDateTicks(labels) ? 8 : 0}},
       plugins:{
         legend:{
           position:"top",
@@ -2629,7 +2624,7 @@ function renderMainInquiryAnswerChart(rows){
         },
         y1:{
           position:"right",
-          min:90,
+          min:50,
           max:102,
           ticks:{stepSize:2,color:"#516074",font:{size:10,weight:"700"},callback:(v)=>Number(v)>100?"":Number(v).toFixed(1)+"%"},
           title:{display:true,text:"답변률 (%)",align:"start",color:"#516074",font:{size:10,weight:"700"},padding:{bottom:8}},
