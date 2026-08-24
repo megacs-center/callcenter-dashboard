@@ -508,6 +508,16 @@ button,input,select{font:inherit}
   gap:10px;
   margin-bottom:12px;
 }
+#cph .cph-metric-cards{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+@media(max-width:1100px){
+  #cph .cph-metric-cards{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:650px){
+  #cph .cph-metric-cards{grid-template-columns:1fr;}
+}
+
 .metric-card{
   background:#fff;
   border:1px solid var(--line);
@@ -2090,12 +2100,12 @@ th{position:sticky;top:0;background:#f8fafc}
 </section>
 <section id="cph" class="section">
   <div class="detail-head"><div class="detail-title">CPH 현황</div><div class="detail-period" id="cphPeriod"></div></div>
-  <div class="metric-cards">
-    <div class="metric-card">
-      <div class="metric-card-title">CPH 평균</div>
-      <div class="metric-line"><span class="metric-label">올해 기준</span><span class="metric-value" id="cphAvgCur">-</span></div>
-      <div class="metric-line"><span class="metric-label">전년 동기간</span><span class="metric-value metric-prev" id="cphAvgYoy">-</span></div>
-      <div class="metric-line"><span class="metric-label">전년차이</span><span class="metric-change" id="cphAvgChg">-</span></div>
+  <div class="metric-cards cph-metric-cards">
+<div class="metric-card">
+      <div class="metric-card-title">주간누적 CPH</div>
+      <div class="metric-line"><span class="metric-label">올해 기준</span><span class="metric-value" id="cphWeekCur">-</span></div>
+      <div class="metric-line"><span class="metric-label">전년 동기간</span><span class="metric-value metric-prev" id="cphWeekYoy">-</span></div>
+      <div class="metric-line"><span class="metric-label">전년차이</span><span class="metric-change" id="cphWeekChg">-</span></div>
     </div><div class="metric-card">
       <div class="metric-card-title">월간누적 CPH</div>
       <div class="metric-line"><span class="metric-label">올해 기준</span><span class="metric-value" id="cphMonthCur">-</span></div>
@@ -3227,10 +3237,12 @@ async function applyFilter(){
   setDetail("exchangeCur","exchangeYoy","exchangeChg",
     curExchangeDetail, yoyExchangeDetail);
 
-  // CPH 현황
+  // CPH 현황: 조회 종료일 기준 주간누적 / 월간누적 / 연간누적
   const yoyLatestDetail = yoyAvailable ? yoyRows.at(-1) : null;
-  setDetail("cphAvgCur","cphAvgYoy","cphAvgChg",
-    cur.cph, yoyAvailable ? yoy.cph : null, {type:"cph",digits:1});
+  setDetail("cphWeekCur","cphWeekYoy","cphWeekChg",
+    Number(latest.cphWeek)||0,
+    yoyLatestDetail ? Number(yoyLatestDetail.cphWeek)||0 : null,
+    {type:"cph",digits:1});
   setDetail("cphMonthCur","cphMonthYoy","cphMonthChg",
     Number(latest.cphMonth)||0,
     yoyLatestDetail ? Number(yoyLatestDetail.cphMonth)||0 : null,
