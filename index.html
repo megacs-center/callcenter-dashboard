@@ -10,29 +10,35 @@
 (function () {
   try {
     const url = new URL(window.location.href);
-    const navEntry = performance.getEntriesByType?.("navigation")?.[0];
-    const isReload = navEntry
-      ? navEntry.type === "reload"
-      : performance.navigation?.type === 1;
+    const versionInUrl = url.searchParams.get("v");
 
-    // 최초 접속(v 없음) 또는 F5/Ctrl+R 새로고침 시에만 현재 시각으로 버전 갱신
-    if (!url.searchParams.has("v") || isReload) {
-      const now = new Date();
-      const pad = n => String(n).padStart(2, "0");
-      const version =
-        now.getFullYear() +
-        pad(now.getMonth() + 1) +
-        pad(now.getDate()) + "-" +
-        pad(now.getHours()) +
-        pad(now.getMinutes()) +
-        pad(now.getSeconds());
+    // 1) 캐시 버전이 포함된 요청으로 실제 페이지를 받은 뒤에는
+    //    주소창에서 v 파라미터만 제거하고, 표시용 버전은 보관한다.
+    if (versionInUrl) {
+      window.__pageVersion = versionInUrl;
+      try { sessionStorage.setItem("callcenterPageVersion", versionInUrl); } catch (_) {}
 
-      const currentVersion = url.searchParams.get("v");
-      if (currentVersion !== version) {
-        url.searchParams.set("v", version);
-        window.location.replace(url.toString());
-      }
+      url.searchParams.delete("v");
+      const cleanUrl = url.pathname + (url.search ? url.search : "") + url.hash;
+      history.replaceState(history.state, document.title, cleanUrl);
+      return;
     }
+
+    // 2) 주소창이 깨끗한 상태로 최초 접속하거나 새로고침하면
+    //    현재 시각의 v를 붙여 1회 재요청해 캐시를 갱신한다.
+    const now = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    const version =
+      now.getFullYear() +
+      pad(now.getMonth() + 1) +
+      pad(now.getDate()) + "-" +
+      pad(now.getHours()) +
+      pad(now.getMinutes()) +
+      pad(now.getSeconds());
+
+    try { sessionStorage.setItem("callcenterPageVersion", version); } catch (_) {}
+    url.searchParams.set("v", version);
+    window.location.replace(url.toString());
   } catch (e) {
     console.warn("자동 버전 파라미터 적용 실패", e);
   }
@@ -2247,7 +2253,7 @@ Chart.defaults.borderColor = "#e6ebf2";
 
 const $ = id => document.getElementById(id);
 
-const pageVersionParam = new URL(window.location.href).searchParams.get("v") || "";
+const pageVersionParam = window.__pageVersion || (()=>{ try { return sessionStorage.getItem("callcenterPageVersion") || ""; } catch (_) { return ""; } })();
 if (document.getElementById("pageVersion") && pageVersionParam) {
   document.getElementById("pageVersion").textContent = "v" + pageVersionParam;
 }
