@@ -1613,6 +1613,41 @@ th{position:sticky;top:0;background:#f8fafc}
   padding:8px 4px !important;
   align-items:center !important;
 }
+
+/* ERMS · 스마트러닝 > 게시판전용문의 */
+.board-inquiry-section{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+.board-inquiry-title{
+  margin:0 0 12px 2px;
+  font-size:18px;
+  line-height:1.3;
+  font-weight:900;
+  color:#14243f;
+  letter-spacing:-.45px;
+}
+.board-inquiry-cards{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+  margin-bottom:12px;
+}
+.board-inquiry-cards .metric-card{min-height:118px;}
+.board-inquiry-charts{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+}
+.board-inquiry-charts .detail-chart-box{height:190px !important;min-height:190px !important;max-height:190px !important;}
+.board-inquiry-charts canvas{height:190px !important;max-height:190px !important;}
+@media(max-width:1200px){
+  .board-inquiry-cards{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:700px){
+  .board-inquiry-cards{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -1915,6 +1950,60 @@ th{position:sticky;top:0;background:#f8fafc}
       <div class="detail-chart-title">스마트러닝앱</div>
       <div class="detail-chart-sub">올해 vs 전년 동기간</div>
       <div class="detail-chart-box"><canvas id="smartOnlyChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="board-inquiry-section">
+    <div class="board-inquiry-title">게시판전용문의</div>
+    <div class="board-inquiry-cards">
+      <div class="metric-card">
+        <div class="metric-card-title">정보변경</div>
+        <div class="metric-line"><span class="metric-label">올해 기준</span><span class="metric-value" id="boardInfoCur">-</span></div>
+        <div class="metric-line"><span class="metric-label">전년 동기간</span><span class="metric-value metric-prev" id="boardInfoYoy">-</span></div>
+        <div class="metric-line"><span class="metric-label">전년대비</span><span class="metric-change" id="boardInfoChg">-</span></div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card-title">교재신청</div>
+        <div class="metric-line"><span class="metric-label">올해 기준</span><span class="metric-value" id="boardBookCur">-</span></div>
+        <div class="metric-line"><span class="metric-label">전년 동기간</span><span class="metric-value metric-prev" id="boardBookYoy">-</span></div>
+        <div class="metric-line"><span class="metric-label">전년대비</span><span class="metric-change" id="boardBookChg">-</span></div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card-title">환급문의</div>
+        <div class="metric-line"><span class="metric-label">올해 기준</span><span class="metric-value" id="boardRefundCur">-</span></div>
+        <div class="metric-line"><span class="metric-label">전년 동기간</span><span class="metric-value metric-prev" id="boardRefundYoy">-</span></div>
+        <div class="metric-line"><span class="metric-label">전년대비</span><span class="metric-change" id="boardRefundChg">-</span></div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card-title">차단해제/삭제</div>
+        <div class="metric-line"><span class="metric-label">올해 기준</span><span class="metric-value" id="boardUnblockCur">-</span></div>
+        <div class="metric-line"><span class="metric-label">전년 동기간</span><span class="metric-value metric-prev" id="boardUnblockYoy">-</span></div>
+        <div class="metric-line"><span class="metric-label">전년대비</span><span class="metric-change" id="boardUnblockChg">-</span></div>
+      </div>
+    </div>
+
+    <div class="compare-chart-note">※ 게시판전용문의는 ERMS 내 별도 분리 항목이며, 각 유형별 올해와 전년 동기간을 비교합니다.</div>
+    <div class="board-inquiry-charts">
+      <div class="detail-chart-card">
+        <div class="detail-chart-title">정보변경</div>
+        <div class="detail-chart-sub">올해 vs 전년 동기간</div>
+        <div class="detail-chart-box"><canvas id="boardInfoChart"></canvas></div>
+      </div>
+      <div class="detail-chart-card">
+        <div class="detail-chart-title">교재신청</div>
+        <div class="detail-chart-sub">올해 vs 전년 동기간</div>
+        <div class="detail-chart-box"><canvas id="boardBookChart"></canvas></div>
+      </div>
+      <div class="detail-chart-card">
+        <div class="detail-chart-title">환급문의</div>
+        <div class="detail-chart-sub">올해 vs 전년 동기간</div>
+        <div class="detail-chart-box"><canvas id="boardRefundChart"></canvas></div>
+      </div>
+      <div class="detail-chart-card">
+        <div class="detail-chart-title">차단해제/삭제</div>
+        <div class="detail-chart-sub">올해 vs 전년 동기간</div>
+        <div class="detail-chart-box"><canvas id="boardUnblockChart"></canvas></div>
+      </div>
     </div>
   </div>
 </section>
@@ -3074,6 +3163,21 @@ async function applyFilter(){
   setDetail("ermsAvgCur","ermsAvgYoy","ermsAvgChg",
     curErmsAvg, yoyErmsAvg, {type:"decimal",digits:1});
 
+  // 게시판전용문의 (ERMS 내 별도 분리 항목)
+  const boardInfoCur=sum(rows,"infoChange");
+  const boardInfoYoy=yoyAvailable ? sum(yoyRows,"infoChange") : null;
+  const boardBookCur=sum(rows,"bookApply");
+  const boardBookYoy=yoyAvailable ? sum(yoyRows,"bookApply") : null;
+  const boardRefundCur=sum(rows,"refundInquiry");
+  const boardRefundYoy=yoyAvailable ? sum(yoyRows,"refundInquiry") : null;
+  const boardUnblockCur=sum(rows,"unblockDelete");
+  const boardUnblockYoy=yoyAvailable ? sum(yoyRows,"unblockDelete") : null;
+
+  setDetail("boardInfoCur","boardInfoYoy","boardInfoChg",boardInfoCur,boardInfoYoy);
+  setDetail("boardBookCur","boardBookYoy","boardBookChg",boardBookCur,boardBookYoy);
+  setDetail("boardRefundCur","boardRefundYoy","boardRefundChg",boardRefundCur,boardRefundYoy);
+  setDetail("boardUnblockCur","boardUnblockYoy","boardUnblockChg",boardUnblockCur,boardUnblockYoy);
+
   // 챗봇 이용
   const curChatConsultDetail = sum(rows,"chatAccess");
   const yoyChatConsultDetail = yoyAvailable ? sum(yoyRows,"chatAccess") : null;
@@ -3165,6 +3269,40 @@ async function applyFilter(){
     rows.map((r,i)=>yoyRowAt(i).smart),
     "스마트러닝 올해","스마트러닝 전년",
     "#1767d9"
+  );
+
+  // 게시판전용문의: 4개 유형 각각 분리
+  barVsYoyChart(
+    "boardInfoChart",
+    detailLabels,
+    rows.map(r=>Number(r.infoChange)||0),
+    rows.map((r,i)=>Number(yoyRowAt(i).infoChange)||0),
+    "정보변경 올해","정보변경 전년",
+    "#7d3fc7"
+  );
+  barVsYoyChart(
+    "boardBookChart",
+    detailLabels,
+    rows.map(r=>Number(r.bookApply)||0),
+    rows.map((r,i)=>Number(yoyRowAt(i).bookApply)||0),
+    "교재신청 올해","교재신청 전년",
+    "#1767d9"
+  );
+  barVsYoyChart(
+    "boardRefundChart",
+    detailLabels,
+    rows.map(r=>Number(r.refundInquiry)||0),
+    rows.map((r,i)=>Number(yoyRowAt(i).refundInquiry)||0),
+    "환급문의 올해","환급문의 전년",
+    "#f97316"
+  );
+  barVsYoyChart(
+    "boardUnblockChart",
+    detailLabels,
+    rows.map(r=>Number(r.unblockDelete)||0),
+    rows.map((r,i)=>Number(yoyRowAt(i).unblockDelete)||0),
+    "차단해제/삭제 올해","차단해제/삭제 전년",
+    "#0b2b59"
   );
 
   // 챗봇 이용: 채팅상담 / 챗봇 이용 각각 분리
@@ -3337,6 +3475,10 @@ async function upload(file,type){
         sourcing:num(pick(o,["응답호 (주간/소싱)b"])),
         night:num(pick(o,["응답호 (야간)c"])),
         ermsCount:num(pick(o,["ERMS 건수","ERMS건수","ERMS"])),
+        infoChange:num(pick(o,["정보변경"])),
+        bookApply:num(pick(o,["교재신청"])),
+        refundInquiry:num(pick(o,["환급문의"])),
+        unblockDelete:num(pick(o,["차단해제/삭제","차단해제삭제"])),
         smart:num(pick(o,["스마트러닝앱"])),
         chatAccess:num(pick(o,["챗봇접속"])),
         bookBuy:num(pick(o,["교재구매건수"])),
@@ -3452,8 +3594,8 @@ function renderRaw(){
     .slice().reverse().slice(0,200);
 
   if(type==="daily"){
-    $("rawHead").innerHTML="<tr><th>일자</th><th>총문의</th><th>총답변</th><th>인입호</th><th>전화 응답률</th><th>응답호</th><th>ERMS</th><th>스마트러닝</th><th>챗봇접속</th><th>챗봇이용</th><th>교재구매</th><th>CPH</th></tr>";
-    $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.date}</td><td>${fmt(r.totalQ)}</td><td>${fmt(r.totalA)}</td><td>${fmt(r.phoneIn)}</td><td>${r.phoneRateExcel?((Number(r.phoneRateExcel)<=1?Number(r.phoneRateExcel)*100:Number(r.phoneRateExcel)).toFixed(1)+"%") :"-"}</td><td>${fmt(r.phoneAns)}</td><td>${fmt(r.ermsCount)}</td><td>${fmt(r.smart)}</td><td>${fmt(r.chatAccess)}</td><td>${fmt(r.chatUse)}</td><td>${fmt(r.bookBuy)}</td><td>${Number(r.cphDay||0).toFixed(1)}</td></tr>`).join("");
+    $("rawHead").innerHTML="<tr><th>일자</th><th>총문의</th><th>총답변</th><th>인입호</th><th>전화 응답률</th><th>응답호</th><th>ERMS</th><th>정보변경</th><th>교재신청</th><th>환급문의</th><th>차단해제/삭제</th><th>스마트러닝</th><th>챗봇접속</th><th>챗봇이용</th><th>교재구매</th><th>CPH</th></tr>";
+    $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.date}</td><td>${fmt(r.totalQ)}</td><td>${fmt(r.totalA)}</td><td>${fmt(r.phoneIn)}</td><td>${r.phoneRateExcel?((Number(r.phoneRateExcel)<=1?Number(r.phoneRateExcel)*100:Number(r.phoneRateExcel)).toFixed(1)+"%") :"-"}</td><td>${fmt(r.phoneAns)}</td><td>${fmt(r.ermsCount)}</td><td>${fmt(r.infoChange)}</td><td>${fmt(r.bookApply)}</td><td>${fmt(r.refundInquiry)}</td><td>${fmt(r.unblockDelete)}</td><td>${fmt(r.smart)}</td><td>${fmt(r.chatAccess)}</td><td>${fmt(r.chatUse)}</td><td>${fmt(r.bookBuy)}</td><td>${Number(r.cphDay||0).toFixed(1)}</td></tr>`).join("");
   }else if(type==="mdm"){
     $("rawHead").innerHTML="<tr><th>날짜</th><th>해제 건 수</th><th>설치 건 수</th><th>합계</th><th>웹 접수 건 수</th><th>웹 접수 비율</th></tr>";
     $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.date}</td><td>${fmt(r.releaseCount)}</td><td>${fmt(r.installCount)}</td><td>${fmt((Number(r.releaseCount)||0)+(Number(r.installCount)||0))}</td><td>${fmt(r.webCount)}</td><td>${Number(r.webRate||0).toFixed(1)}%</td></tr>`).join("");
@@ -3464,8 +3606,8 @@ function renderRaw(){
 }
 
 function dailySample(){
-  const h=["일자","요일","총문의량","총답변량","총답변률","전화인입호","전화 응답률","총응답호 (a+b+c)","응답호 (주간/본사)a","응답호 (주간/소싱)b","응답호 (야간)c","ERMS 건수","스마트러닝앱","챗봇접속","교재구매건수","반품(환불)","교환","챗봇이용건","바로취소","CPH (일별)","CPH (주간누적)","CPH (월간누적)","CPH (연간누적)"];
-  const r=["2026-08-17","월",1140,1121,0.9833,484,0.9607,465,0,383,82,283,33,252,14345,238,42,1710,649,7.40,7.37,7.41,7.38];
+  const h=["일자","요일","총문의량","총답변량","총답변률","전화인입호","전화 응답률","총응답호 (a+b+c)","응답호 (주간/본사)a","응답호 (주간/소싱)b","응답호 (야간)c","ERMS 건수","정보변경","교재신청","환급문의","차단해제/삭제","스마트러닝앱","챗봇접속","교재구매건수","반품(환불)","교환","챗봇이용건","바로취소","CPH (일별)","CPH (주간누적)","CPH (월간누적)","CPH (연간누적)"];
+  const r=["2026-08-17","월",1140,1121,0.9833,484,0.9607,465,0,383,82,283,0,0,0,0,33,252,14345,238,42,1710,649,7.40,7.37,7.41,7.38];
   const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet([h,r]);
   if(ws["E2"]) ws["E2"].z="0.0%";
   if(ws["G2"]) ws["G2"].z="0.0%";
