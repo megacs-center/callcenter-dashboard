@@ -2353,12 +2353,13 @@ function barVsYoyChart(id,labels,currentData,yoyData,currentLabel,yoyLabel,color
           backgroundColor:"transparent",
           borderWidth:2.2,
           borderDash:[7,5],
-          pointRadius:2.6,
-          pointHoverRadius:4,
+          pointRadius:labels.length <= 30 ? 2.4 : 0,
+          pointHoverRadius:4.5,
+          pointHitRadius:12,
           pointBackgroundColor:"#fff",
           pointBorderColor:yoyColor,
           pointBorderWidth:2,
-          tension:.22,
+          tension:.42,
           fill:false,
           order:1
         }
@@ -2370,12 +2371,15 @@ function barVsYoyChart(id,labels,currentData,yoyData,currentLabel,yoyLabel,color
       interaction:{mode:"index",intersect:false},
       plugins:{
         legend:{
-          position:"bottom",
+          position:"top",
+          align:"end",
+          fullSize:true,
           labels:{
-            boxWidth:18,
-            boxHeight:8,
-            font:{size:11},
+            boxWidth:14,
+            boxHeight:14,
+            font:{size:11,weight:"700"},
             padding:12,
+            color:"#334155",
             usePointStyle:false
           }
         },
@@ -2406,15 +2410,22 @@ function barVsYoyChart(id,labels,currentData,yoyData,currentLabel,yoyLabel,color
 
 function compareLineChart(id, labels, datasets){
   if(charts[id]) charts[id].destroy();
+  const normalizedSets=(datasets||[]).map(ds=>({
+    tension: ds.tension ?? .42,
+    pointRadius: ds.pointRadius ?? (labels.length <= 30 ? 2.8 : 0),
+    pointHoverRadius: ds.pointHoverRadius ?? 4.5,
+    pointHitRadius: ds.pointHitRadius ?? 12,
+    ...ds
+  }));
   charts[id]=new Chart($(id),{
     type:"line",
-    data:{labels,datasets},
+    data:{labels,datasets:normalizedSets},
     options:{
       responsive:true,
       maintainAspectRatio:false,
       interaction:{mode:"index",intersect:false},
       plugins:{
-        legend:{position:"bottom",labels:{boxWidth:18,boxHeight:8,font:{size:11},padding:12}}
+        legend:{position:"top",align:"end",fullSize:true,labels:{boxWidth:14,boxHeight:14,font:{size:11,weight:"700"},padding:12,color:"#334155",usePointStyle:false}}
       },
       scales:{
         x:{grid:{display:false},ticks:{font:{size:11},color:dateTickColor}},
@@ -2431,7 +2442,7 @@ function chart(id,type,labels,sets){
     options:{
       responsive:true,
       maintainAspectRatio:false,
-      plugins:{legend:{position:"bottom"}},
+      plugins:{legend:{position:"top",align:"end",fullSize:true,labels:{boxWidth:14,boxHeight:14,font:{size:11,weight:"700"},padding:12,color:"#334155",usePointStyle:false}}},
       scales:{x:{grid:{display:false},ticks:dateTickDisplayOptions(labels,11,true,12)},y:{beginAtZero:true}}
     }
   });
@@ -2669,9 +2680,10 @@ function spark(id,labels,data,color,opts={}){
         borderColor:color,
         backgroundColor:color+"12",
         fill:true,
-        tension:.28,
-        pointRadius:3.2,
-        pointHoverRadius:4,
+        tension:.42,
+        pointRadius:labels.length <= 30 ? 2.8 : 0,
+        pointHoverRadius:4.5,
+        pointHitRadius:12,
         borderWidth:2.2,
         pointBackgroundColor:"#fff",
         pointBorderColor:color,
