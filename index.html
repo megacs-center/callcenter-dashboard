@@ -2372,7 +2372,7 @@ function barVsYoyChart(id,labels,currentData,yoyData,currentLabel,yoyLabel,color
       plugins:{
         legend:{
           position:"top",
-          align:"end",
+          align:"center",
           fullSize:true,
           labels:{
             boxWidth:14,
@@ -2425,7 +2425,7 @@ function compareLineChart(id, labels, datasets){
       maintainAspectRatio:false,
       interaction:{mode:"index",intersect:false},
       plugins:{
-        legend:{position:"top",align:"end",fullSize:true,labels:{boxWidth:14,boxHeight:14,font:{size:11,weight:"700"},padding:12,color:"#334155",usePointStyle:false}}
+        legend:{position:"top",align:"center",fullSize:true,labels:{boxWidth:14,boxHeight:14,font:{size:11,weight:"700"},padding:12,color:"#334155",usePointStyle:false}}
       },
       scales:{
         x:{grid:{display:false},ticks:{font:{size:11},color:dateTickColor}},
@@ -2442,7 +2442,7 @@ function chart(id,type,labels,sets){
     options:{
       responsive:true,
       maintainAspectRatio:false,
-      plugins:{legend:{position:"top",align:"end",fullSize:true,labels:{boxWidth:14,boxHeight:14,font:{size:11,weight:"700"},padding:12,color:"#334155",usePointStyle:false}}},
+      plugins:{legend:{position:"top",align:"center",fullSize:true,labels:{boxWidth:14,boxHeight:14,font:{size:11,weight:"700"},padding:12,color:"#334155",usePointStyle:false}}},
       scales:{x:{grid:{display:false},ticks:dateTickDisplayOptions(labels,11,true,12)},y:{beginAtZero:true}}
     }
   });
@@ -2527,7 +2527,7 @@ function renderMainInquiryAnswerChart(rows){
     id:"mainInquiryAnswerLabels",
     afterDatasetsDraw(chart){
       if(!showMainChartLabels) return;
-      const {ctx}=chart;
+      const {ctx, chartArea}=chart;
       ctx.save();
 
       const barMeta=chart.getDatasetMeta(0);
@@ -2544,7 +2544,14 @@ function renderMainInquiryAnswerChart(rows){
       ctx.fillStyle="#1b2d47";
       lineMeta.data.forEach((pt,idx)=>{
         const val=(Number(answerRateData[idx])||0).toFixed(1)+"%";
-        ctx.fillText(val, pt.x, pt.y-10);
+        const nearTop = pt.y <= chartArea.top + 16;
+        if(nearTop){
+          ctx.textBaseline = "top";
+          ctx.fillText(val, pt.x, pt.y + 8);
+          ctx.textBaseline = "bottom";
+        }else{
+          ctx.fillText(val, pt.x, pt.y - 10);
+        }
       });
       ctx.restore();
     }
@@ -2597,11 +2604,11 @@ function renderMainInquiryAnswerChart(rows){
       responsive:true,
       maintainAspectRatio:false,
       interaction:{mode:"index",intersect:false},
-      layout:{padding:{top: showMainChartLabels ? 18 : 6,right:8,left:4,bottom: useDiagonalDateTicks(labels) ? 8 : 0}},
+      layout:{padding:{top: showMainChartLabels ? 28 : 10,right:8,left:4,bottom: useDiagonalDateTicks(labels) ? 8 : 0}},
       plugins:{
         legend:{
           position:"top",
-          align:"end",
+          align:"center",
           fullSize:true,
           labels:{
             usePointStyle:false,
