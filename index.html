@@ -1721,6 +1721,302 @@ th{position:sticky;top:0;background:#f8fafc}
   .data-info-popover{width:calc(100vw - 20px);max-height:72vh}
   .data-info-btn{font-size:10px;padding:5px 8px}
 }
+
+
+
+/* 뉴스타트 인증 */
+.news-kpi-groups{display:grid;gap:12px;margin-bottom:12px}
+.news-kpi-group{border:1px solid #e1e7ef;border-radius:10px;background:#fff;padding:12px}
+.news-kpi-title-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+.news-kpi-title{font-size:12px;font-weight:900;color:#29415f}
+.news-kpi-desc{font-size:10.5px;color:#8290a4;font-weight:650}
+.news-kpi-grid{display:grid;gap:9px}
+.news-kpi-group.status .news-kpi-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.news-secondary-groups{display:grid;grid-template-columns:.9fr 1.1fr;gap:12px}
+.news-kpi-group.purchase .news-kpi-grid{grid-template-columns:1fr}
+.news-kpi-group.approval-type .news-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.news-kpi{padding:12px 13px;min-height:86px}
+.news-kpi .lab{font-size:11px;color:#66768c;font-weight:800;margin-bottom:8px}
+.news-kpi .val{font-size:22px;line-height:1;font-weight:900;color:#142947;letter-spacing:-.5px}
+.news-kpi .sub{font-size:10.5px;color:#8391a4;margin-top:8px;line-height:1.35}
+.news-chart-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:12px;margin-bottom:12px}
+.news-chart-card{padding:13px 14px 14px;min-width:0}
+.news-chart-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:5px}
+.news-chart-head h3{margin:0;font-size:13px;color:#1d2e49}
+.news-chart-sub{font-size:10.5px;color:#8794a6;margin-top:3px}
+.news-chart-box{height:245px;position:relative}
+.news-table-card{padding:13px 14px 14px}
+.news-table-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px}
+.news-table-head h3{margin:0;font-size:13px;color:#1d2e49}
+.news-table-card .tableWrap{max-height:540px;margin-top:10px}
+.news-table{width:100%;border-collapse:collapse;min-width:820px}
+.news-table th{position:sticky;top:0;z-index:1;background:#f7f9fc;color:#52647b;font-size:10.5px;font-weight:900;text-align:right;padding:10px 11px;border-bottom:1px solid #dfe6ef;white-space:nowrap}
+.news-table th:first-child{text-align:left}
+.news-table td{font-size:11.5px;color:#2d3e55;text-align:right;padding:9px 11px;border-bottom:1px solid #edf1f6;white-space:nowrap}
+.news-table td:first-child{text-align:left;font-weight:750;color:#41536a}
+.news-table tbody tr:hover{background:#f9fbfe}
+.news-empty{text-align:center!important;color:#8a98aa!important;padding:24px!important}
+.news-note{font-size:10.5px;color:#8190a4;margin-top:8px}
+@media(max-width:1100px){
+  .news-secondary-groups,.news-chart-grid{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  .news-kpi-group.status .news-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .news-kpi-group.approval-type .news-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+
+/* 상담유형 샘플 */
+.consult-sample-note{font-size:11px;color:#718096;margin-top:3px}
+.consult-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.consult-kpi{padding:16px 17px;min-height:98px}
+.consult-kpi .lab{font-size:12px;font-weight:800;color:#52637a;margin-bottom:10px}
+.consult-kpi .val{font-size:25px;font-weight:900;color:#0c2f5f;line-height:1.05}
+.consult-kpi .sub{font-size:10.5px;color:#7b8797;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.consult-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.45fr);gap:12px;margin-bottom:12px}
+.consult-panel{padding:15px 16px}
+.consult-panel-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
+.consult-panel h3{margin:0;font-size:13px;color:#15304f}
+.consult-panel-sub{font-size:10.5px;color:#7a8798;margin-top:4px}
+.consult-bars{display:flex;flex-direction:column;gap:10px}
+.consult-bar-row{display:grid;grid-template-columns:145px 1fr 82px;align-items:center;gap:10px;font-size:11px}
+.consult-bar-label{font-weight:700;color:#3c4e65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.consult-track{height:10px;background:#edf2f7;border-radius:999px;overflow:hidden}
+.consult-fill{height:100%;background:linear-gradient(90deg,#164889,#2879d8);border-radius:999px}
+.consult-bar-value{text-align:right;font-weight:800;color:#24415f}
+.consult-top-table,.consult-detail-table{width:100%;border-collapse:collapse;font-size:11px}
+.consult-top-table th,.consult-detail-table th{padding:8px 7px;border-bottom:1px solid #dbe4ee;color:#63758a;font-size:10px;text-align:left;background:#f8fafc;white-space:nowrap}
+.consult-top-table td,.consult-detail-table td{padding:8px 7px;border-bottom:1px solid #edf1f5;color:#334a62}
+.consult-top-table th.num,.consult-top-table td.num,.consult-detail-table th.num,.consult-detail-table td.num{text-align:right}
+.consult-rank{font-weight:900;color:#1d67c7;width:25px}
+.consult-code{font-family:Consolas,monospace;color:#60758d;font-size:10.5px}
+.consult-share{font-weight:800;color:#1b5fae}
+.consult-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.consult-toolbar select,.consult-toolbar input{height:32px;border:1px solid #d7e0eb;border-radius:8px;background:#fff;padding:0 10px;font-size:11px;color:#40536b}
+.consult-toolbar input{min-width:220px}
+.consult-badge{display:inline-flex;align-items:center;border-radius:999px;padding:3px 8px;background:#eef5ff;color:#2469b8;font-size:9.5px;font-weight:800}
+@media(max-width:1150px){.consult-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.consult-grid{grid-template-columns:1fr}}
+
+
+/* 상담유형 월간 분석 샘플 */
+.consult-month-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;padding:12px 14px;background:#f7faff;border:1px solid #dfe9f5;border-radius:10px}
+.consult-month-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.consult-month-label{font-size:11px;font-weight:800;color:#4a5f78}
+.consult-month-select{height:34px;border:1px solid #ccd9e8;border-radius:8px;background:#fff;padding:0 30px 0 11px;font-size:12px;font-weight:800;color:#173c6e}
+.consult-month-help{font-size:10.5px;color:#748399}
+.consult-month-chip{display:inline-flex;align-items:center;padding:4px 9px;border-radius:999px;background:#eaf3ff;color:#1761b6;font-size:10px;font-weight:800;white-space:nowrap}
+.consult-month-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:12px;margin-bottom:12px}
+.consult-empty{min-height:215px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;border:1px dashed #d9e3ef;border-radius:10px;background:#fbfcfe;color:#7b899b}
+.consult-empty-icon{font-size:28px;line-height:1;margin-bottom:10px;opacity:.7}
+.consult-empty-title{font-size:12px;font-weight:900;color:#53667e;margin-bottom:5px}
+.consult-empty-desc{font-size:10.5px;line-height:1.6;max-width:300px}
+.consult-month-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.consult-month-mini{padding:10px 11px;border:1px solid #e4ebf3;border-radius:9px;background:#fff}
+.consult-month-mini .m-label{font-size:9.5px;color:#748399;font-weight:800}
+.consult-month-mini .m-value{font-size:16px;color:#153a69;font-weight:900;margin-top:5px}
+.consult-month-mini .m-sub{font-size:9px;color:#8a96a6;margin-top:3px}
+@media(max-width:1150px){.consult-month-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.consult-month-toolbar{align-items:flex-start;flex-direction:column}.consult-month-summary{grid-template-columns:1fr}}
+
+
+
+/* 상담유형 월간 통합 분석 */
+.consult-analysis-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.95fr);gap:12px;margin-bottom:12px}
+.consult-change-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:12px}
+.consult-chart-box{height:255px;position:relative;margin-top:8px}
+.consult-chart-box.monthly{height:240px}
+#consulttype .consult-subchart-section{margin-top:16px;padding-top:14px;border-top:1px solid #e6edf6}
+#consulttype .consult-subchart-card{background:#fbfdff;border:1px solid #e6edf6;border-radius:14px;padding:12px 14px 10px}
+#consulttype .consult-subchart-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+#consulttype .consult-subchart-head h4{margin:0;font-size:14px;font-weight:800;color:#16376d}
+#consulttype .consult-subchart-note{display:none}
+.consult-category-chart-full{width:100%;height:300px;margin-top:18px}
+.consult-category-layout{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(360px,.82fr);gap:14px;align-items:stretch}
+.consult-category-table{width:100%;border-collapse:collapse;font-size:10.5px}
+.consult-category-table th{padding:8px 7px;background:#f6f9fc;color:#64768b;border-bottom:1px solid #dce5ef;white-space:nowrap;text-align:left}
+.consult-category-table td{padding:8px 7px;border-bottom:1px solid #edf2f6;color:#334a62}
+.consult-category-table .num{text-align:right}
+.consult-category-table tr:first-child td{font-weight:800}
+.consult-delta-up{color:#d64b4b;font-weight:900}
+.consult-delta-down{color:#1767c2;font-weight:900}
+.consult-delta-flat{color:#77879a;font-weight:800}
+.consult-drill-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:12px}
+.consult-drill-card{padding:14px 15px;min-width:0}
+.consult-drill-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
+.consult-drill-title{font-size:12.5px;font-weight:900;color:#173759;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.consult-drill-meta{font-size:9.5px;color:#75869b;margin-top:3px}
+.consult-drill-total{text-align:right;font-size:17px;font-weight:900;color:#153e72;white-space:nowrap}
+.consult-drill-change{font-size:9.5px;margin-top:3px;text-align:right}
+.consult-section-space{margin-bottom:12px}
+.consult-no-data{padding:12px 14px;margin-bottom:12px;border:1px dashed #cfdceb;background:#f9fbfd;border-radius:10px;font-size:11px;color:#677a91;line-height:1.6}
+.consult-table-title{font-weight:800;color:#435b75}
+.consult-rank-cat{font-size:9px;color:#7c8999;margin-top:2px}
+.consult-trend-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px}
+@media(max-width:1250px){.consult-category-layout{grid-template-columns:1fr}.consult-analysis-grid{grid-template-columns:1fr}}
+@media(max-width:1000px){.consult-drill-grid,.consult-change-grid{grid-template-columns:1fr}}
+
+/* 상담유형 월간 분석 - 이미지형 재구성 */
+#consulttype .consult-image-toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 16px;margin-bottom:12px}
+#consulttype .consult-image-toolbar-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0}
+#consulttype .consult-image-toolbar-right{display:flex;align-items:center;gap:8px}
+#consulttype .consult-filter-unit{display:flex;align-items:center;gap:8px}
+#consulttype .consult-nav-btns{display:flex;gap:8px}
+#consulttype .consult-kpis-5{grid-template-columns:repeat(5,minmax(0,1fr));margin-bottom:14px}
+#consulttype .consult-kpi.visual{padding:14px 16px;position:relative;overflow:hidden;min-height:88px}
+#consulttype .consult-kpi.visual .val.small{font-size:16px;line-height:1.35;white-space:normal}
+#consulttype .consult-kpi.visual .sub{max-width:85%}
+#consulttype .consult-number-title{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+#consulttype .consult-number-title.inline{margin-bottom:8px}
+#consulttype .num-box{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;background:#2d6cdf;color:#fff;font-size:12px;font-weight:800;flex:0 0 24px}
+#consulttype .consult-number-title h3{margin:0;font-size:22px}
+#consulttype .consult-number-sub{font-size:11px;color:#7a889b;font-weight:700;margin-left:auto}
+#consulttype .consult-rank-table{width:100%;table-layout:fixed;border-collapse:collapse}
+#consulttype .consult-rank-table th,#consulttype .consult-rank-table td{padding:10px 8px;border-bottom:1px solid #e9eff6;font-size:12px;vertical-align:middle}
+#consulttype .consult-rank-table tr.consult-total-row td{font-weight:800;background:#f4f8fd;border-top:2px solid #cfdceb;color:#173a6b}
+#consulttype .consult-top10-chart-box{height:270px;margin-top:0;border-top:none;padding-top:0}
+#consulttype .consult-highlight-box{border:1px solid #e8eef6;border-radius:12px;background:#fff;overflow:hidden}
+#consulttype .consult-highlight-box.up{background:linear-gradient(180deg,#fff7f5 0%,#fff 18%)}
+#consulttype .consult-highlight-box.down{background:linear-gradient(180deg,#f7fbff 0%,#fff 18%)}
+#consulttype .consult-highlight-head{padding:12px 16px;font-weight:800;color:#29415c}
+#consulttype .consult-feature-card{padding:16px 18px;border:1px solid #f0dfb5;background:linear-gradient(180deg,#fffaf0 0%,#fffef8 100%)}
+#consulttype .consult-feature-text{font-size:16px;line-height:1.8;color:#29384b;padding:6px 2px 0 2px}
+#consulttype .consult-feature-text b{color:#0f3f86}
+#consulttype .consult-analysis-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+#consulttype .consult-filter-inline{display:flex;align-items:center;gap:8px}
+#consulttype .consult-analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+#consulttype .consult-analysis-card{border:1px solid #e4ebf3;border-radius:12px;padding:12px 14px;background:#fff}
+#consulttype .consult-analysis-card-title{font-size:18px;font-weight:800;color:#143a77;margin-bottom:10px}
+#consulttype .consult-toolbar-extended{display:grid;grid-template-columns:repeat(4,minmax(0,180px)) 1fr auto;gap:10px;align-items:center}
+#consulttype .consult-toggle-group{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+#consulttype .consult-toggle-group button{border:1px solid #d8e3f1;background:#fff;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:800;color:#46607f;cursor:pointer}
+#consulttype .consult-toggle-group button.active{background:#eaf2ff;border-color:#bcd2ff;color:#215db5}
+#consulttype .consult-detail-toggle-row{display:flex;justify-content:center;margin:14px 0 10px}
+#consulttype .consult-note-small{font-size:11px;color:#7a889b;margin-top:10px}
+#consulttype .consult-chart-legend-note{font-size:12px;color:#5f7187;font-weight:700}
+@media (max-width:1200px){#consulttype .consult-kpis-5{grid-template-columns:repeat(2,minmax(0,1fr))}#consulttype .consult-analysis-grid{grid-template-columns:1fr}#consulttype .consult-toolbar-extended{grid-template-columns:repeat(2,minmax(0,1fr))}#consulttype .consult-toggle-group{justify-content:flex-start}}
+@media (max-width:760px){#consulttype .consult-image-toolbar{padding:12px}#consulttype .consult-kpis-5{grid-template-columns:1fr}#consulttype .consult-toolbar-extended{grid-template-columns:1fr}}
+/* 상담유형 분석: 충분한 화면 폭에서도 불필요한 가로 스크롤이 생기지 않도록 표를 카드 폭에 맞춤 */
+#consulttype .tableWrap{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  overflow-y:auto;
+  box-sizing:border-box;
+}
+#consulttype .tableWrap table,
+#consulttype .consult-category-table,
+#consulttype .consult-top-table,
+#consulttype .consult-detail-table{
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100%;
+  table-layout:fixed;
+}
+#consulttype .consult-category-table th,
+#consulttype .consult-category-table td,
+#consulttype .consult-top-table th,
+#consulttype .consult-top-table td,
+#consulttype .consult-detail-table th,
+#consulttype .consult-detail-table td{
+  min-width:0;
+  box-sizing:border-box;
+  overflow-wrap:anywhere;
+  word-break:keep-all;
+}
+#consulttype .consult-category-table th:first-child,
+#consulttype .consult-category-table td:first-child{width:30%}
+#consulttype .consult-category-table th:not(:first-child),
+#consulttype .consult-category-table td:not(:first-child){width:14%}
+
+#consulttype .consult-change-grid .consult-top-table th:first-child,
+#consulttype .consult-change-grid .consult-top-table td:first-child{width:55%}
+#consulttype .consult-change-grid .consult-top-table th:not(:first-child),
+#consulttype .consult-change-grid .consult-top-table td:not(:first-child){width:15%}
+
+#consulttype .consult-drill-card .consult-top-table th:nth-child(1),
+#consulttype .consult-drill-card .consult-top-table td:nth-child(1){width:7%}
+#consulttype .consult-drill-card .consult-top-table th:nth-child(2),
+#consulttype .consult-drill-card .consult-top-table td:nth-child(2){width:45%}
+#consulttype .consult-drill-card .consult-top-table th:nth-child(n+3),
+#consulttype .consult-drill-card .consult-top-table td:nth-child(n+3){width:16%}
+
+#consulttype .consult-detail-table th,
+#consulttype .consult-detail-table td{white-space:normal}
+#consulttype .consult-detail-table .num,
+#consulttype .consult-top-table .num,
+#consulttype .consult-category-table .num{white-space:nowrap}
+
+@media(max-width:760px){
+  .consult-kpis{grid-template-columns:1fr 1fr}
+  .consult-chart-box{height:230px}
+  .consult-drill-grid{grid-template-columns:1fr}
+  #consulttype .consult-category-table{min-width:0 !important}
+}
+
+
+
+/* 상담유형 월간 분석 - 공백 최소화 / 고밀도 배치 */
+#consulttype .consult-image-toolbar{padding:10px 12px;margin-bottom:8px}
+#consulttype .consult-kpis-5{gap:8px;margin-bottom:9px}
+#consulttype .consult-kpi.visual{padding:11px 13px;min-height:80px}
+#consulttype .consult-kpi .lab{margin-bottom:7px}
+#consulttype .consult-kpi .sub{margin-top:5px}
+#consulttype .consult-panel{padding:11px 12px}
+#consulttype .consult-section-space{margin-bottom:8px}
+#consulttype .consult-number-title{margin-bottom:8px}
+#consulttype .consult-number-title h3{font-size:17px}
+#consulttype .consult-number-sub{font-size:10px}
+#consulttype .consult-rank-table th,
+#consulttype .consult-rank-table td{padding:6px 8px;font-size:11px}
+#consulttype .consult-rank-table th:nth-child(1),
+#consulttype .consult-rank-table td:nth-child(1){width:6%!important}
+#consulttype .consult-rank-table th:nth-child(2),
+#consulttype .consult-rank-table td:nth-child(2){width:43%!important}
+#consulttype .consult-rank-table th:nth-child(3),
+#consulttype .consult-rank-table td:nth-child(3){width:18%!important}
+#consulttype .consult-rank-table th:nth-child(4),
+#consulttype .consult-rank-table td:nth-child(4){width:14%!important}
+#consulttype .consult-rank-table th:nth-child(5),
+#consulttype .consult-rank-table td:nth-child(5){width:19%!important}
+
+#consulttype .consult-change-grid{gap:8px;margin-bottom:0}
+#consulttype .consult-highlight-head{padding:9px 11px;font-size:11px}
+#consulttype .consult-change-grid .consult-top-table th,
+#consulttype .consult-change-grid .consult-top-table td{padding:6px 7px}
+#consulttype .consult-change-grid .consult-top-table th:first-child,
+#consulttype .consult-change-grid .consult-top-table td:first-child{width:42%!important}
+#consulttype .consult-change-grid .consult-top-table th:not(:first-child),
+#consulttype .consult-change-grid .consult-top-table td:not(:first-child){width:19.333%!important}
+#consulttype .consult-rank-cat{margin-top:1px}
+
+#consulttype .consult-analysis-head{margin-bottom:7px}
+#consulttype .consult-analysis-grid{gap:8px;margin-bottom:0}
+#consulttype .consult-analysis-card{padding:9px 10px}
+#consulttype .consult-analysis-card-title{font-size:15px;margin-bottom:7px}
+#consulttype .consult-analysis-card .consult-top-table th,
+#consulttype .consult-analysis-card .consult-top-table td{padding:6px 7px}
+#consulttype .consult-analysis-card .consult-top-table th:nth-child(1),
+#consulttype .consult-analysis-card .consult-top-table td:nth-child(1){width:8%!important}
+#consulttype .consult-analysis-card .consult-top-table th:nth-child(2),
+#consulttype .consult-analysis-card .consult-top-table td:nth-child(2){width:48%!important}
+#consulttype .consult-analysis-card .consult-top-table th:nth-child(3),
+#consulttype .consult-analysis-card .consult-top-table td:nth-child(3){width:24%!important}
+#consulttype .consult-analysis-card .consult-top-table th:nth-child(4),
+#consulttype .consult-analysis-card .consult-top-table td:nth-child(4){width:20%!important}
+
+#consulttype .consult-empty{min-height:105px;padding:12px}
+#consulttype .consult-chart-box.monthly{height:215px}
+#consulttype .consult-toolbar-extended{gap:7px}
+#consulttype .consult-detail-toggle-row{margin:9px 0 6px}
+#consulttype .consult-note-small{margin-top:6px}
+#consulttype .tableWrap{max-height:none}
+
+/* 상담유형 월간/특정기간 분석 */
+#consulttype .consult-mode-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#consulttype .consult-period-date{font-size:11px;font-weight:700;color:#65778f;padding:5px 8px;background:#f6f9fd;border-radius:7px;white-space:nowrap}
+#consulttype .consult-kpi.period-date .val{font-size:14px;line-height:1.45;white-space:normal}
+#consulttype .consult-period-note{font-size:10px;color:#718198;font-weight:700}
+
 </style>
 </head>
 <body>
@@ -1735,6 +2031,8 @@ th{position:sticky;top:0;background:#f8fafc}
     <button data-target="book">▣　<span>교재 구매</span></button>
     <button data-target="cph">♟　<span>CPH 현황</span></button>
     <button data-target="mdm">▣　<span>MDM 원격</span></button>
+    <button data-target="newsstart">✓　<span>뉴스타트 인증</span></button>
+    <button data-target="consulttype">▤　<span>상담유형</span></button>
     <div class="sep"></div>
     <button data-target="admin">🔒　<span>관리자</span></button>
   </div>
@@ -1900,6 +2198,7 @@ th{position:sticky;top:0;background:#f8fafc}
       <div class="channel-note">※ 전년대비는 동일 요일 기준 증감률입니다.</div>
     </div>
   </div>
+
 
   <div class="bottom-section-title">일자별 추이</div>
   <div class="bottom">
@@ -2217,6 +2516,196 @@ th{position:sticky;top:0;background:#f8fafc}
 </section>
 
 
+
+
+
+<section id="consulttype" class="section">
+  <div class="detail-head">
+    <div>
+      <div class="detail-title-wrap"><div class="detail-title">상담유형 분석</div><button type="button" class="data-info-btn" data-info-page="consulttype">ⓘ 데이터 기준</button></div>
+      <div class="consult-sample-note">월간 집계 또는 등록된 특정기간 데이터를 기준으로 상담유형의 규모·변화·세부 원인을 비교합니다.</div>
+    </div>
+  </div>
+
+  <div class="consult-image-toolbar card">
+    <div class="consult-image-toolbar-left">
+      <div class="consult-filter-unit"><span class="consult-month-label">분석기준</span><select class="consult-month-select" id="consultModeSelect"><option value="monthly">월간</option><option value="period">특정기간</option></select></div>
+      <div class="consult-filter-unit"><span class="consult-month-label">상담구분</span><select class="consult-month-select" id="consultChannelSelect"><option value="all">전체</option><option value="인바운드 상담">Call</option><option value="게시판 상담">게시판</option></select></div>
+      <div class="consult-mode-controls" id="consultMonthlyControls">
+        <div class="consult-filter-unit"><span class="consult-month-label">분석연도</span><select class="consult-month-select" id="consultYearSelect"></select></div>
+        <div class="consult-filter-unit"><span class="consult-month-label">분석월</span><select class="consult-month-select" id="consultMonthSelectLive"></select></div>
+        <div class="consult-nav-btns"><button type="button" class="btn secondary" id="consultPrevMonthBtn">〈 전월</button><button type="button" class="btn secondary" id="consultNextMonthBtn">다음월 〉</button></div>
+      </div>
+      <div class="consult-mode-controls hidden" id="consultPeriodControls">
+        <select id="consultPeriodSelect" class="hidden" aria-hidden="true" tabindex="-1"></select>
+        <span class="consult-period-date" id="consultPeriodDateText">-</span>
+      </div>
+      <span class="consult-month-help" id="consultMonthHelp">관리자에서 상담유형 Excel 등록 후 분석이 표시됩니다.</span>
+    </div>
+  </div>
+
+  <div id="consultNoData" class="consult-no-data">관리자에서 <b>인바운드상담 / 게시판상담</b> 2개 시트가 포함된 상담유형 Excel을 등록하면 이 화면의 모든 분석이 자동으로 갱신됩니다.</div>
+
+  <div class="consult-kpis consult-kpis-5">
+    <div class="card consult-kpi visual"><div class="lab">총 상담건수</div><div class="val" id="consultTotal">-</div><div class="sub" id="consultTotalSub">선택월 전체 합계</div></div>
+    <div class="card consult-kpi visual" id="consultPrevKpiCard"><div class="lab" id="consultPrevLabel">전월 대비</div><div class="val" id="consultPrevChange">-</div><div class="sub" id="consultPrevSub">전월 데이터 등록 시 표시</div></div>
+    <div class="card consult-kpi visual" id="consultYoYKpiCard"><div class="lab" id="consultYoYLabel">전년동월 대비</div><div class="val" id="consultYoYChange">-</div><div class="sub" id="consultYoYSub">전년 데이터 등록 시 표시</div></div>
+    <div class="card consult-kpi visual"><div class="lab">최대 상담유형</div><div class="val small" id="consultTopCategoryKpi">-</div><div class="sub" id="consultTopCategoryKpiSub">-</div></div>
+    <div class="card consult-kpi visual"><div class="lab">최대 증가 유형</div><div class="val small" id="consultTopIncreaseKpi">-</div><div class="sub" id="consultTopIncreaseKpiSub">전월 데이터 등록 시 표시</div></div>
+  </div>
+
+  <div class="card consult-panel consult-section-space">
+    <div class="consult-number-title"><span class="num-box">1</span><h3>상담유형 TOP10</h3><span class="consult-number-sub" id="consultTopShareNote">※ 비중은 선택월 기준</span></div>
+    <div class="tableWrap">
+      <table class="consult-rank-table">
+        <thead><tr><th style="width:60px">순위</th><th>상담유형</th><th class="num" style="width:130px">건수</th><th class="num" style="width:100px">비중</th><th class="num" style="width:120px" id="consultTopCompareHead">전월 대비</th></tr></thead>
+        <tbody id="consultTop10CategoryBody"><tr><td colspan="5" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr></tbody>
+      </table>
+    </div>
+    <div class="consult-subchart-section">
+      <div class="consult-subchart-card">
+        <div class="consult-subchart-head"><h4>TOP10 비교 그래프</h4><span class="consult-subchart-note" id="consultTop10ChartNote">※ 현재 기준과 비교 기준을 동일 그래프에서 확인합니다.</span></div>
+        <div class="consult-chart-box consult-top10-chart-box"><canvas id="consultTop10Chart"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card consult-panel consult-section-space">
+    <div class="consult-number-title"><span class="num-box">2</span><h3 id="consultChangeTitle">전월 대비 주요 변화</h3></div>
+    <div class="consult-change-grid">
+      <div class="consult-highlight-box up">
+        <div class="consult-highlight-head" id="consultIncreaseTitle">전월 대비 증가 TOP5</div>
+        <div id="consultIncreaseBody"><div class="consult-empty"><div class="consult-empty-title">전월 데이터 등록 시 표시</div></div></div>
+      </div>
+      <div class="consult-highlight-box down">
+        <div class="consult-highlight-head" id="consultDecreaseTitle">전월 대비 감소 TOP5</div>
+        <div id="consultDecreaseBody"><div class="consult-empty"><div class="consult-empty-title">전월 데이터 등록 시 표시</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card consult-panel consult-section-space">
+    <div class="consult-number-title"><span class="num-box">3</span><h3>상담유형 상세분석</h3><span class="consult-number-sub">(대분류 선택 시 중/소분류 TOP10 조회)</span></div>
+    <div class="consult-analysis-head"><div></div><div class="consult-filter-inline"><span class="consult-month-label">대분류 선택</span><select class="consult-month-select" id="consultDrillCategorySelect"></select></div></div>
+    <div class="consult-analysis-grid">
+      <div class="consult-analysis-card">
+        <div class="consult-analysis-card-title">중분류 TOP10</div>
+        <div class="tableWrap"><table class="consult-top-table"><thead><tr><th style="width:50px">순위</th><th>중분류</th><th class="num">건수</th><th class="num">비중</th></tr></thead><tbody id="consultMidTopBody"><tr><td colspan="4" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr></tbody></table></div>
+      </div>
+      <div class="consult-analysis-card">
+        <div class="consult-analysis-card-title">소분류 TOP10</div>
+        <div class="tableWrap"><table class="consult-top-table"><thead><tr><th style="width:50px">순위</th><th>소분류</th><th class="num">건수</th><th class="num">비중</th></tr></thead><tbody id="consultSmallTopBody"><tr><td colspan="4" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr></tbody></table></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card consult-panel consult-section-space" id="consultMonthlyTrendPanel">
+    <div class="consult-number-title"><span class="num-box">4</span><h3>월별 상담량 및 유형별 추이</h3></div>
+    <div class="consult-analysis-head"><div class="consult-chart-legend-note" id="consultTrendBadge">표시 유형 선택</div><div class="consult-filter-inline"><span class="consult-month-label">표시 유형 선택</span><select class="consult-month-select" id="consultTrendSeriesCount"><option value="3">3개 선택</option><option value="5" selected>5개 선택</option><option value="7">7개 선택</option></select></div></div>
+    <div class="consult-chart-box monthly"><canvas id="consultMonthlyChart"></canvas></div>
+  </div>
+
+  <div class="card consult-panel consult-section-space">
+    <div class="consult-number-title"><span class="num-box" id="consultDetailSectionNum">5</span><h3>상담유형 상세 데이터</h3></div>
+    <div class="consult-toolbar consult-toolbar-extended">
+      <select id="consultDetailChannelFilter">
+        <option value="">상담구분 전체</option>
+        <option value="인바운드 상담">Call</option>
+        <option value="게시판 상담">게시판</option>
+      </select>
+      <select id="consultCatFilter"><option value="">대분류 전체</option></select>
+      <select id="consultMidFilter"><option value="">중분류 전체</option></select>
+      <select id="consultSmallFilter"><option value="">소분류 전체</option></select>
+      <input id="consultSearch" type="text" placeholder="문의유형 검색">
+      <div class="consult-toggle-group">
+        <button type="button" class="active" data-filter="all">전체</button>
+        <button type="button" data-filter="increase">증가유형</button>
+        <button type="button" data-filter="decrease">감소유형</button>
+        <button type="button" data-filter="new">신규발생</button>
+      </div>
+    </div>
+    <div class="consult-detail-toggle-row"><button type="button" class="btn secondary" id="consultDetailToggleBtn">상세 데이터 펼쳐보기 ▼</button></div>
+    <div class="tableWrap hidden" id="consultDetailWrap">
+      <table class="consult-detail-table"><thead><tr><th>상담구분</th><th>대분류</th><th>중분류</th><th>소분류</th><th>문의유형</th><th class="num" id="consultDetailMonthHead">선택월</th><th class="num" id="consultDetailPrevHead">전월</th><th class="num">증감률</th></tr></thead><tbody id="consultDetailBody"><tr><td colspan="8" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr></tbody></table>
+    </div>
+    <div class="consult-note-small" id="consultCompareNote">※ 전월 대비 증감률은 소수점 첫째자리 반올림 기준입니다.</div>
+  </div>
+</section>
+
+
+<section id="newsstart" class="section">
+  <div class="detail-head">
+    <div>
+      <div class="detail-title-wrap"><div class="detail-title">뉴스타트 인증</div><button type="button" class="data-info-btn" data-info-page="newsstart">ⓘ 데이터 기준</button></div>
+      <div class="detail-period" id="newsStartPeriod"></div>
+    </div>
+  </div>
+
+  <div class="news-kpi-groups">
+    <div class="news-kpi-group status">
+      <div class="news-kpi-title-row">
+        <div class="news-kpi-title">인증 처리 현황</div>
+        <div class="news-kpi-desc">조회기간 신청 및 인증 처리 결과</div>
+      </div>
+      <div class="news-kpi-grid">
+        <div class="card news-kpi"><div class="lab">신청자</div><div class="val" id="newsApplicant">-</div><div class="sub">조회기간 신청 합계</div></div>
+        <div class="card news-kpi"><div class="lab">승인</div><div class="val" id="newsApproved">-</div><div class="sub" id="newsApprovedRate">승인율 -</div></div>
+        <div class="card news-kpi"><div class="lab">반려</div><div class="val" id="newsRejected">-</div><div class="sub" id="newsRejectedRate">반려율 -</div></div>
+        <div class="card news-kpi"><div class="lab">대기</div><div class="val" id="newsPending">-</div><div class="sub">원본 입력값 기준</div></div>
+      </div>
+    </div>
+
+    <div class="news-secondary-groups">
+      <div class="news-kpi-group purchase">
+        <div class="news-kpi-title-row">
+          <div class="news-kpi-title">뉴스타트 구매 현황</div>
+          <div class="news-kpi-desc">신청 승인 후 결제한 인원</div>
+        </div>
+        <div class="news-kpi-grid">
+          <div class="card news-kpi"><div class="lab">뉴스타트 구매자</div><div class="val" id="newsPurchaser">-</div><div class="sub">신청 승인 후 결제자</div></div>
+        </div>
+      </div>
+
+      <div class="news-kpi-group approval-type">
+        <div class="news-kpi-title-row">
+          <div class="news-kpi-title">승인 구분 현황</div>
+          <div class="news-kpi-desc">승인 구분별 인원</div>
+        </div>
+        <div class="news-kpi-grid">
+          <div class="card news-kpi"><div class="lab">N수</div><div class="val" id="newsNsu">-</div><div class="sub">승인 구분 · N수</div></div>
+          <div class="card news-kpi"><div class="lab">군수</div><div class="val" id="newsGunsu">-</div><div class="sub">승인 구분 · 군수</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="news-chart-grid">
+    <div class="card news-chart-card">
+      <div class="news-chart-head">
+        <div><h3>일자별 신청 · 승인 · 구매 추이</h3><div class="news-chart-sub">신청자, 승인자, 뉴스타트 구매자 일별 변화</div></div>
+      </div>
+      <div class="news-chart-box"><canvas id="newsMainTrendChart"></canvas></div>
+    </div>
+    <div class="card news-chart-card">
+      <div class="news-chart-head">
+        <div><h3>일자별 승인 구분 추이</h3><div class="news-chart-sub">N수와 군수 승인 구분별 일자 추이</div></div>
+      </div>
+      <div class="news-chart-box"><canvas id="newsApprovalTypeChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card news-table-card">
+    <div class="news-table-head"><h3>일자별 뉴스타트 인증 현황</h3></div>
+    <div class="tableWrap">
+      <table class="news-table">
+        <thead><tr><th>일자</th><th>신청자</th><th>승인</th><th>반려</th><th>대기</th><th>뉴스타트구매자</th><th>N수</th><th>군수</th></tr></thead>
+        <tbody id="newsStartBody"><tr><td colspan="8" class="news-empty">조회기간을 선택해 주세요.</td></tr></tbody>
+      </table>
+    </div>
+    <div class="news-note">※ 뉴스타트 구매자는 신청 승인 후 결제한 인원이며, N수·군수는 승인 구분입니다. 빈 값은 원본 데이터가 입력되지 않은 항목으로 표시합니다.</div>
+  </div>
+</section>
+
 <section id="admin" class="section">
   <div class="detail-head"><div class="detail-title-wrap"><div class="detail-title">관리자</div><button type="button" class="data-info-btn" data-info-page="admin">ⓘ 데이터 기준</button></div></div>
   <div id="adminLock" class="card adminbox">
@@ -2251,22 +2740,36 @@ th{position:sticky;top:0;background:#f8fafc}
         </div>
 
         <div class="card upload">
-          <h3>② 환불 상세 Excel</h3>
-          <div class="drop">
-            <input id="refundFile" type="file" accept=".xlsx,.xls,.csv">
-            <div style="margin-top:9px"><button class="btn secondary" id="refundSampleBtn">샘플 Excel</button></div>
-          </div>
-          <div id="refundStatus" class="status">Firestore 확인 중...</div>
-        </div>
-
-        <div class="card upload">
-          <h3>③ MDM 원격 Excel</h3>
+          <h3>② MDM 원격 Excel</h3>
           <div class="drop">
             <input id="mdmFile" type="file" accept=".xlsx,.xls,.csv">
             <div style="margin-top:9px"><button class="btn secondary" id="mdmSampleBtn">샘플 Excel</button></div>
           </div>
           <div id="mdmStatus" class="status">Firestore 확인 중...</div>
           <div class="status">※ 컬럼: 날짜 / 해제 건 수 / 설치 건 수 / 합계 / 웹 접수 건 수 / 웹 접수 비율</div>
+        </div>
+
+        <div class="card upload">
+          <h3>③ 뉴스타트 인증 Excel</h3>
+          <div class="drop">
+            <input id="newsStartFile" type="file" accept=".xlsx,.xls,.csv">
+            <div style="margin-top:9px"><button class="btn secondary" id="newsStartSampleBtn">샘플 Excel</button></div>
+          </div>
+          <div id="newsStartStatus" class="status">Firestore 확인 중...</div>
+          <div class="status">※ 컬럼: 일자 / 신청자 / 승인 / 반려 / 대기 / 뉴스타트구매자 / N수 / 군수</div>
+        </div>
+
+        <div class="card upload">
+          <h3>④ 상담유형 Excel</h3>
+          <div class="drop">
+            <input id="consultTypeFile" type="file" accept=".xlsx,.xls,.csv">
+            <div style="margin-top:9px"><button class="btn secondary" id="consultTypeSampleBtn">샘플 Excel</button></div>
+          </div>
+          <div id="consultTypeStatus" class="status">Firestore 확인 중...</div>
+          <div class="status">※ Excel 시트명: <b>2026_CALL / 2026_ERMS / 2025_CALL / 2025_ERMS</b> 형식</div>
+          <div class="status">※ CALL = 인바운드 상담 / ERMS = 게시판 상담</div>
+          <div class="status">※ 각 시트 컬럼: 대분류 / 중분류 / 소분류 / 코드▼ / 문의 유형 / 1월 ~ 12월</div>
+          <div class="status" style="color:#52657c">※ 연도별·채널별 월간 시트를 한 파일에서 누적 관리하며, 빈 월은 미등록으로 처리합니다.<br>※ 특정기간 비교는 <b>올해_CALL / 올해_ERMS / 전년_CALL / 전년_ERMS</b> 4개 시트로 구분해 등록합니다.<br>※ 기간 시트 컬럼: 분석명 / 시작일 / 종료일 / 대분류 / 중분류 / 소분류 / 코드▼ / 문의 유형 / 건수<br>※ 기간 시트만 별도로 업로드해도 기존 월간 데이터는 유지되며, 같은 분석명·비교구분·채널 조합만 갱신됩니다.</div>
         </div>
       </div>
 
@@ -2276,6 +2779,9 @@ th{position:sticky;top:0;background:#f8fafc}
             <option value="daily">일일 운영실적</option>
             <option value="refund">환불 상세</option>
             <option value="mdm">MDM 원격</option>
+            <option value="newsstart">뉴스타트 인증</option>
+            <option value="consulttype">상담유형 월간</option>
+            <option value="consultperiod">상담유형 특정기간</option>
           </select>
           <input id="rawSearch" placeholder="검색">
         </div>
@@ -2299,6 +2805,39 @@ th{position:sticky;top:0;background:#f8fafc}
   <div id="dataInfoBody" class="data-info-popover-body"></div>
 </div>
 
+
+<script>
+(function(){
+  function bindDashboardMenu(){
+    if(window.__dashboardMenuBound) return;
+    window.__dashboardMenuBound=true;
+    const menu=document.querySelector('.menu');
+    if(!menu) return;
+    menu.addEventListener('click',function(e){
+      const btn=e.target.closest('button[data-target]');
+      if(!btn || !menu.contains(btn)) return;
+      const targetId=btn.getAttribute('data-target');
+      const target=document.getElementById(targetId);
+      if(!target) return;
+
+      document.querySelectorAll('.menu button[data-target]').forEach(x=>x.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+      target.classList.add('active');
+
+      const topFilters=document.querySelector('.top .filters');
+      if(topFilters) topFilters.style.display=targetId==='consulttype'?'none':'flex';
+
+      const pop=document.getElementById('dataInfoPopover');
+      if(pop){ pop.classList.remove('open'); pop.setAttribute('aria-hidden','true'); }
+
+      window.dispatchEvent(new Event('resize'));
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bindDashboardMenu,{once:true});
+  else bindDashboardMenu();
+})();
+</script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 import {
@@ -2419,17 +2958,49 @@ const DATA_INFO = {
         <div class="data-info-row">웹 접수 비율 그래프는 업로드된 일자별 웹 접수 비율 값을 표시합니다.</div>
       </div>`
   },
+
+  newsstart: {
+    title:"뉴스타트 인증 · 데이터 기준",
+    html:`
+      <div class="data-info-section"><div class="data-info-label">집계 기준</div>
+        <div class="data-info-row">신청자·승인·반려·대기·뉴스타트구매자·N수·군수는 선택기간에 입력된 일자별 값을 각각 합산합니다.</div>
+        <div class="data-info-row"><span class="data-info-em">뉴스타트 구매자</span>는 신청 승인 후 결제한 인원입니다.</div>
+        <div class="data-info-row"><span class="data-info-em">N수·군수</span>는 승인 구분별 인원입니다.</div>
+        <div class="data-info-row">빈 셀은 미입력 값으로 보고 합계에서 제외하며, 숫자 0은 실제 0건으로 반영합니다.</div>
+        <div class="data-info-formula">승인율 = 승인 ÷ 신청자 × 100<br>반려율 = 반려 ÷ 신청자 × 100</div>
+      </div>
+      <div class="data-info-section"><div class="data-info-label">그래프 및 일자별 현황</div>
+        <div class="data-info-row">신청·승인·구매 추이는 일자별 신청자, 승인자, 뉴스타트 구매자 변화를 비교합니다.</div>
+        <div class="data-info-row">승인 구분 추이는 N수와 군수의 일자별 변화를 표시합니다.</div>
+        <div class="data-info-row">하단 표는 선택기간의 원본 일자별 값을 그대로 표시하며 임의로 보정하지 않습니다.</div>
+      </div>`
+  },
+  consulttype: {
+    title:"상담유형 · 데이터 기준",
+    html:`
+      <div class="data-info-section"><div class="data-info-label">집계 기준</div>
+        <div class="data-info-row">상담유형은 <span class="data-info-em">월간 집계</span>와 필요 시 등록하는 <span class="data-info-em">특정기간 분석</span>을 분리해 조회하며, 전체 / Call / 게시판을 구분할 수 있습니다.</div>
+        <div class="data-info-row">월간은 연도_CALL/ERMS 시트의 1월~12월 건수를 저장하고, 특정기간은 올해_CALL·올해_ERMS·전년_CALL·전년_ERMS 시트의 분석명·시작/종료일·건수를 별도로 저장합니다.</div>
+        <div class="data-info-row">빈 월은 미등록으로 보고 월 선택 목록에서 제외합니다. 숫자 0은 실제 0건으로 반영합니다.</div>
+      </div>
+      <div class="data-info-section"><div class="data-info-label">분석 항목</div>
+        <div class="data-info-row">월간은 선택월 기준 전월·전년동월을 비교하고, 특정기간은 같은 분석명의 올해 기간과 전년 비교기간을 직접 비교합니다.</div>
+        <div class="data-info-row">대분류별 인바운드·게시판 실적과 전월 증감률을 비교하고, 상담량이 큰 대분류는 내부 문의유형 TOP5까지 자동으로 펼쳐 보여줍니다.</div>
+        <div class="data-info-row">직전 월 데이터가 있으면 증가 TOP5·감소 TOP5, 전체 TOP10 및 상세 현황의 전월 대비 증감률을 함께 표시합니다.</div>
+        <div class="data-info-row">코드는 관리자 원본 및 Excel에는 유지되지만 상담유형 분석 화면에서는 표시하지 않습니다.</div>
+      </div>`
+  },
   admin: {
     title:"관리자 · 데이터 기준",
     html:`
       <div class="data-info-section"><div class="data-info-label">데이터 구성</div>
-        <div class="data-info-row">일일 운영실적, 환불 상세, MDM 원격 데이터를 Excel로 등록하고 Firestore에 저장합니다.</div>
+        <div class="data-info-row">일일 운영실적, 환불 상세, MDM 원격, 뉴스타트 인증, 상담유형 데이터를 Excel로 등록하고 Firestore에 저장합니다.</div>
         <div class="data-info-row">공개 대시보드는 저장된 일자별 데이터를 조회기간에 맞춰 집계합니다.</div>
       </div>
       <div class="data-info-section"><div class="data-info-label">주요 반영 규칙</div>
         <div class="data-info-row">Call 응답률은 대시보드에서 총 응답호 ÷ 인입호로 다시 계산합니다.</div>
         <div class="data-info-row">CPH는 일별·주간누적·월간누적·연간누적 컬럼을 각각 저장합니다.</div>
-        <div class="data-info-row">MDM은 해제·설치·합계·웹 접수 건 수·웹 접수 비율 컬럼을 사용합니다.</div>
+        <div class="data-info-row">MDM은 해제·설치·합계·웹 접수 건 수·웹 접수 비율 컬럼을 사용하며, 뉴스타트 인증은 신청자·승인·반려·대기·뉴스타트구매자·N수·군수 컬럼을 사용합니다. 상담유형은 연도_CALL·연도_ERMS 시트에서 대분류·중분류·소분류·코드·문의유형과 1월~12월 월별 건수를 사용합니다. CALL은 Call, ERMS는 게시판으로 표시합니다.</div>
       </div>`
   }
 };
@@ -2523,6 +3094,24 @@ let daily = [];
 let refunds = [];          // 관리자 로그인 시에만 원본 로드
 let refundDaily = [];      // 일반 조회용 일자별 환불 집계
 let mdmData = [];          // MDM 원격 일자별 현황
+let consultTypeData = [];  // 상담유형 월별 현황
+let consultPeriodData = []; // 상담유형 특정기간(올해/전년 비교) 현황
+let newsStartData = [];    // 뉴스타트 인증 일자별 현황
+let newsStartUsingFallback = false;
+const NEWSSTART_INITIAL_DATA = [
+  {date:"2026-01-01",applicant:864,approved:835,rejected:29,pending:null,purchaser:886,nsu:804,gunsu:32},
+  {date:"2026-01-02",applicant:604,approved:590,rejected:14,pending:null,purchaser:524,nsu:571,gunsu:19},
+  {date:"2026-01-03",applicant:546,approved:527,rejected:19,pending:null,purchaser:445,nsu:504,gunsu:24},
+  {date:"2026-01-04",applicant:847,approved:803,rejected:44,pending:null,purchaser:693,nsu:771,gunsu:32},
+  {date:"2026-01-05",applicant:1154,approved:1112,rejected:42,pending:null,purchaser:1128,nsu:1094,gunsu:18},
+  {date:"2026-01-06",applicant:497,approved:483,rejected:14,pending:null,purchaser:450,nsu:474,gunsu:9},
+  {date:"2026-01-07",applicant:505,approved:498,rejected:7,pending:null,purchaser:428,nsu:475,gunsu:23},
+  {date:"2026-01-08",applicant:409,approved:404,rejected:5,pending:null,purchaser:375,nsu:379,gunsu:25},
+  {date:"2026-01-09",applicant:407,approved:390,rejected:17,pending:null,purchaser:350,nsu:362,gunsu:28},
+  {date:"2026-01-10",applicant:393,approved:384,rejected:9,pending:null,purchaser:362,nsu:349,gunsu:35},
+  {date:"2026-01-11",applicant:543,approved:522,rejected:21,pending:null,purchaser:443,nsu:489,gunsu:33},
+  {date:"2026-01-12",applicant:646,approved:613,rejected:33,pending:null,purchaser:642,nsu:581,gunsu:32}
+];
 let charts = {};
 let currentUser = null;
 
@@ -2544,6 +3133,11 @@ function num(v){
   if(v===null||v===undefined||v==="") return 0;
   const x=Number(String(v).replace(/[,%₩원]/g,""));
   return isNaN(x)?0:x;
+}
+function nullableNum(v){
+  if(v===null||v===undefined||String(v).trim()==="") return null;
+  const x=Number(String(v).replace(/[,%₩원]/g,""));
+  return isNaN(x)?null:x;
 }
 function asDate(v){
   if(v===null||v===undefined||v==="") return "";
@@ -3016,6 +3610,17 @@ async function reload(){
   mdmData = await fetchCollection("mdm");
   mdmData.sort((a,b)=>(a.date||"").localeCompare(b.date||""));
 
+  consultTypeData = await fetchCollection("consultTypes");
+  consultTypeData.sort((a,b)=>String(a.code||"").localeCompare(String(b.code||"")));
+
+  consultPeriodData = await fetchCollection("consultPeriods");
+  consultPeriodData.sort((a,b)=>String(a.analysisName||"").localeCompare(String(b.analysisName||"")) || String(a.compareType||"").localeCompare(String(b.compareType||"")) || String(a.code||"").localeCompare(String(b.code||"")));
+
+  const newsStored = await fetchCollection("newsstart");
+  newsStartUsingFallback = !newsStored.length;
+  newsStartData = (newsStored.length ? newsStored : NEWSSTART_INITIAL_DATA.map(r=>({...r})));
+  newsStartData.sort((a,b)=>(a.date||"").localeCompare(b.date||""));
+
   if(currentUser){
     refunds = await fetchCollection("refunds");
     refunds.sort((a,b)=>(a.applyDate||"").localeCompare(b.applyDate||""));
@@ -3023,6 +3628,7 @@ async function reload(){
     refunds = [];
   }
   updateStatus();
+  renderConsultType();
 }
 
 async function deleteCollectionDocs(name){
@@ -3216,6 +3822,91 @@ function weekdayAlignedLastYearRange(startStr,endStr){
   return {start:fmt(lyStart),end:fmt(lyEnd)};
 }
 
+
+
+function newsDateLabel(dateStr){
+  if(!dateStr) return "-";
+  const dayMap=["일","월","화","수","목","금","토"];
+  const d=new Date(dateStr+"T00:00:00");
+  const day=!isNaN(d)?dayMap[d.getDay()]:"";
+  return day ? `${dateStr}(${day})` : dateStr;
+}
+function newsSum(rows,key){
+  const vals=rows.map(r=>r[key]).filter(v=>v!==null&&v!==undefined&&v!==""&&!Number.isNaN(Number(v)));
+  if(!vals.length) return null;
+  return vals.reduce((a,v)=>a+Number(v),0);
+}
+function newsDisplay(v){
+  return (v===null||v===undefined||v==="") ? "-" : fmt(v);
+}
+function renderNewsStartCharts(rows){
+  const labels=rows.map(r=>formatDateLabel(r.date));
+  const dynamicPoint=rows.length<=30?2.6:0;
+
+  if(charts["newsMainTrendChart"]) charts["newsMainTrendChart"].destroy();
+  if($("newsMainTrendChart")){
+    charts["newsMainTrendChart"]=new Chart($("newsMainTrendChart"),{
+      type:"line",
+      data:{labels,datasets:[
+        {label:"신청자",data:rows.map(r=>r.applicant),borderColor:"#153f73",backgroundColor:"#153f73",borderWidth:2.2,tension:.38,pointRadius:dynamicPoint,pointHoverRadius:5,pointHitRadius:12,spanGaps:true},
+        {label:"승인",data:rows.map(r=>r.approved),borderColor:"#2876d8",backgroundColor:"#2876d8",borderWidth:2.2,tension:.38,pointRadius:dynamicPoint,pointHoverRadius:5,pointHitRadius:12,spanGaps:true},
+        {label:"뉴스타트 구매자",data:rows.map(r=>r.purchaser),borderColor:"#f1a800",backgroundColor:"#f1a800",borderWidth:2.2,tension:.38,pointRadius:dynamicPoint,pointHoverRadius:5,pointHitRadius:12,spanGaps:true}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{position:"top",align:"center",labels:{boxWidth:14,boxHeight:14,font:{size:11,weight:"700"},padding:12,color:"#334155"}}},
+        scales:{x:{grid:{display:false},ticks:dateTickDisplayOptions(labels,11,true,12)},y:{beginAtZero:true,grid:{color:"#e8edf4"},ticks:{font:{size:11}}}}
+      }
+    });
+  }
+
+  if(charts["newsApprovalTypeChart"]) charts["newsApprovalTypeChart"].destroy();
+  if($("newsApprovalTypeChart")){
+    charts["newsApprovalTypeChart"]=new Chart($("newsApprovalTypeChart"),{
+      data:{labels,datasets:[
+        {type:"bar",label:"N수",data:rows.map(r=>r.nsu),backgroundColor:"#153f73",borderRadius:4,borderSkipped:false,maxBarThickness:28,yAxisID:"y"},
+        {type:"line",label:"군수",data:rows.map(r=>r.gunsu),borderColor:"#f1a800",backgroundColor:"#f1a800",borderWidth:2.2,tension:.38,pointRadius:dynamicPoint,pointHoverRadius:5,pointHitRadius:12,spanGaps:true,yAxisID:"y1"}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{position:"top",align:"center",labels:{boxWidth:14,boxHeight:14,font:{size:11,weight:"700"},padding:12,color:"#334155"}}},
+        scales:{
+          x:{grid:{display:false},ticks:dateTickDisplayOptions(labels,11,true,12)},
+          y:{beginAtZero:true,position:"left",grid:{color:"#e8edf4"},ticks:{font:{size:11}}},
+          y1:{beginAtZero:true,position:"right",grid:{drawOnChartArea:false},ticks:{font:{size:11}}}
+        }
+      }
+    });
+  }
+}
+function renderNewsStart(s,e){
+  const rows=newsStartData.filter(r=>r.date>=s&&r.date<=e);
+  if($("newsStartPeriod")) $("newsStartPeriod").textContent=`${s} ~ ${e}`;
+  const map=[
+    ["newsApplicant","applicant"],["newsApproved","approved"],["newsRejected","rejected"],["newsPending","pending"],
+    ["newsPurchaser","purchaser"],["newsNsu","nsu"],["newsGunsu","gunsu"]
+  ];
+  map.forEach(([id,key])=>{ if($(id)) $(id).textContent=newsDisplay(newsSum(rows,key)); });
+
+  const applicant=newsSum(rows,"applicant");
+  const approved=newsSum(rows,"approved");
+  const rejected=newsSum(rows,"rejected");
+  if($("newsApprovedRate")) $("newsApprovedRate").textContent=(applicant!==null&&applicant>0&&approved!==null)?`승인율 ${(approved/applicant*100).toFixed(1)}%`:"승인율 -";
+  if($("newsRejectedRate")) $("newsRejectedRate").textContent=(applicant!==null&&applicant>0&&rejected!==null)?`반려율 ${(rejected/applicant*100).toFixed(1)}%`:"반려율 -";
+
+  renderNewsStartCharts(rows);
+
+  const body=$("newsStartBody");
+  if(!body) return;
+  if(!rows.length){
+    body.innerHTML='<tr><td colspan="8" class="news-empty">선택기간에 뉴스타트 인증 데이터가 없습니다.</td></tr>';
+    return;
+  }
+  body.innerHTML=rows.map(r=>`<tr>
+    <td>${newsDateLabel(r.date)}</td>
+    <td>${newsDisplay(r.applicant)}</td><td>${newsDisplay(r.approved)}</td><td>${newsDisplay(r.rejected)}</td><td>${newsDisplay(r.pending)}</td>
+    <td>${newsDisplay(r.purchaser)}</td><td>${newsDisplay(r.nsu)}</td><td>${newsDisplay(r.gunsu)}</td>
+  </tr>`).join("");
+}
+
 async function applyFilter(){
   await reload();
 
@@ -3385,8 +4076,6 @@ async function applyFilter(){
   setChannelYoy("yoyBookReturn","chgBookReturn",channelBookReturn,yoyChannelBookReturn);
   setChannelYoy("yoyBookExchange","chgBookExchange",channelBookExchange,yoyChannelBookExchange);
   setChannelYoy("yoyCancel","chgCancel",channelCancel,yoyChannelCancel);
-
-
 
 
   // 하단 = 선택기간 기준 (인입호 → CPH → ERMS → 채팅상담 → 스마트러닝앱 → 챗봇 이용)
@@ -3703,6 +4392,8 @@ async function applyFilter(){
     });
   }
 
+  renderNewsStart(s,e);
+
   renderRaw();
 }
 
@@ -3713,11 +4404,13 @@ function updateStatus(){
     $("dailyStatus").textContent="Firestore에 등록된 일일 운영실적 없음";
   }
 
-  if(refundDaily.length){
-    const cnt=refundDaily.reduce((a,r)=>a+(Number(r.count)||0),0);
-    $("refundStatus").innerHTML=`Firestore 환불 집계 <b>${cnt}건</b> · ${refundDaily[0].date} ~ ${refundDaily.at(-1).date}`;
-  }else{
-    $("refundStatus").textContent="Firestore에 등록된 환불 데이터 없음";
+  if($("refundStatus")){
+    if(refundDaily.length){
+      const cnt=refundDaily.reduce((a,r)=>a+(Number(r.count)||0),0);
+      $("refundStatus").innerHTML=`Firestore 환불 집계 <b>${cnt}건</b> · ${refundDaily[0].date} ~ ${refundDaily.at(-1).date}`;
+    }else{
+      $("refundStatus").textContent="Firestore에 등록된 환불 데이터 없음";
+    }
   }
 
   if($("mdmStatus")){
@@ -3728,6 +4421,27 @@ function updateStatus(){
       $("mdmStatus").textContent="Firestore에 등록된 MDM 원격 데이터 없음";
     }
   }
+
+  if($("newsStartStatus")){
+    if(newsStartData.length){
+      const src=newsStartUsingFallback ? "HTML 기본 데이터" : "Firestore 등록";
+      $("newsStartStatus").innerHTML=`${src} <b>${newsStartData.length}일</b> · ${newsStartData[0].date} ~ ${newsStartData.at(-1).date}`;
+    }else{
+      $("newsStartStatus").textContent="뉴스타트 인증 데이터 없음";
+    }
+  }
+
+  if($("consultTypeStatus")){
+    const periodNames=[...new Set(consultPeriodData.map(r=>r.analysisName).filter(Boolean))];
+    if(consultTypeData.length || consultPeriodData.length){
+      const years=[...new Set(consultTypeData.map(r=>Number(r.year)).filter(Boolean))].sort((a,b)=>b-a);
+      const inCount=consultTypeData.filter(r=>r.channel==="인바운드 상담").length;
+      const boardCount=consultTypeData.filter(r=>r.channel==="게시판 상담").length;
+      $("consultTypeStatus").innerHTML=`월간 <b>${consultTypeData.length}개 유형</b> · 인바운드 ${inCount} / 게시판 ${boardCount} · 등록연도 ${years.join(", ")||"-"}<br>특정기간 <b>${periodNames.length}개 분석</b> · ${periodNames.join(" · ")||"미등록"}`;
+    }else{
+      $("consultTypeStatus").textContent="Firestore에 등록된 상담유형 데이터 없음";
+    }
+  }
 }
 
 async function upload(file,type){
@@ -3736,9 +4450,36 @@ async function upload(file,type){
 
   try{
     const wb=XLSX.read(await file.arrayBuffer(),{type:"array",cellDates:false});
-    const ws=wb.Sheets[wb.SheetNames[0]];
-    const raw=XLSX.utils.sheet_to_json(ws,{defval:"",raw:true});
-    if(!raw.length) throw new Error("첫 시트에 데이터가 없습니다.");
+    let raw=[];
+    if(type==="consulttype"){
+      const matched=[];
+      var consultPeriodRaw=[];
+      const matchedPeriod=[];
+      wb.SheetNames.forEach(name=>{
+        const sheetName=String(name||"").trim();
+        const m=sheetName.match(/^(20\d{2})[_\-\s]*(CALL|ERMS)$/i);
+        if(m){
+          const year=Number(m[1]);
+          const channel=m[2].toUpperCase()==="CALL"?"인바운드 상담":"게시판 상담";
+          const rows=XLSX.utils.sheet_to_json(wb.Sheets[name],{defval:"",raw:true}).map(o=>({...o,__channel:channel,__year:year,__sheet:name}));
+          raw.push(...rows); matched.push(name);
+          return;
+        }
+        const compact=sheetName.replace(/\s/g,"").replace(/-/g,"_").toUpperCase();
+        const pm=compact.match(/^(올해|전년)_?(CALL|ERMS)$/);
+        if(pm){
+          const compareType=pm[1];
+          const channel=pm[2]==="CALL"?"인바운드 상담":"게시판 상담";
+          const rows=XLSX.utils.sheet_to_json(wb.Sheets[name],{defval:"",raw:true}).map(o=>({...o,__compareType:compareType,__periodChannel:channel,__periodSheet:name}));
+          consultPeriodRaw.push(...rows); matchedPeriod.push(name);
+        }
+      });
+      if(!matched.length && !consultPeriodRaw.length) throw new Error("월간 시트(예: 2026_CALL/2026_ERMS) 또는 기간 시트(올해_CALL/올해_ERMS/전년_CALL/전년_ERMS)를 확인해 주세요.");
+    }else{
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      raw=XLSX.utils.sheet_to_json(ws,{defval:"",raw:true});
+      if(!raw.length) throw new Error("첫 시트에 데이터가 없습니다.");
+    }
 
     if(type==="daily"){
       const rows=raw.map(o=>({
@@ -3848,6 +4589,77 @@ async function upload(file,type){
       await reload();
       await applyFilter();
       alert(`${rows.length}일 MDM 원격 데이터를 Firestore에 교체 등록했습니다.`);
+    }else if(type==="newsstart"){
+      const rows=raw.map(o=>({
+        date:asDate(pick(o,["일자","날짜"])),
+        applicant:nullableNum(pick(o,["신청자"])),
+        approved:nullableNum(pick(o,["승인"])),
+        rejected:nullableNum(pick(o,["반려"])),
+        pending:nullableNum(pick(o,["대기"])),
+        purchaser:nullableNum(pick(o,["뉴스타트구매자","뉴스타트 구매자"])),
+        nsu:nullableNum(pick(o,["N수","n수"])),
+        gunsu:nullableNum(pick(o,["군수"]))
+      })).filter(r=>r.date);
+      if(!rows.length) throw new Error("일자 컬럼을 인식하지 못했습니다.");
+      rows.sort((a,b)=>a.date.localeCompare(b.date));
+      await replaceCollection("newsstart",rows,r=>r.date);
+      await reload();
+      await applyFilter();
+      alert(`${rows.length}일 뉴스타트 인증 데이터를 Firestore에 교체 등록했습니다.`);
+    }else if(type==="consulttype"){
+      const rows=raw.map((o,i)=>({
+        year:Number(o.__year)||new Date().getFullYear(),
+        channel:String(o.__channel||"").trim(),
+        category1:String(pick(o,["대분류"])||"").trim(),
+        category2:String(pick(o,["중분류"])||"").trim(),
+        category3:String(pick(o,["소분류"])||"").trim(),
+        code:String(pick(o,["코드▼","코드","상담유형코드"])||"").trim(),
+        inquiry:String(pick(o,["문의 유형","문의유형"])||"").trim(),
+        m1:nullableNum(pick(o,["1월","01월"])), m2:nullableNum(pick(o,["2월","02월"])), m3:nullableNum(pick(o,["3월","03월"])),
+        m4:nullableNum(pick(o,["4월","04월"])), m5:nullableNum(pick(o,["5월","05월"])), m6:nullableNum(pick(o,["6월","06월"])),
+        m7:nullableNum(pick(o,["7월","07월"])), m8:nullableNum(pick(o,["8월","08월"])), m9:nullableNum(pick(o,["9월","09월"])),
+        m10:nullableNum(pick(o,["10월"])), m11:nullableNum(pick(o,["11월"])), m12:nullableNum(pick(o,["12월"]))
+      })).filter(r=>r.category1||r.category2||r.category3||r.code||r.inquiry);
+
+      const normalizeCompare=v=>{ const t=String(v||"").trim().toLowerCase(); return ["전년","작년","previous","prev","prior"].includes(t)?"전년":"올해"; };
+      const normalizeChannel=v=>{ const t=String(v||"").trim().toUpperCase().replace(/\s/g,""); return t==="ERMS"||t==="게시판"||t==="게시판상담"?"게시판 상담":"인바운드 상담"; };
+      const periodRows=(typeof consultPeriodRaw!=="undefined"?consultPeriodRaw:[]).map(o=>({
+        analysisName:String(pick(o,["분석명","기간명","분석 기간명"])||"").trim(),
+        compareType:String(o.__compareType||"").trim() || normalizeCompare(pick(o,["비교구분","구분","연도구분"])),
+        startDate:asDate(pick(o,["시작일","분석시작일"])),
+        endDate:asDate(pick(o,["종료일","분석종료일"])),
+        channel:String(o.__periodChannel||"").trim() || normalizeChannel(pick(o,["상담구분","채널","CALL/ERMS"])),
+        category1:String(pick(o,["대분류"])||"").trim(),
+        category2:String(pick(o,["중분류"])||"").trim(),
+        category3:String(pick(o,["소분류"])||"").trim(),
+        code:String(pick(o,["코드▼","코드","상담유형코드"])||"").trim(),
+        inquiry:String(pick(o,["문의 유형","문의유형"])||"").trim(),
+        count:nullableNum(pick(o,["건수","상담건수","실적"]))
+      })).filter(r=>r.analysisName && r.startDate && r.endDate && (r.category1||r.code||r.inquiry) && r.count!==null);
+
+      const messages=[];
+      if(rows.length){
+        const registeredMonths=[];
+        for(let m=1;m<=12;m++) if(rows.some(r=>r[`m${m}`]!==null)) registeredMonths.push(`${m}월`);
+        if(!registeredMonths.length) throw new Error("월간 시트의 1월~12월 중 등록된 건수가 없습니다.");
+        await replaceCollection("consultTypes",rows,(r,i)=>`ct_${r.year}_${r.channel==="게시판 상담"?"erms":"call"}_${String(i).padStart(5,"0")}`);
+        const years=[...new Set(rows.map(r=>r.year))].sort((a,b)=>b-a);
+        messages.push(`월간 ${rows.length}개 유형 · ${years.join(", ")} · ${registeredMonths.join(", ")}`);
+      }
+      if(periodRows.length){
+        const uploadedNames=[...new Set(periodRows.map(r=>r.analysisName))];
+        const replaceKeys=new Set(periodRows.map(r=>`${r.analysisName}|${r.compareType}|${r.channel}`));
+        const kept=consultPeriodData.filter(r=>!replaceKeys.has(`${r.analysisName}|${r.compareType}|${r.channel}`)).map(({__id,...r})=>r);
+        const merged=[...kept,...periodRows];
+        const safe=v=>String(v||"").replace(/[^0-9A-Za-z가-힣_-]/g,"_").slice(0,45);
+        await replaceCollection("consultPeriods",merged,(r,i)=>`cp_${safe(r.analysisName)}_${r.compareType==="전년"?"prev":"cur"}_${r.channel==="게시판 상담"?"erms":"call"}_${safe(r.code||r.inquiry)}_${String(i).padStart(4,"0")}`);
+        const comboText=[...replaceKeys].map(k=>{const [n,c,ch]=k.split("|");return `${n}·${c}·${ch==="게시판 상담"?"ERMS":"CALL"}`;});
+        messages.push(`특정기간 ${uploadedNames.length}개 분석 · ${comboText.join(" / ")}`);
+      }
+      if(!rows.length && !periodRows.length) throw new Error("상담유형 데이터를 인식하지 못했습니다.");
+      await reload();
+      renderRaw();
+      alert(`상담유형 데이터를 등록했습니다.\n${messages.join("\n")}`);
     }
   }catch(e){
     console.error(e);
@@ -3867,7 +4679,7 @@ function renderRaw(){
     return;
   }
 
-  const sourceRows=type==="daily" ? daily : type==="mdm" ? mdmData : refunds;
+  const sourceRows=type==="daily" ? daily : type==="mdm" ? mdmData : type==="newsstart" ? newsStartData : type==="consulttype" ? consultTypeData : type==="consultperiod" ? consultPeriodData : refunds;
   const rows=sourceRows
     .filter(r=>JSON.stringify(r).toLowerCase().includes(q))
     .slice().reverse().slice(0,200);
@@ -3878,10 +4690,554 @@ function renderRaw(){
   }else if(type==="mdm"){
     $("rawHead").innerHTML="<tr><th>날짜</th><th>해제 건 수</th><th>설치 건 수</th><th>합계</th><th>웹 접수 건 수</th><th>웹 접수 비율</th></tr>";
     $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.date}</td><td>${fmt(r.releaseCount)}</td><td>${fmt(r.installCount)}</td><td>${fmt((Number(r.releaseCount)||0)+(Number(r.installCount)||0))}</td><td>${fmt(r.webCount)}</td><td>${Number(r.webRate||0).toFixed(1)}%</td></tr>`).join("");
+  }else if(type==="newsstart"){
+    $("rawHead").innerHTML="<tr><th>일자</th><th>신청자</th><th>승인</th><th>반려</th><th>대기</th><th>뉴스타트구매자</th><th>N수</th><th>군수</th></tr>";
+    $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.date}</td><td>${newsDisplay(r.applicant)}</td><td>${newsDisplay(r.approved)}</td><td>${newsDisplay(r.rejected)}</td><td>${newsDisplay(r.pending)}</td><td>${newsDisplay(r.purchaser)}</td><td>${newsDisplay(r.nsu)}</td><td>${newsDisplay(r.gunsu)}</td></tr>`).join("");
+  }else if(type==="consulttype"){
+    $("rawHead").innerHTML="<tr><th>연도</th><th>상담구분</th><th>대분류</th><th>중분류</th><th>소분류</th><th>코드</th><th>문의유형</th>"+Array.from({length:12},(_,i)=>`<th>${i+1}월</th>`).join("")+"</tr>";
+    $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.year||"-"}</td><td>${r.channel||"-"}</td><td>${r.category1||""}</td><td>${r.category2||""}</td><td>${r.category3||""}</td><td>${r.code||""}</td><td>${r.inquiry||""}</td>${Array.from({length:12},(_,i)=>`<td>${r[`m${i+1}`]===null||r[`m${i+1}`]===undefined?"-":fmt(r[`m${i+1}`])}</td>`).join("")}</tr>`).join("");
+  }else if(type==="consultperiod"){
+    $("rawHead").innerHTML="<tr><th>분석명</th><th>비교구분</th><th>시작일</th><th>종료일</th><th>상담구분</th><th>대분류</th><th>중분류</th><th>소분류</th><th>코드</th><th>문의유형</th><th>건수</th></tr>";
+    $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.analysisName||""}</td><td>${r.compareType||""}</td><td>${r.startDate||""}</td><td>${r.endDate||""}</td><td>${r.channel||""}</td><td>${r.category1||""}</td><td>${r.category2||""}</td><td>${r.category3||""}</td><td>${r.code||""}</td><td>${r.inquiry||""}</td><td>${fmt(r.count)}</td></tr>`).join("");
   }else{
     $("rawHead").innerHTML="<tr><th>신청일</th><th>아이디</th><th>이름</th><th>종류</th><th>환불금액</th><th>사유1</th><th>사유2</th><th>환불방법</th></tr>";
     $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.applyDate}</td><td>${r.uid}</td><td>${r.name}</td><td>${r.type}</td><td>${fmt(r.refundAmount)}</td><td>${r.reason1}</td><td>${r.reason2}</td><td>${r.refundMethod}</td></tr>`).join("");
   }
+}
+
+
+function consultMonthValue(r,m){
+  const v=r?.[`m${m}`];
+  return v===null||v===undefined ? null : (Number(v)||0);
+}
+function consultSelectedChannel(){ return $("consultChannelSelect")?.value||"all"; }
+function consultChannelLabel(v){
+  if(v==="all") return "전체";
+  if(v==="인바운드 상담") return "Call";
+  if(v==="게시판 상담") return "게시판";
+  return v;
+}
+function consultDetailChannelLabel(channels){
+  const set=channels instanceof Set?channels:new Set(Array.isArray(channels)?channels:[channels].filter(Boolean));
+  const hasCall=set.has("인바운드 상담"), hasBoard=set.has("게시판 상담");
+  if(hasCall&&hasBoard) return "Call/게시판";
+  if(hasCall) return "Call";
+  if(hasBoard) return "게시판";
+  return "-";
+}
+function consultAvailableYears(){ return [...new Set(consultTypeData.map(r=>Number(r.year)).filter(Boolean))].sort((a,b)=>b-a); }
+function consultSelectedYear(){ const years=consultAvailableYears(); return Number($("consultYearSelect")?.value)||years[0]||new Date().getFullYear(); }
+function consultRowsFor(channel=consultSelectedChannel(),year=consultSelectedYear()){
+  return consultTypeData.filter(r=>(channel==="all"||r.channel===channel) && Number(r.year)===Number(year));
+}
+function consultBaseRows(channel=consultSelectedChannel()){ return consultRowsFor(channel,consultSelectedYear()); }
+function consultAvailableMonths(channel=consultSelectedChannel(),year=consultSelectedYear()){
+  const base=consultRowsFor(channel,year), arr=[];
+  for(let m=1;m<=12;m++) if(base.some(r=>consultMonthValue(r,m)!==null)) arr.push(m);
+  return arr;
+}
+function consultRowKey(r){ return `${r.code||""}|${r.inquiry||""}|${r.category1||""}|${r.category2||""}|${r.category3||""}`; }
+function consultAggregateForMonth(base,m){
+  const map=new Map();
+  base.forEach(r=>{
+    const key=consultRowKey(r);
+    if(!map.has(key)) map.set(key,{...r,_v:0,_has:false,channel:""});
+    const item=map.get(key), v=consultMonthValue(r,m);
+    if(v!==null){ item._v+=(Number(v)||0); item._has=true; }
+  });
+  return [...map.values()].map(r=>({...r,_v:r._has?r._v:null}));
+}
+function consultSelectionValue(r,selection,months){
+  if(String(selection)!=="all") return consultMonthValue(r,Number(selection));
+  let total=0, has=false;
+  (months||[]).forEach(m=>{ const v=consultMonthValue(r,m); if(v!==null){total+=Number(v)||0;has=true;} });
+  return has?total:null;
+}
+function consultAggregateForSelection(base,selection,months){
+  if(String(selection)!=="all") return consultAggregateForMonth(base,Number(selection));
+  const map=new Map();
+  base.forEach(r=>{
+    const key=consultRowKey(r);
+    if(!map.has(key)) map.set(key,{...r,_v:0,_has:false,channel:""});
+    const item=map.get(key), v=consultSelectionValue(r,"all",months);
+    if(v!==null){item._v+=Number(v)||0;item._has=true;}
+  });
+  return [...map.values()].map(r=>({...r,_v:r._has?r._v:null}));
+}
+function consultMonthLabel(m){
+  const year=consultSelectedYear();
+  return String(m)==="all" ? `${year}년 전체` : `${year}년 ${m}월`;
+}
+function consultEsc(v){
+  return String(v??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]));
+}
+function consultRateText(cur,prev){
+  cur=Number(cur)||0; prev=Number(prev)||0;
+  if(prev===0) return cur>0?"신규":"0.0%";
+  const rate=(cur-prev)/prev*100;
+  return `${rate>0?"▲ ":rate<0?"▼ ":""}${Math.abs(rate).toFixed(1)}%`;
+}
+function consultRateClass(cur,prev){
+  const d=(Number(cur)||0)-(Number(prev)||0);
+  return d>0?"consult-delta-up":d<0?"consult-delta-down":"consult-delta-flat";
+}
+function consultCategoryMap(channel,m){
+  const year=consultSelectedYear(), map=new Map(), months=consultAvailableMonths(channel,year);
+  consultTypeData.filter(r=>r.channel===channel && Number(r.year)===year).forEach(r=>{
+    const v=consultSelectionValue(r,m,months); if(v===null) return;
+    const k=r.category1||"미분류"; map.set(k,(map.get(k)||0)+(Number(v)||0));
+  });
+  return map;
+}
+function consultHasMonth(channel,m,year=consultSelectedYear()){
+  return m>=1 && m<=12 && consultTypeData.some(r=>Number(r.year)===Number(year)&&(channel==="all"||r.channel===channel)&&consultMonthValue(r,m)!==null);
+}
+function consultPrevAggregates(base,m){
+  if(m<=1 || !consultHasMonth(consultSelectedChannel(),m-1)) return {has:false,map:new Map(),rows:[]};
+  const rows=consultAggregateForMonth(base,m-1);
+  return {has:true,map:new Map(rows.map(r=>[consultRowKey(r),Number(r._v)||0])),rows};
+}
+function consultMakeChangeTable(items,emptyText,prevLabel="전월",curLabel="선택월"){
+  if(!items.length) return `<div class="consult-empty"><div class="consult-empty-title">${emptyText}</div></div>`;
+  return `<div class="tableWrap"><table class="consult-top-table"><thead><tr><th>문의유형</th><th class="num">${prevLabel}</th><th class="num">${curLabel}</th><th class="num">증감률</th></tr></thead><tbody>${items.map(x=>`<tr><td><div class="consult-table-title">${consultEsc(x.r.inquiry||"-")}</div><div class="consult-rank-cat">${consultEsc(x.r.category1||"-")}</div></td><td class="num">${fmt(x.prev)}</td><td class="num"><b>${fmt(x.cur)}</b></td><td class="num"><span class="${consultRateClass(x.cur,x.prev)}">${consultRateText(x.cur,x.prev)}</span></td></tr>`).join("")}</tbody></table></div>`;
+}
+function consultDestroyChart(key){ if(charts[key]){ try{charts[key].destroy();}catch(e){} delete charts[key]; } }
+function consultRenderCategoryChart(m){
+  const canvas=$("consultCategoryChart"); if(!canvas) return;
+  consultDestroyChart("consultCategoryCompare");
+  const inMap=consultCategoryMap("인바운드 상담",m), boardMap=consultCategoryMap("게시판 상담",m);
+  const names=[...new Set([...inMap.keys(),...boardMap.keys()])].sort((a,b)=>((inMap.get(b)||0)+(boardMap.get(b)||0))-((inMap.get(a)||0)+(boardMap.get(a)||0))).slice(0,10);
+  charts.consultCategoryCompare=new Chart(canvas,{type:"bar",data:{labels:names,datasets:[
+    {label:"인바운드 상담",data:names.map(n=>inMap.get(n)||0),backgroundColor:"#123f78",borderRadius:3,maxBarThickness:26},
+    {label:"게시판 상담",data:names.map(n=>boardMap.get(n)||0),backgroundColor:"#74a8e8",borderRadius:3,maxBarThickness:26}
+  ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},plugins:{legend:{position:"top",align:"center",labels:{boxWidth:12,boxHeight:12,padding:14,font:{size:10,weight:"bold"}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.raw)}건`}}},scales:{x:{grid:{display:false},ticks:{font:{size:9},maxRotation:35,minRotation:names.length>7?35:0}},y:{beginAtZero:true,grid:{color:"#edf1f5"},ticks:{font:{size:9},callback:v=>fmt(v)}}}}});
+}
+function consultPrevYearAggregates(channel,m){
+  const prevYear=consultSelectedYear()-1;
+  const yearRows=consultRowsFor(channel,prevYear);
+  if(!yearRows.length || !consultHasMonth(channel,m,prevYear)) return {has:false,map:new Map(),rows:[]};
+  const rows=consultAggregateForMonth(yearRows,m);
+  return {has:true,map:new Map(rows.map(r=>[consultRowKey(r),Number(r._v)||0])),rows};
+}
+function consultAggregateBy(rows,keyField){
+  const map=new Map();
+  rows.forEach(r=>{
+    const key=(r[keyField]||'미분류').trim()||'미분류';
+    const v=Number(r._v)||0; if(!v) return;
+    map.set(key,(map.get(key)||0)+v);
+  });
+  return [...map.entries()].map(([name,value])=>({name,value})).sort((a,b)=>b.value-a.value);
+}
+function consultBuildTop10CategoryTable(items,total,prevMap){
+  if(!items.length) return '<tr><td colspan="5" style="text-align:center;color:#8a96a6;padding:22px">데이터가 없습니다.</td></tr>';
+  const body=items.map((x,i)=>{
+    const prev=prevMap.get(x.name), share=total?x.value/total*100:0;
+    return `<tr><td class="consult-rank">${i+1}</td><td><b>${consultEsc(x.name)}</b></td><td class="num"><b>${fmt(x.value)}</b></td><td class="num">${share.toFixed(1)}%</td><td class="num">${prev===undefined?'-':`<span class="${consultRateClass(x.value,prev)}">${consultRateText(x.value,prev)}</span>`}</td></tr>`;
+  }).join('');
+  const topTotal=items.reduce((s,x)=>s+(Number(x.value)||0),0);
+  const topShare=total?topTotal/total*100:0;
+  const hasCompare=prevMap && prevMap.size>0;
+  const prevTopTotal=hasCompare?items.reduce((s,x)=>s+(Number(prevMap.get(x.name))||0),0):null;
+  const compareText=prevTopTotal===null?'-':`<span class="${consultRateClass(topTotal,prevTopTotal)}">${consultRateText(topTotal,prevTopTotal)}</span>`;
+  return body+`<tr class="consult-total-row"><td></td><td>총합계</td><td class="num">${fmt(topTotal)}</td><td class="num">${topShare.toFixed(1)}%</td><td class="num">${compareText}</td></tr>`;
+}
+function consultRenderTop10Chart(items,prevMap,currentLabel,compareLabel){
+  const canvas=$("consultTop10Chart"); if(!canvas) return;
+  consultDestroyChart("consultTop10Compare");
+  if(!items?.length) return;
+  const labels=items.map(x=>x.name);
+  const current=items.map(x=>Number(x.value)||0);
+  const previous=items.map(x=>prevMap.has(x.name)?Number(prevMap.get(x.name))||0:0);
+  const yoyColor="#6f7d92";
+  charts.consultTop10Compare=new Chart(canvas,{
+    data:{labels,datasets:[
+      {type:"bar",label:currentLabel,data:current,backgroundColor:"#123f78",borderColor:"#123f78",borderWidth:0,borderRadius:4,maxBarThickness:34,order:2},
+      {type:"line",label:compareLabel,data:previous,borderColor:yoyColor,backgroundColor:"transparent",borderWidth:2.2,borderDash:[7,5],pointRadius:2.4,pointHoverRadius:4.5,pointHitRadius:12,pointBackgroundColor:"#fff",pointBorderColor:yoyColor,pointBorderWidth:2,tension:.42,fill:false,order:1}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},plugins:{legend:{position:"top",align:"center",fullSize:true,labels:{boxWidth:14,boxHeight:14,font:{size:11,weight:"700"},padding:12,color:"#334155",usePointStyle:false}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y)}건`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10},color:"#516074",maxRotation:30,minRotation:labels.length>=7?30:0}},y:{beginAtZero:true,grid:{color:"#e8edf4"},ticks:{font:{size:11},callback:v=>fmt(v)}}}}
+  });
+}
+function consultMakeSimpleTopTable(items,labelField,emptyText){
+  if(!items.length) return `<tr><td colspan="4" style="text-align:center;color:#8a96a6;padding:22px">${emptyText}</td></tr>`;
+  const total=items.reduce((s,x)=>s+(Number(x.value)||0),0);
+  return items.map((x,i)=>`<tr><td class="consult-rank">${i+1}</td><td><b>${consultEsc(x[labelField]||x.name||'-')}</b></td><td class="num"><b>${fmt(x.value)}</b></td><td class="num">${total?((x.value/total)*100).toFixed(1):'0.0'}%</td></tr>`).join('');
+}
+function consultGenerateInsight(total, prevTotal, topCategory, topIncrease, topDecrease){
+  if(!total) return '데이터 등록 후 핵심 특징이 표시됩니다.';
+  const lines=[];
+  const prevText=prevTotal===null? '전월 비교 데이터는 아직 없습니다.' : `전체 상담은 전월 대비 <b>${consultRateText(total, prevTotal)}</b> ${prevTotal!==0 && total>=prevTotal?'증가':'변화'}했습니다.`;
+  lines.push(prevText);
+  if(topCategory) lines.push(`가장 큰 비중을 차지한 상담유형은 <b>${consultEsc(topCategory.name)}</b>이며, ${fmt(topCategory.value)}건(${((topCategory.value/total)*100).toFixed(1)}%)입니다.`);
+  if(topIncrease) lines.push(`특히 <b>${consultEsc(topIncrease.r.inquiry||topIncrease.r.category1||'-')}</b>의 증가폭이 가장 컸습니다.`);
+  if(topDecrease) lines.push(`반면 <b>${consultEsc(topDecrease.r.inquiry||topDecrease.r.category1||'-')}</b>은 전월 대비 가장 크게 감소했습니다.`);
+  return lines.join(' ');
+}
+function consultUpdateSmallFilter(){
+  const cat=$('consultCatFilter')?.value||'', mid=$('consultMidFilter')?.value||'', small=$('consultSmallFilter'); if(!small) return;
+  const old=small.value, base=consultCurrentFilterBase();
+  const vals=[...new Set(base.filter(r=>(!cat||r.category1===cat)&&(!mid||r.category2===mid)).map(r=>r.category3).filter(Boolean))].sort();
+  small.innerHTML='<option value="">소분류 전체</option>'+vals.map(x=>`<option value="${consultEsc(x)}">${consultEsc(x)}</option>`).join('');
+  if(vals.includes(old)) small.value=old;
+}
+function consultExportCurrent(){
+  if(!consultTypeData.length) return;
+  const available=consultAvailableMonths(), selection=$('consultMonthSelectLive').value||String(available.at(-1)), isAll=selection==='all', m=isAll?'all':Number(selection), prev=isAll?null:m-1;
+  const base=consultBaseRows();
+  const prevAgg=!isAll&&prev>=1?consultAggregateForMonth(base,prev):[];
+  const prevMap=new Map(prevAgg.map(r=>[consultRowKey(r), Number(r._v)||0]));
+  const rows=consultAggregateForSelection(base,m,available).filter(r=>Number(r._v)||0).sort((a,b)=>(Number(b._v)||0)-(Number(a._v)||0));
+  const aoa=[[ '상담구분','대분류','중분류','소분류','코드','문의유형', isAll?'전체':'선택월','전월','증감률' ]];
+  rows.forEach(r=>{const pv=prevMap.get(consultRowKey(r)); aoa.push([consultSelectedChannel()==='all'? (r.channel||''): consultSelectedChannel(), r.category1||'', r.category2||'', r.category3||'', r.code||'', r.inquiry||'', Number(r._v)||0, pv===undefined?'':pv, pv===undefined?'':consultRateText(r._v,pv)]);});
+  const wb=XLSX.utils.book_new(), ws=XLSX.utils.aoa_to_sheet(aoa);
+  XLSX.utils.book_append_sheet(wb,ws,'상담유형분석');
+  XLSX.writeFile(wb,`상담유형_분석_${consultSelectedYear()}_${selection==='all'?'전체':selection+'월'}.xlsx`);
+}
+function consultMode(){ return $("consultModeSelect")?.value||"monthly"; }
+function consultPeriodNames(){ return [...new Set(consultPeriodData.map(r=>r.analysisName).filter(Boolean))]; }
+function consultPeriodChannelRows(name,compareType,channel=consultSelectedChannel()){
+  return consultPeriodData.filter(r=>r.analysisName===name && r.compareType===compareType && (channel==="all"||r.channel===channel));
+}
+function consultPeriodRowKey(r){ return `${r.code||""}|${r.inquiry||""}|${r.category1||""}|${r.category2||""}|${r.category3||""}`; }
+function consultAggregatePeriodRows(source){
+  const map=new Map();
+  source.forEach(r=>{
+    const key=consultPeriodRowKey(r);
+    if(!map.has(key)) map.set(key,{...r,_v:0,channel:""});
+    map.get(key)._v+=(Number(r.count)||0);
+  });
+  return [...map.values()];
+}
+function consultPeriodDateRange(name,type){
+  const rows=consultPeriodData.filter(r=>r.analysisName===name&&r.compareType===type);
+  if(!rows.length) return "-";
+  const starts=rows.map(r=>r.startDate).filter(Boolean).sort(), ends=rows.map(r=>r.endDate).filter(Boolean).sort();
+  const withWeekday=(dateStr)=>{
+    if(!dateStr) return "-";
+    const dayMap=["일","월","화","수","목","금","토"];
+    const d=new Date(String(dateStr)+"T00:00:00");
+    return isNaN(d) ? String(dateStr) : `${dateStr}(${dayMap[d.getDay()]})`;
+  };
+  return starts.length&&ends.length?`${withWeekday(starts[0])} ~ ${withWeekday(ends.at(-1))}`:"-";
+}
+function consultPeriodFilterBase(){
+  const name=$("consultPeriodSelect")?.value||consultPeriodNames()[0]||"";
+  return consultAggregatePeriodRows(consultPeriodChannelRows(name,"올해"));
+}
+function consultCurrentFilterBase(){ return consultMode()==="period" ? consultPeriodFilterBase() : consultBaseRows(); }
+function renderConsultPeriod(){
+  const periodSel=$("consultPeriodSelect"), names=consultPeriodNames();
+  if(!periodSel) return;
+  if(!names.length){
+    periodSel.innerHTML=""; $("consultMonthHelp").textContent="관리자 Excel의 올해_CALL / 올해_ERMS / 전년_CALL / 전년_ERMS 시트에 특정기간 데이터를 등록해 주세요."; consultRenderEmpty(); return;
+  }
+  const old=periodSel.value;
+  periodSel.innerHTML=names.map(n=>`<option value="${consultEsc(n)}">${consultEsc(n)}</option>`).join("");
+  periodSel.value=names.includes(old)?old:names.at(-1);
+  const name=periodSel.value, channel=consultSelectedChannel(), channelLabel=consultChannelLabel(channel);
+  const curRaw=consultPeriodChannelRows(name,"올해",channel), prevRaw=consultPeriodChannelRows(name,"전년",channel);
+  const curRows=consultAggregatePeriodRows(curRaw), prevRows=consultAggregatePeriodRows(prevRaw);
+  const active=curRows.filter(r=>(Number(r._v)||0)>0), total=active.reduce((s,r)=>s+(Number(r._v)||0),0);
+  const prevTotal=prevRows.length?prevRows.reduce((s,r)=>s+(Number(r._v)||0),0):null;
+  const prevMap=new Map(prevRows.map(r=>[consultPeriodRowKey(r),Number(r._v)||0]));
+  const categoryAgg=consultAggregateBy(active,"category1"), topCategory=categoryAgg[0]||null, top10=categoryAgg.slice(0,10);
+  const prevCatMap=new Map(consultAggregateBy(prevRows.filter(r=>(Number(r._v)||0)>0),"category1").map(x=>[x.name,x.value]));
+  const changes=curRows.map(r=>({r,cur:Number(r._v)||0,prev:prevMap.get(consultPeriodRowKey(r))||0})).map(x=>({...x,delta:x.cur-x.prev}));
+  const inc=changes.filter(x=>x.delta>0).sort((a,b)=>b.delta-a.delta).slice(0,5), dec=changes.filter(x=>x.delta<0).sort((a,b)=>a.delta-b.delta).slice(0,5);
+  const topIncrease=inc[0]||null;
+  const curRange=consultPeriodDateRange(name,"올해"), prevRange=consultPeriodDateRange(name,"전년");
+
+  $("consultNoData")?.classList.add("hidden");
+  $("consultPeriodDateText").textContent=`올해 ${curRange} / 전년 ${prevRange}`;
+  $("consultMonthHelp").textContent=`특정기간 · ${name} · ${channelLabel}`;
+  $("consultPrevLabel").textContent="전년 대비";
+  $("consultYoYLabel").textContent="비교기간";
+  $("consultTotal").textContent=fmt(total)+" 건"; $("consultTotalSub").textContent=`${name} · 올해 기간 합계`;
+  if(prevTotal!==null){ $("consultPrevChange").textContent=consultRateText(total,prevTotal); $("consultPrevChange").className=`val ${total>prevTotal?'up':total<prevTotal?'down':''}`; $("consultPrevSub").textContent=`전년 ${fmt(prevTotal)}건 대비 ${total>=prevTotal?'+':''}${fmt(total-prevTotal)}건`; }
+  else { $("consultPrevChange").textContent="-"; $("consultPrevChange").className="val"; $("consultPrevSub").textContent="전년 비교 데이터 미등록"; }
+  $("consultYoYChange").textContent=curRange; $("consultYoYChange").className="val"; $("consultYoYChange").style.fontSize="13px"; $("consultYoYSub").textContent=`전년 비교 ${prevRange}`;
+  $("consultTopCategoryKpi").textContent=topCategory?topCategory.name:"-"; $("consultTopCategoryKpiSub").textContent=topCategory?`${fmt(topCategory.value)}건 (${total?((topCategory.value/total)*100).toFixed(1):'0.0'}%)`:"-";
+  $("consultTopIncreaseKpi").textContent=topIncrease?(topIncrease.r.inquiry||topIncrease.r.category1||"-"):"-"; $("consultTopIncreaseKpiSub").textContent=topIncrease?`전년 대비 ${consultRateText(topIncrease.cur,topIncrease.prev)}`:"증가 유형 없음";
+  $("consultChangeTitle").textContent="전년 대비 주요 변화"; $("consultIncreaseTitle").textContent="전년 대비 증가 TOP5"; $("consultDecreaseTitle").textContent="전년 대비 감소 TOP5"; $("consultTopCompareHead").textContent="전년 대비";
+  $("consultTopShareNote").textContent="※ 비중은 올해 분석기간 기준"; $("consultDetailSectionNum").textContent="4"; $("consultCompareNote").textContent="※ 전년 비교기간 대비 증감률은 소수점 첫째자리 반올림 기준입니다.";
+  $("consultDetailMonthHead").textContent="올해"; $("consultDetailPrevHead").textContent="전년";
+  $("consultTop10CategoryBody").innerHTML=consultBuildTop10CategoryTable(top10,total,prevCatMap);
+  requestAnimationFrame(()=>consultRenderTop10Chart(top10,prevCatMap,"올해 상담건수","전년 상담건수"));
+  if(prevRows.length){ $("consultIncreaseBody").innerHTML=consultMakeChangeTable(inc,"증가한 문의유형이 없습니다.","전년","올해"); $("consultDecreaseBody").innerHTML=consultMakeChangeTable(dec,"감소한 문의유형이 없습니다.","전년","올해"); }
+  else { const msg='<div class="consult-empty"><div class="consult-empty-title">전년 비교 데이터 등록 시 표시</div></div>'; $("consultIncreaseBody").innerHTML=msg; $("consultDecreaseBody").innerHTML=msg; }
+
+  const drillSel=$("consultDrillCategorySelect"), catNames=categoryAgg.map(x=>x.name), oldDrill=drillSel?.value||"";
+  if(drillSel){ drillSel.innerHTML=catNames.map(x=>`<option value="${consultEsc(x)}">${consultEsc(x)}</option>`).join(""); drillSel.value=catNames.includes(oldDrill)?oldDrill:(catNames[0]||""); drillSel.onchange=renderConsultPeriod; }
+  const selectedCat=drillSel?.value||(catNames[0]||""), drillRows=active.filter(r=>(r.category1||"미분류")===selectedCat);
+  $("consultMidTopBody").innerHTML=consultMakeSimpleTopTable(consultAggregateBy(drillRows,"category2").slice(0,10),"name","중분류 데이터가 없습니다.");
+  $("consultSmallTopBody").innerHTML=consultMakeSimpleTopTable(consultAggregateBy(drillRows,"category3").slice(0,10),"name","소분류 데이터가 없습니다.");
+  $("consultMonthlyTrendPanel")?.classList.add("hidden");
+
+  const catFilter=$("consultCatFilter"), oldCat=catFilter.value, filterCats=[...new Set(active.map(r=>r.category1).filter(Boolean))].sort();
+  catFilter.innerHTML='<option value="">대분류 전체</option>'+filterCats.map(x=>`<option value="${consultEsc(x)}">${consultEsc(x)}</option>`).join(""); if(filterCats.includes(oldCat)) catFilter.value=oldCat;
+  refreshConsultMidFilter(); consultUpdateSmallFilter(); renderConsultDetail();
+  periodSel.onchange=renderConsultPeriod; $("consultChannelSelect").onchange=renderConsultType; $("consultDetailChannelFilter").onchange=renderConsultDetail; catFilter.onchange=()=>{refreshConsultMidFilter();consultUpdateSmallFilter();renderConsultDetail();}; $("consultMidFilter").onchange=()=>{consultUpdateSmallFilter();renderConsultDetail();}; $("consultSmallFilter").onchange=renderConsultDetail; $("consultSearch").oninput=renderConsultDetail;
+  document.querySelectorAll('#consulttype .consult-toggle-group button').forEach(btn=>{btn.onclick=()=>{document.querySelectorAll('#consulttype .consult-toggle-group button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderConsultDetail();};});
+}
+function consultGroupDetailRows(rows){
+  const map=new Map();
+  rows.forEach(r=>{
+    const key=consultRowKey(r);
+    if(!map.has(key)) map.set(key,{...r,_cur:0,_prev:0,_prevHas:false,_channels:new Set()});
+    const item=map.get(key);
+    item._cur+=(Number(r._cur)||0);
+    if(r._prev!==null && r._prev!==undefined){ item._prev+=(Number(r._prev)||0); item._prevHas=true; }
+    if(r.channel) item._channels.add(r.channel);
+  });
+  return [...map.values()].map(r=>({...r,channel:consultDetailChannelLabel(r._channels),_prev:r._prevHas?r._prev:null}));
+}
+function renderConsultPeriodDetail(){
+  const name=$("consultPeriodSelect")?.value||"", pageChannel=consultSelectedChannel();
+  const curRaw=consultPeriodChannelRows(name,"올해",pageChannel), prevRaw=consultPeriodChannelRows(name,"전년",pageChannel);
+  const prevByChannelKey=new Map();
+  prevRaw.forEach(r=>{
+    const key=`${r.channel||''}|${consultPeriodRowKey(r)}`;
+    prevByChannelKey.set(key,(prevByChannelKey.get(key)||0)+(Number(r.count)||0));
+  });
+  const detailChannel=$("consultDetailChannelFilter")?.value||"";
+  const prepared=curRaw
+    .filter(r=>!detailChannel||r.channel===detailChannel)
+    .map(r=>({...r,_cur:Number(r.count)||0,_prev:prevByChannelKey.get(`${r.channel||''}|${consultPeriodRowKey(r)}`)??0}));
+  const grouped=consultGroupDetailRows(prepared);
+  const cat=$("consultCatFilter")?.value||"", mid=$("consultMidFilter")?.value||"", small=$("consultSmallFilter")?.value||"", q=($("consultSearch")?.value||"").trim().toLowerCase(), mode=document.querySelector('#consulttype .consult-toggle-group button.active')?.dataset.filter||"all";
+  const rows=grouped.filter(r=>(!cat||r.category1===cat)&&(!mid||r.category2===mid)&&(!small||r.category3===small)&&(!q||`${r.channel||''} ${r.inquiry||''} ${r.category1||''} ${r.category2||''} ${r.category3||''}`.toLowerCase().includes(q)));
+  const filtered=rows.filter(r=>mode==="increase"?r._prev!==null&&r._cur>r._prev:mode==="decrease"?r._prev!==null&&r._cur<r._prev:mode==="new"?r._prev!==null&&r._prev===0&&r._cur>0:true).sort((a,b)=>b._cur-a._cur);
+  $("consultDetailBody").innerHTML=filtered.map(r=>`<tr><td><span class="consult-badge">${consultEsc(r.channel||'-')}</span></td><td>${consultEsc(r.category1||'-')}</td><td>${consultEsc(r.category2||'-')}</td><td>${consultEsc(r.category3||'-')}</td><td>${consultEsc(r.inquiry||'-')}</td><td class="num">${fmt(r._cur)}</td><td class="num">${r._prev===null?'-':fmt(r._prev)}</td><td class="num">${r._prev===null?'-':`<span class="${consultRateClass(r._cur,r._prev)}">${consultRateText(r._cur,r._prev)}</span>`}</td></tr>`).join("") || '<tr><td colspan="8" style="text-align:center;color:#8a96a6;padding:22px">조건에 맞는 상담유형이 없습니다.</td></tr>';
+}
+function renderConsultType(){
+  const sel=$("consultMonthSelectLive"), channelSel=$("consultChannelSelect"), yearSel=$("consultYearSelect"), modeSel=$("consultModeSelect");
+  if(!sel||!channelSel||!yearSel||!modeSel) return;
+  const mode=consultMode();
+  $("consultMonthlyControls")?.classList.toggle("hidden",mode!=="monthly");
+  $("consultPeriodControls")?.classList.toggle("hidden",mode!=="period");
+  modeSel.onchange=renderConsultType;
+  if(mode==="period"){ renderConsultPeriod(); return; }
+  $("consultMonthlyTrendPanel")?.classList.remove("hidden");
+  $("consultPrevLabel").textContent="전월 대비"; $("consultYoYLabel").textContent="전년동월 대비"; $("consultYoYChange").style.fontSize="";
+  $("consultChangeTitle").textContent="전월 대비 주요 변화"; $("consultIncreaseTitle").textContent="전월 대비 증가 TOP5"; $("consultDecreaseTitle").textContent="전월 대비 감소 TOP5"; $("consultTopCompareHead").textContent="전월 대비"; $("consultDetailPrevHead").textContent="전월";
+  $("consultTopShareNote").textContent="※ 비중은 선택월 기준"; $("consultDetailSectionNum").textContent="5"; $("consultCompareNote").textContent="※ 전월 대비 증감률은 소수점 첫째자리 반올림 기준입니다.";
+  if(!consultTypeData.length){
+    sel.innerHTML=""; yearSel.innerHTML=""; channelSel.value="all"; $("consultMonthHelp").textContent="관리자에서 월간 상담유형 Excel을 등록해 주세요."; consultRenderEmpty(); return;
+  }
+  $('consultNoData')?.classList.add('hidden');
+  const years=consultAvailableYears(), oldYear=Number(yearSel.value);
+  yearSel.innerHTML=years.map(y=>`<option value="${y}">${y}년</option>`).join('');
+  yearSel.value=String(years.includes(oldYear)?oldYear:years[0]);
+  const channel=consultSelectedChannel(), channelLabel=consultChannelLabel(channel), base=consultBaseRows(channel), available=consultAvailableMonths(channel);
+  if(!available.length){ consultRenderEmpty(); $('consultMonthHelp').textContent=`${channelLabel}에 등록된 월별 실적이 없습니다.`; return; }
+
+  const old=sel.value;
+  sel.innerHTML=`<option value="all">전체</option>`+available.map(m=>`<option value="${m}">${consultMonthLabel(m)}</option>`).join('');
+  if(old==='all' || available.includes(Number(old))) sel.value=old||String(available.at(-1)); else sel.value=String(available.at(-1));
+
+  const selection=sel.value, isAll=selection==='all', m=isAll?'all':Number(selection), label=consultMonthLabel(m), prev=isAll?null:m-1;
+  const rows=consultAggregateForSelection(base,m,available), active=rows.filter(r=>(Number(r._v)||0)>0), total=active.reduce((a,r)=>a+(Number(r._v)||0),0);
+  const sorted=active.slice().sort((a,b)=>(Number(b._v)||0)-(Number(a._v)||0));
+  const prevInfo=isAll?{has:false,map:new Map(),rows:[]}:consultPrevAggregates(base,m), prevMap=prevInfo.map;
+  const prevTotal=prevInfo.has?prevInfo.rows.reduce((a,r)=>a+(Number(r._v)||0),0):null;
+  const yoyInfo=!isAll?consultPrevYearAggregates(channel,m):{has:false,map:new Map(),rows:[]};
+  const yoyTotal=yoyInfo.has?yoyInfo.rows.reduce((a,r)=>a+(Number(r._v)||0),0):null;
+
+  const categoryAgg=consultAggregateBy(active,'category1');
+  const topCategory=categoryAgg[0]||null;
+  const top10Categories=categoryAgg.slice(0,10);
+  const top10CategoryTotal=top10Categories.reduce((s,x)=>s+x.value,0);
+  const prevCatAgg=prevInfo.has?consultAggregateBy(prevInfo.rows.filter(r=>(Number(r._v)||0)>0),'category1'):[];
+  const prevCatMap=new Map(prevCatAgg.map(x=>[x.name,x.value]));
+
+  let changes=[];
+  if(prevInfo.has){ changes=rows.map(r=>({r,cur:Number(r._v)||0,prev:prevMap.get(consultRowKey(r))||0})).map(x=>({...x,delta:x.cur-x.prev})); }
+  const inc=changes.filter(x=>x.delta>0).sort((a,b)=>b.delta-a.delta).slice(0,5);
+  const dec=changes.filter(x=>x.delta<0).sort((a,b)=>a.delta-b.delta).slice(0,5);
+  const topIncrease=inc[0]||null; const topDecrease=dec[0]||null;
+
+  // KPI
+  $('consultTotal').textContent=fmt(total)+' 건'; $('consultTotalSub').textContent=`${label} · ${channelLabel} 합계`;
+  if(prevTotal!==null){ $('consultPrevChange').textContent=consultRateText(total,prevTotal); $('consultPrevChange').className=`val ${total>prevTotal?'up':total<prevTotal?'down':''}`; $('consultPrevSub').textContent=`전월 ${fmt(prevTotal)}건 대비 ${total>=prevTotal?'+':''}${fmt(total-prevTotal)}건`; }
+  else { $('consultPrevChange').textContent='-'; $('consultPrevChange').className='val'; $('consultPrevSub').textContent=isAll?'전체 선택 시 전월 비교 제외':'전월 데이터 등록 시 표시'; }
+  if(yoyTotal!==null){ $('consultYoYChange').textContent=consultRateText(total,yoyTotal); $('consultYoYChange').className=`val ${total>yoyTotal?'up':total<yoyTotal?'down':''}`; $('consultYoYSub').textContent=`전년동월 ${fmt(yoyTotal)}건 대비 ${total>=yoyTotal?'+':''}${fmt(total-yoyTotal)}건`; }
+  else { $('consultYoYChange').textContent='-'; $('consultYoYChange').className='val'; $('consultYoYSub').textContent=isAll?'전체 선택 시 전년동월 비교 제외':'전년 데이터 등록 시 표시'; }
+  $('consultTopCategoryKpi').textContent=topCategory?topCategory.name:'-'; $('consultTopCategoryKpiSub').textContent=topCategory?`${fmt(topCategory.value)}건 (${total?((topCategory.value/total)*100).toFixed(1):'0.0'}%)`:'-';
+  $('consultTopIncreaseKpi').textContent=topIncrease?(topIncrease.r.inquiry||'-'):'-'; $('consultTopIncreaseKpiSub').textContent=topIncrease?`전월 대비 ${consultRateText(topIncrease.cur,topIncrease.prev)}`:(isAll?'개별 월 선택 시 표시':'전월 데이터 등록 시 표시');
+  $('consultMonthHelp').textContent=`${consultSelectedYear()}년 등록 월: ${available.map(x=>x+'월').join(' · ')}`;
+  $('consultDetailMonthHead').textContent=label; $('consultTrendBadge').textContent=`${channelLabel} 기준`;
+
+  // navigation controls
+  const prevBtn=$('consultPrevMonthBtn'), nextBtn=$('consultNextMonthBtn');
+  if(prevBtn){ prevBtn.disabled=isAll || available.indexOf(Number(sel.value))<=0; prevBtn.onclick=()=>{const idx=available.indexOf(Number(sel.value)); if(idx>0){ sel.value=String(available[idx-1]); renderConsultType(); }}; }
+  if(nextBtn){ nextBtn.disabled=isAll || available.indexOf(Number(sel.value))===-1 || available.indexOf(Number(sel.value))>=available.length-1; nextBtn.onclick=()=>{const idx=available.indexOf(Number(sel.value)); if(idx>=0 && idx<available.length-1){ sel.value=String(available[idx+1]); renderConsultType(); }}; }
+
+  // Top 10 categories section
+  $('consultTop10CategoryBody').innerHTML=consultBuildTop10CategoryTable(top10Categories,total,prevCatMap);
+  requestAnimationFrame(()=>consultRenderTop10Chart(top10Categories,prevCatMap,isAll?"전체 상담건수":"선택월 상담건수",isAll?"비교 없음":"전월 상담건수"));
+
+  // Change sections
+  if(prevInfo.has){ $('consultIncreaseBody').innerHTML=consultMakeChangeTable(inc,'증가한 문의유형이 없습니다.'); $('consultDecreaseBody').innerHTML=consultMakeChangeTable(dec,'감소한 문의유형이 없습니다.'); }
+  else { const msg=`<div class="consult-empty"><div class="consult-empty-title">${isAll?'분석월을 선택하면 전월 비교가 표시됩니다':'전월 데이터 등록 시 표시'}</div></div>`; $('consultIncreaseBody').innerHTML=msg; $('consultDecreaseBody').innerHTML=msg; }
+
+  // detail analysis (mid/small top10 within chosen category)
+  const drillSel=$('consultDrillCategorySelect');
+  const catNames=categoryAgg.map(x=>x.name);
+  const oldDrill=drillSel?.value||'';
+  if(drillSel){
+    drillSel.innerHTML=catNames.map(x=>`<option value="${consultEsc(x)}">${consultEsc(x)}</option>`).join('');
+    drillSel.value=catNames.includes(oldDrill)?oldDrill:(catNames[0]||'');
+    drillSel.onchange=()=>renderConsultType();
+  }
+  const selectedCat=drillSel?.value || (catNames[0]||'');
+  const drillRows=active.filter(r=>(r.category1||'미분류')===selectedCat);
+  const midAgg=consultAggregateBy(drillRows,'category2').slice(0,10).map(x=>({name:x.name,value:x.value}));
+  const smallAgg=consultAggregateBy(drillRows,'category3').slice(0,10).map(x=>({name:x.name,value:x.value}));
+  $('consultMidTopBody').innerHTML=consultMakeSimpleTopTable(midAgg,'name','중분류 데이터가 없습니다.');
+  $('consultSmallTopBody').innerHTML=consultMakeSimpleTopTable(smallAgg,'name','소분류 데이터가 없습니다.');
+
+  // monthly trend
+  consultRenderMonthlyChart(channel, available);
+
+  // filters
+  const catFilter=$('consultCatFilter'), oldCat=catFilter.value;
+  const catNamesFilter=[...new Set(base.map(r=>r.category1).filter(Boolean))].sort();
+  catFilter.innerHTML='<option value="">대분류 전체</option>'+catNamesFilter.map(x=>`<option value="${consultEsc(x)}">${consultEsc(x)}</option>`).join('');
+  if(catNamesFilter.includes(oldCat)) catFilter.value=oldCat;
+  refreshConsultMidFilter(); consultUpdateSmallFilter(); renderConsultDetail();
+  sel.onchange=renderConsultType; yearSel.onchange=()=>{ sel.value=''; renderConsultType(); }; channelSel.onchange=renderConsultType; $('consultTrendSeriesCount').onchange=()=>consultRenderMonthlyChart(channel, available); $('consultDetailChannelFilter').onchange=renderConsultDetail; catFilter.onchange=()=>{refreshConsultMidFilter(); consultUpdateSmallFilter(); renderConsultDetail();}; $('consultMidFilter').onchange=()=>{consultUpdateSmallFilter(); renderConsultDetail();}; $('consultSmallFilter').onchange=renderConsultDetail; $('consultSearch').oninput=renderConsultDetail;
+  document.querySelectorAll('#consulttype .consult-toggle-group button').forEach(btn=>{ btn.onclick=()=>{ document.querySelectorAll('#consulttype .consult-toggle-group button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderConsultDetail(); }; });
+  const toggleBtn=$('consultDetailToggleBtn'), detailWrap=$('consultDetailWrap'); if(toggleBtn && detailWrap){ toggleBtn.onclick=()=>{ detailWrap.classList.toggle('hidden'); toggleBtn.textContent=detailWrap.classList.contains('hidden')?'상세 데이터 펼쳐보기 ▼':'상세 데이터 접기 ▲'; }; }
+}
+function refreshConsultMidFilter(){
+  const cat=$('consultCatFilter')?.value||'', mid=$('consultMidFilter'); if(!mid) return;
+  const old=mid.value, base=consultCurrentFilterBase();
+  const vals=[...new Set(base.filter(r=>!cat||r.category1===cat).map(r=>r.category2).filter(Boolean))].sort();
+  mid.innerHTML='<option value="">중분류 전체</option>'+vals.map(x=>`<option value="${consultEsc(x)}">${consultEsc(x)}</option>`).join('');
+  if(vals.includes(old)) mid.value=old;
+}
+function renderConsultDetail(){
+  if(consultMode()==="period"){ renderConsultPeriodDetail(); return; }
+  if(!consultTypeData.length||!$('consultMonthSelectLive')) return;
+  const available=consultAvailableMonths(), selection=$('consultMonthSelectLive').value||String(available.at(-1)), isAll=selection==='all', m=isAll?'all':Number(selection), prev=isAll?null:m-1;
+  const detailChannel=$('consultDetailChannelFilter')?.value||'', cat=$('consultCatFilter')?.value||'', mid=$('consultMidFilter')?.value||'', small=$('consultSmallFilter')?.value||'', q=($('consultSearch')?.value||'').trim().toLowerCase();
+  const mode=document.querySelector('#consulttype .consult-toggle-group button.active')?.dataset.filter||'all';
+  const base=consultBaseRows();
+  const prepared=base
+    .filter(r=>!detailChannel||r.channel===detailChannel)
+    .map(r=>{const v=consultSelectionValue(r,m,available); let pv=null; if(!isAll&&prev>=1){ const t=consultMonthValue(r,prev); pv=t===null?0:t; } return {...r,_cur:v,_prev:pv};})
+    .filter(r=>r._cur!==null);
+  const grouped=consultGroupDetailRows(prepared);
+  const rows=grouped.filter(r=>(!cat||r.category1===cat)&&(!mid||r.category2===mid)&&(!small||r.category3===small)&&(!q||`${r.channel||''} ${r.inquiry||''} ${r.category1||''} ${r.category2||''} ${r.category3||''}`.toLowerCase().includes(q)));
+  const filtered=rows.filter(r=>{ if(mode==='increase') return r._prev!==null && r._cur>r._prev; if(mode==='decrease') return r._prev!==null && r._cur<r._prev; if(mode==='new') return r._prev!==null && (Number(r._prev)||0)===0 && (Number(r._cur)||0)>0; return true; }).sort((a,b)=>(Number(b._cur)||0)-(Number(a._cur)||0));
+  $('consultDetailBody').innerHTML=filtered.map(r=>`<tr><td><span class="consult-badge">${consultEsc(r.channel||'-')}</span></td><td>${consultEsc(r.category1||'-')}</td><td>${consultEsc(r.category2||'-')}</td><td>${consultEsc(r.category3||'-')}</td><td>${consultEsc(r.inquiry||'-')}</td><td class="num">${r._cur===null?'-':fmt(r._cur)}</td><td class="num">${r._prev===null?'-':fmt(r._prev)}</td><td class="num">${r._cur===null||r._prev===null?'-':`<span class="${consultRateClass(r._cur,r._prev)}">${consultRateText(r._cur,r._prev)}</span>`}</td></tr>`).join('') || '<tr><td colspan="8" style="text-align:center;color:#8a96a6;padding:22px">조건에 맞는 상담유형이 없습니다.</td></tr>';
+}
+function consultRenderMonthlyChart(channel,available){
+  const canvas=$('consultMonthlyChart'); if(!canvas) return; consultDestroyChart('consultMonthly'); consultDestroyChart('consultTop10Compare');
+  const months=available.length?available:Array.from({length:12},(_,i)=>i+1);
+  const baseAll=consultRowsFor(channel,consultSelectedYear());
+  const totalForMonth=m=>baseAll.reduce((s,r)=>s+(consultMonthValue(r,m)??0),0);
+  const categoryTotals=consultAggregateBy(consultAggregateForSelection(baseAll,'all',months).filter(r=>(Number(r._v)||0)>0),'category1');
+  const seriesCount=Math.max(1,Number($('consultTrendSeriesCount')?.value||5));
+  const selectedCats=categoryTotals.slice(0,seriesCount).map(x=>x.name);
+  const palette=['#173f7a','#5c9cff','#33b06a','#f0a330','#8d63d2','#ff6680','#2bbfcb','#55c3b4'];
+  // '기타' 대표 소분류는 같은 소분류명을 CALL/ERMS 합산하지 않고,
+  // 현재 분석월(전체 선택 시 등록월 전체)에서 건수가 가장 큰 '개별 행'의 소분류를 사용한다.
+  // 예: 타부서 문의 455 / 기타 338 / 기타 196 이면 → 기타(타부서 문의)
+  const selectedMonthValue=$('consultMonthSelectLive')?.value||'all';
+  const labelMonths=selectedMonthValue==='all' ? months : [Number(selectedMonthValue)].filter(m=>Number.isFinite(m));
+  const findTopSmallLabel=rows=>{
+    let top=''; let topVal=-1;
+    rows.forEach(r=>{
+      const name=(r.category3||r.category2||r.inquiry||'').trim();
+      if(!name) return;
+      const val=labelMonths.reduce((ms,m)=>ms+(consultMonthValue(r,m)??0),0);
+      if(val>topVal){ topVal=val; top=name; }
+    });
+    return top;
+  };
+  const getDisplayLabel=(cat,rows)=>{
+    if(!String(cat||'').includes('기타')) return cat;
+    const topSmall=findTopSmallLabel(rows);
+    return topSmall ? `기타(${topSmall})` : cat;
+  };
+
+  const selectedSeries=selectedCats.map((cat,idx)=>{
+    const catRows=baseAll.filter(r=>(r.category1||'미분류')===cat);
+    return {
+      label:getDisplayLabel(cat,catRows),
+      data:months.map(m=>catRows.reduce((s,r)=>s+(consultMonthValue(r,m)??0),0)),
+      backgroundColor:palette[idx%palette.length],
+      borderColor:palette[idx%palette.length],
+      borderWidth:0,
+      stack:'total',
+      barPercentage:0.72,
+      categoryPercentage:0.74,
+      borderRadius:0,
+      borderSkipped:false
+    };
+  });
+
+  // 그래프의 '기타'는 TOP5 외 전체 잔여분이 아니라,
+  // TOP10에서 사용하는 실제 대분류 '기타 문의'와 동일한 건수 기준으로 표시한다.
+  const otherCategoryRows=baseAll.filter(r=>String(r.category1||'').trim()==='기타 문의');
+  const alreadyHasOther=selectedCats.includes('기타 문의');
+  const otherData=months.map(m=>otherCategoryRows.reduce((s,r)=>s+(consultMonthValue(r,m)??0),0));
+  const hasOther=!alreadyHasOther && otherData.some(v=>v>0);
+  const datasets=[...selectedSeries];
+  if(hasOther){
+    const otherLabel=(function(){
+      const topSmall=findTopSmallLabel(otherCategoryRows);
+      return topSmall ? `기타(${topSmall})` : '기타';
+    })();
+    datasets.push({
+      label:otherLabel,
+      data:otherData,
+      backgroundColor:'#cfd9e8',
+      borderColor:'#cfd9e8',
+      borderWidth:0,
+      stack:'total',
+      barPercentage:0.72,
+      categoryPercentage:0.74,
+      borderRadius:0,
+      borderSkipped:false
+    });
+  }
+
+  charts.consultMonthly=new Chart(canvas,{
+    type:'bar',
+    data:{labels:months.map(m=>`${m}월`),datasets},
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{position:'top',align:'center',labels:{boxWidth:12,boxHeight:12,padding:12,font:{size:10,weight:'bold'}}},
+        tooltip:{
+          callbacks:{
+            label:c=>`${c.dataset.label}: ${fmt(c.raw)}건`,
+            footer:(items)=>{
+              if(!items?.length) return '';
+              const total=items.reduce((s,it)=>s+(Number(it.raw)||0),0);
+              return `합계: ${fmt(total)}건`;
+            }
+          }
+        }
+      },
+      scales:{
+        x:{stacked:true,grid:{display:false},ticks:{font:{size:10}}},
+        y:{stacked:true,beginAtZero:true,grid:{color:'#edf1f5'},ticks:{font:{size:9},callback:v=>fmt(v)}}
+      }
+    }
+  });
+}
+function consultRenderEmpty(){
+  $('consultNoData')?.classList.remove('hidden');
+  ['consultTotal','consultPrevChange','consultYoYChange','consultTopCategoryKpi','consultTopIncreaseKpi'].forEach(id=>{if($(id)) $(id).textContent='-';});
+  if($('consultTop10CategoryBody')) $('consultTop10CategoryBody').innerHTML='<tr><td colspan="5" style="text-align:center;color:#8a96a6;padding:22px">관리자에서 상담유형 Excel을 등록해 주세요.</td></tr>';
+  if($('consultDetailBody')) $('consultDetailBody').innerHTML='<tr><td colspan="8" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr>';
+  if($('consultMidTopBody')) $('consultMidTopBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr>';
+  if($('consultSmallTopBody')) $('consultSmallTopBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr>';
+  consultDestroyChart('consultMonthly');
 }
 
 function dailySample(){
@@ -3907,6 +5263,62 @@ function mdmSample(){
   if(ws["F2"]) ws["F2"].z="0.0%";
   XLSX.utils.book_append_sheet(wb,ws,"MDM원격");
   XLSX.writeFile(wb,"MDM_원격_샘플.xlsx");
+}
+function newsStartSample(){
+  const h=["일자","신청자","승인","반려","대기","뉴스타트구매자","N수","군수"];
+  const rows=[
+    ["2026-01-01",864,835,29,"",886,804,32],
+    ["2026-01-02",604,590,14,"",524,571,19],
+    ["2026-01-03",546,527,19,"",445,504,24],
+    ["2026-01-04",847,803,44,"",693,771,32],
+    ["2026-01-05",1154,1112,42,"",1128,1094,18],
+    ["2026-01-06",497,483,14,"",450,474,9],
+    ["2026-01-07",505,498,7,"",428,475,23],
+    ["2026-01-08",409,404,5,"",375,379,25],
+    ["2026-01-09",407,390,17,"",350,362,28],
+    ["2026-01-10",393,384,9,"",362,349,35],
+    ["2026-01-11",543,522,21,"",443,489,33],
+    ["2026-01-12",646,613,33,"",642,581,32]
+  ];
+  const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet([h,...rows]);
+  XLSX.utils.book_append_sheet(wb,ws,"뉴스타트인증");
+  XLSX.writeFile(wb,"뉴스타트_인증_샘플.xlsx");
+}
+
+function consultTypeSample(){
+  const h=["대분류","중분류","소분류","코드▼","문의 유형","1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
+  const call2026=[
+    ["회원 정보","학생/일반회원","ID/PW","P1101","ID/PW 문의",1759,1538,1497,1402,1360,1290,1497,"","","","",""],
+    ["강좌/교재 신청, 배송","강좌신청","강좌신청 문의","R1105","수강권 관련 문의",6733,7272,7400,8120,9050,10210,13177,"","","","",""],
+    ["강좌/교재 신청, 배송","반송","교환/반품","R5102","반품 접수 담당자 처리",5328,3805,4200,4550,5100,6200,3203,"","","","",""],
+    ["결제, 취소, 환불","취소/환불","부분환불","S2203","학습량 기준 부분 현금 환불",1165,1425,1510,1670,1810,2050,1480,"","","","",""]
+  ];
+  const erms2026=[
+    ["회원 정보","학생/일반회원","ID/PW","P1101","ID/PW 문의",145,120,180,190,210,230,261,"","","","",""],
+    ["강좌/교재 신청, 배송","강좌신청","강좌신청 문의","R1105","수강권 관련 문의",1833,1420,1510,1660,1750,1980,2223,"","","","",""],
+    ["결제, 취소, 환불","취소/환불","부분환불","S2203","학습량 기준 부분 현금 환불",2110,2020,2160,2250,2430,2710,3013,"","","","",""]
+  ];
+  const call2025=call2026.map(r=>[...r.slice(0,5),...r.slice(5).map(v=>typeof v==='number'?Math.round(v*0.72):v)]);
+  const erms2025=erms2026.map(r=>[...r.slice(0,5),...r.slice(5).map(v=>typeof v==='number'?Math.round(v*0.78):v)]);
+  const wb=XLSX.utils.book_new();
+  [["2026_CALL",call2026],["2026_ERMS",erms2026],["2025_CALL",call2025],["2025_ERMS",erms2025]].forEach(([name,rows])=>{
+    const ws=XLSX.utils.aoa_to_sheet([h,...rows]);
+    ws["!cols"]=[{wch:24},{wch:24},{wch:20},{wch:12},{wch:34},...Array.from({length:12},()=>({wch:10}))];
+    XLSX.utils.book_append_sheet(wb,ws,name);
+  });
+  const ph=["분석명","시작일","종료일","대분류","중분류","소분류","코드▼","문의 유형","건수"];
+  const periodSheets=[
+    ["올해_CALL",[["7월 집중기간","2026-07-01","2026-07-15","강좌/교재 신청, 배송","강좌신청","강좌신청 문의","R1105","수강권 관련 문의",1524]]],
+    ["올해_ERMS",[["7월 집중기간","2026-07-01","2026-07-15","게시판 전용 문의","교재문의(추가구매)","교재 재구매","Z2203","재수강",63]]],
+    ["전년_CALL",[["7월 집중기간","2025-07-02","2025-07-16","강좌/교재 신청, 배송","강좌신청","강좌신청 문의","R1105","수강권 관련 문의",1183]]],
+    ["전년_ERMS",[["7월 집중기간","2025-07-02","2025-07-16","게시판 전용 문의","교재문의(추가구매)","교재 재구매","Z2203","재수강",48]]]
+  ];
+  periodSheets.forEach(([name,rows])=>{
+    const pws=XLSX.utils.aoa_to_sheet([ph,...rows]);
+    pws["!cols"]=[{wch:18},{wch:13},{wch:13},{wch:24},{wch:24},{wch:20},{wch:12},{wch:34},{wch:10}];
+    XLSX.utils.book_append_sheet(wb,pws,name);
+  });
+  XLSX.writeFile(wb,"상담유형_월간_특정기간_4시트_샘플.xlsx");
 }
 
 async function login(){
@@ -3945,11 +5357,13 @@ $("loginBtn").addEventListener("click",login);
 $("logoutBtn").addEventListener("click",logout);
 $("adminPassword").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
 $("dailyFile").addEventListener("change",e=>upload(e.target.files[0],"daily"));
-$("refundFile").addEventListener("change",e=>upload(e.target.files[0],"refund"));
 $("mdmFile").addEventListener("change",e=>upload(e.target.files[0],"mdm"));
+$("newsStartFile").addEventListener("change",e=>upload(e.target.files[0],"newsstart"));
+$("consultTypeFile").addEventListener("change",e=>upload(e.target.files[0],"consulttype"));
 $("dailySampleBtn").addEventListener("click",dailySample);
-$("refundSampleBtn").addEventListener("click",refundSample);
 $("mdmSampleBtn").addEventListener("click",mdmSample);
+$("newsStartSampleBtn").addEventListener("click",newsStartSample);
+$("consultTypeSampleBtn").addEventListener("click",consultTypeSample);
 $("rawType").addEventListener("change",renderRaw);
 $("rawSearch").addEventListener("input",renderRaw);
 
@@ -3970,23 +5384,19 @@ function setDefaultRecent7Days(){
 
 $("clearBtn").addEventListener("click",async()=>{
   if(!currentUser) return alert("관리자 로그인이 필요합니다.");
-  if(!confirm("Firestore의 일일 운영실적, 환불, MDM 원격 데이터를 모두 삭제할까요?")) return;
+  if(!confirm("Firestore의 일일 운영실적, 환불, MDM 원격, 뉴스타트 인증, 상담유형(월간/특정기간) 데이터를 모두 삭제할까요?")) return;
   await deleteCollectionDocs("daily");
   await deleteCollectionDocs("refunds");
   await deleteCollectionDocs("refundDaily");
   await deleteCollectionDocs("mdm");
+  await deleteCollectionDocs("newsstart");
+  await deleteCollectionDocs("consultTypes");
+  await deleteCollectionDocs("consultPeriods");
   await reload();
   location.reload();
 });
 
-document.querySelectorAll(".menu button[data-target]").forEach(b=>b.addEventListener("click",()=>{
-  closeDataInfo();
-  document.querySelectorAll(".menu button[data-target]").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");
-  document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
-  $(b.dataset.target).classList.add("active");
-  setTimeout(()=>Object.values(charts).forEach(c=>c.resize()),50);
-}));
+/* 좌측 메뉴 이동은 아래 독립 스크립트에서 처리 */
 
 (async()=>{
   try{
