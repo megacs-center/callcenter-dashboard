@@ -2031,7 +2031,7 @@ th{position:sticky;top:0;background:#f8fafc}
     <button data-target="book">▣　<span>교재 구매</span></button>
     <button data-target="cph">♟　<span>CPH 현황</span></button>
     <button data-target="mdm">▣　<span>MDM 원격</span></button>
-    <button data-target="newsstart">✓　<span>뉴스타트 인증</span></button>
+    <button data-target="newsstart" style="display:none">✓　<span>뉴스타트 인증</span></button>
     <button data-target="consulttype">▤　<span>상담유형</span></button>
     <div class="sep"></div>
     <button data-target="admin">🔒　<span>관리자</span></button>
@@ -2633,7 +2633,7 @@ th{position:sticky;top:0;background:#f8fafc}
 </section>
 
 
-<section id="newsstart" class="section">
+<section id="newsstart" class="section" style="display:none">
   <div class="detail-head">
     <div>
       <div class="detail-title-wrap"><div class="detail-title">뉴스타트 인증</div><button type="button" class="data-info-btn" data-info-page="newsstart">ⓘ 데이터 기준</button></div>
@@ -2749,7 +2749,7 @@ th{position:sticky;top:0;background:#f8fafc}
           <div class="status">※ 컬럼: 날짜 / 해제 건 수 / 설치 건 수 / 합계 / 웹 접수 건 수 / 웹 접수 비율</div>
         </div>
 
-        <div class="card upload">
+        <div class="card upload" style="display:none">
           <h3>③ 뉴스타트 인증 Excel</h3>
           <div class="drop">
             <input id="newsStartFile" type="file" accept=".xlsx,.xls,.csv">
@@ -2760,7 +2760,7 @@ th{position:sticky;top:0;background:#f8fafc}
         </div>
 
         <div class="card upload">
-          <h3>④ 상담유형 Excel</h3>
+          <h3>③ 상담유형 Excel</h3>
           <div class="drop">
             <input id="consultTypeFile" type="file" accept=".xlsx,.xls,.csv">
             <div style="margin-top:9px"><button class="btn secondary" id="consultTypeSampleBtn">샘플 Excel</button></div>
@@ -2779,7 +2779,7 @@ th{position:sticky;top:0;background:#f8fafc}
             <option value="daily">일일 운영실적</option>
             <option value="refund">환불 상세</option>
             <option value="mdm">MDM 원격</option>
-            <option value="newsstart">뉴스타트 인증</option>
+            <option value="newsstart" style="display:none">뉴스타트 인증</option>
             <option value="consulttype">상담유형 월간</option>
             <option value="consultperiod">상담유형 특정기간</option>
           </select>
@@ -3207,7 +3207,7 @@ function barVsYoyChart(id,labels,currentData,yoyData,currentLabel,yoyLabel,color
           borderColor:yoyColor,
           backgroundColor:"transparent",
           borderWidth:2.2,
-          borderDash:[7,5],
+          borderDash:[3,3],
           pointRadius:labels.length <= 30 ? 2.4 : 0,
           pointHoverRadius:4.5,
           pointHitRadius:12,
@@ -3365,7 +3365,7 @@ function dateTickDisplayOptions(labels, fontSize=10, allowSkip=true, maxTicksLim
   };
 }
 
-function renderMainInquiryAnswerChart(rows){
+function renderMainInquiryAnswerChart(rows,yoyRows=[]){
   if(charts["mainBar"]) charts["mainBar"].destroy();
 
   const labels=rows.map(r=>formatDateLabel(r.date,r.day));
@@ -3374,6 +3374,12 @@ function renderMainInquiryAnswerChart(rows){
     const raw=Number(r.answerPct);
     const normalized = raw>0 && raw<=1 ? raw*100 : raw;
     return normalized>0 ? normalized : pct(r.totalA,r.totalQ);
+  });
+  const yoyAnswerRateData=rows.map((_,idx)=>{
+    const y=yoyRows[idx]||{};
+    const raw=Number(y.answerPct);
+    const normalized = raw>0 && raw<=1 ? raw*100 : raw;
+    return normalized>0 ? normalized : pct(Number(y.totalA)||0,Number(y.totalQ)||0);
   });
   const maxVolume=Math.max(...volumeData, 0);
   const yMax=Math.max(1600, Math.ceil((maxVolume*1.12)/200)*200);
@@ -3452,6 +3458,24 @@ function renderMainInquiryAnswerChart(rows){
           pointBorderColor:"#f4b000",
           pointBorderWidth:0,
           yAxisID:"y1"
+        },
+        {
+          type:"line",
+          label:"전년 답변률(%)",
+          data:yoyAnswerRateData,
+          borderColor:"#8a94a6",
+          backgroundColor:"transparent",
+          borderWidth:2.2,
+          borderDash:[3,3],
+          tension:0.42,
+          fill:false,
+          pointRadius: rows.length <= 30 ? 2.2 : 0,
+          pointHoverRadius:4.5,
+          pointHitRadius:14,
+          pointBackgroundColor:"#fff",
+          pointBorderColor:"#8a94a6",
+          pointBorderWidth:1.8,
+          yAxisID:"y1"
         }
       ]
     },
@@ -3459,7 +3483,7 @@ function renderMainInquiryAnswerChart(rows){
       responsive:true,
       maintainAspectRatio:false,
       interaction:{mode:"index",intersect:false},
-      layout:{padding:{top: showMainChartLabels ? 28 : 10,right:8,left:4,bottom: useDiagonalDateTicks(labels) ? 8 : 0}},
+      layout:{padding:{top: showMainChartLabels ? 34 : 16,right:8,left:4,bottom: useDiagonalDateTicks(labels) ? 8 : 0}},
       plugins:{
         legend:{
           position:"top",
@@ -3476,7 +3500,7 @@ function renderMainInquiryAnswerChart(rows){
         },
         tooltip:{
           callbacks:{
-            label:(ctx)=> ctx.dataset.type==="line"
+            label:(ctx)=> ctx.dataset.yAxisID==="y1"
               ? `${ctx.dataset.label}: ${Number(ctx.parsed.y||0).toFixed(1)}%`
               : `${ctx.dataset.label}: ${fmt(ctx.parsed.y||0)}`
           }
@@ -4013,7 +4037,7 @@ async function applyFilter(){
   });
 
 
-  renderMainInquiryAnswerChart(rows);
+  renderMainInquiryAnswerChart(rows,yoyRows);
 
   // 우측 채널 =  / 선택기간 총문의량 대비 %
 
@@ -4852,7 +4876,7 @@ function consultRenderTop10Chart(items,prevMap,currentLabel,compareLabel){
   charts.consultTop10Compare=new Chart(canvas,{
     data:{labels,datasets:[
       {type:"bar",label:currentLabel,data:current,backgroundColor:"#123f78",borderColor:"#123f78",borderWidth:0,borderRadius:4,maxBarThickness:34,order:2},
-      {type:"line",label:compareLabel,data:previous,borderColor:yoyColor,backgroundColor:"transparent",borderWidth:2.2,borderDash:[7,5],pointRadius:2.4,pointHoverRadius:4.5,pointHitRadius:12,pointBackgroundColor:"#fff",pointBorderColor:yoyColor,pointBorderWidth:2,tension:.42,fill:false,order:1}
+      {type:"line",label:compareLabel,data:previous,borderColor:yoyColor,backgroundColor:"transparent",borderWidth:2.2,borderDash:[3,3],pointRadius:2.4,pointHoverRadius:4.5,pointHitRadius:12,pointBackgroundColor:"#fff",pointBorderColor:yoyColor,pointBorderWidth:2,tension:.42,fill:false,order:1}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},plugins:{legend:{position:"top",align:"center",fullSize:true,labels:{boxWidth:14,boxHeight:14,font:{size:11,weight:"700"},padding:12,color:"#334155",usePointStyle:false}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y)}건`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10},color:"#516074",maxRotation:30,minRotation:labels.length>=7?30:0}},y:{beginAtZero:true,grid:{color:"#e8edf4"},ticks:{font:{size:11},callback:v=>fmt(v)}}}}
   });
