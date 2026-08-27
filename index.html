@@ -2017,9 +2017,63 @@ th{position:sticky;top:0;background:#f8fafc}
 #consulttype .consult-kpi.period-date .val{font-size:14px;line-height:1.45;white-space:normal}
 #consulttype .consult-period-note{font-size:10px;color:#718198;font-weight:700}
 
+
+
+/* 전체 로그인 게이트 / 권한 UI */
+body.auth-pending .app{visibility:hidden}
+.auth-gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#edf3fb 0%,#f7f9fc 48%,#e9f1fb 100%)}
+.auth-gate.hidden{display:none}
+.auth-card{width:min(420px,100%);background:#fff;border:1px solid #dce5f0;border-radius:18px;box-shadow:0 22px 60px rgba(16,42,78,.18);padding:28px 28px 24px}
+.auth-logo{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:900;color:#37506f;margin-bottom:14px}
+.auth-logo-mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#0c5ecf;color:#fff;font-size:17px}
+.auth-title{font-size:22px;font-weight:900;letter-spacing:-.7px;color:#10233f;margin:0 0 7px}
+.auth-desc{font-size:12px;color:#6e7f95;line-height:1.6;margin-bottom:18px}
+.auth-fields{display:grid;gap:10px}
+.auth-fields input{height:44px;width:100%;border:1px solid #d5deea;border-radius:9px;padding:0 12px;outline:0;background:#fff;color:#17263e;font-weight:700}
+.auth-fields input:focus{border-color:#4a8df0;box-shadow:0 0 0 3px rgba(30,111,232,.10)}
+.auth-login-btn{height:44px;border:0;border-radius:9px;background:#0f6fe8;color:#fff;font-weight:900;cursor:pointer;margin-top:2px}
+.auth-login-btn:disabled{opacity:.55;cursor:wait}
+.auth-status{min-height:18px;margin-top:10px;font-size:11px;color:#748399;line-height:1.5}
+.auth-status.error{color:#c83232}
+.auth-note{border-top:1px solid #edf1f5;margin-top:16px;padding-top:13px;font-size:10.5px;line-height:1.55;color:#8793a4}
+.top-right{display:flex;align-items:center;justify-content:flex-end;gap:10px;min-width:0}
+.session-chip{display:none;align-items:center;gap:7px;padding:5px 6px 5px 9px;border:1px solid #dfe6ef;background:#f8fafc;border-radius:9px;white-space:nowrap}
+.session-chip.show{display:flex}
+.session-role{font-size:10px;font-weight:900;color:#0c5ecf;background:#e8f1ff;padding:4px 6px;border-radius:6px}
+.session-email{font-size:10.5px;font-weight:700;color:#65758b;max-width:170px;overflow:hidden;text-overflow:ellipsis}
+.session-logout{height:28px;border:0;border-radius:6px;padding:0 8px;background:#eef2f7;color:#4d5c70;font-size:10.5px;font-weight:800;cursor:pointer}
+.access-manager{margin-bottom:12px}
+.access-manager-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.access-manager-title{font-size:14px;font-weight:900;color:#152740}
+.access-manager-note{font-size:10.5px;color:#74839a;line-height:1.55;margin-top:3px}
+.access-form{display:grid;grid-template-columns:minmax(210px,1fr) 130px auto;gap:8px;margin:10px 0}
+.access-form input,.access-form select{height:38px;border:1px solid #d7e0eb;border-radius:8px;padding:0 10px;background:#fff;font-weight:700;color:#26364e}
+.access-table{width:100%;border-collapse:collapse;font-size:11px}
+.access-table th,.access-table td{padding:8px 9px;border-bottom:1px solid #edf1f5;text-align:left}
+.access-table th{background:#f7f9fc;color:#617187;font-weight:900}
+.access-table td:last-child,.access-table th:last-child{text-align:center;width:88px}
+.role-pill{display:inline-block;padding:3px 7px;border-radius:999px;font-size:10px;font-weight:900;background:#eef3fa;color:#51657c}
+.role-pill.admin{background:#e7f1ff;color:#0b63ce}
+.mini-danger{height:27px;border:1px solid #f3c7c7;background:#fff4f4;color:#c23b3b;border-radius:6px;padding:0 8px;font-size:10px;font-weight:800;cursor:pointer}
+@media(max-width:1100px){.session-email{display:none}.top-right{gap:6px}.access-form{grid-template-columns:1fr 110px}.access-form button{grid-column:1/-1}.title{font-size:20px}}
+
 </style>
 </head>
-<body>
+<body class="auth-pending">
+<div id="authGate" class="auth-gate">
+  <div class="auth-card">
+    <div class="auth-logo"><span class="auth-logo-mark">M</span><span>megastudy · 학습지원센터</span></div>
+    <h1 class="auth-title">통합 운영 대시보드 로그인</h1>
+    <div class="auth-desc">승인된 계정만 대시보드에 접근할 수 있습니다.<br>일반 사용자는 조회만, 관리자는 데이터 등록·관리까지 가능합니다.</div>
+    <div class="auth-fields">
+      <input id="gateEmail" type="email" placeholder="이메일" autocomplete="username">
+      <input id="gatePassword" type="password" placeholder="비밀번호" autocomplete="current-password">
+      <button id="gateLoginBtn" class="auth-login-btn" type="button">로그인</button>
+    </div>
+    <div id="gateStatus" class="auth-status">Firebase Authentication 계정으로 로그인해 주세요.</div>
+    <div class="auth-note">※ URL을 전달받더라도 등록된 계정과 권한이 없으면 운영 데이터에 접근할 수 없도록 구성했습니다.</div>
+  </div>
+</div>
 <div class="app">
 <aside class="side">
   <div class="brand">☰ <small>megastudy</small> <img class="brand-m-symbol" src="data:image/png;base64,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" alt="M"></div>
@@ -2034,16 +2088,23 @@ th{position:sticky;top:0;background:#f8fafc}
     <button data-target="newsstart" style="display:none">✓　<span>뉴스타트 인증</span></button>
     <button data-target="consulttype">▤　<span>상담유형</span></button>
     <div class="sep"></div>
-    <button data-target="admin">🔒　<span>관리자</span></button>
+    <button data-target="admin" data-role="admin" style="display:none">🔒　<span>관리자</span></button>
   </div>
 </aside>
 
 <main class="main">
 <div class="top">
   <div class="title">학습지원센터 통합 운영 대시보드 <span id="pageVersion" style="font-size:10px;color:#8a96a8;font-weight:600;margin-left:6px"></span></div>
-  <div class="filters">
-    <div class="datebox">📅 <input id="startDate" type="date"> ~ <input id="endDate" type="date"></div>
-    <button class="btn primary" id="searchBtn">조회</button>
+  <div class="top-right">
+    <div class="filters">
+      <div class="datebox">📅 <input id="startDate" type="date"> ~ <input id="endDate" type="date"></div>
+      <button class="btn primary" id="searchBtn">조회</button>
+    </div>
+    <div id="sessionChip" class="session-chip">
+      <span id="sessionRole" class="session-role">일반</span>
+      <span id="sessionEmail" class="session-email">-</span>
+      <button id="topLogoutBtn" class="session-logout" type="button">로그아웃</button>
+    </div>
   </div>
 </div>
 
@@ -2708,18 +2769,30 @@ th{position:sticky;top:0;background:#f8fafc}
 
 <section id="admin" class="section">
   <div class="detail-head"><div class="detail-title-wrap"><div class="detail-title">관리자</div><button type="button" class="data-info-btn" data-info-page="admin">ⓘ 데이터 기준</button></div></div>
-  <div id="adminLock" class="card adminbox">
-    <h3>🔒 관리자 로그인</h3>
-    <div class="notice">Firebase Authentication에 등록한 관리자 이메일/비밀번호로 로그인합니다.</div>
-    <div class="actions">
-      <input id="adminEmail" type="email" placeholder="관리자 이메일" autocomplete="username">
-      <input id="adminPassword" type="password" placeholder="비밀번호" autocomplete="current-password">
-      <button class="btn primary" id="loginBtn">로그인</button>
-    </div>
-    <div id="loginStatus" class="status">로그인하지 않음</div>
+  <div id="adminLock" class="card adminbox hidden">
+    <h3>🔒 관리자 권한 필요</h3>
+    <div class="notice">관리자 권한이 있는 계정만 접근할 수 있습니다.</div>
   </div>
 
   <div id="adminPanel" class="hidden">
+    <div class="card adminbox access-manager">
+      <div class="access-manager-head">
+        <div>
+          <div class="access-manager-title">👤 사용자 권한 관리</div>
+          <div class="access-manager-note">Firebase Authentication에 생성된 이메일 계정을 등록합니다. 일반은 조회만, 관리자는 관리자 메뉴와 데이터 업로드가 가능합니다.</div>
+        </div>
+        <button class="btn secondary" id="refreshAccessBtn" type="button">새로고침</button>
+      </div>
+      <div class="access-form">
+        <input id="accessEmail" type="email" placeholder="사용자 이메일">
+        <select id="accessRole"><option value="user">일반</option><option value="admin">관리자</option></select>
+        <button class="btn primary" id="saveAccessBtn" type="button">권한 저장</button>
+      </div>
+      <div id="accessStatus" class="status">등록된 권한을 불러오는 중...</div>
+      <div class="tableWrap" style="max-height:260px">
+        <table class="access-table"><thead><tr><th>이메일</th><th>권한</th><th>상태</th><th>관리</th></tr></thead><tbody id="accessBody"></tbody></table>
+      </div>
+    </div>
     <div class="card adminbox">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
         <div>
@@ -2817,6 +2890,7 @@ th{position:sticky;top:0;background:#f8fafc}
       const btn=e.target.closest('button[data-target]');
       if(!btn || !menu.contains(btn)) return;
       const targetId=btn.getAttribute('data-target');
+      if(targetId==='admin' && window.__dashboardRole!=='admin') return;
       const target=document.getElementById(targetId);
       if(!target) return;
 
@@ -2841,7 +2915,7 @@ th{position:sticky;top:0;background:#f8fafc}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 import {
-  getFirestore, collection, getDocs, doc, writeBatch, deleteDoc
+  getFirestore, collection, getDocs, doc, getDoc, setDoc, writeBatch, deleteDoc
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 import {
   getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
@@ -3114,6 +3188,7 @@ const NEWSSTART_INITIAL_DATA = [
 ];
 let charts = {};
 let currentUser = null;
+let currentRole = null; // "admin" | "user"
 
 function norm(s){
   return String(s||"")
@@ -3645,7 +3720,7 @@ async function reload(){
   newsStartData = (newsStored.length ? newsStored : NEWSSTART_INITIAL_DATA.map(r=>({...r})));
   newsStartData.sort((a,b)=>(a.date||"").localeCompare(b.date||""));
 
-  if(currentUser){
+  if(currentUser && currentRole==="admin"){
     refunds = await fetchCollection("refunds");
     refunds.sort((a,b)=>(a.applyDate||"").localeCompare(b.applyDate||""));
   }else{
@@ -3656,6 +3731,7 @@ async function reload(){
 }
 
 async function deleteCollectionDocs(name){
+  if(currentRole!=="admin") throw new Error("관리자 권한이 필요합니다.");
   const snap=await getDocs(collection(firestore,name));
   const docs=snap.docs;
   for(let i=0;i<docs.length;i+=400){
@@ -4469,6 +4545,7 @@ function updateStatus(){
 }
 
 async function upload(file,type){
+  if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
   if(!currentUser) return alert("관리자 로그인이 필요합니다.");
   if(!file) return;
 
@@ -5345,41 +5422,160 @@ function consultTypeSample(){
   XLSX.writeFile(wb,"상담유형_월간_특정기간_4시트_샘플.xlsx");
 }
 
-async function login(){
-  try{
-    await signInWithEmailAndPassword(auth,$("adminEmail").value.trim(),$("adminPassword").value);
-  }catch(e){
-    console.error(e);
-    alert("로그인 실패: 이메일 또는 비밀번호를 확인해 주세요.");
-  }
+const ACCESS_COLLECTION="dashboardAccess";
+const normalizeEmail=email=>String(email||"").trim().toLowerCase();
+const accessRef=email=>doc(firestore,ACCESS_COLLECTION,normalizeEmail(email));
+
+function setGateStatus(message,isError=false){
+  const el=$("gateStatus"); if(!el) return;
+  el.textContent=message||"";
+  el.classList.toggle("error",!!isError);
 }
-async function logout(){
-  await signOut(auth);
+function showLoginGate(message="Firebase Authentication 계정으로 로그인해 주세요.",isError=false){
+  document.body.classList.add("auth-pending");
+  $("authGate")?.classList.remove("hidden");
+  $("sessionChip")?.classList.remove("show");
+  setGateStatus(message,isError);
+}
+function showDashboard(){
+  document.body.classList.remove("auth-pending");
+  $("authGate")?.classList.add("hidden");
+  $("sessionChip")?.classList.add("show");
+}
+function applyRoleUI(){
+  window.__dashboardRole=currentRole;
+  const isAdmin=currentRole==="admin";
+  document.querySelectorAll('[data-role="admin"]').forEach(el=>{el.style.display=isAdmin?"":"none";});
+  if($("adminPanel")) $("adminPanel").classList.toggle("hidden",!isAdmin);
+  if($("adminLock")) $("adminLock").classList.toggle("hidden",isAdmin);
+  if($("sessionRole")){
+    $("sessionRole").textContent=isAdmin?"관리자":"일반";
+    $("sessionRole").classList.toggle("admin",isAdmin);
+  }
+  if($("sessionEmail")) $("sessionEmail").textContent=currentUser?.email||"-";
+  if($("adminUserText") && currentUser) $("adminUserText").textContent=`로그인: ${currentUser.email} · ${isAdmin?"관리자":"일반"}`;
+  if(!isAdmin && document.getElementById("admin")?.classList.contains("active")){
+    document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+    document.getElementById("overview")?.classList.add("active");
+    document.querySelectorAll('.menu button[data-target]').forEach(x=>x.classList.toggle('active',x.dataset.target==='overview'));
+  }
 }
 
-function syncAuthUI(){
-  const logged=!!currentUser;
-  $("adminLock").classList.toggle("hidden",logged);
-  $("adminPanel").classList.toggle("hidden",!logged);
-  if(logged){
-    $("adminUserText").textContent=`로그인: ${currentUser.email}`;
+async function resolveUserRole(user){
+  const email=normalizeEmail(user?.email);
+  if(!email) throw new Error("이메일 정보가 없는 계정입니다.");
+  const ref=accessRef(email);
+  const snap=await getDoc(ref);
+  if(snap.exists()){
+    const data=snap.data()||{};
+    if(data.active===false) throw new Error("사용 중지된 계정입니다. 관리자에게 문의해 주세요.");
+    const role=data.role==="admin"?"admin":"user";
+    return role;
   }
+
+  // 최초 도입 시 기존 관리자 계정이 잠기지 않도록 첫 승인 계정 1개를 관리자 권한으로 자동 등록.
+  const all=await getDocs(collection(firestore,ACCESS_COLLECTION));
+  if(all.empty){
+    await setDoc(ref,{email,role:"admin",active:true,bootstrap:true,updatedAt:new Date().toISOString()},{merge:true});
+    return "admin";
+  }
+  throw new Error("대시보드 접근 권한이 등록되지 않은 계정입니다. 관리자에게 등록을 요청해 주세요.");
 }
+
+async function login(){
+  const email=normalizeEmail($("gateEmail")?.value);
+  const password=$("gatePassword")?.value||"";
+  if(!email||!password){ setGateStatus("이메일과 비밀번호를 입력해 주세요.",true); return; }
+  const btn=$("gateLoginBtn"); if(btn) btn.disabled=true;
+  setGateStatus("로그인 확인 중...");
+  try{
+    await signInWithEmailAndPassword(auth,email,password);
+  }catch(e){
+    console.error(e);
+    setGateStatus("로그인 실패: 이메일 또는 비밀번호를 확인해 주세요.",true);
+  }finally{ if(btn) btn.disabled=false; }
+}
+async function logout(){
+  try{ await signOut(auth); }catch(e){ console.error(e); }
+}
+
+async function loadAccessList(){
+  if(currentRole!=="admin") return;
+  const body=$("accessBody"), status=$("accessStatus");
+  if(status) status.textContent="권한 목록을 불러오는 중...";
+  try{
+    const snap=await getDocs(collection(firestore,ACCESS_COLLECTION));
+    const rows=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>String(a.email||a.id).localeCompare(String(b.email||b.id)));
+    if(body) body.innerHTML=rows.length?rows.map(r=>{
+      const email=normalizeEmail(r.email||r.id);
+      const role=r.role==="admin"?"admin":"user";
+      const isSelf=email===normalizeEmail(currentUser?.email);
+      return `<tr><td>${consultEsc(email)}</td><td><span class="role-pill ${role==='admin'?'admin':''}">${role==='admin'?'관리자':'일반'}</span></td><td>${r.active===false?'사용중지':'사용'}</td><td>${isSelf?'<span style="color:#8b98a8;font-size:10px">현재 계정</span>':`<button class="mini-danger access-delete" data-email="${consultEsc(email)}" type="button">삭제</button>`}</td></tr>`;
+    }).join(""):'<tr><td colspan="4" style="text-align:center;color:#8a96a6;padding:18px">등록된 권한이 없습니다.</td></tr>';
+    if(status) status.textContent=`등록 계정 ${rows.length}명`;
+    body?.querySelectorAll('.access-delete').forEach(btn=>btn.addEventListener('click',async()=>{
+      if(currentRole!=="admin") return;
+      const email=btn.dataset.email;
+      if(!confirm(`${email}의 대시보드 접근 권한을 삭제할까요?`)) return;
+      await deleteDoc(accessRef(email));
+      await loadAccessList();
+    }));
+  }catch(e){ console.error(e); if(status) status.textContent="권한 목록 조회 실패: "+(e?.message||e); }
+}
+
+async function saveAccess(){
+  if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
+  const email=normalizeEmail($("accessEmail")?.value);
+  const role=$("accessRole")?.value==="admin"?"admin":"user";
+  if(!email || !email.includes("@")) return alert("사용자 이메일을 입력해 주세요.");
+  try{
+    await setDoc(accessRef(email),{email,role,active:true,updatedAt:new Date().toISOString()},{merge:true});
+    $("accessEmail").value="";
+    await loadAccessList();
+  }catch(e){ console.error(e); alert("권한 저장 실패: "+(e?.message||e)); }
+}
+
+function syncAuthUI(){ applyRoleUI(); }
 
 onAuthStateChanged(auth, async user=>{
   currentUser=user;
-  syncAuthUI();
-  await reload();
-  renderRaw();
+  if(!user){
+    currentRole=null;
+    window.__dashboardRole=null;
+    document.querySelectorAll('[data-role="admin"]').forEach(el=>el.style.display="none");
+    showLoginGate();
+    return;
+  }
+  try{
+    setGateStatus("접근 권한 확인 중...");
+    currentRole=await resolveUserRole(user);
+    applyRoleUI();
+    await reload();
+    if(daily.length){
+      setDefaultRecent7Days();
+      await applyFilter();
+    }
+    renderRaw();
+    showDashboard();
+    if(currentRole==="admin") await loadAccessList();
+  }catch(e){
+    console.error(e);
+    currentRole=null;
+    await signOut(auth).catch(()=>{});
+    showLoginGate(e?.message||"접근 권한을 확인할 수 없습니다.",true);
+  }
 });
 
+$("gateLoginBtn")?.addEventListener("click",login);
+$("gatePassword")?.addEventListener("keydown",e=>{if(e.key==="Enter")login();});
+$("topLogoutBtn")?.addEventListener("click",logout);
+$("logoutBtn")?.addEventListener("click",logout);
+$("saveAccessBtn")?.addEventListener("click",saveAccess);
+$("refreshAccessBtn")?.addEventListener("click",loadAccessList);
 $("searchBtn").addEventListener("click",()=>applyFilter().catch(e=>{
   console.error(e);
   alert("조회 오류: "+(e?.message||e));
 }));
-$("loginBtn").addEventListener("click",login);
-$("logoutBtn").addEventListener("click",logout);
-$("adminPassword").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
 $("dailyFile").addEventListener("change",e=>upload(e.target.files[0],"daily"));
 $("mdmFile").addEventListener("change",e=>upload(e.target.files[0],"mdm"));
 $("newsStartFile").addEventListener("change",e=>upload(e.target.files[0],"newsstart"));
@@ -5407,6 +5603,7 @@ function setDefaultRecent7Days(){
 }
 
 $("clearBtn").addEventListener("click",async()=>{
+  if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
   if(!currentUser) return alert("관리자 로그인이 필요합니다.");
   if(!confirm("Firestore의 일일 운영실적, 환불, MDM 원격, 뉴스타트 인증, 상담유형(월간/특정기간) 데이터를 모두 삭제할까요?")) return;
   await deleteCollectionDocs("daily");
@@ -5422,19 +5619,7 @@ $("clearBtn").addEventListener("click",async()=>{
 
 /* 좌측 메뉴 이동은 아래 독립 스크립트에서 처리 */
 
-(async()=>{
-  try{
-    await reload();
-    if(daily.length){
-      setDefaultRecent7Days();
-      await applyFilter();
-    }else{
-    }
-  }catch(e){
-    console.error(e);
-    alert("Firebase 초기화 오류: "+(e?.message||e));
-  }
-})();
+/* 초기 데이터 로드는 Firebase 로그인 및 권한 확인 후 onAuthStateChanged에서 실행합니다. */
 </script>
 
 </body></html>
