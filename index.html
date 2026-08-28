@@ -1874,6 +1874,8 @@ th{position:sticky;top:0;background:#f8fafc}
 #consulttype .consult-rank-table th,#consulttype .consult-rank-table td{padding:10px 8px;border-bottom:1px solid #e9eff6;font-size:12px;vertical-align:middle}
 #consulttype .consult-rank-table tr.consult-total-row td{font-weight:800;background:#f4f8fd;border-top:2px solid #cfdceb;color:#173a6b}
 #consulttype .consult-top10-chart-box{height:270px;margin-top:0;border-top:none;padding-top:0}
+#consulttype .consult-monthly-yoy-col.hidden{display:none!important}
+#consulttype .consult-detail-table th,#consulttype .consult-detail-table td{font-size:11px}
 #consulttype .consult-highlight-box{border:1px solid #e8eef6;border-radius:12px;background:#fff;overflow:hidden}
 #consulttype .consult-highlight-box.up{background:linear-gradient(180deg,#fff7f5 0%,#fff 18%)}
 #consulttype .consult-highlight-box.down{background:linear-gradient(180deg,#f7fbff 0%,#fff 18%)}
@@ -2610,22 +2612,23 @@ body.auth-pending .app{visibility:hidden}
   <div class="consult-kpis consult-kpis-5">
     <div class="card consult-kpi visual"><div class="lab">총 상담건수</div><div class="val" id="consultTotal">-</div><div class="sub" id="consultTotalSub">선택월 전체 합계</div></div>
     <div class="card consult-kpi visual" id="consultPrevKpiCard"><div class="lab" id="consultPrevLabel">전월 대비</div><div class="val" id="consultPrevChange">-</div><div class="sub" id="consultPrevSub">전월 데이터 등록 시 표시</div></div>
-    <div class="card consult-kpi visual" id="consultYoYKpiCard"><div class="lab" id="consultYoYLabel">전년동월 대비</div><div class="val" id="consultYoYChange">-</div><div class="sub" id="consultYoYSub">전년 데이터 등록 시 표시</div></div>
+    <div class="card consult-kpi visual" id="consultYoYKpiCard"><div class="lab" id="consultYoYLabel">전년 대비</div><div class="val" id="consultYoYChange">-</div><div class="sub" id="consultYoYSub">전년 데이터 등록 시 표시</div></div>
     <div class="card consult-kpi visual"><div class="lab">최대 상담유형</div><div class="val small" id="consultTopCategoryKpi">-</div><div class="sub" id="consultTopCategoryKpiSub">-</div></div>
     <div class="card consult-kpi visual"><div class="lab">최대 증가 유형</div><div class="val small" id="consultTopIncreaseKpi">-</div><div class="sub" id="consultTopIncreaseKpiSub">전월 데이터 등록 시 표시</div></div>
   </div>
 
   <div class="card consult-panel consult-section-space">
     <div class="consult-number-title"><span class="num-box">1</span><h3>상담유형 TOP10</h3><span class="consult-number-sub" id="consultTopShareNote">※ 비중은 선택월 기준</span></div>
+    <div class="consult-analysis-head" id="consultCompareModeWrap"><div class="consult-chart-legend-note">비교기준에 따라 TOP10 그래프와 주요 변화가 함께 변경됩니다.</div><div class="consult-filter-inline"><span class="consult-month-label">비교기준</span><select class="consult-month-select" id="consultCompareMode"><option value="prev" selected>전월 대비</option><option value="yoy">전년 대비</option></select></div></div>
     <div class="tableWrap">
       <table class="consult-rank-table">
-        <thead><tr><th style="width:60px">순위</th><th>상담유형</th><th class="num" style="width:130px">건수</th><th class="num" style="width:100px">비중</th><th class="num" style="width:120px" id="consultTopCompareHead">전월 대비</th></tr></thead>
+        <thead><tr><th style="width:60px">순위</th><th>상담유형</th><th class="num" style="width:120px">건수</th><th class="num" style="width:90px">비중</th><th class="num" style="width:125px" id="consultTopCompareHead">전월 대비</th></tr></thead>
         <tbody id="consultTop10CategoryBody"><tr><td colspan="5" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr></tbody>
       </table>
     </div>
     <div class="consult-subchart-section">
       <div class="consult-subchart-card">
-        <div class="consult-subchart-head"><h4>TOP10 비교 그래프</h4><span class="consult-subchart-note" id="consultTop10ChartNote">※ 현재 기준과 비교 기준을 동일 그래프에서 확인합니다.</span></div>
+        <div class="consult-subchart-head"><h4>TOP10 비교 그래프</h4><span class="consult-subchart-note" id="consultTop10ChartNote"></span></div>
         <div class="consult-chart-box consult-top10-chart-box"><canvas id="consultTop10Chart"></canvas></div>
       </div>
     </div>
@@ -2662,7 +2665,7 @@ body.auth-pending .app{visibility:hidden}
 
   <div class="card consult-panel consult-section-space" id="consultMonthlyTrendPanel">
     <div class="consult-number-title"><span class="num-box">4</span><h3>월별 상담량 및 유형별 추이</h3></div>
-    <div class="consult-analysis-head"><div class="consult-chart-legend-note" id="consultTrendBadge">표시 유형 선택</div><div class="consult-filter-inline"><span class="consult-month-label">표시 유형 선택</span><select class="consult-month-select" id="consultTrendSeriesCount"><option value="3">3개 선택</option><option value="5" selected>5개 선택</option><option value="7">7개 선택</option></select></div></div>
+    <div class="consult-analysis-head"><div class="consult-chart-legend-note" id="consultTrendBadge">표시 유형 선택</div><div class="consult-filter-inline"><span class="consult-month-label">표시 유형</span><select class="consult-month-select" id="consultTrendSeriesCount"><option value="3">3개 선택</option><option value="5" selected>5개 선택</option><option value="7">7개 선택</option></select><span class="consult-month-label">전년 비교</span><select class="consult-month-select" id="consultTrendYoyMode"><option value="off" selected>숨김</option><option value="on">전년 전체 추이 표시</option></select></div></div>
     <div class="consult-chart-box monthly"><canvas id="consultMonthlyChart"></canvas></div>
   </div>
 
@@ -2687,7 +2690,7 @@ body.auth-pending .app{visibility:hidden}
     </div>
     <div class="consult-detail-toggle-row"><button type="button" class="btn secondary" id="consultDetailToggleBtn">상세 데이터 펼쳐보기 ▼</button></div>
     <div class="tableWrap hidden" id="consultDetailWrap">
-      <table class="consult-detail-table"><thead><tr><th>상담구분</th><th>대분류</th><th>중분류</th><th>소분류</th><th>문의유형</th><th class="num" id="consultDetailMonthHead">선택월</th><th class="num" id="consultDetailPrevHead">전월</th><th class="num">증감률</th></tr></thead><tbody id="consultDetailBody"><tr><td colspan="8" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr></tbody></table>
+      <table class="consult-detail-table"><thead><tr><th>상담구분</th><th>대분류</th><th>중분류</th><th>소분류</th><th>문의유형</th><th class="num" id="consultDetailMonthHead">선택월</th><th class="num" id="consultDetailPrevHead">전월</th><th class="num">전월 대비</th><th class="num consult-monthly-yoy-col" id="consultDetailYoyHead">전년</th><th class="num consult-monthly-yoy-col">전년 대비</th></tr></thead><tbody id="consultDetailBody"><tr><td colspan="10" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr></tbody></table>
     </div>
     <div class="consult-note-small" id="consultCompareNote">※ 전월 대비 증감률은 소수점 첫째자리 반올림 기준입니다.</div>
   </div>
@@ -3058,7 +3061,7 @@ const DATA_INFO = {
         <div class="data-info-row">빈 월은 미등록으로 보고 월 선택 목록에서 제외합니다. 숫자 0은 실제 0건으로 반영합니다.</div>
       </div>
       <div class="data-info-section"><div class="data-info-label">분석 항목</div>
-        <div class="data-info-row">월간은 선택월 기준 전월·전년동월을 비교하고, 특정기간은 같은 분석명의 올해 기간과 전년 비교기간을 직접 비교합니다.</div>
+        <div class="data-info-row">월간은 선택월 기준 전월·전년을 비교하고, 특정기간은 같은 분석명의 올해 기간과 전년 비교기간을 직접 비교합니다.</div>
         <div class="data-info-row">대분류별 인바운드·게시판 실적과 전월 증감률을 비교하고, 상담량이 큰 대분류는 내부 문의유형 TOP5까지 자동으로 펼쳐 보여줍니다.</div>
         <div class="data-info-row">직전 월 데이터가 있으면 증가 TOP5·감소 TOP5, 전체 TOP10 및 상세 현황의 전월 대비 증감률을 함께 표시합니다.</div>
         <div class="data-info-row">코드는 관리자 원본 및 Excel에는 유지되지만 상담유형 분석 화면에서는 표시하지 않습니다.</div>
@@ -4929,31 +4932,30 @@ function consultAggregateBy(rows,keyField){
   });
   return [...map.entries()].map(([name,value])=>({name,value})).sort((a,b)=>b.value-a.value);
 }
-function consultBuildTop10CategoryTable(items,total,prevMap){
+function consultBuildTop10CategoryTable(items,total,compareMap){
   if(!items.length) return '<tr><td colspan="5" style="text-align:center;color:#8a96a6;padding:22px">데이터가 없습니다.</td></tr>';
   const body=items.map((x,i)=>{
-    const prev=prevMap.get(x.name), share=total?x.value/total*100:0;
-    return `<tr><td class="consult-rank">${i+1}</td><td><b>${consultEsc(x.name)}</b></td><td class="num"><b>${fmt(x.value)}</b></td><td class="num">${share.toFixed(1)}%</td><td class="num">${prev===undefined?'-':`<span class="${consultRateClass(x.value,prev)}">${consultRateText(x.value,prev)}</span>`}</td></tr>`;
+    const base=compareMap?.get(x.name), share=total?x.value/total*100:0;
+    const compareText=base===undefined?'-':`<span class="${consultRateClass(x.value,base)}">${consultRateText(x.value,base)}</span>`;
+    return `<tr><td class="consult-rank">${i+1}</td><td><b>${consultEsc(x.name)}</b></td><td class="num"><b>${fmt(x.value)}</b></td><td class="num">${share.toFixed(1)}%</td><td class="num">${compareText}</td></tr>`;
   }).join('');
   const topTotal=items.reduce((s,x)=>s+(Number(x.value)||0),0);
   const topShare=total?topTotal/total*100:0;
-  const hasCompare=prevMap && prevMap.size>0;
-  const prevTopTotal=hasCompare?items.reduce((s,x)=>s+(Number(prevMap.get(x.name))||0),0):null;
-  const compareText=prevTopTotal===null?'-':`<span class="${consultRateClass(topTotal,prevTopTotal)}">${consultRateText(topTotal,prevTopTotal)}</span>`;
+  const baseTopTotal=compareMap && compareMap.size ? items.reduce((s,x)=>s+(Number(compareMap.get(x.name))||0),0) : null;
+  const compareText=baseTopTotal===null?'-':`<span class="${consultRateClass(topTotal,baseTopTotal)}">${consultRateText(topTotal,baseTopTotal)}</span>`;
   return body+`<tr class="consult-total-row"><td></td><td>총합계</td><td class="num">${fmt(topTotal)}</td><td class="num">${topShare.toFixed(1)}%</td><td class="num">${compareText}</td></tr>`;
 }
-function consultRenderTop10Chart(items,prevMap,currentLabel,compareLabel){
+function consultRenderTop10Chart(items,compareMap,currentLabel,compareLabel){
   const canvas=$("consultTop10Chart"); if(!canvas) return;
   consultDestroyChart("consultTop10Compare");
   if(!items?.length) return;
   const labels=items.map(x=>x.name);
   const current=items.map(x=>Number(x.value)||0);
-  const previous=items.map(x=>prevMap.has(x.name)?Number(prevMap.get(x.name))||0:0);
-  const yoyColor="#6f7d92";
+  const comparison=items.map(x=>compareMap?.has(x.name)?Number(compareMap.get(x.name))||0:0);
   charts.consultTop10Compare=new Chart(canvas,{
     data:{labels,datasets:[
       {type:"bar",label:currentLabel,data:current,backgroundColor:"#123f78",borderColor:"#123f78",borderWidth:0,borderRadius:4,maxBarThickness:34,order:2},
-      {type:"line",label:compareLabel,data:previous,borderColor:yoyColor,backgroundColor:"transparent",borderWidth:2.2,borderDash:[3,3],pointRadius:2.4,pointHoverRadius:4.5,pointHitRadius:12,pointBackgroundColor:"#fff",pointBorderColor:yoyColor,pointBorderWidth:2,tension:.42,fill:false,order:1}
+      {type:"line",label:compareLabel,data:comparison,borderColor:"#6f7d92",backgroundColor:"transparent",borderWidth:2.2,borderDash:[3,3],pointRadius:2.4,pointHoverRadius:4.5,pointHitRadius:12,pointBackgroundColor:"#fff",pointBorderColor:"#6f7d92",pointBorderWidth:2,tension:.42,fill:false,order:1}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},plugins:{legend:{position:"top",align:"center",fullSize:true,labels:{boxWidth:14,boxHeight:14,font:{size:11,weight:"700"},padding:12,color:"#334155",usePointStyle:false}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y)}건`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10},color:"#516074",maxRotation:30,minRotation:labels.length>=7?30:0}},y:{beginAtZero:true,grid:{color:"#e8edf4"},ticks:{font:{size:11},callback:v=>fmt(v)}}}}
   });
@@ -5058,10 +5060,10 @@ function renderConsultPeriod(){
   $("consultYoYChange").textContent=curRange; $("consultYoYChange").className="val"; $("consultYoYChange").style.fontSize="13px"; $("consultYoYSub").textContent=`전년 비교 ${prevRange}`;
   $("consultTopCategoryKpi").textContent=topCategory?topCategory.name:"-"; $("consultTopCategoryKpiSub").textContent=topCategory?`${fmt(topCategory.value)}건 (${total?((topCategory.value/total)*100).toFixed(1):'0.0'}%)`:"-";
   $("consultTopIncreaseKpi").textContent=topIncrease?(topIncrease.r.inquiry||topIncrease.r.category1||"-"):"-"; $("consultTopIncreaseKpiSub").textContent=topIncrease?`전년 대비 ${consultRateText(topIncrease.cur,topIncrease.prev)}`:"증가 유형 없음";
-  $("consultChangeTitle").textContent="전년 대비 주요 변화"; $("consultIncreaseTitle").textContent="전년 대비 증가 TOP5"; $("consultDecreaseTitle").textContent="전년 대비 감소 TOP5"; $("consultTopCompareHead").textContent="전년 대비";
+  $("consultChangeTitle").textContent="전년 대비 주요 변화"; $("consultIncreaseTitle").textContent="전년 대비 증가 TOP5"; $("consultDecreaseTitle").textContent="전년 대비 감소 TOP5"; $("consultTopCompareHead").textContent="전년 대비"; $("consultCompareModeWrap")?.classList.add("hidden"); document.querySelectorAll("#consulttype .consult-monthly-yoy-col").forEach(el=>el.classList.add("hidden"));
   $("consultTopShareNote").textContent="※ 비중은 올해 분석기간 기준"; $("consultDetailSectionNum").textContent="4"; $("consultCompareNote").textContent="※ 전년 비교기간 대비 증감률은 소수점 첫째자리 반올림 기준입니다.";
   $("consultDetailMonthHead").textContent="올해"; $("consultDetailPrevHead").textContent="전년";
-  $("consultTop10CategoryBody").innerHTML=consultBuildTop10CategoryTable(top10,total,prevCatMap);
+  $("consultTop10CategoryBody").innerHTML=consultBuildTop10CategoryTable(top10,total,prevCatMap,null,false);
   requestAnimationFrame(()=>consultRenderTop10Chart(top10,prevCatMap,"올해 상담건수","전년 상담건수"));
   if(prevRows.length){ $("consultIncreaseBody").innerHTML=consultMakeChangeTable(inc,"증가한 문의유형이 없습니다.","전년","올해"); $("consultDecreaseBody").innerHTML=consultMakeChangeTable(dec,"감소한 문의유형이 없습니다.","전년","올해"); }
   else { const msg='<div class="consult-empty"><div class="consult-empty-title">전년 비교 데이터 등록 시 표시</div></div>'; $("consultIncreaseBody").innerHTML=msg; $("consultDecreaseBody").innerHTML=msg; }
@@ -5083,13 +5085,14 @@ function consultGroupDetailRows(rows){
   const map=new Map();
   rows.forEach(r=>{
     const key=consultRowKey(r);
-    if(!map.has(key)) map.set(key,{...r,_cur:0,_prev:0,_prevHas:false,_channels:new Set()});
+    if(!map.has(key)) map.set(key,{...r,_cur:0,_prev:0,_prevHas:false,_yoy:0,_yoyHas:false,_channels:new Set()});
     const item=map.get(key);
     item._cur+=(Number(r._cur)||0);
     if(r._prev!==null && r._prev!==undefined){ item._prev+=(Number(r._prev)||0); item._prevHas=true; }
+    if(r._yoy!==null && r._yoy!==undefined){ item._yoy+=(Number(r._yoy)||0); item._yoyHas=true; }
     if(r.channel) item._channels.add(r.channel);
   });
-  return [...map.values()].map(r=>({...r,channel:consultDetailChannelLabel(r._channels),_prev:r._prevHas?r._prev:null}));
+  return [...map.values()].map(r=>({...r,channel:consultDetailChannelLabel(r._channels),_prev:r._prevHas?r._prev:null,_yoy:r._yoyHas?r._yoy:null}));
 }
 function renderConsultPeriodDetail(){
   const name=$("consultPeriodSelect")?.value||"", pageChannel=consultSelectedChannel();
@@ -5107,7 +5110,7 @@ function renderConsultPeriodDetail(){
   const cat=$("consultCatFilter")?.value||"", mid=$("consultMidFilter")?.value||"", small=$("consultSmallFilter")?.value||"", q=($("consultSearch")?.value||"").trim().toLowerCase(), mode=document.querySelector('#consulttype .consult-toggle-group button.active')?.dataset.filter||"all";
   const rows=grouped.filter(r=>(!cat||r.category1===cat)&&(!mid||r.category2===mid)&&(!small||r.category3===small)&&(!q||`${r.channel||''} ${r.inquiry||''} ${r.category1||''} ${r.category2||''} ${r.category3||''}`.toLowerCase().includes(q)));
   const filtered=rows.filter(r=>mode==="increase"?r._prev!==null&&r._cur>r._prev:mode==="decrease"?r._prev!==null&&r._cur<r._prev:mode==="new"?r._prev!==null&&r._prev===0&&r._cur>0:true).sort((a,b)=>b._cur-a._cur);
-  $("consultDetailBody").innerHTML=filtered.map(r=>`<tr><td><span class="consult-badge">${consultEsc(r.channel||'-')}</span></td><td>${consultEsc(r.category1||'-')}</td><td>${consultEsc(r.category2||'-')}</td><td>${consultEsc(r.category3||'-')}</td><td>${consultEsc(r.inquiry||'-')}</td><td class="num">${fmt(r._cur)}</td><td class="num">${r._prev===null?'-':fmt(r._prev)}</td><td class="num">${r._prev===null?'-':`<span class="${consultRateClass(r._cur,r._prev)}">${consultRateText(r._cur,r._prev)}</span>`}</td></tr>`).join("") || '<tr><td colspan="8" style="text-align:center;color:#8a96a6;padding:22px">조건에 맞는 상담유형이 없습니다.</td></tr>';
+  $("consultDetailBody").innerHTML=filtered.map(r=>`<tr><td><span class="consult-badge">${consultEsc(r.channel||'-')}</span></td><td>${consultEsc(r.category1||'-')}</td><td>${consultEsc(r.category2||'-')}</td><td>${consultEsc(r.category3||'-')}</td><td>${consultEsc(r.inquiry||'-')}</td><td class="num">${fmt(r._cur)}</td><td class="num">${r._prev===null?'-':fmt(r._prev)}</td><td class="num">${r._prev===null?'-':`<span class="${consultRateClass(r._cur,r._prev)}">${consultRateText(r._cur,r._prev)}</span>`}</td><td class="num consult-monthly-yoy-col hidden">-</td><td class="num consult-monthly-yoy-col hidden">-</td></tr>`).join("") || '<tr><td colspan="10" style="text-align:center;color:#8a96a6;padding:22px">조건에 맞는 상담유형이 없습니다.</td></tr>';
 }
 function renderConsultType(){
   const sel=$("consultMonthSelectLive"), channelSel=$("consultChannelSelect"), yearSel=$("consultYearSelect"), modeSel=$("consultModeSelect");
@@ -5118,9 +5121,10 @@ function renderConsultType(){
   modeSel.onchange=renderConsultType;
   if(mode==="period"){ renderConsultPeriod(); return; }
   $("consultMonthlyTrendPanel")?.classList.remove("hidden");
-  $("consultPrevLabel").textContent="전월 대비"; $("consultYoYLabel").textContent="전년동월 대비"; $("consultYoYChange").style.fontSize="";
-  $("consultChangeTitle").textContent="전월 대비 주요 변화"; $("consultIncreaseTitle").textContent="전월 대비 증가 TOP5"; $("consultDecreaseTitle").textContent="전월 대비 감소 TOP5"; $("consultTopCompareHead").textContent="전월 대비"; $("consultDetailPrevHead").textContent="전월";
-  $("consultTopShareNote").textContent="※ 비중은 선택월 기준"; $("consultDetailSectionNum").textContent="5"; $("consultCompareNote").textContent="※ 전월 대비 증감률은 소수점 첫째자리 반올림 기준입니다.";
+  $("consultPrevLabel").textContent="전월 대비"; $("consultYoYLabel").textContent="전년 대비"; $("consultYoYChange").style.fontSize="";
+  $("consultCompareModeWrap")?.classList.remove("hidden");
+  $("consultDetailPrevHead").textContent="전월"; document.querySelectorAll("#consulttype .consult-monthly-yoy-col").forEach(el=>el.classList.remove("hidden"));
+  $("consultTopShareNote").textContent="※ 비중은 선택월 기준"; $("consultDetailSectionNum").textContent="5"; $("consultCompareNote").textContent="※ 전월·전년 대비 증감률은 소수점 첫째자리 반올림 기준입니다.";
   if(!consultTypeData.length){
     sel.innerHTML=""; yearSel.innerHTML=""; channelSel.value="all"; $("consultMonthHelp").textContent="관리자에서 월간 상담유형 Excel을 등록해 주세요."; consultRenderEmpty(); return;
   }
@@ -5136,6 +5140,7 @@ function renderConsultType(){
   if(old==='all' || available.includes(Number(old))) sel.value=old||String(available.at(-1)); else sel.value=String(available.at(-1));
 
   const selection=sel.value, isAll=selection==='all', m=isAll?'all':Number(selection), label=consultMonthLabel(m), prev=isAll?null:m-1;
+  document.querySelectorAll("#consulttype .consult-monthly-yoy-col").forEach(el=>el.classList.toggle("hidden",isAll));
   const rows=consultAggregateForSelection(base,m,available), active=rows.filter(r=>(Number(r._v)||0)>0), total=active.reduce((a,r)=>a+(Number(r._v)||0),0);
   const sorted=active.slice().sort((a,b)=>(Number(b._v)||0)-(Number(a._v)||0));
   const prevInfo=isAll?{has:false,map:new Map(),rows:[]}:consultPrevAggregates(base,m), prevMap=prevInfo.map;
@@ -5149,9 +5154,23 @@ function renderConsultType(){
   const top10CategoryTotal=top10Categories.reduce((s,x)=>s+x.value,0);
   const prevCatAgg=prevInfo.has?consultAggregateBy(prevInfo.rows.filter(r=>(Number(r._v)||0)>0),'category1'):[];
   const prevCatMap=new Map(prevCatAgg.map(x=>[x.name,x.value]));
+  const yoyCatAgg=yoyInfo.has?consultAggregateBy(yoyInfo.rows.filter(r=>(Number(r._v)||0)>0),'category1'):[];
+  const yoyCatMap=new Map(yoyCatAgg.map(x=>[x.name,x.value]));
+
+  const compareMode=$("consultCompareMode")?.value||"prev";
+  const compareIsYoy=compareMode==="yoy";
+  const compareLabel=compareIsYoy?"전년":"전월";
+  const compareMap=compareIsYoy?yoyInfo.map:prevMap;
+  const compareCatMap=compareIsYoy?yoyCatMap:prevCatMap;
+  const compareRows=compareIsYoy?yoyInfo.rows:prevInfo.rows;
+  const compareHas=compareIsYoy?yoyInfo.has:prevInfo.has;
+  $("consultChangeTitle").textContent=`${compareLabel} 대비 주요 변화`;
+  $("consultIncreaseTitle").textContent=`${compareLabel} 대비 증가 TOP5`;
+  $("consultDecreaseTitle").textContent=`${compareLabel} 대비 감소 TOP5`;
+  $("consultTopCompareHead").textContent=`${compareLabel} 대비`;
 
   let changes=[];
-  if(prevInfo.has){ changes=rows.map(r=>({r,cur:Number(r._v)||0,prev:prevMap.get(consultRowKey(r))||0})).map(x=>({...x,delta:x.cur-x.prev})); }
+  if(compareHas){ changes=rows.map(r=>({r,cur:Number(r._v)||0,prev:compareMap.get(consultRowKey(r))||0})).map(x=>({...x,delta:x.cur-x.prev})); }
   const inc=changes.filter(x=>x.delta>0).sort((a,b)=>b.delta-a.delta).slice(0,5);
   const dec=changes.filter(x=>x.delta<0).sort((a,b)=>a.delta-b.delta).slice(0,5);
   const topIncrease=inc[0]||null; const topDecrease=dec[0]||null;
@@ -5160,10 +5179,10 @@ function renderConsultType(){
   $('consultTotal').textContent=fmt(total)+' 건'; $('consultTotalSub').textContent=`${label} · ${channelLabel} 합계`;
   if(prevTotal!==null){ $('consultPrevChange').textContent=consultRateText(total,prevTotal); $('consultPrevChange').className=`val ${total>prevTotal?'up':total<prevTotal?'down':''}`; $('consultPrevSub').textContent=`전월 ${fmt(prevTotal)}건 대비 ${total>=prevTotal?'+':''}${fmt(total-prevTotal)}건`; }
   else { $('consultPrevChange').textContent='-'; $('consultPrevChange').className='val'; $('consultPrevSub').textContent=isAll?'전체 선택 시 전월 비교 제외':'전월 데이터 등록 시 표시'; }
-  if(yoyTotal!==null){ $('consultYoYChange').textContent=consultRateText(total,yoyTotal); $('consultYoYChange').className=`val ${total>yoyTotal?'up':total<yoyTotal?'down':''}`; $('consultYoYSub').textContent=`전년동월 ${fmt(yoyTotal)}건 대비 ${total>=yoyTotal?'+':''}${fmt(total-yoyTotal)}건`; }
-  else { $('consultYoYChange').textContent='-'; $('consultYoYChange').className='val'; $('consultYoYSub').textContent=isAll?'전체 선택 시 전년동월 비교 제외':'전년 데이터 등록 시 표시'; }
+  if(yoyTotal!==null){ $('consultYoYChange').textContent=consultRateText(total,yoyTotal); $('consultYoYChange').className=`val ${total>yoyTotal?'up':total<yoyTotal?'down':''}`; $('consultYoYSub').textContent=`전년 ${fmt(yoyTotal)}건 대비 ${total>=yoyTotal?'+':''}${fmt(total-yoyTotal)}건`; }
+  else { $('consultYoYChange').textContent='-'; $('consultYoYChange').className='val'; $('consultYoYSub').textContent=isAll?'전체 선택 시 전년 비교 제외':'전년 데이터 등록 시 표시'; }
   $('consultTopCategoryKpi').textContent=topCategory?topCategory.name:'-'; $('consultTopCategoryKpiSub').textContent=topCategory?`${fmt(topCategory.value)}건 (${total?((topCategory.value/total)*100).toFixed(1):'0.0'}%)`:'-';
-  $('consultTopIncreaseKpi').textContent=topIncrease?(topIncrease.r.inquiry||'-'):'-'; $('consultTopIncreaseKpiSub').textContent=topIncrease?`전월 대비 ${consultRateText(topIncrease.cur,topIncrease.prev)}`:(isAll?'개별 월 선택 시 표시':'전월 데이터 등록 시 표시');
+  $('consultTopIncreaseKpi').textContent=topIncrease?(topIncrease.r.inquiry||'-'):'-'; $('consultTopIncreaseKpiSub').textContent=topIncrease?`${compareLabel} 대비 ${consultRateText(topIncrease.cur,topIncrease.prev)}`:(isAll?'개별 월 선택 시 표시':`${compareLabel} 데이터 등록 시 표시`);
   $('consultMonthHelp').textContent=`${consultSelectedYear()}년 등록 월: ${available.map(x=>x+'월').join(' · ')}`;
   $('consultDetailMonthHead').textContent=label; $('consultTrendBadge').textContent=`${channelLabel} 기준`;
 
@@ -5173,12 +5192,12 @@ function renderConsultType(){
   if(nextBtn){ nextBtn.disabled=isAll || available.indexOf(Number(sel.value))===-1 || available.indexOf(Number(sel.value))>=available.length-1; nextBtn.onclick=()=>{const idx=available.indexOf(Number(sel.value)); if(idx>=0 && idx<available.length-1){ sel.value=String(available[idx+1]); renderConsultType(); }}; }
 
   // Top 10 categories section
-  $('consultTop10CategoryBody').innerHTML=consultBuildTop10CategoryTable(top10Categories,total,prevCatMap);
-  requestAnimationFrame(()=>consultRenderTop10Chart(top10Categories,prevCatMap,isAll?"전체 상담건수":"선택월 상담건수",isAll?"비교 없음":"전월 상담건수"));
+  $('consultTop10CategoryBody').innerHTML=consultBuildTop10CategoryTable(top10Categories,total,isAll?new Map():compareCatMap);
+  requestAnimationFrame(()=>consultRenderTop10Chart(top10Categories,isAll?new Map():compareCatMap,isAll?"전체 상담건수":"선택월 상담건수",isAll?"비교 없음":`${compareLabel} 상담건수`));
 
   // Change sections
-  if(prevInfo.has){ $('consultIncreaseBody').innerHTML=consultMakeChangeTable(inc,'증가한 문의유형이 없습니다.'); $('consultDecreaseBody').innerHTML=consultMakeChangeTable(dec,'감소한 문의유형이 없습니다.'); }
-  else { const msg=`<div class="consult-empty"><div class="consult-empty-title">${isAll?'분석월을 선택하면 전월 비교가 표시됩니다':'전월 데이터 등록 시 표시'}</div></div>`; $('consultIncreaseBody').innerHTML=msg; $('consultDecreaseBody').innerHTML=msg; }
+  if(compareHas){ $('consultIncreaseBody').innerHTML=consultMakeChangeTable(inc,'증가한 문의유형이 없습니다.'); $('consultDecreaseBody').innerHTML=consultMakeChangeTable(dec,'감소한 문의유형이 없습니다.'); }
+  else { const msg=`<div class="consult-empty"><div class="consult-empty-title">${isAll?'분석월을 선택하면 비교가 표시됩니다':compareLabel+' 데이터 등록 시 표시'}</div></div>`; $('consultIncreaseBody').innerHTML=msg; $('consultDecreaseBody').innerHTML=msg; }
 
   // detail analysis (mid/small top10 within chosen category)
   const drillSel=$('consultDrillCategorySelect');
@@ -5205,7 +5224,7 @@ function renderConsultType(){
   catFilter.innerHTML='<option value="">대분류 전체</option>'+catNamesFilter.map(x=>`<option value="${consultEsc(x)}">${consultEsc(x)}</option>`).join('');
   if(catNamesFilter.includes(oldCat)) catFilter.value=oldCat;
   refreshConsultMidFilter(); consultUpdateSmallFilter(); renderConsultDetail();
-  sel.onchange=renderConsultType; yearSel.onchange=()=>{ sel.value=''; renderConsultType(); }; channelSel.onchange=renderConsultType; $('consultTrendSeriesCount').onchange=()=>consultRenderMonthlyChart(channel, available); $('consultDetailChannelFilter').onchange=renderConsultDetail; catFilter.onchange=()=>{refreshConsultMidFilter(); consultUpdateSmallFilter(); renderConsultDetail();}; $('consultMidFilter').onchange=()=>{consultUpdateSmallFilter(); renderConsultDetail();}; $('consultSmallFilter').onchange=renderConsultDetail; $('consultSearch').oninput=renderConsultDetail;
+  sel.onchange=renderConsultType; yearSel.onchange=()=>{ sel.value=''; renderConsultType(); }; channelSel.onchange=renderConsultType; if($('consultCompareMode')) $('consultCompareMode').onchange=renderConsultType; $('consultTrendSeriesCount').onchange=()=>consultRenderMonthlyChart(channel, available); if($('consultTrendYoyMode')) $('consultTrendYoyMode').onchange=()=>consultRenderMonthlyChart(channel, available); $('consultDetailChannelFilter').onchange=renderConsultDetail; catFilter.onchange=()=>{refreshConsultMidFilter(); consultUpdateSmallFilter(); renderConsultDetail();}; $('consultMidFilter').onchange=()=>{consultUpdateSmallFilter(); renderConsultDetail();}; $('consultSmallFilter').onchange=renderConsultDetail; $('consultSearch').oninput=renderConsultDetail;
   document.querySelectorAll('#consulttype .consult-toggle-group button').forEach(btn=>{ btn.onclick=()=>{ document.querySelectorAll('#consulttype .consult-toggle-group button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderConsultDetail(); }; });
   const toggleBtn=$('consultDetailToggleBtn'), detailWrap=$('consultDetailWrap'); if(toggleBtn && detailWrap){ toggleBtn.onclick=()=>{ detailWrap.classList.toggle('hidden'); toggleBtn.textContent=detailWrap.classList.contains('hidden')?'상세 데이터 펼쳐보기 ▼':'상세 데이터 접기 ▲'; }; }
 }
@@ -5223,14 +5242,25 @@ function renderConsultDetail(){
   const detailChannel=$('consultDetailChannelFilter')?.value||'', cat=$('consultCatFilter')?.value||'', mid=$('consultMidFilter')?.value||'', small=$('consultSmallFilter')?.value||'', q=($('consultSearch')?.value||'').trim().toLowerCase();
   const mode=document.querySelector('#consulttype .consult-toggle-group button.active')?.dataset.filter||'all';
   const base=consultBaseRows();
+  const prevYearRows=!isAll?consultRowsFor(consultSelectedChannel(),consultSelectedYear()-1):[];
+  const yoyByChannelKey=new Map();
+  if(!isAll){
+    prevYearRows.forEach(r=>{
+      const v=consultMonthValue(r,m);
+      if(v!==null){
+        const k=`${r.channel||''}|${consultRowKey(r)}`;
+        yoyByChannelKey.set(k,(yoyByChannelKey.get(k)||0)+(Number(v)||0));
+      }
+    });
+  }
   const prepared=base
     .filter(r=>!detailChannel||r.channel===detailChannel)
-    .map(r=>{const v=consultSelectionValue(r,m,available); let pv=null; if(!isAll&&prev>=1){ const t=consultMonthValue(r,prev); pv=t===null?0:t; } return {...r,_cur:v,_prev:pv};})
+    .map(r=>{const v=consultSelectionValue(r,m,available); let pv=null; if(!isAll&&prev>=1){ const t=consultMonthValue(r,prev); pv=t===null?0:t; } const yv=!isAll?(yoyByChannelKey.get(`${r.channel||''}|${consultRowKey(r)}`)??0):null; return {...r,_cur:v,_prev:pv,_yoy:yv};})
     .filter(r=>r._cur!==null);
   const grouped=consultGroupDetailRows(prepared);
   const rows=grouped.filter(r=>(!cat||r.category1===cat)&&(!mid||r.category2===mid)&&(!small||r.category3===small)&&(!q||`${r.channel||''} ${r.inquiry||''} ${r.category1||''} ${r.category2||''} ${r.category3||''}`.toLowerCase().includes(q)));
   const filtered=rows.filter(r=>{ if(mode==='increase') return r._prev!==null && r._cur>r._prev; if(mode==='decrease') return r._prev!==null && r._cur<r._prev; if(mode==='new') return r._prev!==null && (Number(r._prev)||0)===0 && (Number(r._cur)||0)>0; return true; }).sort((a,b)=>(Number(b._cur)||0)-(Number(a._cur)||0));
-  $('consultDetailBody').innerHTML=filtered.map(r=>`<tr><td><span class="consult-badge">${consultEsc(r.channel||'-')}</span></td><td>${consultEsc(r.category1||'-')}</td><td>${consultEsc(r.category2||'-')}</td><td>${consultEsc(r.category3||'-')}</td><td>${consultEsc(r.inquiry||'-')}</td><td class="num">${r._cur===null?'-':fmt(r._cur)}</td><td class="num">${r._prev===null?'-':fmt(r._prev)}</td><td class="num">${r._cur===null||r._prev===null?'-':`<span class="${consultRateClass(r._cur,r._prev)}">${consultRateText(r._cur,r._prev)}</span>`}</td></tr>`).join('') || '<tr><td colspan="8" style="text-align:center;color:#8a96a6;padding:22px">조건에 맞는 상담유형이 없습니다.</td></tr>';
+  $('consultDetailBody').innerHTML=filtered.map(r=>`<tr><td><span class="consult-badge">${consultEsc(r.channel||'-')}</span></td><td>${consultEsc(r.category1||'-')}</td><td>${consultEsc(r.category2||'-')}</td><td>${consultEsc(r.category3||'-')}</td><td>${consultEsc(r.inquiry||'-')}</td><td class="num">${r._cur===null?'-':fmt(r._cur)}</td><td class="num">${r._prev===null?'-':fmt(r._prev)}</td><td class="num">${r._cur===null||r._prev===null?'-':`<span class="${consultRateClass(r._cur,r._prev)}">${consultRateText(r._cur,r._prev)}</span>`}</td><td class="num consult-monthly-yoy-col${isAll?' hidden':''}">${r._yoy===null?'-':fmt(r._yoy)}</td><td class="num consult-monthly-yoy-col${isAll?' hidden':''}">${r._cur===null||r._yoy===null?'-':`<span class="${consultRateClass(r._cur,r._yoy)}">${consultRateText(r._cur,r._yoy)}</span>`}</td></tr>`).join('') || '<tr><td colspan="10" style="text-align:center;color:#8a96a6;padding:22px">조건에 맞는 상담유형이 없습니다.</td></tr>';
 }
 function consultRenderMonthlyChart(channel,available){
   const canvas=$('consultMonthlyChart'); if(!canvas) return; consultDestroyChart('consultMonthly'); consultDestroyChart('consultTop10Compare');
@@ -5304,6 +5334,31 @@ function consultRenderMonthlyChart(channel,available){
     });
   }
 
+  const showYoy=$('consultTrendYoyMode')?.value==='on';
+  if(showYoy){
+    const prevYearRows=consultRowsFor(channel,consultSelectedYear()-1);
+    if(prevYearRows.length){
+      datasets.push({
+        type:'line',
+        label:'전년 전체 상담량',
+        data:months.map(m=>prevYearRows.reduce((s,r)=>s+(consultMonthValue(r,m)??0),0)),
+        borderColor:'#6f7d92',
+        backgroundColor:'transparent',
+        borderWidth:2.2,
+        borderDash:[3,3],
+        pointRadius:2.2,
+        pointHoverRadius:4.5,
+        pointBackgroundColor:'#fff',
+        pointBorderColor:'#6f7d92',
+        pointBorderWidth:1.8,
+        tension:.38,
+        fill:false,
+        stack:undefined,
+        order:0
+      });
+    }
+  }
+
   charts.consultMonthly=new Chart(canvas,{
     type:'bar',
     data:{labels:months.map(m=>`${m}월`),datasets},
@@ -5334,8 +5389,8 @@ function consultRenderMonthlyChart(channel,available){
 function consultRenderEmpty(){
   $('consultNoData')?.classList.remove('hidden');
   ['consultTotal','consultPrevChange','consultYoYChange','consultTopCategoryKpi','consultTopIncreaseKpi'].forEach(id=>{if($(id)) $(id).textContent='-';});
-  if($('consultTop10CategoryBody')) $('consultTop10CategoryBody').innerHTML='<tr><td colspan="5" style="text-align:center;color:#8a96a6;padding:22px">관리자에서 상담유형 Excel을 등록해 주세요.</td></tr>';
-  if($('consultDetailBody')) $('consultDetailBody').innerHTML='<tr><td colspan="8" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr>';
+  if($('consultTop10CategoryBody')) $('consultTop10CategoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;color:#8a96a6;padding:22px">관리자에서 상담유형 Excel을 등록해 주세요.</td></tr>';
+  if($('consultDetailBody')) $('consultDetailBody').innerHTML='<tr><td colspan="10" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr>';
   if($('consultMidTopBody')) $('consultMidTopBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr>';
   if($('consultSmallTopBody')) $('consultSmallTopBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr>';
   consultDestroyChart('consultMonthly');
