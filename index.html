@@ -5196,7 +5196,7 @@ function renderConsultType(){
   requestAnimationFrame(()=>consultRenderTop10Chart(top10Categories,isAll?new Map():compareCatMap,isAll?"전체 상담건수":"선택월 상담건수",isAll?"비교 없음":`${compareLabel} 상담건수`));
 
   // Change sections
-  if(compareHas){ $('consultIncreaseBody').innerHTML=consultMakeChangeTable(inc,'증가한 문의유형이 없습니다.'); $('consultDecreaseBody').innerHTML=consultMakeChangeTable(dec,'감소한 문의유형이 없습니다.'); }
+  if(compareHas){ $('consultIncreaseBody').innerHTML=consultMakeChangeTable(inc,'증가한 문의유형이 없습니다.',compareLabel,'선택월'); $('consultDecreaseBody').innerHTML=consultMakeChangeTable(dec,'감소한 문의유형이 없습니다.',compareLabel,'선택월'); }
   else { const msg=`<div class="consult-empty"><div class="consult-empty-title">${isAll?'분석월을 선택하면 비교가 표시됩니다':compareLabel+' 데이터 등록 시 표시'}</div></div>`; $('consultIncreaseBody').innerHTML=msg; $('consultDecreaseBody').innerHTML=msg; }
 
   // detail analysis (mid/small top10 within chosen category)
