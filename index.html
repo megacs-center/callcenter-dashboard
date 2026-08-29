@@ -3790,8 +3790,15 @@ async function reload(){
   consultPeriodData = await fetchCollection("consultPeriods");
   consultPeriodData.sort((a,b)=>String(a.analysisName||"").localeCompare(String(b.analysisName||"")) || String(a.compareType||"").localeCompare(String(b.compareType||"")) || String(a.code||"").localeCompare(String(b.code||"")));
 
-  aiAnalysisData = await fetchCollection("aiAnalysis");
-  aiAnalysisData.sort((a,b)=>String(aiValue(a,["analysisAt","분석일시"],a.__id)||"").localeCompare(String(aiValue(b,["analysisAt","분석일시"],b.__id)||"")));
+  // AI 분석 컬렉션은 기존 Firestore 규칙에 아직 권한이 없을 수 있으므로
+  // 로그인 자체가 막히지 않도록 선택적으로 로드합니다.
+  try {
+    aiAnalysisData = await fetchCollection("aiAnalysis");
+    aiAnalysisData.sort((a,b)=>String(aiValue(a,["analysisAt","분석일시"],a.__id)||"").localeCompare(String(aiValue(b,["analysisAt","분석일시"],b.__id)||"")));
+  } catch (e) {
+    console.warn("aiAnalysis 컬렉션을 읽을 권한이 없어 AI 분석 데이터만 건너뜁니다.", e);
+    aiAnalysisData = [];
+  }
 
   const newsStored = await fetchCollection("newsstart");
   newsStartUsingFallback = !newsStored.length;
