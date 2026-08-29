@@ -2059,6 +2059,38 @@ body.auth-pending .app{visibility:hidden}
 .mini-danger{height:27px;border:1px solid #f3c7c7;background:#fff4f4;color:#c23b3b;border-radius:6px;padding:0 8px;font-size:10px;font-weight:800;cursor:pointer}
 @media(max-width:1100px){.session-email{display:none}.top-right{gap:6px}.access-form{grid-template-columns:1fr 110px}.access-form button{grid-column:1/-1}.title{font-size:20px}}
 
+
+
+/* AI 분석 결과 */
+.ai-head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:2px 0 12px;
+}
+.ai-head-left{min-width:0}
+.ai-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.ai-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid #dfe6ef;border-radius:999px;background:#fff;color:#536178;font-size:10.5px;font-weight:800}
+.ai-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ai-toolbar select{height:38px;min-width:230px;border:1px solid #d7e0eb;border-radius:8px;background:#fff;padding:0 10px;color:#26364f;font-weight:800}
+.ai-status{margin:0 0 10px;padding:10px 12px;border:1px solid #dbe6f3;border-radius:9px;background:#f7faff;color:#58708c;font-size:10.5px;line-height:1.5}
+.ai-status.error{border-color:#fecaca;background:#fff3f3;color:#b42318}
+.ai-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ai-card{padding:16px 17px;min-width:0;box-shadow:var(--shadow)}
+.ai-card.full{grid-column:1/-1}
+.ai-card-title{display:flex;align-items:center;gap:8px;margin:0 0 11px;font-size:14px;font-weight:900;color:#14243f}
+.ai-card-title .ai-dot{width:8px;height:8px;border-radius:50%;flex:0 0 8px;background:#1673f8}
+.ai-card.issue .ai-dot{background:#ef4444}
+.ai-card.operation .ai-dot{background:#1673f8}
+.ai-card.consult .ai-dot{background:#7c3aed}
+.ai-card.check .ai-dot{background:#f59e0b}
+.ai-card.improve .ai-dot{background:#16a34a}
+.ai-body{font-size:12px;line-height:1.72;color:#34445c;word-break:keep-all;overflow-wrap:anywhere}
+.ai-body p{margin:0 0 9px}
+.ai-body p:last-child{margin-bottom:0}
+.ai-body ul,.ai-body ol{margin:0;padding-left:20px}
+.ai-body li{margin:0 0 7px}
+.ai-body strong{color:#172842;font-weight:900}
+.ai-empty{padding:34px 20px;text-align:center;color:#8a96a8;font-size:12px}
+@media(max-width:900px){.ai-grid{grid-template-columns:1fr}.ai-card.full{grid-column:auto}.ai-head{align-items:flex-start;flex-direction:column}.ai-toolbar{width:100%}.ai-toolbar select{min-width:0;flex:1}}
+
 </style>
 </head>
 <body class="auth-pending">
@@ -2089,6 +2121,7 @@ body.auth-pending .app{visibility:hidden}
     <button data-target="mdm">▣　<span>MDM 원격</span></button>
     <button data-target="newsstart" style="display:none">✓　<span>뉴스타트 인증</span></button>
     <button data-target="consulttype">▤　<span>상담유형</span></button>
+    <button data-target="ai">✦　<span>AI 분석</span></button>
     <div class="sep"></div>
     <button data-target="admin" data-role="admin" style="display:none">🔒　<span>관리자</span></button>
   </div>
@@ -2770,6 +2803,32 @@ body.auth-pending .app{visibility:hidden}
   </div>
 </section>
 
+
+<section id="ai" class="section">
+  <div class="ai-head">
+    <div class="ai-head-left">
+      <div class="detail-title-wrap"><div class="detail-title">AI 운영 분석</div><button type="button" class="data-info-btn" data-info-page="ai">ⓘ 데이터 기준</button></div>
+      <div class="ai-meta">
+        <span class="ai-chip">분석일시 <b id="aiAnalysisAt">-</b></span>
+        <span class="ai-chip">운영분석기간 <b id="aiOperationPeriod">-</b></span>
+        <span class="ai-chip">상담유형기준 <b id="aiConsultBase">-</b></span>
+      </div>
+    </div>
+    <div class="ai-toolbar">
+      <select id="aiHistorySelect" aria-label="AI 분석 이력"><option value="">분석 결과 없음</option></select>
+      <button class="btn secondary" id="aiRefreshBtn" type="button">새로고침</button>
+    </div>
+  </div>
+  <div id="aiStatus" class="ai-status">Firestore의 AI 분석 결과를 불러오는 중입니다.</div>
+  <div class="ai-grid">
+    <div class="card ai-card issue"><div class="ai-card-title"><span class="ai-dot"></span>주요 이슈</div><div class="ai-body" id="aiIssues"><div class="ai-empty">분석 결과가 없습니다.</div></div></div>
+    <div class="card ai-card improve"><div class="ai-card-title"><span class="ai-dot"></span>개선 제안</div><div class="ai-body" id="aiImprovement"><div class="ai-empty">분석 결과가 없습니다.</div></div></div>
+    <div class="card ai-card operation"><div class="ai-card-title"><span class="ai-dot"></span>운영 분석</div><div class="ai-body" id="aiOperationAnalysis"><div class="ai-empty">분석 결과가 없습니다.</div></div></div>
+    <div class="card ai-card consult"><div class="ai-card-title"><span class="ai-dot"></span>상담유형 분석</div><div class="ai-body" id="aiConsultAnalysis"><div class="ai-empty">분석 결과가 없습니다.</div></div></div>
+    <div class="card ai-card check full"><div class="ai-card-title"><span class="ai-dot"></span>확인 필요</div><div class="ai-body" id="aiCheckNeeded"><div class="ai-empty">분석 결과가 없습니다.</div></div></div>
+  </div>
+</section>
+
 <section id="admin" class="section">
   <div class="detail-head"><div class="detail-title-wrap"><div class="detail-title">관리자</div><button type="button" class="data-info-btn" data-info-page="admin">ⓘ 데이터 기준</button></div></div>
   <div id="adminLock" class="card adminbox hidden">
@@ -2903,7 +2962,7 @@ body.auth-pending .app{visibility:hidden}
       target.classList.add('active');
 
       const topFilters=document.querySelector('.top .filters');
-      if(topFilters) topFilters.style.display=targetId==='consulttype'?'none':'flex';
+      if(topFilters) topFilters.style.display=(targetId==='consulttype'||targetId==='ai')?'none':'flex';
 
       const pop=document.getElementById('dataInfoPopover');
       if(pop){ pop.classList.remove('open'); pop.setAttribute('aria-hidden','true'); }
@@ -3067,6 +3126,18 @@ const DATA_INFO = {
         <div class="data-info-row">코드는 관리자 원본 및 Excel에는 유지되지만 상담유형 분석 화면에서는 표시하지 않습니다.</div>
       </div>`
   },
+  ai: {
+    title:"AI 운영 분석 · 데이터 기준",
+    html:`
+      <div class="data-info-section"><div class="data-info-label">데이터 흐름</div>
+        <div class="data-info-row">일일 운영실적과 상담유형 데이터를 Google Apps Script에서 AI로 분석한 뒤, 결과를 Firestore <span class="data-info-em">aiAnalysis</span> 컬렉션에 저장하면 이 화면이 최신 결과를 표시합니다.</div>
+        <div class="data-info-row">분석 결과는 분석일시, 운영분석기간, 상담유형기준, 주요이슈, 운영분석, 상담유형분석, 확인필요, 개선제안으로 구성합니다.</div>
+      </div>
+      <div class="data-info-section"><div class="data-info-label">표시 기준</div>
+        <div class="data-info-row">가장 최근 분석 결과를 기본 표시하며, 우측 이력 선택에서 이전 결과를 다시 확인할 수 있습니다.</div>
+        <div class="data-info-row">AI 해석은 운영 판단을 보조하는 참고자료이며, 수치·기간·원천데이터가 다른 경우 원본 데이터를 우선 확인합니다.</div>
+      </div>`
+  },
   admin: {
     title:"관리자 · 데이터 기준",
     html:`
@@ -3173,6 +3244,7 @@ let refundDaily = [];      // 일반 조회용 일자별 환불 집계
 let mdmData = [];          // MDM 원격 일자별 현황
 let consultTypeData = [];  // 상담유형 월별 현황
 let consultPeriodData = []; // 상담유형 특정기간(올해/전년 비교) 현황
+let aiAnalysisData = [];   // AI 운영 분석 결과
 let newsStartData = [];    // 뉴스타트 인증 일자별 현황
 let newsStartUsingFallback = false;
 const NEWSSTART_INITIAL_DATA = [
@@ -3718,6 +3790,9 @@ async function reload(){
   consultPeriodData = await fetchCollection("consultPeriods");
   consultPeriodData.sort((a,b)=>String(a.analysisName||"").localeCompare(String(b.analysisName||"")) || String(a.compareType||"").localeCompare(String(b.compareType||"")) || String(a.code||"").localeCompare(String(b.code||"")));
 
+  aiAnalysisData = await fetchCollection("aiAnalysis");
+  aiAnalysisData.sort((a,b)=>String(aiValue(a,["analysisAt","분석일시"],a.__id)||"").localeCompare(String(aiValue(b,["analysisAt","분석일시"],b.__id)||"")));
+
   const newsStored = await fetchCollection("newsstart");
   newsStartUsingFallback = !newsStored.length;
   newsStartData = (newsStored.length ? newsStored : NEWSSTART_INITIAL_DATA.map(r=>({...r})));
@@ -3731,6 +3806,87 @@ async function reload(){
   }
   updateStatus();
   renderConsultType();
+  renderAiAnalysis();
+}
+
+
+function aiValue(row,names,fallback=""){
+  if(!row) return fallback;
+  for(const name of names){
+    const v=row[name];
+    if(v!==undefined && v!==null && String(v).trim()!=="") return v;
+  }
+  return fallback;
+}
+function aiEscapeHtml(v){
+  return String(v??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]));
+}
+function aiInline(v){
+  return aiEscapeHtml(v).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
+}
+function aiTextToHtml(value){
+  const raw=String(value??"").replace(/<br\s*\/?>/gi,"\n").replace(/\\\*/g,"*").trim();
+  if(!raw) return '<div class="ai-empty">분석 내용이 없습니다.</div>';
+  const lines=raw.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  let html="", listType=null;
+  const closeList=()=>{ if(listType){ html+=`</${listType}>`; listType=null; } };
+  for(const line of lines){
+    const bullet=line.match(/^[-•]\s+(.*)$/);
+    const num=line.match(/^\d+[.)]\s+(.*)$/);
+    if(bullet){
+      if(listType!=="ul"){ closeList(); html+="<ul>"; listType="ul"; }
+      html+=`<li>${aiInline(bullet[1])}</li>`;
+    }else if(num){
+      if(listType!=="ol"){ closeList(); html+="<ol>"; listType="ol"; }
+      html+=`<li>${aiInline(num[1])}</li>`;
+    }else{
+      closeList(); html+=`<p>${aiInline(line)}</p>`;
+    }
+  }
+  closeList();
+  return html;
+}
+function aiAnalysisLabel(row){
+  const at=aiValue(row,["analysisAt","분석일시"],row?.__id||"분석 결과");
+  const period=aiValue(row,["operationPeriod","운영분석기간"],"");
+  return period ? `${at} · ${period}` : String(at);
+}
+function renderAiAnalysis(selectedId=null){
+  const status=$("aiStatus"), select=$("aiHistorySelect");
+  if(!select) return;
+  const rows=[...aiAnalysisData].sort((a,b)=>String(aiValue(b,["analysisAt","분석일시"],b.__id)||"").localeCompare(String(aiValue(a,["analysisAt","분석일시"],a.__id)||"")));
+  if(!rows.length){
+    select.innerHTML='<option value="">분석 결과 없음</option>';
+    if(status){ status.textContent='아직 Firestore aiAnalysis 컬렉션에 저장된 결과가 없습니다. Apps Script에서 최신 AI 분석 결과를 전송하면 자동으로 표시됩니다.'; status.classList.remove('error'); }
+    ["aiIssues","aiOperationAnalysis","aiConsultAnalysis","aiCheckNeeded","aiImprovement"].forEach(id=>{ if($(id)) $(id).innerHTML='<div class="ai-empty">분석 결과가 없습니다.</div>'; });
+    if($("aiAnalysisAt")) $("aiAnalysisAt").textContent="-";
+    if($("aiOperationPeriod")) $("aiOperationPeriod").textContent="-";
+    if($("aiConsultBase")) $("aiConsultBase").textContent="-";
+    return;
+  }
+  select.innerHTML=rows.map(r=>`<option value="${aiEscapeHtml(r.__id)}">${aiEscapeHtml(aiAnalysisLabel(r))}</option>`).join("");
+  const row=rows.find(r=>r.__id===selectedId) || rows[0];
+  select.value=row.__id;
+  if($("aiAnalysisAt")) $("aiAnalysisAt").textContent=aiValue(row,["analysisAt","분석일시"],"-");
+  if($("aiOperationPeriod")) $("aiOperationPeriod").textContent=aiValue(row,["operationPeriod","운영분석기간"],"-");
+  if($("aiConsultBase")) $("aiConsultBase").textContent=aiValue(row,["consultBase","상담유형기준"],"-");
+  if($("aiIssues")) $("aiIssues").innerHTML=aiTextToHtml(aiValue(row,["issues","주요이슈"]));
+  if($("aiOperationAnalysis")) $("aiOperationAnalysis").innerHTML=aiTextToHtml(aiValue(row,["operationAnalysis","운영분석"]));
+  if($("aiConsultAnalysis")) $("aiConsultAnalysis").innerHTML=aiTextToHtml(aiValue(row,["consultAnalysis","상담유형분석"]));
+  if($("aiCheckNeeded")) $("aiCheckNeeded").innerHTML=aiTextToHtml(aiValue(row,["checkNeeded","확인필요"]));
+  if($("aiImprovement")) $("aiImprovement").innerHTML=aiTextToHtml(aiValue(row,["improvement","개선제안"]));
+  if(status){ status.textContent=`AI 분석 결과 ${rows.length}건 저장 · 최신 결과를 기본 표시합니다.`; status.classList.remove('error'); }
+}
+async function refreshAiAnalysis(){
+  const status=$("aiStatus");
+  try{
+    if(status){ status.textContent="AI 분석 결과를 새로 불러오는 중입니다."; status.classList.remove('error'); }
+    aiAnalysisData=await fetchCollection("aiAnalysis");
+    renderAiAnalysis();
+  }catch(e){
+    console.error(e);
+    if(status){ status.textContent="AI 분석 결과 조회 실패: "+(e?.message||e); status.classList.add('error'); }
+  }
 }
 
 async function deleteCollectionDocs(name){
@@ -5641,6 +5797,8 @@ $("newsStartSampleBtn").addEventListener("click",newsStartSample);
 $("consultTypeSampleBtn").addEventListener("click",consultTypeSample);
 $("rawType").addEventListener("change",renderRaw);
 $("rawSearch").addEventListener("input",renderRaw);
+$("aiHistorySelect")?.addEventListener("change",e=>renderAiAnalysis(e.target.value));
+$("aiRefreshBtn")?.addEventListener("click",refreshAiAnalysis);
 
 function setDefaultRecent7Days(){
   if(!daily.length) return;
