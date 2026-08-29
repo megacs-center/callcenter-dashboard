@@ -3130,7 +3130,7 @@ const DATA_INFO = {
     title:"AI 운영 분석 · 데이터 기준",
     html:`
       <div class="data-info-section"><div class="data-info-label">데이터 흐름</div>
-        <div class="data-info-row">일일 운영실적과 상담유형 데이터를 Google Apps Script에서 AI로 분석한 뒤, 결과를 Firestore <span class="data-info-em">aiAnalysis</span> 컬렉션에 저장하면 이 화면이 최신 결과를 표시합니다.</div>
+        <div class="data-info-row">관리자 화면에서 업로드한 Firestore <span class="data-info-em">daily</span> / <span class="data-info-em">consultPeriods</span> 데이터를 Google Apps Script가 직접 읽어 AI로 분석하고, 결과를 <span class="data-info-em">aiAnalysis</span> 컬렉션에 저장하면 이 화면이 최신 결과를 표시합니다.</div>
         <div class="data-info-row">분석 결과는 분석일시, 운영분석기간, 상담유형기준, 주요이슈, 운영분석, 상담유형분석, 확인필요, 개선제안으로 구성합니다.</div>
       </div>
       <div class="data-info-section"><div class="data-info-label">표시 기준</div>
@@ -3864,7 +3864,7 @@ function renderAiAnalysis(selectedId=null){
   const rows=[...aiAnalysisData].sort((a,b)=>String(aiValue(b,["analysisAt","분석일시"],b.__id)||"").localeCompare(String(aiValue(a,["analysisAt","분석일시"],a.__id)||"")));
   if(!rows.length){
     select.innerHTML='<option value="">분석 결과 없음</option>';
-    if(status){ status.textContent='아직 Firestore aiAnalysis 컬렉션에 저장된 결과가 없습니다. Apps Script에서 최신 AI 분석 결과를 전송하면 자동으로 표시됩니다.'; status.classList.remove('error'); }
+    if(status){ status.textContent='아직 Firestore aiAnalysis 컬렉션에 저장된 결과가 없습니다. AI 분석 실행 후 새로고침하면 최신 결과가 표시됩니다.'; status.classList.remove('error'); }
     ["aiIssues","aiOperationAnalysis","aiConsultAnalysis","aiCheckNeeded","aiImprovement"].forEach(id=>{ if($(id)) $(id).innerHTML='<div class="ai-empty">분석 결과가 없습니다.</div>'; });
     if($("aiAnalysisAt")) $("aiAnalysisAt").textContent="-";
     if($("aiOperationPeriod")) $("aiOperationPeriod").textContent="-";
