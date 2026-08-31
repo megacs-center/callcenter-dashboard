@@ -4192,6 +4192,21 @@ async function runAiFromDashboard(){
     aiJobData.push({__id:requestId,requestId,status:"running",analysisName:option.dataset.name||"",startDate:option.dataset.start||"",endDate:option.dataset.end||"",startedAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
     aiSetRunBusy(true,`🟡 AI 분석 요청 접수 · ${option.dataset.start} ~ ${option.dataset.end} · 대시보드를 닫아도 서버에서 계속 처리됩니다.`);
     startAiJobPolling();
+    // 서버에서 작업상태 문서가 생성되지 않거나 postMessage 응답을 받지 못한 경우
+    // 무한히 '분석 중'으로 남지 않도록 30초 후 상태를 재확인합니다.
+    setTimeout(async()=>{
+      if(aiActiveRequestId!==requestId) return;
+      try{
+        const jobs=await fetchCollection("aiAnalysisJobs");
+        const serverJob=(jobs||[]).find(j=>(j.requestId||j.__id)===requestId);
+        if(!serverJob){
+          aiActiveRequestId="";
+          aiSetRunBusy(false);
+          const st=$("aiStatus");
+          if(st){st.textContent="AI 분석 요청 결과를 확인하지 못했습니다. Apps Script 실행 내역 또는 연결설정을 확인한 뒤 다시 실행해 주세요.";st.classList.add("error");}
+        }
+      }catch(_){ }
+    },30000);
   }catch(e){
     console.error(e);
     aiActiveRequestId="";
@@ -4202,8 +4217,9 @@ async function runAiFromDashboard(){
 }
 
 window.addEventListener("message",async e=>{
-  const frame=$("aiRunnerFrame");
-  if(!frame || e.source!==frame.contentWindow) return;
+  // Apps Script 웹앱은 script.googleusercontent.com 계열 중간 프레임을 거칠 수 있어
+  // e.source === iframe.contentWindow 비교가 실패할 수 있습니다.
+  // 대신 서버가 돌려주는 고유 source + 현재 requestId를 함께 검증합니다.
   const data=e.data||{};
   if(data.source!=="dashboard-ai-runner" || !data.requestId || data.requestId!==aiActiveRequestId) return;
   const completedRequestId=aiActiveRequestId;
