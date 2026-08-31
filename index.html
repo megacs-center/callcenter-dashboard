@@ -4089,7 +4089,7 @@ async function runAiFromDashboard(){
     url=getAiWebAppUrl();
   }
   try{
-    aiSetRunBusy(true,"AI 분석 요청을 준비하는 중입니다...");
+    aiSetRunBusy(true,"선택기간 데이터 변경 여부를 확인하는 중입니다...");
     const idToken=await currentUser.getIdToken(true);
     const requestId=`ai_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
     aiActiveRequestId=requestId;
@@ -4101,7 +4101,7 @@ async function runAiFromDashboard(){
       startDate:option.dataset.start||"",
       endDate:option.dataset.end||""
     });
-    aiSetRunBusy(true,`AI 분석 실행 중 · ${option.dataset.start} ~ ${option.dataset.end} · 완료되면 자동 반영됩니다.`);
+    aiSetRunBusy(true,`선택기간 조회 및 변경 확인 중 · ${option.dataset.start} ~ ${option.dataset.end} · 변경된 경우에만 AI를 재분석합니다.`);
   }catch(e){
     console.error(e);
     aiActiveRequestId="";
@@ -4128,7 +4128,14 @@ window.addEventListener("message",async e=>{
     if(status){status.textContent="AI 분석 완료 · 최신 결과를 불러오는 중입니다.";status.classList.remove("error");}
     aiAnalysisData=await fetchCollection("aiAnalysis");
     renderAiAnalysis(data.documentId||null);
-    if(status){status.textContent=`AI 분석 완료 · ${data.operationPeriod||""} 결과가 대시보드에 반영되었습니다.`;status.classList.remove("error");}
+    if(status){
+      let prefix="신규 AI 분석 완료";
+      if(data.mode==="reused") prefix="기존 분석 결과 재사용 · API 재호출 없음";
+      else if(data.mode==="reanalyzed") prefix="데이터 변경 감지 · AI 재분석 완료";
+      const historyInfo=Number(data.historyRows||0)>0 ? ` · 상담이력 ${Number(data.historyRows).toLocaleString()}건(내용표본 ${Number(data.historySampleRows||0).toLocaleString()}건)` : " · 상담이력 없음";
+      status.textContent=`${prefix} · ${data.operationPeriod||""}${historyInfo}`;
+      status.classList.remove("error");
+    }
   }catch(err){
     console.error(err);
     showAiResultReloadError("AI 분석은 완료됐지만 결과 자동 반영에 실패했습니다.");
