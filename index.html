@@ -2919,6 +2919,7 @@ body.auth-pending .app{visibility:hidden}
             <div style="margin-top:9px"><button class="btn secondary" id="consultHistorySampleBtn">샘플 Excel</button></div>
           </div>
           <div id="consultHistoryStatus" class="status">Firestore 확인 중...</div>
+          <div id="consultHistoryVerify" class="status" style="display:none;margin-top:7px"></div>
           <div class="status">※ 컬럼: 상담일자 / 학년정보 / 대분류 / 중분류 / 소분류 / 문의유형 / 상담내용</div>
           <div class="status" style="color:#52657c">※ 상담이력 Excel을 업로드하는 순간 <b>상담내용의 개인정보를 먼저 마스킹</b>한 뒤 Firestore에 저장합니다.<br>※ Firestore에는 마스킹된 상담내용만 저장되며, 원문 상담내용은 대시보드에 저장하지 않습니다.<br>※ AI 전송 직전에도 한 번 더 마스킹하여 이중 보호합니다.</div>
         </div>
@@ -3294,6 +3295,8 @@ function maskConsultHistoryContent(text){
 }
 
 let aiAnalysisData = [];   // AI 운영 분석 결과
+let aiJobData = [];        // AI 분석 작업 상태(관리자 전용)
+let aiJobPollTimer = null;
 let newsStartData = [];    // 뉴스타트 인증 일자별 현황
 let newsStartUsingFallback = false;
 const NEWSSTART_INITIAL_DATA = [
@@ -3859,9 +3862,17 @@ async function reload(){
     refunds.sort((a,b)=>(a.applyDate||"").localeCompare(b.applyDate||""));
     consultHistoryData = await fetchCollection("consultHistory");
     consultHistoryData.sort((a,b)=>(a.date||"").localeCompare(b.date||""));
+    try {
+      aiJobData = await fetchCollection("aiAnalysisJobs");
+      aiJobData.sort((a,b)=>String(a.updatedAt||a.createdAt||"").localeCompare(String(b.updatedAt||b.createdAt||"")));
+    } catch(e) {
+      console.warn("aiAnalysisJobs 조회 실패", e);
+      aiJobData = [];
+    }
   }else{
     refunds = [];
     consultHistoryData = [];
+    aiJobData = [];
   }
   updateStatus();
   renderConsultType();
@@ -4077,6 +4088,86 @@ function aiSubmitHiddenForm(url,fields){
   setTimeout(()=>form.remove(),1000);
 }
 
+function aiSelectedPeriodInfo(){
+  const option=$("aiPeriodSelect")?.selectedOptions?.[0];
+  if(!option || !option.value) return null;
+  return {
+    analysisName:option.dataset.name||"",
+    startDate:option.dataset.start||"",
+    endDate:option.dataset.end||""
+  };
+}
+
+function aiLatestJobForSelected(){
+  const sel=aiSelectedPeriodInfo();
+  if(!sel) return null;
+  return [...(aiJobData||[])]
+    .filter(j=>(j.analysisName||"")===sel.analysisName && (j.startDate||"")===sel.startDate && (j.endDate||"")===sel.endDate)
+    .sort((a,b)=>String(b.updatedAt||b.createdAt||"").localeCompare(String(a.updatedAt||a.createdAt||"")))[0]||null;
+}
+
+function aiApplyPersistedJobStatus(){
+  if(currentRole!=="admin") return;
+  const job=aiLatestJobForSelected();
+  if(!job) return;
+  const status=$("aiStatus");
+  const btn=$("aiRunBtn");
+  const started=job.startedAt ? new Date(job.startedAt) : null;
+  const ageMs=started && !isNaN(started) ? Date.now()-started.getTime() : 0;
+  if(job.status==="running"){
+    const stale=ageMs>15*60*1000;
+    if(btn){btn.disabled=!stale;btn.textContent=stale?"AI 분석 실행":"분석 중...";}
+    if(status){
+      status.textContent=stale
+        ? `이전 분석 요청이 15분 이상 완료되지 않았습니다 · ${job.startDate} ~ ${job.endDate} · 필요하면 다시 실행해 주세요.`
+        : `🟡 AI 분석 중 · ${job.startDate} ~ ${job.endDate} · 대시보드를 닫아도 서버에서 계속 처리됩니다.`;
+      status.classList.toggle("error",stale);
+    }
+  } else if(job.status==="failed"){
+    if(btn){btn.disabled=false;btn.textContent="AI 분석 실행";}
+    if(status){status.textContent=`🔴 AI 분석 실패 · ${job.error||"오류 내용을 확인해 주세요."}`;status.classList.add("error");}
+  }
+}
+
+async function refreshAiJobStatus(){
+  if(currentRole!=="admin" || !currentUser) return;
+  try{
+    const before=aiLatestJobForSelected();
+    aiJobData=await fetchCollection("aiAnalysisJobs");
+    aiJobData.sort((a,b)=>String(a.updatedAt||a.createdAt||"").localeCompare(String(b.updatedAt||b.createdAt||"")));
+    const job=aiLatestJobForSelected();
+    if(!job) return;
+    if(job.status==="running"){
+      aiApplyPersistedJobStatus();
+      return;
+    }
+    if(job.status==="completed" && (!before || before.status==="running" || aiActiveRequestId)){
+      aiActiveRequestId="";
+      aiSetRunBusy(false);
+      aiAnalysisData=await fetchCollection("aiAnalysis");
+      renderAiAnalysis(job.documentId||null);
+      const status=$("aiStatus");
+      if(status){
+        let prefix="신규 AI 분석 완료";
+        if(job.mode==="reused") prefix="기존 분석 결과 재사용 · API 재호출 없음";
+        else if(job.mode==="reanalyzed") prefix="데이터 변경 감지 · AI 재분석 완료";
+        const h=Number(job.historyRows||0)>0?` · 상담이력 ${Number(job.historyRows).toLocaleString()}건(내용표본 ${Number(job.historySampleRows||0).toLocaleString()}건)`:" · 상담이력 없음";
+        status.textContent=`🟢 ${prefix} · ${job.operationPeriod||(`${job.startDate} ~ ${job.endDate}`)}${h}`;
+        status.classList.remove("error");
+      }
+    } else if(job.status==="failed"){
+      aiApplyPersistedJobStatus();
+    }
+  }catch(e){console.warn("AI 작업상태 확인 실패",e);}
+}
+
+function startAiJobPolling(){
+  if(aiJobPollTimer){clearInterval(aiJobPollTimer);aiJobPollTimer=null;}
+  if(currentRole!=="admin") return;
+  aiApplyPersistedJobStatus();
+  aiJobPollTimer=setInterval(()=>refreshAiJobStatus(),6000);
+}
+
 async function runAiFromDashboard(){
   if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
   if(!currentUser) return alert("로그인이 필요합니다.");
@@ -4101,7 +4192,9 @@ async function runAiFromDashboard(){
       startDate:option.dataset.start||"",
       endDate:option.dataset.end||""
     });
-    aiSetRunBusy(true,`선택기간 조회 및 변경 확인 중 · ${option.dataset.start} ~ ${option.dataset.end} · 변경된 경우에만 AI를 재분석합니다.`);
+    aiJobData.push({__id:requestId,requestId,status:"running",analysisName:option.dataset.name||"",startDate:option.dataset.start||"",endDate:option.dataset.end||"",startedAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+    aiSetRunBusy(true,`🟡 AI 분석 요청 접수 · ${option.dataset.start} ~ ${option.dataset.end} · 대시보드를 닫아도 서버에서 계속 처리됩니다.`);
+    startAiJobPolling();
   }catch(e){
     console.error(e);
     aiActiveRequestId="";
@@ -4118,6 +4211,7 @@ window.addEventListener("message",async e=>{
   if(data.source!=="dashboard-ai-runner" || !data.requestId || data.requestId!==aiActiveRequestId) return;
   aiActiveRequestId="";
   aiSetRunBusy(false);
+  refreshAiJobStatus().catch(()=>{});
   if(!data.ok){
     const status=$("aiStatus");
     if(status){status.textContent="AI 분석 실패: "+(data.error||"알 수 없는 오류");status.classList.add("error");}
@@ -4956,10 +5050,29 @@ function updateStatus(){
   }
 
   if($("consultHistoryStatus")){
+    const verify=$("consultHistoryVerify");
     if(consultHistoryData.length){
-      $("consultHistoryStatus").innerHTML=`Firestore 상담이력 <b>${consultHistoryData.length.toLocaleString("ko-KR")}건</b> · ${consultHistoryData[0].date||"-"} ~ ${consultHistoryData.at(-1).date||"-"}`;
+      const first=consultHistoryData[0].date||"-";
+      const last=consultHistoryData.at(-1).date||"-";
+      $("consultHistoryStatus").innerHTML=`<span style="color:#138a45;font-weight:800">✓ Firestore 등록 확인</span> · <b>${consultHistoryData.length.toLocaleString("ko-KR")}건</b> · ${first} ~ ${last} · <b>AI 분석 사용 가능</b>`;
+      $("consultHistoryStatus").style.cssText="background:#f0fff5;border:1px solid #9fdfb6;color:#214c31;font-weight:600";
+      if(verify){
+        let info=null;
+        try{ info=JSON.parse(localStorage.getItem("consultHistoryLastUpload")||"null"); }catch(e){}
+        if(info && Number(info.count)===consultHistoryData.length && info.firstDate===first && info.lastDate===last){
+          verify.style.display="block";
+          verify.style.cssText="display:block;margin-top:7px;background:#f7fbff;border:1px solid #c9ddf3;color:#31516f";
+          verify.innerHTML=`<b>마지막 업로드 검증 완료</b> · 파일 ${escapeHtml(info.fileName||"-")} · ${Number(info.count).toLocaleString("ko-KR")}건 · ${escapeHtml(info.uploadedAt||"-")}<br><span style="font-size:11px">원본 인식 건수와 Firestore 등록 건수/기간이 일치합니다. 상담내용 개인정보 마스킹 적용 완료.</span>`;
+        }else{
+          verify.style.display="block";
+          verify.style.cssText="display:block;margin-top:7px;background:#fffaf0;border:1px solid #ead7a2;color:#6a5525";
+          verify.innerHTML=`Firestore에는 상담이력이 정상 등록되어 있습니다. <b>${consultHistoryData.length.toLocaleString("ko-KR")}건</b> · ${first} ~ ${last}<br><span style="font-size:11px">현재 브라우저에 마지막 업로드 파일 정보가 없어 파일명/업로드시각만 확인할 수 없습니다.</span>`;
+        }
+      }
     }else{
       $("consultHistoryStatus").textContent="Firestore에 등록된 상담이력 데이터 없음";
+      $("consultHistoryStatus").style.cssText="";
+      if(verify) verify.style.display="none";
     }
   }
 }
@@ -5103,9 +5216,17 @@ async function upload(file,type){
       rows.sort((a,b)=>a.date.localeCompare(b.date)||a.rowNo-b.rowNo);
       await replaceCollection("consultHistory",rows,(r,i)=>`ch_${r.date.replace(/-/g,"")}_${String(i).padStart(7,"0")}`);
       consultHistoryData=rows.map(r=>({...r}));
+      const uploadInfo={
+        fileName:file.name||"-",
+        count:rows.length,
+        firstDate:rows[0].date,
+        lastDate:rows.at(-1).date,
+        uploadedAt:new Date().toLocaleString("ko-KR",{hour12:false})
+      };
+      try{ localStorage.setItem("consultHistoryLastUpload",JSON.stringify(uploadInfo)); }catch(e){}
       updateStatus();
       renderRaw();
-      alert(`${rows.length.toLocaleString("ko-KR")}건 상담이력을 Firestore에 교체 등록했습니다.\n기간: ${rows[0].date} ~ ${rows.at(-1).date}\n\n※ 상담내용 개인정보는 업로드 단계에서 마스킹되어 저장되었습니다.`);
+      alert(`✓ 상담이력 업로드 완료\n\n파일: ${uploadInfo.fileName}\n원본 인식: ${rows.length.toLocaleString("ko-KR")}건\nFirestore 등록: ${rows.length.toLocaleString("ko-KR")}건\n기간: ${rows[0].date} ~ ${rows.at(-1).date}\n개인정보 마스킹: 적용 완료\n\n관리자 화면의 초록색 'Firestore 등록 확인' 표시가 보이면 정상입니다.`);
     }else if(type==="mdm"){
       const rows=raw.map(o=>{
         const releaseCount=num(pick(o,["해제 건 수","해제건수","해제"]));
@@ -6049,6 +6170,7 @@ onAuthStateChanged(auth, async user=>{
   if(!user){
     currentRole=null;
     window.__dashboardRole=null;
+    if(aiJobPollTimer){clearInterval(aiJobPollTimer);aiJobPollTimer=null;}
     document.querySelectorAll('[data-role="admin"]').forEach(el=>el.style.display="none");
     showLoginGate();
     return;
@@ -6064,7 +6186,11 @@ onAuthStateChanged(auth, async user=>{
     }
     renderRaw();
     showDashboard();
-    if(currentRole==="admin") await loadAccessList();
+    if(currentRole==="admin"){
+      await loadAccessList();
+      startAiJobPolling();
+      await refreshAiJobStatus();
+    }
   }catch(e){
     console.error(e);
     currentRole=null;
@@ -6098,6 +6224,7 @@ $("rawSearch").addEventListener("input",renderRaw);
 $("aiHistorySelect")?.addEventListener("change",e=>renderAiAnalysis(e.target.value));
 $("aiPeriodSelect")?.addEventListener("change",()=>renderAiAnalysis());
 $("aiRunBtn")?.addEventListener("click",runAiFromDashboard);
+$("aiPeriodSelect")?.addEventListener("change",()=>{ if(currentRole==="admin") refreshAiJobStatus(); });
 $("aiBackendBtn")?.addEventListener("click",configureAiBackend);
 
 function setDefaultRecent7Days(){
