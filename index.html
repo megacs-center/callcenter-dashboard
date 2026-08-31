@@ -2911,18 +2911,6 @@ body.auth-pending .app{visibility:hidden}
           <div class="status">※ 각 시트 컬럼: 대분류 / 중분류 / 소분류 / 코드▼ / 문의 유형 / 1월 ~ 12월</div>
           <div class="status" style="color:#52657c">※ 연도별·채널별 월간 시트를 한 파일에서 누적 관리하며, 빈 월은 미등록으로 처리합니다.<br>※ 특정기간 비교는 <b>올해_CALL / 올해_ERMS / 전년_CALL / 전년_ERMS</b> 4개 시트로 구분해 등록합니다.<br>※ 기간 시트 컬럼: 분석명 / 시작일 / 종료일 / 대분류 / 중분류 / 소분류 / 코드▼ / 문의 유형 / 건수<br>※ 기간 시트만 별도로 업로드해도 기존 월간 데이터는 유지되며, 같은 분석명·비교구분·채널 조합만 갱신됩니다.</div>
         </div>
-
-        <div class="card upload">
-          <h3>④ 상담이력 Excel</h3>
-          <div class="drop">
-            <input id="consultHistoryFile" type="file" accept=".xlsx,.xls,.csv">
-            <div style="margin-top:9px"><button class="btn secondary" id="consultHistorySampleBtn">샘플 Excel</button></div>
-          </div>
-          <div id="consultHistoryStatus" class="status">Firestore 확인 중...</div>
-          <div id="consultHistoryVerify" class="status" style="display:none;margin-top:7px"></div>
-          <div class="status">※ 컬럼: 상담일자 / 학년정보 / 대분류 / 중분류 / 소분류 / 문의유형 / 상담내용</div>
-          <div class="status" style="color:#52657c">※ 상담이력 Excel을 업로드하는 순간 <b>상담내용의 개인정보를 먼저 마스킹</b>한 뒤 Firestore에 저장합니다.<br>※ Firestore에는 마스킹된 상담내용만 저장되며, 원문 상담내용은 대시보드에 저장하지 않습니다.<br>※ AI 전송 직전에도 한 번 더 마스킹하여 이중 보호합니다.</div>
-        </div>
       </div>
 
       <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:13px">
@@ -2934,7 +2922,6 @@ body.auth-pending .app{visibility:hidden}
             <option value="newsstart" style="display:none">뉴스타트 인증</option>
             <option value="consulttype">상담유형 월간</option>
             <option value="consultperiod">상담유형 특정기간</option>
-            <option value="consulthistory">상담이력</option>
           </select>
           <input id="rawSearch" placeholder="검색">
         </div>
@@ -3160,7 +3147,7 @@ const DATA_INFO = {
     title:"관리자 · 데이터 기준",
     html:`
       <div class="data-info-section"><div class="data-info-label">데이터 구성</div>
-        <div class="data-info-row">일일 운영실적, 환불 상세, MDM 원격, 뉴스타트 인증, 상담유형, 상담이력 데이터를 Excel로 등록하고 Firestore에 저장합니다.</div>
+        <div class="data-info-row">일일 운영실적, 환불 상세, MDM 원격, 뉴스타트 인증, 상담유형 데이터를 Excel로 등록하고 Firestore에 저장합니다.</div>
         <div class="data-info-row">공개 대시보드는 저장된 일자별 데이터를 조회기간에 맞춰 집계합니다.</div>
       </div>
       <div class="data-info-section"><div class="data-info-label">주요 반영 규칙</div>
@@ -3262,37 +3249,6 @@ let refundDaily = [];      // 일반 조회용 일자별 환불 집계
 let mdmData = [];          // MDM 원격 일자별 현황
 let consultTypeData = [];  // 상담유형 월별 현황
 let consultPeriodData = []; // 상담유형 특정기간(올해/전년 비교) 현황
-let consultHistoryData = []; // 상담이력(관리자 전용)
-// 상담이력 업로드 전 개인정보 마스킹
-function maskConsultHistoryContent(text){
-  let s=String(text||'');
-  if(!s) return '';
-
-  // 이메일
-  s=s.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi,'[이메일]');
-
-  // 주민등록번호(하이픈/공백 포함)
-  s=s.replace(/(^|\D)\d{6}[-\s]?[1-4]\d{6}(?=\D|$)/g,(m,p1)=>p1+'[주민등록번호]');
-
-  // 휴대전화/일반전화
-  s=s.replace(/(^|\D)(?:01[016789]|02|0[3-6][1-5])[-.\s]?\d{3,4}[-.\s]?\d{4}(?=\D|$)/g,(m,p1)=>p1+'[전화번호]');
-
-  // 카드번호 형태(13~19자리, 공백/하이픈 허용)
-  s=s.replace(/(^|\D)(?:\d[ -]?){13,19}(?=\D|$)/g,(m,p1)=>{
-    const body=m.slice(p1.length);
-    const digits=body.replace(/\D/g,'');
-    return digits.length>=13&&digits.length<=19 ? p1+'[카드번호]' : m;
-  });
-
-  // 라벨 기반 개인정보/식별정보
-  s=s.replace(/((?:이름|성명|고객명|회원명|학생명|보호자명)\s*[:：=]?\s*)[^\s,;|/]{2,20}/gi,'$1[이름]');
-  s=s.replace(/((?:아이디|ID|회원ID|회원번호|고객번호)\s*[:：=]?\s*)[A-Za-z0-9._@-]{2,50}/gi,'$1[식별정보]');
-  s=s.replace(/((?:주문번호|주문No\.?|order\s*(?:id|no\.?))\s*[:：=]?\s*)[A-Za-z0-9_-]{4,60}/gi,'$1[주문번호]');
-  s=s.replace(/((?:생년월일|생일)\s*[:：=]?\s*)(?:19|20)?\d{2}[-./년\s]?\d{1,2}[-./월\s]?\d{1,2}일?/gi,'$1[생년월일]');
-  s=s.replace(/((?:계좌번호|계좌)\s*[:：=]?\s*)[0-9-]{8,30}/gi,'$1[계좌번호]');
-
-  return s;
-}
 
 let aiAnalysisData = [];   // AI 운영 분석 결과
 let aiJobData = [];        // AI 분석 작업 상태(관리자 전용)
@@ -3860,8 +3816,6 @@ async function reload(){
   if(currentUser && currentRole==="admin"){
     refunds = await fetchCollection("refunds");
     refunds.sort((a,b)=>(a.applyDate||"").localeCompare(b.applyDate||""));
-    consultHistoryData = await fetchCollection("consultHistory");
-    consultHistoryData.sort((a,b)=>(a.date||"").localeCompare(b.date||""));
     try {
       aiJobData = await fetchCollection("aiAnalysisJobs");
       aiJobData.sort((a,b)=>String(a.updatedAt||a.createdAt||"").localeCompare(String(b.updatedAt||b.createdAt||"")));
@@ -3871,7 +3825,6 @@ async function reload(){
     }
   }else{
     refunds = [];
-    consultHistoryData = [];
     aiJobData = [];
   }
   updateStatus();
@@ -4151,8 +4104,7 @@ async function refreshAiJobStatus(){
         let prefix="신규 AI 분석 완료";
         if(job.mode==="reused") prefix="기존 분석 결과 재사용 · API 재호출 없음";
         else if(job.mode==="reanalyzed") prefix="데이터 변경 감지 · AI 재분석 완료";
-        const h=Number(job.historyRows||0)>0?` · 상담이력 ${Number(job.historyRows).toLocaleString()}건(내용표본 ${Number(job.historySampleRows||0).toLocaleString()}건)`:" · 상담이력 없음";
-        status.textContent=`🟢 ${prefix} · ${job.operationPeriod||(`${job.startDate} ~ ${job.endDate}`)}${h}`;
+        status.textContent=`🟢 ${prefix} · ${job.operationPeriod||(`${job.startDate} ~ ${job.endDate}`)}`;
         status.classList.remove("error");
       }
     } else if(job.status==="failed"){
@@ -4226,8 +4178,7 @@ window.addEventListener("message",async e=>{
       let prefix="신규 AI 분석 완료";
       if(data.mode==="reused") prefix="기존 분석 결과 재사용 · API 재호출 없음";
       else if(data.mode==="reanalyzed") prefix="데이터 변경 감지 · AI 재분석 완료";
-      const historyInfo=Number(data.historyRows||0)>0 ? ` · 상담이력 ${Number(data.historyRows).toLocaleString()}건(내용표본 ${Number(data.historySampleRows||0).toLocaleString()}건)` : " · 상담이력 없음";
-      status.textContent=`${prefix} · ${data.operationPeriod||""}${historyInfo}`;
+      status.textContent=`${prefix} · ${data.operationPeriod||""}`;
       status.classList.remove("error");
     }
   }catch(err){
@@ -5048,33 +4999,6 @@ function updateStatus(){
       $("consultTypeStatus").textContent="Firestore에 등록된 상담유형 데이터 없음";
     }
   }
-
-  if($("consultHistoryStatus")){
-    const verify=$("consultHistoryVerify");
-    if(consultHistoryData.length){
-      const first=consultHistoryData[0].date||"-";
-      const last=consultHistoryData.at(-1).date||"-";
-      $("consultHistoryStatus").innerHTML=`<span style="color:#138a45;font-weight:800">✓ Firestore 등록 확인</span> · <b>${consultHistoryData.length.toLocaleString("ko-KR")}건</b> · ${first} ~ ${last} · <b>AI 분석 사용 가능</b>`;
-      $("consultHistoryStatus").style.cssText="background:#f0fff5;border:1px solid #9fdfb6;color:#214c31;font-weight:600";
-      if(verify){
-        let info=null;
-        try{ info=JSON.parse(localStorage.getItem("consultHistoryLastUpload")||"null"); }catch(e){}
-        if(info && Number(info.count)===consultHistoryData.length && info.firstDate===first && info.lastDate===last){
-          verify.style.display="block";
-          verify.style.cssText="display:block;margin-top:7px;background:#f7fbff;border:1px solid #c9ddf3;color:#31516f";
-          verify.innerHTML=`<b>마지막 업로드 검증 완료</b> · 파일 ${escapeHtml(info.fileName||"-")} · ${Number(info.count).toLocaleString("ko-KR")}건 · ${escapeHtml(info.uploadedAt||"-")}<br><span style="font-size:11px">원본 인식 건수와 Firestore 등록 건수/기간이 일치합니다. 상담내용 개인정보 마스킹 적용 완료.</span>`;
-        }else{
-          verify.style.display="block";
-          verify.style.cssText="display:block;margin-top:7px;background:#fffaf0;border:1px solid #ead7a2;color:#6a5525";
-          verify.innerHTML=`Firestore에는 상담이력이 정상 등록되어 있습니다. <b>${consultHistoryData.length.toLocaleString("ko-KR")}건</b> · ${first} ~ ${last}<br><span style="font-size:11px">현재 브라우저에 마지막 업로드 파일 정보가 없어 파일명/업로드시각만 확인할 수 없습니다.</span>`;
-        }
-      }
-    }else{
-      $("consultHistoryStatus").textContent="Firestore에 등록된 상담이력 데이터 없음";
-      $("consultHistoryStatus").style.cssText="";
-      if(verify) verify.style.display="none";
-    }
-  }
 }
 
 async function upload(file,type){
@@ -5200,33 +5124,6 @@ async function upload(file,type){
       await reload();
       await applyFilter();
       alert(`${rows.length}건 환불 데이터를 Firestore에 교체 등록했습니다.`);
-    }else if(type==="consulthistory"){
-      const rows=raw.map((o,i)=>({
-        date:asDate(pick(o,["상담일자","상담 일자","일자","날짜"])),
-        grade:String(pick(o,["학년정보","학년 정보","학년"])||"").trim(),
-        category1:String(pick(o,["대분류"])||"").trim(),
-        category2:String(pick(o,["중분류"])||"").trim(),
-        category3:String(pick(o,["소분류"])||"").trim(),
-        inquiry:String(pick(o,["문의유형","문의 유형"])||"").trim(),
-        content:maskConsultHistoryContent(String(pick(o,["상담내용","상담 내용","문의내용","문의 내용"])||"").trim()),
-        rowNo:i+2
-      })).filter(r=>r.date && (r.category1||r.category2||r.category3||r.inquiry||r.content));
-
-      if(!rows.length) throw new Error("상담일자 또는 상담이력 컬럼을 인식하지 못했습니다.");
-      rows.sort((a,b)=>a.date.localeCompare(b.date)||a.rowNo-b.rowNo);
-      await replaceCollection("consultHistory",rows,(r,i)=>`ch_${r.date.replace(/-/g,"")}_${String(i).padStart(7,"0")}`);
-      consultHistoryData=rows.map(r=>({...r}));
-      const uploadInfo={
-        fileName:file.name||"-",
-        count:rows.length,
-        firstDate:rows[0].date,
-        lastDate:rows.at(-1).date,
-        uploadedAt:new Date().toLocaleString("ko-KR",{hour12:false})
-      };
-      try{ localStorage.setItem("consultHistoryLastUpload",JSON.stringify(uploadInfo)); }catch(e){}
-      updateStatus();
-      renderRaw();
-      alert(`✓ 상담이력 업로드 완료\n\n파일: ${uploadInfo.fileName}\n원본 인식: ${rows.length.toLocaleString("ko-KR")}건\nFirestore 등록: ${rows.length.toLocaleString("ko-KR")}건\n기간: ${rows[0].date} ~ ${rows.at(-1).date}\n개인정보 마스킹: 적용 완료\n\n관리자 화면의 초록색 'Firestore 등록 확인' 표시가 보이면 정상입니다.`);
     }else if(type==="mdm"){
       const rows=raw.map(o=>{
         const releaseCount=num(pick(o,["해제 건 수","해제건수","해제"]));
@@ -5340,7 +5237,7 @@ function renderRaw(){
     return;
   }
 
-  const sourceRows=type==="daily" ? daily : type==="mdm" ? mdmData : type==="newsstart" ? newsStartData : type==="consulttype" ? consultTypeData : type==="consultperiod" ? consultPeriodData : type==="consulthistory" ? consultHistoryData : refunds;
+  const sourceRows=type==="daily" ? daily : type==="mdm" ? mdmData : type==="newsstart" ? newsStartData : type==="consulttype" ? consultTypeData : type==="consultperiod" ? consultPeriodData : refunds;
   const rows=sourceRows
     .filter(r=>JSON.stringify(r).toLowerCase().includes(q))
     .slice().reverse().slice(0,200);
@@ -6037,19 +5934,6 @@ function consultTypeSample(){
   XLSX.writeFile(wb,"상담유형_월간_특정기간_4시트_샘플.xlsx");
 }
 
-function consultHistorySample(){
-  const h=["상담일자","학년정보","대분류","중분류","소분류","문의유형","상담내용"];
-  const rows=[
-    ["2026-08-21","고3","강좌/교재 신청, 배송","배송","배송조회","교재 배송 관련 문의","교재가 아직 도착하지 않아 배송상태 확인 요청"],
-    ["2026-08-21","N수","회원 정보","로그인","ID/PW","ID/PW 문의","비밀번호 재설정 후에도 로그인이 되지 않는다고 문의"],
-    ["2026-08-22","고2","결제, 취소, 환불","취소/환불","부분환불","부분 현금 환불","환불 가능 여부와 처리기간 문의"]
-  ];
-  const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet([h,...rows]);
-  ws["!cols"]=[{wch:14},{wch:12},{wch:24},{wch:20},{wch:20},{wch:30},{wch:70}];
-  XLSX.utils.book_append_sheet(wb,ws,"상담이력");
-  XLSX.writeFile(wb,"상담이력_샘플.xlsx");
-}
-
 const ACCESS_COLLECTION="dashboardAccess";
 const normalizeEmail=email=>String(email||"").trim().toLowerCase();
 const accessRef=email=>doc(firestore,ACCESS_COLLECTION,normalizeEmail(email));
@@ -6213,12 +6097,10 @@ $("dailyFile").addEventListener("change",e=>upload(e.target.files[0],"daily"));
 $("mdmFile").addEventListener("change",e=>upload(e.target.files[0],"mdm"));
 $("newsStartFile").addEventListener("change",e=>upload(e.target.files[0],"newsstart"));
 $("consultTypeFile").addEventListener("change",e=>upload(e.target.files[0],"consulttype"));
-$("consultHistoryFile").addEventListener("change",e=>upload(e.target.files[0],"consulthistory"));
 $("dailySampleBtn").addEventListener("click",dailySample);
 $("mdmSampleBtn").addEventListener("click",mdmSample);
 $("newsStartSampleBtn").addEventListener("click",newsStartSample);
 $("consultTypeSampleBtn").addEventListener("click",consultTypeSample);
-$("consultHistorySampleBtn").addEventListener("click",consultHistorySample);
 $("rawType").addEventListener("change",renderRaw);
 $("rawSearch").addEventListener("input",renderRaw);
 $("aiHistorySelect")?.addEventListener("change",e=>renderAiAnalysis(e.target.value));
@@ -6245,7 +6127,7 @@ function setDefaultRecent7Days(){
 $("clearBtn").addEventListener("click",async()=>{
   if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
   if(!currentUser) return alert("관리자 로그인이 필요합니다.");
-  if(!confirm("Firestore의 일일 운영실적, 환불, MDM 원격, 뉴스타트 인증, 상담유형(월간/특정기간), 상담이력 데이터를 모두 삭제할까요?")) return;
+  if(!confirm("Firestore의 일일 운영실적, 환불, MDM 원격, 뉴스타트 인증, 상담유형(월간/특정기간) 데이터를 모두 삭제할까요?")) return;
   await deleteCollectionDocs("daily");
   await deleteCollectionDocs("refunds");
   await deleteCollectionDocs("refundDaily");
@@ -6253,7 +6135,6 @@ $("clearBtn").addEventListener("click",async()=>{
   await deleteCollectionDocs("newsstart");
   await deleteCollectionDocs("consultTypes");
   await deleteCollectionDocs("consultPeriods");
-  await deleteCollectionDocs("consultHistory");
   await reload();
   location.reload();
 });
