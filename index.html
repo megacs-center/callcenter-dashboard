@@ -646,6 +646,14 @@ button,input,select{font:inherit}
 .stat .val{font-size:24px;font-weight:900;margin-top:8px}
 .large{height:340px;padding:16px}
 .adminbox{padding:18px}
+
+.operation-issues-wrap{display:grid;grid-template-columns:minmax(300px,420px) 1fr;gap:14px;align-items:start}
+.issue-form{padding:16px}.issue-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.issue-form-grid .full{grid-column:1/-1}
+.issue-form label{display:block;font-size:11px;font-weight:800;color:#53657a;margin-bottom:5px}.issue-form input,.issue-form select,.issue-form textarea{width:100%;box-sizing:border-box;border:1px solid #d7e0ea;border-radius:9px;padding:9px 10px;background:#fff;color:#11263f;font:inherit}.issue-form textarea{min-height:86px;resize:vertical}
+.issue-form-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}.issue-list-card{padding:16px}.issue-list-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.issue-list-title{font-size:16px;font-weight:900;color:#102744}.issue-summary{font-size:11px;color:#74859a}
+.issue-row{display:grid;grid-template-columns:150px 94px 1fr 88px 62px 92px;gap:8px;align-items:center;padding:10px 8px;border-bottom:1px solid #edf1f5;font-size:12px}.issue-row:last-child{border-bottom:0}.issue-row.issue-head{font-weight:800;color:#66778b;background:#f8fafc;border-radius:8px}.issue-title{font-weight:800;color:#102744}.issue-detail{display:block;color:#6d7d91;font-size:11px;margin-top:3px;white-space:normal;line-height:1.45}.issue-badge{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:4px 7px;font-size:10px;font-weight:800;background:#edf4ff;color:#2062b7}.issue-sev-high{background:#fff0f0;color:#d13a3a}.issue-sev-mid{background:#fff8e5;color:#b57400}.issue-sev-low{background:#eef8f1;color:#2d8a4b}.issue-empty{padding:24px;text-align:center;color:#8b98aa}.issue-delete{border:0;background:#fff1f1;color:#d23c3c;border-radius:7px;padding:5px 8px;cursor:pointer;font-weight:800}.issue-note{font-size:11px;color:#6e7f94;margin-top:8px}.issue-marker-note{font-size:11px;color:#a16400;font-weight:700}.issue-kpi-strip{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}.issue-kpi{background:#fff;border:1px solid #dfe7f0;border-radius:10px;padding:8px 11px;font-size:11px;color:#62748a}.issue-kpi b{color:#102744;font-size:13px;margin-left:4px}
+@media(max-width:1000px){.operation-issues-wrap{grid-template-columns:1fr}.issue-row{grid-template-columns:130px 84px 1fr 72px}.issue-row>div:nth-child(5),.issue-row>div:nth-child(6){display:none}}
+
 .notice{
   background:#fff8e6;border:1px solid #f2d58c;color:#7d5a00;
   padding:11px 13px;border-radius:8px;font-size:11px;line-height:1.5;margin:11px 0
@@ -2130,6 +2138,7 @@ body.auth-pending .app{visibility:hidden}
     <button data-target="mdm">▣　<span>MDM 원격</span></button>
     <button data-target="newsstart" style="display:none">✓　<span>뉴스타트 인증</span></button>
     <button data-target="consulttype">▤　<span>상담유형</span></button>
+    <button data-target="issues">⚑　<span>운영 이슈</span></button>
     <button data-target="ai">✦　<span>AI 분석</span></button>
     <div class="sep"></div>
     <button data-target="admin" data-role="admin" style="display:none">🔒　<span>관리자</span></button>
@@ -2838,6 +2847,38 @@ body.auth-pending .app{visibility:hidden}
 </section>
 <iframe id="aiRunnerFrame" name="aiRunnerFrame" class="hidden" title="AI 분석 실행 백엔드"></iframe>
 
+
+<section id="issues" class="section">
+  <div class="detail-head"><div class="detail-title-wrap"><div class="detail-title">운영 이슈</div><button type="button" class="data-info-btn" data-info-page="issues">ⓘ 데이터 기준</button></div></div>
+  <div class="issue-kpi-strip">
+    <div class="issue-kpi">조회기간 이슈 <b id="issueCountKpi">0건</b></div>
+    <div class="issue-kpi">높음 <b id="issueHighKpi">0건</b></div>
+    <div class="issue-kpi">최근 이슈 <b id="issueLatestKpi">-</b></div>
+    <div class="issue-kpi issue-marker-note">⚑ 이슈 기간은 일자 그래프 라벨에 표시됩니다.</div>
+  </div>
+  <div class="operation-issues-wrap">
+    <div class="card issue-form" data-role="admin" style="display:none">
+      <div class="issue-list-title" style="margin-bottom:12px">⚑ 이슈 등록</div>
+      <div class="issue-form-grid">
+        <div><label>시작일</label><input id="issueStartDate" type="date"></div>
+        <div><label>종료일</label><input id="issueEndDate" type="date"></div>
+        <div><label>구분</label><select id="issueCategory"><option>시스템오류</option><option>이벤트</option><option>정책변경</option><option>배송·교재</option><option>결제·환불</option><option>모의고사</option><option>환급</option><option>기타</option></select></div>
+        <div><label>영향채널</label><select id="issueChannel"><option>전체</option><option>Call</option><option>ERMS</option><option>Call + ERMS</option><option>챗봇</option><option>기타</option></select></div>
+        <div class="full"><label>제목</label><input id="issueTitle" maxlength="100" placeholder="예: 로그인 오류 발생"></div>
+        <div class="full"><label>상세내용</label><textarea id="issueDetail" maxlength="1000" placeholder="발생 시간, 영향 범위, 조치사항 등을 입력"></textarea></div>
+        <div><label>중요도</label><select id="issueSeverity"><option value="높음">높음</option><option value="중간" selected>중간</option><option value="낮음">낮음</option></select></div>
+      </div>
+      <div class="issue-form-actions"><button class="btn secondary" id="issueResetBtn" type="button">초기화</button><button class="btn primary" id="issueSaveBtn" type="button">등록</button></div>
+      <div id="issueFormStatus" class="status">관리자만 등록·삭제할 수 있습니다.</div>
+    </div>
+    <div class="card issue-list-card">
+      <div class="issue-list-head"><div><div class="issue-list-title">기간 내 주요 이슈</div><div class="issue-summary" id="issuePeriodLabel">조회기간 기준</div></div><select id="issueCategoryFilter"><option value="">전체 구분</option><option>시스템오류</option><option>이벤트</option><option>정책변경</option><option>배송·교재</option><option>결제·환불</option><option>모의고사</option><option>환급</option><option>기타</option></select></div>
+      <div class="issue-row issue-head"><div>기간</div><div>구분</div><div>이슈</div><div>채널</div><div>중요도</div><div>관리</div></div>
+      <div id="issueListBody"></div>
+    </div>
+  </div>
+</section>
+
 <section id="admin" class="section">
   <div class="detail-head"><div class="detail-title-wrap"><div class="detail-title">관리자</div><button type="button" class="data-info-btn" data-info-page="admin">ⓘ 데이터 기준</button></div></div>
   <div id="adminLock" class="card adminbox hidden">
@@ -2926,6 +2967,7 @@ body.auth-pending .app{visibility:hidden}
             <option value="newsstart" style="display:none">뉴스타트 인증</option>
             <option value="consulttype">상담유형 월간</option>
             <option value="consultperiod">상담유형 특정기간</option>
+            <option value="issues">운영 이슈</option>
           </select>
           <input id="rawSearch" placeholder="검색">
         </div>
@@ -3147,6 +3189,10 @@ const DATA_INFO = {
         <div class="data-info-row">AI 해석은 운영 판단을 보조하는 참고자료이며, 수치·기간·원천데이터가 다른 경우 원본 데이터를 우선 확인합니다.</div>
       </div>`
   },
+  issues: {
+    title:"운영 이슈 · 데이터 기준",
+    html:`<div class="data-info-row">관리자가 등록한 각종 오류, 이벤트, 정책변경, 배송·교재, 결제·환불, 모의고사, 환급 등 운영 이슈를 Firestore <span class="data-info-em">operationIssues</span>에 저장합니다.</div><div class="data-info-row">운영 이슈는 <span class="data-info-em">시작일~종료일</span> 기간형으로 관리하며, 상단 조회기간과 겹치는 이슈만 표시합니다.</div><div class="data-info-row">이슈 기간에 포함되는 날짜는 일자형 그래프 라벨에 <span class="data-info-em">⚑</span> 표시됩니다.</div><div class="data-info-row">이슈와 문의량 증감은 시점상 연관성을 빠르게 확인하기 위한 보조정보이며, 인과관계를 자동 확정하지 않습니다.</div>`
+  },
   admin: {
     title:"관리자 · 데이터 기준",
     html:`
@@ -3253,6 +3299,7 @@ let refundDaily = [];      // 일반 조회용 일자별 환불 집계
 let mdmData = [];          // MDM 원격 일자별 현황
 let consultTypeData = [];  // 상담유형 월별 현황
 let consultPeriodData = []; // 상담유형 특정기간(올해/전년 비교) 현황
+let operationIssues = [];   // 일자별 운영 이슈
 
 let aiAnalysisData = [];   // AI 운영 분석 결과
 let aiJobData = [];        // AI 분석 작업 상태(관리자 전용)
@@ -3473,7 +3520,8 @@ function formatDateLabel(dateStr, dayStr){
     if(!isNaN(d)) day=dayMap[d.getDay()];
   }
   const mmdd=String(dateStr||"").slice(5);
-  return day ? `${mmdd}(${day})` : mmdd;
+  const flag=hasOperationIssueOnDate(dateStr)?"⚑ ":"";
+  return flag + (day ? `${mmdd}(${day})` : mmdd);
 }
 
 // 대한민국 연도별 공휴일/대체공휴일 + 주말 날짜 라벨 강조
@@ -3805,6 +3853,103 @@ function trend(cur,prev,suffix="%",dec=2){
     : `<span class="down">▼ ${Math.abs(d).toFixed(dec)}${suffix}</span>`;
 }
 
+
+function getIssueStartDate(issue){
+  return String(issue?.startDate || issue?.date || "");
+}
+function getIssueEndDate(issue){
+  return String(issue?.endDate || issue?.startDate || issue?.date || "");
+}
+function isDateInIssueRange(dateStr, issue){
+  if(!dateStr) return false;
+  const start=getIssueStartDate(issue);
+  const end=getIssueEndDate(issue);
+  if(!start && !end) return false;
+  return (!start || String(dateStr)>=start) && (!end || String(dateStr)<=end);
+}
+function issueRangesOverlap(issue, rangeStart, rangeEnd){
+  const start=getIssueStartDate(issue);
+  const end=getIssueEndDate(issue);
+  if(!start && !end) return false;
+  const aStart=start || end;
+  const aEnd=end || start;
+  const bStart=rangeStart || aStart;
+  const bEnd=rangeEnd || aEnd;
+  return aStart<=bEnd && aEnd>=bStart;
+}
+function hasOperationIssueOnDate(dateStr){
+  if(!dateStr) return false;
+  return (operationIssues||[]).some(x=>isDateInIssueRange(String(dateStr),x));
+}
+function issueEsc(v){return String(v??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]));}
+function issueSeverityClass(v){return v==="높음"?"issue-sev-high":v==="낮음"?"issue-sev-low":"issue-sev-mid";}
+function issueSelectedRange(){
+  const s=$("startDate")?.value||"", e=$("endDate")?.value||"";
+  return {s,e};
+}
+function formatIssuePeriodLabel(issue){
+  const start=getIssueStartDate(issue);
+  const end=getIssueEndDate(issue);
+  if(!start && !end) return "-";
+  if(!end || start===end) return start || end;
+  return `${start} ~ ${end}`;
+}
+function renderOperationIssues(){
+  const body=$("issueListBody"); if(!body) return;
+  const {s,e}=issueSelectedRange();
+  const cat=$("issueCategoryFilter")?.value||"";
+  let rows=[...(operationIssues||[])].filter(r=>issueRangesOverlap(r,s,e));
+  if(cat) rows=rows.filter(r=>String(r.category||"")===cat);
+  rows.sort((a,b)=>String(getIssueEndDate(b)).localeCompare(String(getIssueEndDate(a)))||String(getIssueStartDate(b)).localeCompare(String(getIssueStartDate(a)))||String(b.createdAt||"").localeCompare(String(a.createdAt||"")));
+  if($("issuePeriodLabel")) $("issuePeriodLabel").textContent=(s&&e)?`${s} ~ ${e}`:"전체 기간";
+  const allRange=[...(operationIssues||[])].filter(r=>issueRangesOverlap(r,s,e));
+  if($("issueCountKpi")) $("issueCountKpi").textContent=`${allRange.length}건`;
+  if($("issueHighKpi")) $("issueHighKpi").textContent=`${allRange.filter(r=>r.severity==="높음").length}건`;
+  if($("issueLatestKpi")) {
+    const latest=allRange.length?[...allRange].sort((a,b)=>String(getIssueEndDate(b)).localeCompare(String(getIssueEndDate(a)))||String(getIssueStartDate(b)).localeCompare(String(getIssueStartDate(a))))[0]:null;
+    $("issueLatestKpi").textContent=latest?formatIssuePeriodLabel(latest):"-";
+  }
+  if(!rows.length){body.innerHTML='<div class="issue-empty">조회기간에 등록된 운영 이슈가 없습니다.</div>';return;}
+  body.innerHTML=rows.map(r=>`<div class="issue-row"><div>${issueEsc(formatIssuePeriodLabel(r))}</div><div><span class="issue-badge">${issueEsc(r.category||"기타")}</span></div><div><span class="issue-title">${issueEsc(r.title||"-")}</span>${r.detail?`<span class="issue-detail">${issueEsc(r.detail)}</span>`:""}</div><div>${issueEsc(r.channel||"전체")}</div><div><span class="issue-badge ${issueSeverityClass(r.severity)}">${issueEsc(r.severity||"중간")}</span></div><div>${currentRole==="admin"?`<button class="issue-delete" type="button" data-issue-delete="${issueEsc(r.__id||"")}">삭제</button>`:"-"}</div></div>`).join("");
+  body.querySelectorAll("[data-issue-delete]").forEach(btn=>btn.onclick=()=>deleteOperationIssue(btn.dataset.issueDelete));
+}
+function resetOperationIssueForm(){
+  const defaultDate=$("endDate")?.value||new Date().toISOString().slice(0,10);
+  if($("issueStartDate")) $("issueStartDate").value=defaultDate;
+  if($("issueEndDate")) $("issueEndDate").value=defaultDate;
+  if($("issueCategory")) $("issueCategory").value="시스템오류";
+  if($("issueTitle")) $("issueTitle").value="";
+  if($("issueDetail")) $("issueDetail").value="";
+  if($("issueChannel")) $("issueChannel").value="전체";
+  if($("issueSeverity")) $("issueSeverity").value="중간";
+}
+async function saveOperationIssue(){
+  if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
+  const startDate=$("issueStartDate")?.value||"";
+  const endDate=$("issueEndDate")?.value||startDate;
+  const title=String($("issueTitle")?.value||"").trim();
+  if(!startDate) return alert("시작일을 선택해 주세요.");
+  if(!endDate) return alert("종료일을 선택해 주세요.");
+  if(endDate < startDate) return alert("종료일은 시작일보다 빠를 수 없습니다.");
+  if(!title) return alert("제목을 입력해 주세요.");
+  const status=$("issueFormStatus");
+  try{
+    if(status) status.textContent="등록 중...";
+    const id=`${startDate}_${endDate}_${Date.now()}`;
+    await setDoc(doc(firestore,"operationIssues",id),{date:startDate,startDate,endDate,category:$("issueCategory")?.value||"기타",title,detail:String($("issueDetail")?.value||"").trim(),channel:$("issueChannel")?.value||"전체",severity:$("issueSeverity")?.value||"중간",createdAt:new Date().toISOString(),createdBy:currentUser?.email||""});
+    operationIssues=await fetchCollection("operationIssues");
+    operationIssues.sort((a,b)=>String(getIssueStartDate(a)).localeCompare(String(getIssueStartDate(b))));
+    renderOperationIssues(); applyFilter(); resetOperationIssueForm();
+    if(status) status.textContent="등록 완료 · 이슈 기간에 해당하는 날짜에 ⚑ 표시가 반영됩니다.";
+  }catch(e){console.error(e);if(status) status.textContent="등록 실패: "+(e?.message||e);}
+}
+async function deleteOperationIssue(id){
+  if(currentRole!=="admin"||!id) return;
+  if(!confirm("이 운영 이슈를 삭제할까요?")) return;
+  try{await deleteDoc(doc(firestore,"operationIssues",id)); operationIssues=operationIssues.filter(x=>x.__id!==id); renderOperationIssues(); applyFilter();}
+  catch(e){alert("삭제 실패: "+(e?.message||e));}
+}
+
 async function fetchCollection(name){
   const snap=await getDocs(collection(firestore,name));
   return snap.docs.map(d=>({__id:d.id,...d.data()}));
@@ -3826,6 +3971,15 @@ async function reload(){
 
   consultPeriodData = await fetchCollection("consultPeriods");
   consultPeriodData.sort((a,b)=>String(a.analysisName||"").localeCompare(String(b.analysisName||"")) || String(a.compareType||"").localeCompare(String(b.compareType||"")) || String(a.code||"").localeCompare(String(b.code||"")));
+
+  try {
+    operationIssues = await fetchCollection("operationIssues");
+    operationIssues.sort((a,b)=>String(a.date||"").localeCompare(String(b.date||"")) || String(a.createdAt||"").localeCompare(String(b.createdAt||"")));
+  } catch(e) {
+    console.warn("operationIssues 조회 실패",e);
+    operationIssues = [];
+  }
+  renderOperationIssues();
 
   // AI 분석 컬렉션은 기존 Firestore 규칙에 아직 권한이 없을 수 있으므로
   // 로그인 자체가 막히지 않도록 선택적으로 로드합니다.
@@ -4522,6 +4676,7 @@ async function applyFilter(){
   if(s>e) return alert("시작일이 종료일보다 늦습니다.");
 
   const rows=daily.filter(r=>r.date>=s&&r.date<=e);
+  renderOperationIssues();
   if(!rows.length) return alert("선택 기간에 데이터가 없습니다.");
 
   const latest=rows.at(-1);
@@ -5286,7 +5441,7 @@ function renderRaw(){
     return;
   }
 
-  const sourceRows=type==="daily" ? daily : type==="mdm" ? mdmData : type==="newsstart" ? newsStartData : type==="consulttype" ? consultTypeData : type==="consultperiod" ? consultPeriodData : refunds;
+  const sourceRows=type==="daily" ? daily : type==="mdm" ? mdmData : type==="newsstart" ? newsStartData : type==="consulttype" ? consultTypeData : type==="consultperiod" ? consultPeriodData : type==="issues" ? operationIssues : refunds;
   const rows=sourceRows
     .filter(r=>JSON.stringify(r).toLowerCase().includes(q))
     .slice().reverse().slice(0,200);
@@ -5306,6 +5461,9 @@ function renderRaw(){
   }else if(type==="consultperiod"){
     $("rawHead").innerHTML="<tr><th>분석명</th><th>비교구분</th><th>시작일</th><th>종료일</th><th>상담구분</th><th>대분류</th><th>중분류</th><th>소분류</th><th>코드</th><th>문의유형</th><th>건수</th></tr>";
     $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.analysisName||""}</td><td>${r.compareType||""}</td><td>${r.startDate||""}</td><td>${r.endDate||""}</td><td>${r.channel||""}</td><td>${r.category1||""}</td><td>${r.category2||""}</td><td>${r.category3||""}</td><td>${r.code||""}</td><td>${r.inquiry||""}</td><td>${fmt(r.count)}</td></tr>`).join("");
+  }else if(type==="issues"){
+    $("rawHead").innerHTML="<tr><th>일자</th><th>구분</th><th>제목</th><th>상세내용</th><th>영향채널</th><th>중요도</th><th>등록자</th></tr>";
+    $("rawBody").innerHTML=rows.map(r=>`<tr><td>${issueEsc(r.date||"")}</td><td>${issueEsc(r.category||"")}</td><td>${issueEsc(r.title||"")}</td><td style="white-space:normal;min-width:280px">${issueEsc(r.detail||"")}</td><td>${issueEsc(r.channel||"")}</td><td>${issueEsc(r.severity||"")}</td><td>${issueEsc(r.createdBy||"")}</td></tr>`).join("");
   }else if(type==="consulthistory"){
     $("rawHead").innerHTML="<tr><th>상담일자</th><th>학년정보</th><th>대분류</th><th>중분류</th><th>소분류</th><th>문의유형</th><th>상담내용</th></tr>";
     $("rawBody").innerHTML=rows.map(r=>`<tr><td>${aiEscapeHtml(r.date||"")}</td><td>${aiEscapeHtml(r.grade||"")}</td><td>${aiEscapeHtml(r.category1||"")}</td><td>${aiEscapeHtml(r.category2||"")}</td><td>${aiEscapeHtml(r.category3||"")}</td><td>${aiEscapeHtml(r.inquiry||"")}</td><td style="white-space:normal;min-width:360px">${aiEscapeHtml(r.content||"")}</td></tr>`).join("");
@@ -6191,6 +6349,16 @@ $("clearBtn").addEventListener("click",async()=>{
 /* 좌측 메뉴 이동은 아래 독립 스크립트에서 처리 */
 
 /* 초기 데이터 로드는 Firebase 로그인 및 권한 확인 후 onAuthStateChanged에서 실행합니다. */
+
+(function bindOperationIssuesUI(){
+  const run=()=>{
+    if($("issueSaveBtn")) $("issueSaveBtn").onclick=saveOperationIssue;
+    if($("issueResetBtn")) $("issueResetBtn").onclick=resetOperationIssueForm;
+    if($("issueCategoryFilter")) $("issueCategoryFilter").onchange=renderOperationIssues;
+    resetOperationIssueForm(); renderOperationIssues();
+  };
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",run,{once:true}); else run();
+})();
 </script>
 
 </body></html>
