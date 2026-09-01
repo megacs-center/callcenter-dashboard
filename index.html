@@ -4098,6 +4098,7 @@ function selectedAiPeriodInfo(){
     analysisName:String(option.dataset.name||"").trim(),
     startDate:start,
     endDate:end,
+    channel:String(option.dataset.channel||"").trim(),
     periodLabel:`${start} ~ ${end}`
   };
 }
@@ -4127,7 +4128,9 @@ function renderAiAnalysis(selectedId=null){
     ? allRows.filter(r=>{
         const operation=String(aiValue(r,["operationPeriod","운영분석기간"],"")).trim();
         const consult=String(aiValue(r,["consultBase","상담유형기준"],"")).trim();
-        return operation===periodInfo.periodLabel || consult===periodInfo.periodLabel;
+        const resultChannel=String(aiValue(r,["analysisChannel","consultChannel","상담채널"],"")).trim();
+        const samePeriod=operation===periodInfo.periodLabel || consult===periodInfo.periodLabel;
+        return samePeriod && (!periodInfo.channel || resultChannel===periodInfo.channel);
       })
     : allRows;
 
@@ -4152,7 +4155,7 @@ function renderAiAnalysis(selectedId=null){
   if($("aiCheckNeeded")) $("aiCheckNeeded").innerHTML=aiTextToHtml(aiValue(row,["checkNeeded","확인필요"]));
   if($("aiImprovement")) $("aiImprovement").innerHTML=aiTextToHtml(aiValue(row,["improvement","개선제안"]));
   if(status){
-    const prefix=periodInfo ? periodInfo.periodLabel : '전체 기간';
+    const prefix=periodInfo ? `${periodInfo.periodLabel}${periodInfo.channel?` · ${periodInfo.channel}`:""}` : '전체 기간';
     status.textContent=`${prefix} · AI 분석 이력 ${rows.length}건 · 최신 결과를 표시합니다.`;
     status.classList.remove('error');
   }
@@ -4188,12 +4191,19 @@ function aiPeriodOptions(){
     const name=String(r.analysisName||"").trim();
     const start=String(r.startDate||"").trim();
     const end=String(r.endDate||"").trim();
-    if(compare!=="올해" || !name || !start || !end) return;
-    const key=`${name}|||${start}|||${end}`;
-    if(!map.has(key)) map.set(key,{key,analysisName:name,startDate:start,endDate:end,channels:new Set()});
-    if(r.channel) map.get(key).channels.add(String(r.channel));
+    const channel=String(r.channel||"").trim();
+    if(compare!=="올해" || !name || !start || !end || !channel) return;
+    // AI 분석기간은 채널별로 독립 선택합니다.
+    const key=`${name}|||${start}|||${end}|||${channel}`;
+    if(!map.has(key)) map.set(key,{key,analysisName:name,startDate:start,endDate:end,channel});
   });
-  return [...map.values()].sort((a,b)=>b.endDate.localeCompare(a.endDate)||b.startDate.localeCompare(a.startDate)||a.analysisName.localeCompare(b.analysisName));
+  const channelPriority=ch=>ch==="인바운드 상담"?0:ch==="게시판 상담"?1:2;
+  return [...map.values()].sort((a,b)=>
+    b.endDate.localeCompare(a.endDate) ||
+    b.startDate.localeCompare(a.startDate) ||
+    channelPriority(a.channel)-channelPriority(b.channel) ||
+    a.analysisName.localeCompare(b.analysisName)
+  );
 }
 
 function populateAiPeriodSelect(forceLatest=false){
@@ -4206,17 +4216,21 @@ function populateAiPeriodSelect(forceLatest=false){
     return;
   }
   select.innerHTML=options.map(o=>{
-    const channels=[...o.channels].join(" + ");
-    const label=`${o.startDate} ~ ${o.endDate}${channels?` · ${channels}`:""}`;
-    return `<option value="${aiEscapeHtml(o.key)}" data-name="${aiEscapeHtml(o.analysisName)}" data-start="${aiEscapeHtml(o.startDate)}" data-end="${aiEscapeHtml(o.endDate)}">${aiEscapeHtml(label)}</option>`;
+    const label=`${o.startDate} ~ ${o.endDate} · ${o.channel}`;
+    return `<option value="${aiEscapeHtml(o.key)}" data-name="${aiEscapeHtml(o.analysisName)}" data-start="${aiEscapeHtml(o.startDate)}" data-end="${aiEscapeHtml(o.endDate)}" data-channel="${aiEscapeHtml(o.channel)}">${aiEscapeHtml(label)}</option>`;
   }).join("");
 
-  // 일반 화면 새로고침에서는 사용자가 선택한 기간을 유지합니다.
-  // 상담유형 데이터를 새로 등록한 직후에는 가장 최신 종료일의 기간을 자동 선택합니다.
+  // 일반 화면 새로고침에서는 사용자가 선택한 기간/채널을 유지합니다.
+  // 상담유형 데이터를 새로 등록한 직후에는 최신 종료일의 인바운드 상담을 우선 선택하고,
+  // 같은 최신기간에 인바운드가 없으면 게시판 상담(그 외 채널)을 선택합니다.
   if(!forceLatest && previous && [...select.options].some(o=>o.value===previous)){
     select.value=previous;
   }else{
-    select.selectedIndex=0; // aiPeriodOptions()가 최신 종료일 순으로 정렬되어 있음
+    const latestEnd=options[0]?.endDate||"";
+    const latestOptions=options.filter(o=>o.endDate===latestEnd);
+    const preferred=latestOptions.find(o=>o.channel==="인바운드 상담") || latestOptions[0] || options[0];
+    if(preferred) select.value=preferred.key;
+    else select.selectedIndex=0;
   }
 }
 
@@ -4268,7 +4282,8 @@ function aiSelectedPeriodInfo(){
   return {
     analysisName:option.dataset.name||"",
     startDate:option.dataset.start||"",
-    endDate:option.dataset.end||""
+    endDate:option.dataset.end||"",
+    channel:option.dataset.channel||""
   };
 }
 
@@ -4288,7 +4303,10 @@ function aiLatestAnalysisForSelected(){
     .filter(r=>{
       const op=String(aiValue(r,["operationPeriod","운영분석기간"],"")||"");
       const name=String(r.analysisName||"");
-      return op===`${sel.startDate} ~ ${sel.endDate}` && (!name || name===sel.analysisName);
+      const resultChannel=String(aiValue(r,["analysisChannel","consultChannel","상담채널"],"")||"");
+      return op===`${sel.startDate} ~ ${sel.endDate}` &&
+        (!name || name===sel.analysisName) &&
+        (!sel.channel || resultChannel===sel.channel);
     })
     .sort((a,b)=>String(aiValue(b,["analysisAt","분석일시","createdAt"],"")||"").localeCompare(String(aiValue(a,["analysisAt","분석일시","createdAt"],"")||"")))[0]||null;
 }
@@ -4304,7 +4322,7 @@ function aiLatestJobForSelected(){
   const sel=aiSelectedPeriodInfo();
   if(!sel) return null;
   return [...(aiJobData||[])]
-    .filter(j=>(j.analysisName||"")===sel.analysisName && (j.startDate||"")===sel.startDate && (j.endDate||"")===sel.endDate)
+    .filter(j=>(j.analysisName||"")===sel.analysisName && (j.startDate||"")===sel.startDate && (j.endDate||"")===sel.endDate && (!sel.channel || (j.channel||"")===sel.channel))
     .sort((a,b)=>String(b.updatedAt||b.createdAt||"").localeCompare(String(a.updatedAt||a.createdAt||"")))[0]||null;
 }
 
@@ -4374,10 +4392,11 @@ async function runAiFromDashboard(){
       requestId,
       analysisName:option.dataset.name||"",
       startDate:option.dataset.start||"",
-      endDate:option.dataset.end||""
+      endDate:option.dataset.end||"",
+      channel:option.dataset.channel||""
     });
-    aiJobData.push({__id:requestId,requestId,status:"running",analysisName:option.dataset.name||"",startDate:option.dataset.start||"",endDate:option.dataset.end||"",startedAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
-    aiSetRunBusy(true,`🟡 AI 분석 요청 접수 · ${option.dataset.start} ~ ${option.dataset.end} · 응답이 완료되면 자동 반영됩니다.`);
+    aiJobData.push({__id:requestId,requestId,status:"running",analysisName:option.dataset.name||"",startDate:option.dataset.start||"",endDate:option.dataset.end||"",channel:option.dataset.channel||"",startedAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+    aiSetRunBusy(true,`🟡 AI 분석 요청 접수 · ${option.dataset.start} ~ ${option.dataset.end}${option.dataset.channel?` · ${option.dataset.channel}`:""} · 응답이 완료되면 자동 반영됩니다.`);
     startAiJobPolling();
     // Firestore 폴링은 사용하지 않습니다. Apps Script 응답이 일정 시간 내 돌아오지 않으면 버튼만 복구합니다.
     setTimeout(()=>{
@@ -4425,7 +4444,7 @@ window.addEventListener("message",async e=>{
       let prefix="신규 AI 분석 완료";
       if(data.mode==="reused") prefix="기존 분석 결과 재사용 · API 재호출 없음";
       else if(data.mode==="reanalyzed") prefix="데이터 변경 감지 · AI 재분석 완료";
-      status.textContent=`${prefix} · ${data.operationPeriod||""}`;
+      status.textContent=`${prefix} · ${data.operationPeriod||""}${data.analysisChannel?` · ${data.analysisChannel}`:""}`;
       status.classList.remove("error");
     }
   }catch(err){
