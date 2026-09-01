@@ -5422,7 +5422,7 @@ async function upload(file,type){
 
       const normalizeCompare=v=>{ const t=String(v||"").trim().toLowerCase(); return ["전년","작년","previous","prev","prior"].includes(t)?"전년":"올해"; };
       const normalizeChannel=v=>{ const t=String(v||"").trim().toUpperCase().replace(/\s/g,""); return t==="ERMS"||t==="게시판"||t==="게시판상담"?"게시판 상담":"인바운드 상담"; };
-      const periodRows=(typeof consultPeriodRaw!=="undefined"?consultPeriodRaw:[]).map(o=>({
+      const periodRowsRaw=(typeof consultPeriodRaw!=="undefined"?consultPeriodRaw:[]).map(o=>({
         analysisName:String(pick(o,["분석명","기간명","분석 기간명"])||"").trim(),
         compareType:String(o.__compareType||"").trim() || normalizeCompare(pick(o,["비교구분","구분","연도구분"])),
         startDate:asDate(pick(o,["시작일","분석시작일"])),
@@ -5436,6 +5436,24 @@ async function upload(file,type){
         count:nullableNum(pick(o,["건수","상담건수","실적"]))
       })).filter(r=>r.analysisName && r.startDate && r.endDate && (r.category1||r.code||r.inquiry) && r.count!==null);
 
+      // 같은 분석명·비교구분·채널 안에 과거 기간 행이 함께 남아 있어도
+      // 종료일이 가장 최신인 한 기간만 업로드 대상으로 사용합니다.
+      // 예: 8/1~8/27 + 8/1~8/31이 함께 있으면 8/1~8/31만 유지.
+      const latestPeriodByCombo=new Map();
+      periodRowsRaw.forEach(r=>{
+        const combo=`${r.analysisName}|${r.compareType}|${r.channel}`;
+        const period=`${r.startDate}|${r.endDate}`;
+        const prev=latestPeriodByCombo.get(combo);
+        if(!prev || r.endDate>prev.endDate || (r.endDate===prev.endDate && r.startDate>prev.startDate)){
+          latestPeriodByCombo.set(combo,{startDate:r.startDate,endDate:r.endDate,period});
+        }
+      });
+      const periodRows=periodRowsRaw.filter(r=>{
+        const combo=`${r.analysisName}|${r.compareType}|${r.channel}`;
+        const latest=latestPeriodByCombo.get(combo);
+        return latest && r.startDate===latest.startDate && r.endDate===latest.endDate;
+      });
+
       const messages=[];
       if(rows.length){
         const registeredMonths=[];
@@ -5448,6 +5466,7 @@ async function upload(file,type){
       if(periodRows.length){
         const uploadedNames=[...new Set(periodRows.map(r=>r.analysisName))];
         const replaceKeys=new Set(periodRows.map(r=>`${r.analysisName}|${r.compareType}|${r.channel}`));
+        // 업로드된 조합은 기존 Firestore 행을 전부 제거한 뒤 최신 한 기간으로 교체합니다.
         const kept=consultPeriodData.filter(r=>!replaceKeys.has(`${r.analysisName}|${r.compareType}|${r.channel}`)).map(({__id,...r})=>r);
         const merged=[...kept,...periodRows];
         const safe=v=>String(v||"").replace(/[^0-9A-Za-z가-힣_-]/g,"_").slice(0,45);
