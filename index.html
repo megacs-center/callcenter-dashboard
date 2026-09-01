@@ -2854,7 +2854,7 @@ body.auth-pending .app{visibility:hidden}
     <div class="issue-kpi">조회기간 이슈 <b id="issueCountKpi">0건</b></div>
     <div class="issue-kpi">높음 <b id="issueHighKpi">0건</b></div>
     <div class="issue-kpi">최근 이슈 <b id="issueLatestKpi">-</b></div>
-    <div class="issue-kpi issue-marker-note">⚑ 이슈 기간은 일자 그래프 라벨에 표시됩니다.</div>
+    <div class="issue-kpi issue-marker-note">⚑ 이슈 기간은 그래프 라벨과 툴팁에 표시됩니다.</div>
   </div>
   <div class="operation-issues-wrap">
     <div class="card issue-form" data-role="admin" style="display:none">
@@ -3191,7 +3191,7 @@ const DATA_INFO = {
   },
   issues: {
     title:"운영 이슈 · 데이터 기준",
-    html:`<div class="data-info-row">관리자가 등록한 각종 오류, 이벤트, 정책변경, 배송·교재, 결제·환불, 모의고사, 환급 등 운영 이슈를 Firestore <span class="data-info-em">operationIssues</span>에 저장합니다.</div><div class="data-info-row">운영 이슈는 <span class="data-info-em">시작일~종료일</span> 기간형으로 관리하며, 상단 조회기간과 겹치는 이슈만 표시합니다.</div><div class="data-info-row">이슈 기간에 포함되는 날짜는 일자형 그래프 라벨에 <span class="data-info-em">⚑</span> 표시됩니다.</div><div class="data-info-row">이슈와 문의량 증감은 시점상 연관성을 빠르게 확인하기 위한 보조정보이며, 인과관계를 자동 확정하지 않습니다.</div>`
+    html:`<div class="data-info-row">관리자가 등록한 각종 오류, 이벤트, 정책변경, 배송·교재, 결제·환불, 모의고사, 환급 등 운영 이슈를 Firestore <span class="data-info-em">operationIssues</span>에 저장합니다.</div><div class="data-info-row">운영 이슈는 <span class="data-info-em">시작일~종료일</span> 기간형으로 관리하며, 상단 조회기간과 겹치는 이슈만 표시합니다.</div><div class="data-info-row">이슈 기간에 포함되는 날짜는 일자형 그래프 라벨에 <span class="data-info-em">⚑</span> 표시되며, 그래프에 마우스를 올리면 툴팁에서 이슈 제목·기간·중요도를 바로 확인할 수 있습니다.</div><div class="data-info-row">이슈와 문의량 증감은 시점상 연관성을 빠르게 확인하기 위한 보조정보이며, 인과관계를 자동 확정하지 않습니다.</div>`
   },
   admin: {
     title:"관리자 · 데이터 기준",
@@ -3893,6 +3893,40 @@ function formatIssuePeriodLabel(issue){
   if(!start && !end) return "-";
   if(!end || start===end) return start || end;
   return `${start} ~ ${end}`;
+}
+function issueDateFromChartLabel(label){
+  const raw=String(label||"").replace(/^⚑\s*/,"").trim();
+  const m=raw.match(/(\d{2})-(\d{2})/);
+  if(!m) return "";
+  const s=$("startDate")?.value||"";
+  const e=$("endDate")?.value||"";
+  let year=s?s.slice(0,4):(e?e.slice(0,4):"");
+  if(!year && daily?.length) year=String(daily.at(-1)?.date||"").slice(0,4);
+  if(!year) return "";
+  let date=`${year}-${m[1]}-${m[2]}`;
+  // 조회구간이 연도를 넘는 경우 MM-DD가 시작월보다 작으면 종료연도로 보정
+  if(s && e && s.slice(0,4)!==e.slice(0,4) && date<s) date=`${e.slice(0,4)}-${m[1]}-${m[2]}`;
+  return date;
+}
+function operationIssueTooltipLines(label){
+  const date=issueDateFromChartLabel(label);
+  if(!date) return [];
+  const list=(operationIssues||[]).filter(x=>isDateInIssueRange(date,x));
+  if(!list.length) return [];
+  const lines=["",`⚑ 운영 이슈 ${list.length}건`];
+  list.slice(0,4).forEach(x=>{
+    lines.push(`• [${x.category||"기타"}] ${x.title||"-"}`);
+    lines.push(`  기간: ${formatIssuePeriodLabel(x)} · 중요도: ${x.severity||"중간"}`);
+  });
+  if(list.length>4) lines.push(`  외 ${list.length-4}건`);
+  return lines;
+}
+if(window.Chart?.defaults?.plugins?.tooltip){
+  const callbacks=Chart.defaults.plugins.tooltip.callbacks||(Chart.defaults.plugins.tooltip.callbacks={});
+  callbacks.afterBody=(items)=>{
+    const label=items?.[0]?.label||"";
+    return operationIssueTooltipLines(label);
+  };
 }
 function renderOperationIssues(){
   const body=$("issueListBody"); if(!body) return;
