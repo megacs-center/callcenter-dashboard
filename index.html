@@ -2851,7 +2851,7 @@ body.auth-pending .app{visibility:hidden}
 <section id="issues" class="section">
   <div class="detail-head"><div class="detail-title-wrap"><div class="detail-title">운영 이슈</div><button type="button" class="data-info-btn" data-info-page="issues">ⓘ 데이터 기준</button></div></div>
   <div class="issue-kpi-strip">
-    <div class="issue-kpi">조회기간 이슈 <b id="issueCountKpi">0건</b></div>
+    <div class="issue-kpi">표시 이슈 <b id="issueCountKpi">0건</b></div>
     <div class="issue-kpi">높음 <b id="issueHighKpi">0건</b></div>
     <div class="issue-kpi">최근 이슈 <b id="issueLatestKpi">-</b></div>
     <div class="issue-kpi issue-marker-note">⚑ 이슈 기간은 그래프 라벨과 툴팁에 표시됩니다.</div>
@@ -2872,7 +2872,7 @@ body.auth-pending .app{visibility:hidden}
       <div id="issueFormStatus" class="status">관리자만 등록·삭제할 수 있습니다.</div>
     </div>
     <div class="card issue-list-card">
-      <div class="issue-list-head"><div><div class="issue-list-title">기간 내 주요 이슈</div><div class="issue-summary" id="issuePeriodLabel">조회기간 기준</div></div><select id="issueCategoryFilter"><option value="">전체 구분</option><option>시스템오류</option><option>이벤트</option><option>정책변경</option><option>배송·교재</option><option>결제·환불</option><option>모의고사</option><option>환급</option><option>기타</option></select></div>
+      <div class="issue-list-head"><div><div class="issue-list-title">주요 이슈</div><div class="issue-summary" id="issuePeriodLabel">전체 기간</div></div><div style="display:flex;gap:8px;align-items:center"><select id="issueScopeFilter" aria-label="이슈 조회 범위"><option value="all" selected>전체</option><option value="period">조회기간</option></select><select id="issueCategoryFilter"><option value="">전체 구분</option><option>시스템오류</option><option>이벤트</option><option>정책변경</option><option>배송·교재</option><option>결제·환불</option><option>모의고사</option><option>환급</option><option>기타</option></select></div></div>
       <div class="issue-row issue-head"><div>기간</div><div>구분</div><div>이슈</div><div>채널</div><div>중요도</div><div>관리</div></div>
       <div id="issueListBody"></div>
     </div>
@@ -3191,7 +3191,7 @@ const DATA_INFO = {
   },
   issues: {
     title:"운영 이슈 · 데이터 기준",
-    html:`<div class="data-info-row">관리자가 등록한 각종 오류, 이벤트, 정책변경, 배송·교재, 결제·환불, 모의고사, 환급 등 운영 이슈를 Firestore <span class="data-info-em">operationIssues</span>에 저장합니다.</div><div class="data-info-row">운영 이슈는 <span class="data-info-em">시작일~종료일</span> 기간형으로 관리하며, 상단 조회기간과 겹치는 이슈만 표시합니다.</div><div class="data-info-row">이슈 기간에 포함되는 날짜는 일자형 그래프 라벨에 <span class="data-info-em">⚑</span> 표시되며, 그래프에 마우스를 올리면 툴팁에서 이슈 제목·기간·중요도를 바로 확인할 수 있습니다.</div><div class="data-info-row">이슈와 문의량 증감은 시점상 연관성을 빠르게 확인하기 위한 보조정보이며, 인과관계를 자동 확정하지 않습니다.</div>`
+    html:`<div class="data-info-row">관리자가 등록한 각종 오류, 이벤트, 정책변경, 배송·교재, 결제·환불, 모의고사, 환급 등 운영 이슈를 Firestore <span class="data-info-em">operationIssues</span>에 저장합니다.</div><div class="data-info-row">운영 이슈는 <span class="data-info-em">시작일~종료일</span> 기간형으로 관리합니다. 기본은 전체 기간 이슈를 표시하며, 필요 시 조회기간 기준으로 전환할 수 있습니다.</div><div class="data-info-row">이슈 기간에 포함되는 날짜는 일자형 그래프 라벨에 <span class="data-info-em">⚑</span> 표시되며, 그래프에 마우스를 올리면 툴팁에서 이슈 제목·기간·중요도를 바로 확인할 수 있습니다.</div><div class="data-info-row">이슈와 문의량 증감은 시점상 연관성을 빠르게 확인하기 위한 보조정보이며, 인과관계를 자동 확정하지 않습니다.</div>`
   },
   admin: {
     title:"관리자 · 데이터 기준",
@@ -3931,19 +3931,22 @@ if(window.Chart?.defaults?.plugins?.tooltip){
 function renderOperationIssues(){
   const body=$("issueListBody"); if(!body) return;
   const {s,e}=issueSelectedRange();
+  const scope=$("issueScopeFilter")?.value||"all";
   const cat=$("issueCategoryFilter")?.value||"";
-  let rows=[...(operationIssues||[])].filter(r=>issueRangesOverlap(r,s,e));
+  const usePeriod=scope==="period";
+  let rows=[...(operationIssues||[])];
+  if(usePeriod) rows=rows.filter(r=>issueRangesOverlap(r,s,e));
   if(cat) rows=rows.filter(r=>String(r.category||"")===cat);
   rows.sort((a,b)=>String(getIssueEndDate(b)).localeCompare(String(getIssueEndDate(a)))||String(getIssueStartDate(b)).localeCompare(String(getIssueStartDate(a)))||String(b.createdAt||"").localeCompare(String(a.createdAt||"")));
-  if($("issuePeriodLabel")) $("issuePeriodLabel").textContent=(s&&e)?`${s} ~ ${e}`:"전체 기간";
-  const allRange=[...(operationIssues||[])].filter(r=>issueRangesOverlap(r,s,e));
-  if($("issueCountKpi")) $("issueCountKpi").textContent=`${allRange.length}건`;
-  if($("issueHighKpi")) $("issueHighKpi").textContent=`${allRange.filter(r=>r.severity==="높음").length}건`;
+  if($("issuePeriodLabel")) $("issuePeriodLabel").textContent=usePeriod&&s&&e?`${s} ~ ${e}`:"전체 기간";
+  const scopeRows=usePeriod?[...(operationIssues||[])].filter(r=>issueRangesOverlap(r,s,e)):[...(operationIssues||[])];
+  if($("issueCountKpi")) $("issueCountKpi").textContent=`${scopeRows.length}건`;
+  if($("issueHighKpi")) $("issueHighKpi").textContent=`${scopeRows.filter(r=>r.severity==="높음").length}건`;
   if($("issueLatestKpi")) {
-    const latest=allRange.length?[...allRange].sort((a,b)=>String(getIssueEndDate(b)).localeCompare(String(getIssueEndDate(a)))||String(getIssueStartDate(b)).localeCompare(String(getIssueStartDate(a))))[0]:null;
+    const latest=scopeRows.length?[...scopeRows].sort((a,b)=>String(getIssueEndDate(b)).localeCompare(String(getIssueEndDate(a)))||String(getIssueStartDate(b)).localeCompare(String(getIssueStartDate(a))))[0]:null;
     $("issueLatestKpi").textContent=latest?formatIssuePeriodLabel(latest):"-";
   }
-  if(!rows.length){body.innerHTML='<div class="issue-empty">조회기간에 등록된 운영 이슈가 없습니다.</div>';return;}
+  if(!rows.length){body.innerHTML=`<div class="issue-empty">${usePeriod?'조회기간에':'전체 기간에'} 등록된 운영 이슈가 없습니다.</div>`;return;}
   body.innerHTML=rows.map(r=>`<div class="issue-row"><div>${issueEsc(formatIssuePeriodLabel(r))}</div><div><span class="issue-badge">${issueEsc(r.category||"기타")}</span></div><div><span class="issue-title">${issueEsc(r.title||"-")}</span>${r.detail?`<span class="issue-detail">${issueEsc(r.detail)}</span>`:""}</div><div>${issueEsc(r.channel||"전체")}</div><div><span class="issue-badge ${issueSeverityClass(r.severity)}">${issueEsc(r.severity||"중간")}</span></div><div>${currentRole==="admin"?`<button class="issue-delete" type="button" data-issue-delete="${issueEsc(r.__id||"")}">삭제</button>`:"-"}</div></div>`).join("");
   body.querySelectorAll("[data-issue-delete]").forEach(btn=>btn.onclick=()=>deleteOperationIssue(btn.dataset.issueDelete));
 }
@@ -6388,6 +6391,7 @@ $("clearBtn").addEventListener("click",async()=>{
   const run=()=>{
     if($("issueSaveBtn")) $("issueSaveBtn").onclick=saveOperationIssue;
     if($("issueResetBtn")) $("issueResetBtn").onclick=resetOperationIssueForm;
+    if($("issueScopeFilter")) $("issueScopeFilter").onchange=renderOperationIssues;
     if($("issueCategoryFilter")) $("issueCategoryFilter").onchange=renderOperationIssues;
     resetOperationIssueForm(); renderOperationIssues();
   };
