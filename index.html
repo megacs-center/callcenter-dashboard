@@ -4196,7 +4196,7 @@ function aiPeriodOptions(){
   return [...map.values()].sort((a,b)=>b.endDate.localeCompare(a.endDate)||b.startDate.localeCompare(a.startDate)||a.analysisName.localeCompare(b.analysisName));
 }
 
-function populateAiPeriodSelect(){
+function populateAiPeriodSelect(forceLatest=false){
   const select=$("aiPeriodSelect");
   if(!select) return;
   const previous=select.value;
@@ -4210,7 +4210,14 @@ function populateAiPeriodSelect(){
     const label=`${o.startDate} ~ ${o.endDate}${channels?` · ${channels}`:""}`;
     return `<option value="${aiEscapeHtml(o.key)}" data-name="${aiEscapeHtml(o.analysisName)}" data-start="${aiEscapeHtml(o.startDate)}" data-end="${aiEscapeHtml(o.endDate)}">${aiEscapeHtml(label)}</option>`;
   }).join("");
-  if(previous && [...select.options].some(o=>o.value===previous)) select.value=previous;
+
+  // 일반 화면 새로고침에서는 사용자가 선택한 기간을 유지합니다.
+  // 상담유형 데이터를 새로 등록한 직후에는 가장 최신 종료일의 기간을 자동 선택합니다.
+  if(!forceLatest && previous && [...select.options].some(o=>o.value===previous)){
+    select.value=previous;
+  }else{
+    select.selectedIndex=0; // aiPeriodOptions()가 최신 종료일 순으로 정렬되어 있음
+  }
 }
 
 function getAiWebAppUrl(){
@@ -5476,8 +5483,11 @@ async function upload(file,type){
       }
       if(!rows.length && !periodRows.length) throw new Error("상담유형 데이터를 인식하지 못했습니다.");
       await reload();
+      // 데이터 등록 직후 AI 분석기간을 가장 최신 특정기간으로 자동 전환합니다.
+      populateAiPeriodSelect(true);
+      renderAiAnalysis();
       renderRaw();
-      alert(`상담유형 데이터를 등록했습니다.\n${messages.join("\n")}`);
+      alert(`상담유형 데이터를 등록했습니다.\n${messages.join("\n")}\n\nAI 분석기간도 최신 등록기간으로 자동 적용되었습니다.`);
     }
   }catch(e){
     console.error(e);
