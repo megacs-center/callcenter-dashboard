@@ -2108,6 +2108,72 @@ body.auth-pending .app{visibility:hidden}
 
 .ai-latest-date{display:inline-flex;align-items:center;white-space:nowrap;padding:0 10px;height:38px;border:1px solid #d8e1ee;border-radius:10px;background:#fff;color:#64748b;font-size:12px;font-weight:700}
 @media(max-width:1200px){.ai-latest-date{display:none}}
+
+/* v36 상담유형 학년별 분석 */
+.grade-summary-card{margin-top:12px;padding:16px}.grade-summary-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.grade-summary-head h3{margin:0;font-size:15px;color:#102744}.grade-summary-note{font-size:11px;color:#75859a}.grade-kpi-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:10px 0 12px}.grade-kpi{border:1px solid #e5ebf3;border-radius:10px;padding:10px;background:#fbfdff}.grade-kpi .glabel{font-size:10px;color:#728197;font-weight:800}.grade-kpi .gvalue{font-size:18px;font-weight:900;color:#102744;margin-top:4px}.grade-kpi .gpct{font-size:10px;color:#7b8798;margin-top:2px}.grade-stack{height:18px;border-radius:999px;overflow:hidden;background:#eef2f7;display:flex}.grade-stack>span{height:100%;min-width:0}.grade-legend{display:flex;flex-wrap:wrap;gap:10px 14px;margin-top:8px;font-size:10px;color:#536277;font-weight:700}.grade-legend i{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:4px}.grade-insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.grade-insight-box{border:1px solid #e5ebf3;border-radius:10px;padding:11px 12px;background:#fff}.grade-insight-title{font-size:11px;font-weight:900;color:#29415f;margin-bottom:6px}.grade-insight-text{font-size:11px;color:#526174;line-height:1.55}.consult-grade-panel{padding:16px}.consult-grade-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:14px}.consult-grade-chart{height:190px}.consult-grade-bars{display:grid;gap:9px}.consult-grade-row{display:grid;grid-template-columns:58px 1fr 82px;align-items:center;gap:8px;font-size:11px}.consult-grade-name{font-weight:800;color:#35465d}.consult-grade-track{height:11px;border-radius:999px;background:#edf2f7;overflow:hidden}.consult-grade-fill{height:100%;border-radius:999px}.consult-grade-val{text-align:right;color:#4b5d73;font-weight:800}.consult-grade-toptypes{display:grid;gap:7px}.consult-grade-type{display:grid;grid-template-columns:minmax(130px,1.5fr) repeat(6,minmax(34px,.55fr));gap:5px;align-items:center;font-size:10px}.consult-grade-type.head{color:#718096;font-weight:800;border-bottom:1px solid #edf1f5;padding-bottom:5px}.consult-grade-type .type-name{font-weight:800;color:#233b59;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.consult-grade-type .pct{text-align:right;color:#536277}.consult-rank-table .grade-cell{min-width:250px}.mini-grade-stack{height:13px;border-radius:999px;overflow:hidden;background:#edf2f7;display:flex}.mini-grade-stack span{height:100%}.mini-grade-legend{font-size:9px;color:#7b8798;margin-top:4px;white-space:nowrap}.overview-grade-card{margin-top:12px}
+@media(max-width:1100px){.grade-kpi-grid{grid-template-columns:repeat(3,1fr)}.consult-grade-grid{grid-template-columns:1fr}}@media(max-width:680px){.grade-kpi-grid{grid-template-columns:repeat(2,1fr)}.grade-insight-grid{grid-template-columns:1fr}}
+/* v42 상담유형(학년) - 상담비중 숫자 우선 / 학년별 주요문의 TOP10 */
+.grade-page-share-rows{display:grid;gap:10px}
+.grade-page-share-head{display:grid;grid-template-columns:44px 86px 58px minmax(140px,1fr);align-items:center;gap:10px;font-size:10px;color:#7a8ba1;font-weight:800;margin-bottom:-2px;padding-bottom:4px;border-bottom:1px solid #eef2f6}
+.grade-page-share-head .hcount,.grade-page-share-head .hpct{text-align:right;white-space:nowrap}
+.grade-page-share-head .hbar{text-align:left;padding-left:2px}
+.grade-page-share-row{display:grid;grid-template-columns:44px 86px 58px minmax(140px,1fr);align-items:center;gap:10px;font-size:11px}
+.grade-page-share-grade{font-weight:900;color:#29415f}
+.grade-page-share-count{font-weight:900;color:#173757;text-align:right;white-space:nowrap}
+.grade-page-share-pct{font-weight:800;color:#63748a;text-align:right;white-space:nowrap}
+.grade-page-share-track{height:12px;border-radius:999px;background:#edf2f7;overflow:hidden}
+.grade-page-share-fill{height:100%;border-radius:999px}
+.grade-top10-controls{display:flex;align-items:center;gap:8px}
+.grade-top10-controls label{font-size:10px;color:#7a889b;font-weight:800}
+.grade-top10-controls select{height:30px;border:1px solid #dce5ef;border-radius:7px;background:#fff;padding:0 28px 0 9px;font-size:11px;font-weight:800;color:#29415f}
+.grade-inquiry-top10{display:grid;gap:3px}
+.grade-inquiry-top10-row{display:grid;grid-template-columns:28px minmax(150px,1.2fr) 82px 56px minmax(120px,.9fr);align-items:center;gap:9px;min-height:34px;padding:5px 3px;border-bottom:1px solid #f0f3f7;font-size:10.5px}
+.grade-inquiry-rank{width:22px;height:22px;border-radius:6px;background:#edf4ff;color:#146fd1;font-weight:900;display:flex;align-items:center;justify-content:center}
+.grade-inquiry-name{font-weight:800;color:#29415f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grade-inquiry-count{text-align:right;font-weight:900;color:#173757;white-space:nowrap}
+.grade-inquiry-share{text-align:right;font-weight:800;color:#6b7b90;white-space:nowrap}
+.grade-inquiry-track{height:9px;border-radius:999px;background:#edf2f7;overflow:hidden}
+.grade-inquiry-fill{height:100%;border-radius:999px}
+
+.grade-vertical-chart{height:300px;display:grid;grid-template-columns:repeat(6,minmax(70px,1fr));align-items:end;gap:18px;padding:28px 20px 10px;border:1px solid #e7edf5;border-radius:10px;background:#fff}
+.grade-vbar-col{height:100%;display:grid;grid-template-rows:32px 1fr 24px;align-items:end;justify-items:center;min-width:0}
+.grade-vbar-value{font-size:12px;font-weight:900;color:#173757;white-space:nowrap;align-self:start}
+.grade-vbar-area{height:100%;width:100%;display:flex;align-items:flex-end;justify-content:center;border-bottom:1px solid #dfe7f0}
+.grade-vbar{width:min(54px,62%);min-height:2px;border-radius:7px 7px 0 0;transition:height .2s ease}
+.grade-vbar-label{font-size:11px;font-weight:900;color:#314a67;white-space:nowrap;padding-top:7px}
+.grade-vbar-pct{font-size:10px;font-weight:800;color:#718096;margin-left:4px}
+.grade-top10-compact{table-layout:fixed;width:100%;min-width:1120px!important}
+.grade-top10-compact th,.grade-top10-compact td{vertical-align:middle;padding:9px 10px}
+.grade-top10-compact th:nth-child(1),.grade-top10-compact td:nth-child(1){width:52px;text-align:center}
+.grade-top10-compact th:nth-child(2),.grade-top10-compact td:nth-child(2){width:30%;text-align:left}
+.grade-top10-compact th:nth-child(3),.grade-top10-compact td:nth-child(3){width:92px;text-align:right}
+.grade-top10-compact th:nth-child(4),.grade-top10-compact td:nth-child(4){width:68px;text-align:right}
+.grade-top10-compact th:nth-child(n+5),.grade-top10-compact td:nth-child(n+5){width:92px;text-align:center}
+.grade-num-cell{white-space:nowrap}
+.grade-num-main,.grade-num-pct{display:inline!important}
+.grade-num-main{font-weight:900;color:#173757}
+.grade-num-pct{font-size:10px;color:#75859a;margin-left:4px}
+@media(max-width:780px){.grade-page-share-head,.grade-page-share-row{grid-template-columns:38px 74px 50px minmax(100px,1fr)}.grade-inquiry-top10-row{grid-template-columns:26px minmax(120px,1fr) 68px 48px}.grade-inquiry-track{display:none}}
+
+
+
+/* v41 상담유형(학년) - 통합현황형 UI */
+.grade-page-overview{padding-bottom:24px}.grade-page-headrow{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:10px}.grade-page-badge{font-size:11px;font-weight:800;color:#536b88;background:#edf4ff;border:1px solid #dce8f8;border-radius:999px;padding:6px 10px;white-space:nowrap}.grade-filter-bar{padding:12px 14px;margin-bottom:12px}.grade-filter-left{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}.grade-filter-unit{display:flex;flex-direction:column;gap:5px;min-width:112px}.grade-filter-unit span{font-size:10px;font-weight:800;color:#62748c}.grade-filter-unit select{height:36px;border:1px solid #dbe4ef;border-radius:8px;background:#fff;padding:0 34px 0 11px;font-size:12px;font-weight:800;color:#24415f}.grade-filter-help{font-size:10.5px;color:#75859a;padding:0 2px 9px;flex:1}.grade-kpi-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:12px}.grade-overview-kpi{padding:14px 16px;min-height:104px;display:flex;flex-direction:column;justify-content:center}.gok-label{font-size:11px;font-weight:800;color:#5d6f86;margin-bottom:7px}.gok-value{font-size:25px;line-height:1.15;font-weight:900;color:#0f2f55;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gok-value.compact{font-size:19px}.gok-sub{font-size:10.5px;color:#7d8a9d;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.grade-page-main-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:12px;margin-bottom:12px}.grade-overview-panel{padding:15px 16px}.grade-full-panel{margin-top:12px}.grade-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid #edf1f6}.grade-panel-head>div{display:flex;align-items:center;gap:8px;color:#153757;font-size:13px}.grade-panel-head>span{font-size:10px;color:#7a889b;white-space:nowrap}.grade-panel-num{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:6px;background:#1473e6;color:#fff;font-size:10px;font-weight:900}.grade-page-kpis{grid-template-columns:repeat(3,minmax(0,1fr));margin:0 0 10px}.grade-page-kpis .grade-kpi{padding:9px 10px}.grade-overview-inner{margin-top:12px}.grade-overview-inner.no-border{border:0;padding:0;margin-top:0}.grade-overview-panel .consult-grade-toptypes{gap:10px}.grade-overview-panel .consult-grade-type{grid-template-columns:minmax(150px,1.6fr) repeat(6,minmax(38px,.52fr));font-size:10px}.grade-top10-table .grade-cell{min-width:340px}.grade-monthly-chart{height:300px}.grade-trend-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:0 0 12px}.grade-trend-kpi{border:1px solid #e3eaf3;border-radius:10px;background:#f9fbfe;padding:11px 13px;min-height:76px;display:flex;flex-direction:column;justify-content:center}.grade-trend-kpi>span{font-size:10px;font-weight:800;color:#687a91;margin-bottom:5px}.grade-trend-kpi>b{font-size:18px;line-height:1.2;color:#12365b}.grade-trend-kpi>small{font-size:9.5px;color:#8a97a8;margin-top:5px}.grade-ratio-chart{border:1px solid #edf1f6;border-radius:10px;padding:8px 10px 2px}.grade-trend-table-wrap{margin-top:12px;border:1px solid #e4ebf3;border-radius:10px;overflow:hidden}.grade-trend-table{width:100%;border-collapse:collapse;font-size:10.5px}.grade-trend-table th{background:#f6f9fc;color:#5e7188;font-weight:800;padding:8px 10px;border-bottom:1px solid #e4ebf3;text-align:left}.grade-trend-table td{padding:8px 10px;border-bottom:1px solid #edf1f6;color:#253e5d}.grade-trend-table tr:last-child td{border-bottom:0}.grade-trend-table .num{text-align:right;font-variant-numeric:tabular-nums}.grade-month-share-wrap{margin-top:12px;border:1px solid #e4ebf3;border-radius:10px;overflow:hidden}.grade-month-share-table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:10.5px}.grade-month-share-table th{background:#f6f9fc;color:#5e7188;font-weight:800;padding:8px 6px;border-bottom:1px solid #e4ebf3;text-align:center;white-space:nowrap}.grade-month-share-table td{padding:8px 6px;border-bottom:1px solid #edf1f6;color:#253e5d;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap}.grade-month-share-table tr:last-child td{border-bottom:0}.grade-month-share-table td:first-child,.grade-month-share-table th:first-child{font-weight:800;width:72px}.grade-month-share-table td:last-child,.grade-month-share-table th:last-child{font-weight:900;width:76px}.grade-delta-up{color:#e5484d;font-weight:800}.grade-delta-down{color:#1769d1;font-weight:800}.grade-delta-flat{color:#75859a;font-weight:700}@media(max-width:1000px){.grade-trend-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}.grade-detail-toolbar{display:grid;grid-template-columns:repeat(3,minmax(150px,190px)) minmax(220px,1fr);gap:8px;margin-bottom:10px}.grade-detail-toolbar select,.grade-detail-toolbar input{width:100%;min-width:0}.grade-page-overview .tableWrap{overflow-x:auto}.grade-page-overview .consult-detail-table{min-width:1080px}.grade-page-overview .consult-rank-table{min-width:920px}@media(max-width:1200px){.grade-kpi-strip{grid-template-columns:repeat(3,minmax(0,1fr))}.grade-page-main-grid{grid-template-columns:1fr}.grade-page-kpis{grid-template-columns:repeat(6,minmax(0,1fr))}}@media(max-width:820px){.grade-page-headrow{align-items:flex-start;flex-direction:column}.grade-kpi-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.grade-page-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grade-detail-toolbar{grid-template-columns:1fr 1fr}.grade-filter-help{flex-basis:100%;padding:2px 0}.grade-panel-head{align-items:flex-start}.grade-panel-head>span{white-space:normal;text-align:right}}
+
+/* v44 상담유형(학년) TOP10 학년별 구성을 가로 컬럼형으로 축소 */
+.grade-top10-table.grade-top10-compact{min-width:1080px;table-layout:auto}
+.grade-top10-compact th,.grade-top10-compact td{padding-top:9px!important;padding-bottom:9px!important;vertical-align:middle}
+.grade-top10-compact .grade-col{width:92px;min-width:82px;text-align:right;white-space:nowrap}
+.grade-top10-compact .grade-num-cell{white-space:nowrap;font-variant-numeric:tabular-nums}
+.grade-top10-compact .grade-num-main{font-weight:800;color:#173a60}
+.grade-top10-compact .grade-num-pct{margin-left:5px;font-size:9px;color:#8492a5;font-weight:700}
+@media(max-width:1250px){.grade-top10-compact .grade-col{width:82px;min-width:76px}.grade-top10-compact .grade-num-pct{display:block;margin-left:0;margin-top:2px}}
+
+/* v51 학년 비중 추이 리디자인 */
+.grade-trend-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}.grade-trend-tab{height:30px;padding:0 12px;border:1px solid #dfe7f1;border-radius:8px;background:#fff;color:#5b6f88;font-size:10.5px;font-weight:800;cursor:pointer}.grade-trend-tab.active{background:#1473e6;color:#fff;border-color:#1473e6}.grade-trend-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:10px}.grade-trend-summary.yoy-on{grid-template-columns:repeat(4,minmax(0,1fr))}.grade-trend-summary .grade-trend-kpi{min-height:70px}.grade-trend-change-note{margin:10px 0 0;border:1px solid #e4ebf3;border-radius:9px;background:#f8fbff;padding:10px 12px;font-size:10.5px;color:#415974;line-height:1.6}.grade-trend-change-note b{color:#12365b}.grade-month-share-wrap.compact{margin-top:10px}.grade-month-share-wrap.compact .grade-month-share-table{font-size:10px}.grade-month-share-wrap.compact .grade-month-share-table th,.grade-month-share-wrap.compact .grade-month-share-table td{padding:7px 5px}.grade-trend-panel .grade-ratio-chart{height:260px}.grade-trend-panel .grade-trend-table-wrap{display:none}.grade-trend-panel .grade-month-share-table td:last-child,.grade-trend-panel .grade-month-share-table th:last-child{display:none}.grade-trend-line-note{font-size:10px;color:#7c899a;margin-left:auto}.grade-trend-legend-hint{font-size:9.5px;color:#8996a7;margin-top:5px}.grade-trend-yoy-only{display:none}.grade-trend-yoy-only.show{display:flex}@media(max-width:900px){.grade-trend-summary,.grade-trend-summary.yoy-on{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.grade-note-uniform{font-size:inherit !important;line-height:inherit;color:inherit;}
+.grade-note-uniform b,.grade-note-uniform strong{font-size:inherit !important;}
 </style>
 </head>
 <body class="auth-pending">
@@ -2138,6 +2204,7 @@ body.auth-pending .app{visibility:hidden}
     <button data-target="mdm">▣　<span>MDM 원격</span></button>
     <button data-target="newsstart" style="display:none">✓　<span>뉴스타트 인증</span></button>
     <button data-target="consulttype">▤　<span>상담유형</span></button>
+    <button data-target="consultgrade">▥　<span>상담유형(학년)</span></button>
     <button data-target="issues">⚑　<span>운영 이슈</span></button>
     <button data-target="ai">✦　<span>AI 분석</span></button>
     <div class="sep"></div>
@@ -2313,6 +2380,15 @@ body.auth-pending .app{visibility:hidden}
     </div>
   </div>
 
+
+
+  <div class="card grade-summary-card overview-grade-card" id="overviewGradeCard">
+    <div class="grade-summary-head"><h3>상담 학년별 구성</h3><span class="grade-summary-note" id="overviewGradeBasis">CALL · 2026년 이후 데이터 기준</span></div>
+    <div class="grade-kpi-grid" id="overviewGradeKpis"></div>
+    <div class="grade-stack" id="overviewGradeStack"></div>
+    <div class="grade-legend" id="overviewGradeLegend"></div>
+    <div class="grade-insight-grid"></div>
+  </div>
 
   <div class="bottom-section-title">일자별 추이</div>
   <div class="bottom">
@@ -2550,7 +2626,7 @@ body.auth-pending .app{visibility:hidden}
     </div>
   </div>
   
-  <div class="compare-chart-note">※ 올해는 항목별 색상의 막대그래프, 전년 동기간은 회색 점선으로 표시됩니다.</div>
+  <div class="compare-chart-note">※ 교재구매·반품·교환 개별 차트는 기존대로 유지하고, 하단에 반품+교환 누적 합산 차트를 추가합니다. 반품은 초록, 교환은 빨강 색상을 유지합니다.</div>
   <div class="detail-chart-grid cols-3">
     <div class="detail-chart-card">
       <div class="detail-chart-title">교재구매</div>
@@ -2566,6 +2642,13 @@ body.auth-pending .app{visibility:hidden}
       <div class="detail-chart-title">교환</div>
       <div class="detail-chart-sub">올해 vs 전년 동기간</div>
       <div class="detail-chart-box"><canvas id="bookExchangeOnlyChart"></canvas></div>
+    </div>
+  </div>
+  <div class="detail-chart-grid" style="grid-template-columns:1fr;margin-top:12px">
+    <div class="detail-chart-card">
+      <div class="detail-chart-title">반품+교환</div>
+      <div class="detail-chart-sub">올해 반품·교환 누적 구성 vs 전년 합계</div>
+      <div class="detail-chart-box"><canvas id="bookReturnExchangeChart"></canvas></div>
     </div>
   </div>
 </section>
@@ -2668,13 +2751,24 @@ body.auth-pending .app{visibility:hidden}
     <div class="card consult-kpi visual"><div class="lab">최대 증가 유형</div><div class="val small" id="consultTopIncreaseKpi">-</div><div class="sub" id="consultTopIncreaseKpiSub">전월 데이터 등록 시 표시</div></div>
   </div>
 
+  <div class="card consult-panel consult-section-space consult-grade-panel">
+    <div class="consult-number-title"><span class="num-box">G</span><h3>학년별 상담 구성</h3><span class="consult-number-sub" id="consultGradeBasis">CALL · 2026년 이후 데이터 기준</span></div>
+    <div class="grade-kpi-grid" id="consultGradeKpis"></div>
+    <div class="grade-stack" id="consultGradeStack"></div>
+    <div class="grade-legend" id="consultGradeLegend"></div>
+    <div class="consult-grade-grid" style="margin-top:14px">
+      <div class="grade-insight-box"><div class="grade-insight-title">학년별 상담 비중</div><div class="consult-grade-bars" id="consultGradeBars"></div></div>
+      <div class="grade-insight-box"><div class="grade-insight-title">학년별 주요 문의유형</div><div class="consult-grade-toptypes" id="consultGradeTopTypes"></div></div>
+    </div>
+  </div>
+
   <div class="card consult-panel consult-section-space">
     <div class="consult-number-title"><span class="num-box">1</span><h3>상담유형 TOP10</h3><span class="consult-number-sub" id="consultTopShareNote">※ 비중은 선택월 기준</span></div>
     <div class="consult-analysis-head" id="consultCompareModeWrap"><div class="consult-chart-legend-note">비교기준에 따라 TOP10 그래프와 주요 변화가 함께 변경됩니다.</div><div class="consult-filter-inline"><span class="consult-month-label">비교기준</span><select class="consult-month-select" id="consultCompareMode"><option value="prev" selected>전월 대비</option><option value="yoy">전년 대비</option></select></div></div>
     <div class="tableWrap">
       <table class="consult-rank-table">
-        <thead><tr><th style="width:60px">순위</th><th>상담유형</th><th class="num" style="width:120px">건수</th><th class="num" style="width:90px">비중</th><th class="num" style="width:125px" id="consultTopCompareHead">전월 대비</th></tr></thead>
-        <tbody id="consultTop10CategoryBody"><tr><td colspan="5" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr></tbody>
+        <thead><tr><th style="width:60px">순위</th><th>상담유형</th><th class="num" style="width:120px">건수</th><th class="num" style="width:90px">비중</th><th class="grade-cell">학년별 구성</th><th class="num" style="width:125px" id="consultTopCompareHead">전월 대비</th></tr></thead>
+        <tbody id="consultTop10CategoryBody"><tr><td colspan="6" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr></tbody>
       </table>
     </div>
     <div class="consult-subchart-section">
@@ -2741,12 +2835,106 @@ body.auth-pending .app{visibility:hidden}
     </div>
     <div class="consult-detail-toggle-row"><button type="button" class="btn secondary" id="consultDetailToggleBtn">상세 데이터 펼쳐보기 ▼</button></div>
     <div class="tableWrap hidden" id="consultDetailWrap">
-      <table class="consult-detail-table"><thead><tr><th>상담구분</th><th>대분류</th><th>중분류</th><th>소분류</th><th>문의유형</th><th class="num" id="consultDetailMonthHead">선택월</th><th class="num" id="consultDetailPrevHead">전월</th><th class="num">전월 대비</th><th class="num consult-monthly-yoy-col" id="consultDetailYoyHead">전년</th><th class="num consult-monthly-yoy-col">전년 대비</th></tr></thead><tbody id="consultDetailBody"><tr><td colspan="10" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr></tbody></table>
+      <table class="consult-detail-table"><thead><tr><th>상담구분</th><th>대분류</th><th>중분류</th><th>소분류</th><th>문의유형</th><th class="num">고1</th><th class="num">고2</th><th class="num">고3</th><th class="num">N수</th><th class="num">기타</th><th class="num">비회원</th><th class="num" id="consultDetailMonthHead">선택월</th><th class="num" id="consultDetailPrevHead">전월</th><th class="num">전월 대비</th><th class="num consult-monthly-yoy-col" id="consultDetailYoyHead">전년</th><th class="num consult-monthly-yoy-col">전년 대비</th></tr></thead><tbody id="consultDetailBody"><tr><td colspan="16" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr></tbody></table>
     </div>
     <div class="consult-note-small" id="consultCompareNote">※ 전월 대비 증감률은 소수점 첫째자리 반올림 기준입니다.</div>
+    <div class="consult-note-small">※ 학년정보: 고1 · 고2 · 고3 · N수 · 기타 · 비회원. 학년정보가 없는 데이터는 공란(-)으로 표시합니다.</div>
   </div>
 </section>
 
+
+<section id="consultgrade" class="section grade-page-overview">
+  <div class="grade-page-headrow">
+    <div>
+      <div class="detail-title-wrap"><div class="detail-title">상담유형(학년) 분석</div><button type="button" class="data-info-btn" data-info-page="consultgrade">ⓘ 데이터 기준</button></div>
+      <div class="consult-sample-note">2026년부터 수집된 CALL 상담의 학년정보만 분석합니다. ERMS · 스마트러닝은 집계에서 제외됩니다. 기타는 02-3489-8200 관련 문의를 의미합니다.</div>
+    </div>
+    <div class="grade-page-badge">CALL · 2026년 이후</div>
+  </div>
+
+  <div class="card grade-filter-bar">
+    <div class="grade-filter-left">
+      <div class="grade-filter-unit"><span>분석채널</span><select disabled><option>CALL</option></select></div>
+      <div class="grade-filter-unit"><span>분석연도</span><select id="gradePageYear"></select></div>
+      <div class="grade-filter-unit"><span>분석월</span><select id="gradePageMonth"></select></div>
+      <div class="grade-filter-help" id="gradePageHelp">2026년 CALL 학년정보 기준</div>
+    </div>
+  </div>
+
+  <div id="gradePageNoData" class="consult-no-data hidden">2026_CALL Excel에 학년정보를 등록하면 분석이 표시됩니다.</div>
+
+  <div class="grade-kpi-strip">
+    <div class="card grade-overview-kpi"><div class="gok-label">학년정보 상담건수</div><div class="gok-value" id="gradePageTotal">-</div><div class="gok-sub">고1~비회원 합계</div></div>
+    
+    
+    <div class="card grade-overview-kpi"><div class="gok-label">최대 상담유형</div><div class="gok-value compact" id="gradePageTopCategory">-</div><div class="gok-sub" id="gradePageTopCategorySub">-</div></div>
+    <div class="card grade-overview-kpi"><div class="gok-label">최대 문의유형</div><div class="gok-value compact" id="gradePageTopInquiry">-</div><div class="gok-sub" id="gradePageTopInquirySub">-</div></div>
+  </div>
+
+  <div class="grade-page-main-grid">
+    <div class="card grade-overview-panel">
+      <div class="grade-panel-head"><div><span class="grade-panel-num">1</span><b>학년별 상담 구성</b></div><span id="gradePageGradeBasis">CALL · 2026년 이후</span></div>
+      <div class="grade-vertical-chart" id="gradePageVerticalChart"></div>
+    </div>
+
+    <div class="card grade-overview-panel">
+      <div class="grade-panel-head"><div><span class="grade-panel-num">2</span><b>학년별 주요문의 TOP10</b></div><div class="grade-top10-controls"><label for="gradePageTopGradeSelect">학년</label><select id="gradePageTopGradeSelect"></select></div></div>
+      <div class="grade-insight-box grade-overview-inner no-border"><div class="grade-inquiry-top10" id="gradePageGradeTopTypes"></div></div>
+    </div>
+  </div>
+
+  <div class="card grade-overview-panel grade-full-panel">
+    <div class="grade-panel-head"><div><span class="grade-panel-num">3</span><b>상담유형 TOP10 · 학년별 구성</b></div><span>선택월 CALL 기준</span></div>
+    <div class="tableWrap">
+      <table class="consult-rank-table grade-top10-table grade-top10-compact"><thead><tr><th style="width:54px">순위</th><th>상담유형</th><th class="num" style="width:105px">문의량</th><th class="num" style="width:72px">비중</th><th class="num grade-col">고1</th><th class="num grade-col">고2</th><th class="num grade-col">고3</th><th class="num grade-col">N수</th><th class="num grade-col">기타</th><th class="num grade-col">비회원</th></tr></thead><tbody id="gradePageTop10Body"></tbody></table>
+    </div>
+  </div>
+
+  <div class="card grade-overview-panel grade-full-panel grade-trend-panel">
+    <div class="grade-panel-head"><div><span class="grade-panel-num">4</span><b>월별 학년 비중 추이</b></div><span id="gradeTrendModeLabel">전체 학년 구성비 · 100% 기준</span></div>
+    <div class="grade-trend-tabs" id="gradeTrendTabs">
+      <button type="button" class="grade-trend-tab active" data-grade="all">전체</button>
+      <button type="button" class="grade-trend-tab" data-grade="grade1">고1</button>
+      <button type="button" class="grade-trend-tab" data-grade="grade2">고2</button>
+      <button type="button" class="grade-trend-tab" data-grade="grade3">고3</button>
+      <button type="button" class="grade-trend-tab" data-grade="nStudent">N수</button>
+      <button type="button" class="grade-trend-tab" data-grade="gradeOther">기타</button>
+      <button type="button" class="grade-trend-tab" data-grade="gradeUnclassified">비회원</button>
+    </div>
+    <div class="grade-trend-summary" id="gradeTrendKpis">
+      <div class="grade-trend-kpi"><span id="gradeTrendPrimaryLabel">기준월 비중</span><b id="gradeTrendPrimary">-</b><small id="gradeTrendPrimarySub">선택월 또는 최신월</small></div>
+      <div class="grade-trend-kpi"><span>전월 대비</span><b id="gradeTrendMomTop">-</b><small id="gradeTrendMomSub">비중 증감(%p)</small></div>
+      <div class="grade-trend-kpi"><span>상담건수</span><b id="gradeTrendTotal">-</b><small id="gradeTrendTotalSub">기준월 학년정보 합계</small></div>
+      <div class="grade-trend-kpi grade-trend-yoy-only" id="gradeTrendYoyCard"><span>전년 동월 대비</span><b id="gradeTrendYoyTop">-</b><small id="gradeTrendYoySub">전년 학년정보 기준</small></div>
+    </div>
+    <div class="consult-chart-box monthly grade-monthly-chart grade-ratio-chart"><canvas id="gradePageMonthlyChart"></canvas></div>
+    <div class="grade-trend-change-note" id="gradeTrendChangeNote">월별 학년정보 등록 후 주요 변화가 표시됩니다.</div>
+    <div class="grade-month-share-wrap compact">
+      <table class="grade-month-share-table">
+        <thead><tr><th>월</th><th>고1</th><th>고2</th><th>고3</th><th>N수</th><th>기타</th><th>비회원</th><th>합계</th></tr></thead>
+        <tbody id="gradeMonthShareBody"></tbody>
+      </table>
+    </div>
+    <div class="grade-trend-table-wrap">
+      <table class="grade-trend-table"><tbody id="gradeTrendBody"></tbody></table>
+    </div>
+    <div class="consult-note-small"><span class="grade-note-uniform">※ 학년 비중 변화는 <b>%p(퍼센트포인트)</b> 기준입니다. 2026년은 전년 학년정보가 없어 전년 동월 비교를 표시하지 않습니다.</span></div>
+  </div>
+
+  <div class="card grade-overview-panel grade-full-panel">
+    <div class="grade-panel-head"><div><span class="grade-panel-num">5</span><b>상담유형(학년) 상세 데이터</b></div><span>대·중·소분류 및 문의유형 검색</span></div>
+    <div class="consult-toolbar consult-toolbar-extended grade-detail-toolbar">
+      <select id="gradePageCatFilter"><option value="">대분류 전체</option></select>
+      <select id="gradePageMidFilter"><option value="">중분류 전체</option></select>
+      <select id="gradePageSmallFilter"><option value="">소분류 전체</option></select>
+      <input id="gradePageSearch" type="text" placeholder="문의유형 검색">
+    </div>
+    <div class="tableWrap">
+      <table class="consult-detail-table"><thead><tr><th>대분류</th><th>중분류</th><th>소분류</th><th>문의유형</th><th class="num">문의량</th><th class="num">고1</th><th class="num">고2</th><th class="num">고3</th><th class="num">N수</th><th class="num">기타</th><th class="num">비회원</th></tr></thead><tbody id="gradePageDetailBody"></tbody></table>
+    </div>
+    <div class="consult-note-small">※ 학년정보는 2026년 이후 CALL에 한해 집계합니다. ERMS · 스마트러닝은 제외됩니다.</div>
+  </div>
+</section>
 
 <section id="newsstart" class="section" style="display:none">
   <div class="detail-head">
@@ -2954,7 +3142,7 @@ body.auth-pending .app{visibility:hidden}
           <div class="status">※ Excel 시트명: <b>2026_CALL / 2026_ERMS / 2025_CALL / 2025_ERMS</b> 형식</div>
           <div class="status">※ CALL = 인바운드 상담 / ERMS = 게시판 상담</div>
           <div class="status">※ 각 시트 컬럼: 대분류 / 중분류 / 소분류 / 코드▼ / 문의 유형 / 1월 ~ 12월</div>
-          <div class="status" style="color:#52657c">※ 연도별·채널별 월간 시트를 한 파일에서 누적 관리하며, 빈 월은 미등록으로 처리합니다.<br>※ 특정기간 비교는 <b>올해_CALL / 올해_ERMS / 전년_CALL / 전년_ERMS</b> 4개 시트로 구분해 등록합니다.<br>※ 기간 시트 컬럼: 분석명 / 시작일 / 종료일 / 대분류 / 중분류 / 소분류 / 코드▼ / 문의 유형 / 건수<br>※ 기간 시트만 별도로 업로드해도 기존 월간 데이터는 유지되며, 같은 분석명·비교구분·채널 조합만 갱신됩니다.</div>
+          <div class="status" style="color:#52657c">※ 연도별·채널별 월간 시트를 한 파일에서 누적 관리하며, 빈 월은 미등록으로 처리합니다.<br>※ 특정기간 비교는 <b>올해_CALL / 올해_ERMS / 전년_CALL / 전년_ERMS</b> 4개 시트로 구분해 등록합니다.<br>※ 학년정보(고1/고2/고3/N수/기타/비회원)는 <b>CALL 데이터에 한해 2026년부터 적용</b>하며, ERMS·스마트러닝에는 적용하지 않습니다.<br>※ 2026_CALL 월간 시트는 <b>2단 헤더</b>를 지원합니다: 1월~12월(상위) → 문의량 / 고1 / 고2 / 고3 / N수 / 기타 / 비회원(하위).<br>※ 기간 시트 컬럼: 시작일 / 종료일 / 대분류 / 중분류 / 소분류 / 코드▼ / 문의 유형 / 건수 / 고1 / 고2 / 고3 / N수 / 기타 / 비회원<br>※ 분석명은 사용하지 않습니다. 기간 시트만 별도로 업로드해도 기존 월간 데이터는 유지되며, 같은 비교구분·채널 조합은 최신 기간으로 갱신됩니다.</div>
         </div>
       </div>
 
@@ -3013,10 +3201,11 @@ body.auth-pending .app{visibility:hidden}
       target.classList.add('active');
 
       const topFilters=document.querySelector('.top .filters');
-      if(topFilters) topFilters.style.display=(targetId==='consulttype'||targetId==='ai')?'none':'flex';
+      if(topFilters) topFilters.style.display=(targetId==='consulttype'||targetId==='consultgrade'||targetId==='ai')?'none':'flex';
 
       const pop=document.getElementById('dataInfoPopover');
       if(pop){ pop.classList.remove('open'); pop.setAttribute('aria-hidden','true'); }
+      if(targetId==='consultgrade' && typeof renderConsultGradePage==='function') renderConsultGradePage();
 
       window.dispatchEvent(new Event('resize'));
     });
@@ -3167,14 +3356,27 @@ const DATA_INFO = {
     html:`
       <div class="data-info-section"><div class="data-info-label">집계 기준</div>
         <div class="data-info-row">상담유형은 <span class="data-info-em">월간 집계</span>와 필요 시 등록하는 <span class="data-info-em">특정기간 분석</span>을 분리해 조회하며, 전체 / Call / 게시판을 구분할 수 있습니다.</div>
-        <div class="data-info-row">월간은 연도_CALL/ERMS 시트의 1월~12월 건수를 저장하고, 특정기간은 올해_CALL·올해_ERMS·전년_CALL·전년_ERMS 시트의 분석명·시작/종료일·건수를 별도로 저장합니다.</div>
+        <div class="data-info-row">월간은 연도_CALL/ERMS 시트의 1월~12월 건수를 저장하고, 특정기간은 올해_CALL·올해_ERMS·전년_CALL·전년_ERMS 시트의 시작/종료일·건수를 별도로 저장합니다.</div>
         <div class="data-info-row">빈 월은 미등록으로 보고 월 선택 목록에서 제외합니다. 숫자 0은 실제 0건으로 반영합니다.</div>
       </div>
       <div class="data-info-section"><div class="data-info-label">분석 항목</div>
-        <div class="data-info-row">월간은 선택월 기준 전월·전년을 비교하고, 특정기간은 같은 분석명의 올해 기간과 전년 비교기간을 직접 비교합니다.</div>
+        <div class="data-info-row">월간은 선택월 기준 전월·전년을 비교하고, 특정기간은 선택한 올해 기간과 같은 채널의 전년 비교기간을 직접 비교합니다.</div>
         <div class="data-info-row">대분류별 인바운드·게시판 실적과 전월 증감률을 비교하고, 상담량이 큰 대분류는 내부 문의유형 TOP5까지 자동으로 펼쳐 보여줍니다.</div>
         <div class="data-info-row">직전 월 데이터가 있으면 증가 TOP5·감소 TOP5, 전체 TOP10 및 상세 현황의 전월 대비 증감률을 함께 표시합니다.</div>
         <div class="data-info-row">코드는 관리자 원본 및 Excel에는 유지되지만 상담유형 분석 화면에서는 표시하지 않습니다.</div>
+      </div>`
+  },
+  consultgrade: {
+    title:"상담유형(학년) · 데이터 기준",
+    html:`
+      <div class="data-info-section"><div class="data-info-label">집계 기준</div>
+        <div class="data-info-row">학년정보는 <span class="data-info-em">2026년 이후 CALL 상담</span>에 한해 집계합니다. ERMS · 스마트러닝은 학년정보 집계에서 제외합니다.</div>
+        <div class="data-info-row">학년 구분은 고1 · 고2 · 고3 · N수 · 기타 · 비회원으로 표시합니다.</div>
+        <div class="data-info-row"><span class="data-info-em">기타</span>는 <span class="data-info-em">02-3489-8200 관련 문의</span>를 의미합니다.</div>
+      </div>
+      <div class="data-info-section"><div class="data-info-label">표시 기준</div>
+        <div class="data-info-row">선택한 연도·월의 CALL 학년정보를 기준으로 학년별 상담 구성, 학년별 주요문의 TOP10, 상담유형 TOP10의 학년별 건수·비중을 표시합니다.</div>
+        <div class="data-info-row">학년정보가 없는 데이터는 0건으로 임의 변환하지 않고 미집계로 처리합니다.</div>
       </div>`
   },
   ai: {
@@ -3466,6 +3668,102 @@ function barVsYoyChart(id,labels,currentData,yoyData,currentLabel,yoyLabel,color
             font:{size:11},
             callback:(v)=>opts.percent?Number(v).toFixed(1)+"%":opts.decimal?Number(v).toFixed(1):fmt(v)
           }
+        }
+      }
+    }
+  });
+}
+
+function stackedReturnExchangeChart(id,labels,returnCurrent,exchangeCurrent,returnYoy,exchangeYoy){
+  if(charts[id]) charts[id].destroy();
+  const returnColor="#22c55e";
+  const exchangeColor="#ef4444";
+  const yoyColor="#6f7d92";
+  const curReturn=returnCurrent.map(v=>Number(v)||0);
+  const curExchange=exchangeCurrent.map(v=>Number(v)||0);
+  const yoyTotal=labels.map((_,i)=>(Number(returnYoy[i])||0)+(Number(exchangeYoy[i])||0));
+
+  charts[id]=new Chart($(id),{
+    data:{
+      labels,
+      datasets:[
+        {
+          type:"bar",
+          label:"반품 올해",
+          data:curReturn,
+          backgroundColor:returnColor,
+          borderColor:returnColor,
+          borderWidth:0,
+          borderRadius:4,
+          maxBarThickness:34,
+          stack:"current",
+          order:2
+        },
+        {
+          type:"bar",
+          label:"교환 올해",
+          data:curExchange,
+          backgroundColor:exchangeColor,
+          borderColor:exchangeColor,
+          borderWidth:0,
+          borderRadius:4,
+          maxBarThickness:34,
+          stack:"current",
+          order:2
+        },
+        {
+          type:"line",
+          label:"전년 반품+교환",
+          data:yoyTotal,
+          borderColor:yoyColor,
+          backgroundColor:"transparent",
+          borderWidth:2.2,
+          borderDash:[3,3],
+          pointRadius:labels.length <= 30 ? 2.4 : 0,
+          pointHoverRadius:4.5,
+          pointHitRadius:12,
+          pointBackgroundColor:"#fff",
+          pointBorderColor:yoyColor,
+          pointBorderWidth:2,
+          tension:.42,
+          fill:false,
+          order:1
+        }
+      ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      interaction:{mode:"index",intersect:false},
+      plugins:{
+        legend:{
+          position:"top",
+          align:"center",
+          fullSize:true,
+          labels:{boxWidth:14,boxHeight:14,font:{size:11,weight:"700"},padding:12,color:"#334155",usePointStyle:false}
+        },
+        tooltip:{
+          callbacks:{
+            label:(ctx)=>`${ctx.dataset.label}: ${fmt(ctx.parsed.y)}`,
+            afterBody:(items)=>{
+              if(!items?.length) return "";
+              const i=items[0].dataIndex;
+              return `올해 합계: ${fmt(curReturn[i]+curExchange[i])}`;
+            }
+          }
+        }
+      },
+      scales:{
+        x:{
+          stacked:true,
+          grid:{display:false},
+          ticks:{font:{size:11},color:(ctx)=>dateTickColor(ctx,"")}
+        },
+        y:{
+          stacked:true,
+          beginAtZero:true,
+          grid:{color:"#e8edf4"},
+          ticks:{font:{size:11},callback:(v)=>fmt(v)}
         }
       }
     }
@@ -4007,7 +4305,7 @@ async function reload(){
   consultTypeData.sort((a,b)=>String(a.code||"").localeCompare(String(b.code||"")));
 
   consultPeriodData = await fetchCollection("consultPeriods");
-  consultPeriodData.sort((a,b)=>String(a.analysisName||"").localeCompare(String(b.analysisName||"")) || String(a.compareType||"").localeCompare(String(b.compareType||"")) || String(a.code||"").localeCompare(String(b.code||"")));
+  consultPeriodData.sort((a,b)=>String(a.startDate||"").localeCompare(String(b.startDate||"")) || String(a.endDate||"").localeCompare(String(b.endDate||"")) || String(a.compareType||"").localeCompare(String(b.compareType||"")) || String(a.channel||"").localeCompare(String(b.channel||"")) || String(a.code||"").localeCompare(String(b.code||"")));
 
   try {
     operationIssues = await fetchCollection("operationIssues");
@@ -4043,6 +4341,7 @@ async function reload(){
   }
   updateStatus();
   renderConsultType();
+  renderConsultGradePage();
   populateAiPeriodSelect();
   renderAiAnalysis();
 }
@@ -4095,7 +4394,6 @@ function selectedAiPeriodInfo(){
   const end=String(option.dataset.end||"").trim();
   if(!start || !end) return null;
   return {
-    analysisName:String(option.dataset.name||"").trim(),
     startDate:start,
     endDate:end,
     channel:String(option.dataset.channel||"").trim(),
@@ -4188,21 +4486,19 @@ function aiPeriodOptions(){
   const map=new Map();
   (consultPeriodData||[]).forEach(r=>{
     const compare=String(r.compareType||"").trim();
-    const name=String(r.analysisName||"").trim();
     const start=String(r.startDate||"").trim();
     const end=String(r.endDate||"").trim();
     const channel=String(r.channel||"").trim();
-    if(compare!=="올해" || !name || !start || !end || !channel) return;
-    // AI 분석기간은 채널별로 독립 선택합니다.
-    const key=`${name}|||${start}|||${end}|||${channel}`;
-    if(!map.has(key)) map.set(key,{key,analysisName:name,startDate:start,endDate:end,channel});
+    if(compare!=="올해" || !start || !end || !channel) return;
+    // 분석명은 사용하지 않고 시작일·종료일·채널로만 AI 분석기간을 구성합니다.
+    const key=`${start}|||${end}|||${channel}`;
+    if(!map.has(key)) map.set(key,{key,startDate:start,endDate:end,channel});
   });
   const channelPriority=ch=>ch==="인바운드 상담"?0:ch==="게시판 상담"?1:2;
   return [...map.values()].sort((a,b)=>
     b.endDate.localeCompare(a.endDate) ||
     b.startDate.localeCompare(a.startDate) ||
-    channelPriority(a.channel)-channelPriority(b.channel) ||
-    a.analysisName.localeCompare(b.analysisName)
+    channelPriority(a.channel)-channelPriority(b.channel)
   );
 }
 
@@ -4217,7 +4513,7 @@ function populateAiPeriodSelect(forceLatest=false){
   }
   select.innerHTML=options.map(o=>{
     const label=`${o.startDate} ~ ${o.endDate} · ${o.channel}`;
-    return `<option value="${aiEscapeHtml(o.key)}" data-name="${aiEscapeHtml(o.analysisName)}" data-start="${aiEscapeHtml(o.startDate)}" data-end="${aiEscapeHtml(o.endDate)}" data-channel="${aiEscapeHtml(o.channel)}">${aiEscapeHtml(label)}</option>`;
+    return `<option value="${aiEscapeHtml(o.key)}" data-start="${aiEscapeHtml(o.startDate)}" data-end="${aiEscapeHtml(o.endDate)}" data-channel="${aiEscapeHtml(o.channel)}">${aiEscapeHtml(label)}</option>`;
   }).join("");
 
   // 일반 화면 새로고침에서는 사용자가 선택한 기간/채널을 유지합니다.
@@ -4280,7 +4576,6 @@ function aiSelectedPeriodInfo(){
   const option=$("aiPeriodSelect")?.selectedOptions?.[0];
   if(!option || !option.value) return null;
   return {
-    analysisName:option.dataset.name||"",
     startDate:option.dataset.start||"",
     endDate:option.dataset.end||"",
     channel:option.dataset.channel||""
@@ -4302,10 +4597,8 @@ function aiLatestAnalysisForSelected(){
   return [...(aiAnalysisData||[])]
     .filter(r=>{
       const op=String(aiValue(r,["operationPeriod","운영분석기간"],"")||"");
-      const name=String(r.analysisName||"");
       const resultChannel=String(aiValue(r,["analysisChannel","consultChannel","상담채널"],"")||"");
       return op===`${sel.startDate} ~ ${sel.endDate}` &&
-        (!name || name===sel.analysisName) &&
         (!sel.channel || resultChannel===sel.channel);
     })
     .sort((a,b)=>String(aiValue(b,["analysisAt","분석일시","createdAt"],"")||"").localeCompare(String(aiValue(a,["analysisAt","분석일시","createdAt"],"")||"")))[0]||null;
@@ -4322,7 +4615,7 @@ function aiLatestJobForSelected(){
   const sel=aiSelectedPeriodInfo();
   if(!sel) return null;
   return [...(aiJobData||[])]
-    .filter(j=>(j.analysisName||"")===sel.analysisName && (j.startDate||"")===sel.startDate && (j.endDate||"")===sel.endDate && (!sel.channel || (j.channel||"")===sel.channel))
+    .filter(j=>(j.startDate||"")===sel.startDate && (j.endDate||"")===sel.endDate && (!sel.channel || (j.channel||"")===sel.channel))
     .sort((a,b)=>String(b.updatedAt||b.createdAt||"").localeCompare(String(a.updatedAt||a.createdAt||"")))[0]||null;
 }
 
@@ -4390,12 +4683,11 @@ async function runAiFromDashboard(){
       action:"runAiAnalysis",
       firebaseIdToken:idToken,
       requestId,
-      analysisName:option.dataset.name||"",
-      startDate:option.dataset.start||"",
+        startDate:option.dataset.start||"",
       endDate:option.dataset.end||"",
       channel:option.dataset.channel||""
     });
-    aiJobData.push({__id:requestId,requestId,status:"running",analysisName:option.dataset.name||"",startDate:option.dataset.start||"",endDate:option.dataset.end||"",channel:option.dataset.channel||"",startedAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+    aiJobData.push({__id:requestId,requestId,status:"running",startDate:option.dataset.start||"",endDate:option.dataset.end||"",channel:option.dataset.channel||"",startedAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
     aiSetRunBusy(true,`🟡 AI 분석 요청 접수 · ${option.dataset.start} ~ ${option.dataset.end}${option.dataset.channel?` · ${option.dataset.channel}`:""} · 응답이 완료되면 자동 반영됩니다.`);
     startAiJobPolling();
     // Firestore 폴링은 사용하지 않습니다. Apps Script 응답이 일정 시간 내 돌아오지 않으면 버튼만 복구합니다.
@@ -4838,6 +5130,7 @@ async function applyFilter(){
 
 
   renderMainInquiryAnswerChart(rows,yoyRows);
+  renderOverviewGradeSummary(s,e);
 
   // 우측 채널 =  / 선택기간 총문의량 대비 %
 
@@ -5115,7 +5408,7 @@ async function applyFilter(){
     "#0b2b59"
   );
 
-  // 교재 구매: 교재구매 / 반품 / 교환 각각 분리
+  // 교재 구매: 기존 교재구매 / 반품 / 교환 차트 유지 + 반품+교환 누적 합산 차트 추가
   barVsYoyChart(
     "bookBuyOnlyChart",
     detailLabels,
@@ -5139,6 +5432,14 @@ async function applyFilter(){
     rows.map((r,i)=>yoyRowAt(i).bookExchange),
     "교환 올해","교환 전년",
     "#ef4444"
+  );
+  stackedReturnExchangeChart(
+    "bookReturnExchangeChart",
+    detailLabels,
+    rows.map(r=>r.bookReturn),
+    rows.map(r=>r.bookExchange),
+    rows.map((r,i)=>yoyRowAt(i).bookReturn),
+    rows.map((r,i)=>yoyRowAt(i).bookExchange)
   );
 
   // CPH
@@ -5256,16 +5557,80 @@ function updateStatus(){
   }
 
   if($("consultTypeStatus")){
-    const periodNames=[...new Set(consultPeriodData.map(r=>r.analysisName).filter(Boolean))];
+    const periodRanges=[...new Set(consultPeriodData.filter(r=>r.compareType==="올해"&&r.startDate&&r.endDate).map(r=>`${r.startDate} ~ ${r.endDate}`))].sort();
     if(consultTypeData.length || consultPeriodData.length){
       const years=[...new Set(consultTypeData.map(r=>Number(r.year)).filter(Boolean))].sort((a,b)=>b-a);
       const inCount=consultTypeData.filter(r=>r.channel==="인바운드 상담").length;
       const boardCount=consultTypeData.filter(r=>r.channel==="게시판 상담").length;
-      $("consultTypeStatus").innerHTML=`월간 <b>${consultTypeData.length}개 유형</b> · 인바운드 ${inCount} / 게시판 ${boardCount} · 등록연도 ${years.join(", ")||"-"}<br>특정기간 <b>${periodNames.length}개 분석</b> · ${periodNames.join(" · ")||"미등록"}`;
+      $("consultTypeStatus").innerHTML=`월간 <b>${consultTypeData.length}개 유형</b> · 인바운드 ${inCount} / 게시판 ${boardCount} · 등록연도 ${years.join(", ")||"-"}<br>특정기간 <b>${periodRanges.length}개 기간</b> · ${periodRanges.join(" · ")||"미등록"}`;
     }else{
       $("consultTypeStatus").textContent="Firestore에 등록된 상담유형 데이터 없음";
     }
   }
+}
+
+
+function consultCleanHeader(v){
+  return String(v??"").trim().replace(/\s+/g," ");
+}
+function consultMonthHeaderNumber(v){
+  const t=consultCleanHeader(v).replace(/\s/g,"");
+  const m=t.match(/^(0?[1-9]|1[0-2])월$/);
+  return m?Number(m[1]):null;
+}
+function consultGradeSubKey(v){
+  const t=consultCleanHeader(v).replace(/[▼▽]/g,"").replace(/\s/g,"").toUpperCase();
+  if(["문의량","건수","상담건수"].includes(t)) return "count";
+  if(t==="고1") return "grade1";
+  if(t==="고2") return "grade2";
+  if(t==="고3") return "grade3";
+  if(t==="N수".toUpperCase()) return "nStudent";
+  if(t==="기타") return "gradeOther";
+  if(["비회원","정보없음"].includes(t)) return "gradeUnclassified";
+  return null;
+}
+function parseConsultMonthlySheet(ws,year,channel,sheetName){
+  const aoa=XLSX.utils.sheet_to_json(ws,{header:1,defval:"",raw:true,blankrows:false});
+  if(!aoa.length) return [];
+  const row0=aoa[0]||[], row1=aoa[1]||[];
+  const maxCols=Math.max(row0.length,row1.length);
+  let currentMonth=null, groupedCols=[], monthCount=0;
+  for(let c=0;c<maxCols;c++){
+    const direct=consultMonthHeaderNumber(row0[c]);
+    if(direct!==null){ currentMonth=direct; monthCount++; }
+    const sub=consultGradeSubKey(row1[c]);
+    if(currentMonth!==null && sub) groupedCols.push({c,month:currentMonth,sub});
+  }
+  // 2단 헤더: 1월~12월 아래 문의량/고1/고2/고3/N수/기타/비회원
+  if(monthCount>0 && groupedCols.some(x=>x.sub==="count")){
+    const baseCols={};
+    for(let c=0;c<maxCols;c++){
+      const h0=consultCleanHeader(row0[c]).replace(/[▼▽]/g,"");
+      const h1=consultCleanHeader(row1[c]).replace(/[▼▽]/g,"");
+      const h=h0||h1;
+      if(["순위","대분류","중분류","소분류","코드","상담유형코드","문의 유형","문의유형"].includes(h)) baseCols[h]=c;
+    }
+    const val=(arr,names)=>{ for(const n of names){ if(baseCols[n]!==undefined) return arr[baseCols[n]]; } return ""; };
+    const out=[];
+    for(let r=2;r<aoa.length;r++){
+      const arr=aoa[r]||[];
+      const obj={
+        "순위":val(arr,["순위"]),"대분류":val(arr,["대분류"]),"중분류":val(arr,["중분류"]),"소분류":val(arr,["소분류"]),
+        "코드":val(arr,["코드","상담유형코드"]),"문의 유형":val(arr,["문의 유형","문의유형"]),
+        __channel:channel,__year:year,__sheet:sheetName,__groupedMonthly:true
+      };
+      groupedCols.forEach(({c,month,sub})=>{
+        const suffix=`_m${month}`;
+        if(sub==="count") obj[`m${month}`]=arr[c];
+        else obj[`${sub}${suffix}`]=arr[c];
+      });
+      const meaningful=String(obj["대분류"]||obj["중분류"]||obj["소분류"]||obj["코드"]||obj["문의 유형"]||"").trim();
+      if(meaningful) out.push(obj);
+    }
+    return out;
+  }
+  // 기존 1단 헤더 형식도 계속 지원
+  return XLSX.utils.sheet_to_json(ws,{defval:"",raw:true}).map(o=>({...o,__channel:channel,__year:year,__sheet:sheetName,__groupedMonthly:false}));
 }
 
 async function upload(file,type){
@@ -5286,7 +5651,7 @@ async function upload(file,type){
         if(m){
           const year=Number(m[1]);
           const channel=m[2].toUpperCase()==="CALL"?"인바운드 상담":"게시판 상담";
-          const rows=XLSX.utils.sheet_to_json(wb.Sheets[name],{defval:"",raw:true}).map(o=>({...o,__channel:channel,__year:year,__sheet:name}));
+          const rows=parseConsultMonthlySheet(wb.Sheets[name],year,channel,name);
           raw.push(...rows); matched.push(name);
           return;
         }
@@ -5438,18 +5803,37 @@ async function upload(file,type){
         category1:String(pick(o,["대분류"])||"").trim(),
         category2:String(pick(o,["중분류"])||"").trim(),
         category3:String(pick(o,["소분류"])||"").trim(),
+        rank:nullableNum(pick(o,["순위"])),
         code:String(pick(o,["코드▼","코드","상담유형코드"])||"").trim(),
         inquiry:String(pick(o,["문의 유형","문의유형"])||"").trim(),
-        m1:nullableNum(pick(o,["1월","01월"])), m2:nullableNum(pick(o,["2월","02월"])), m3:nullableNum(pick(o,["3월","03월"])),
-        m4:nullableNum(pick(o,["4월","04월"])), m5:nullableNum(pick(o,["5월","05월"])), m6:nullableNum(pick(o,["6월","06월"])),
-        m7:nullableNum(pick(o,["7월","07월"])), m8:nullableNum(pick(o,["8월","08월"])), m9:nullableNum(pick(o,["9월","09월"])),
-        m10:nullableNum(pick(o,["10월"])), m11:nullableNum(pick(o,["11월"])), m12:nullableNum(pick(o,["12월"]))
+        count:nullableNum(pick(o,["문의량 ▼","문의량","건수","상담건수"])),
+        grade1:nullableNum(pick(o,["고1 ▼","고1"])),
+        grade2:nullableNum(pick(o,["고2 ▼","고2"])),
+        grade3:nullableNum(pick(o,["고3 ▼","고3"])),
+        nStudent:nullableNum(pick(o,["N수 ▼","N수","n수"])),
+        gradeOther:nullableNum(pick(o,["기타 ▼","기타"])),
+        gradeUnclassified:nullableNum(pick(o,["비회원 ▼","비회원","정보없음 ▼","정보없음"])),
+        grade1_m1:nullableNum(o.grade1_m1), grade2_m1:nullableNum(o.grade2_m1), grade3_m1:nullableNum(o.grade3_m1), nStudent_m1:nullableNum(o.nStudent_m1), gradeOther_m1:nullableNum(o.gradeOther_m1), gradeUnclassified_m1:nullableNum(o.gradeUnclassified_m1),
+        grade1_m2:nullableNum(o.grade1_m2), grade2_m2:nullableNum(o.grade2_m2), grade3_m2:nullableNum(o.grade3_m2), nStudent_m2:nullableNum(o.nStudent_m2), gradeOther_m2:nullableNum(o.gradeOther_m2), gradeUnclassified_m2:nullableNum(o.gradeUnclassified_m2),
+        grade1_m3:nullableNum(o.grade1_m3), grade2_m3:nullableNum(o.grade2_m3), grade3_m3:nullableNum(o.grade3_m3), nStudent_m3:nullableNum(o.nStudent_m3), gradeOther_m3:nullableNum(o.gradeOther_m3), gradeUnclassified_m3:nullableNum(o.gradeUnclassified_m3),
+        grade1_m4:nullableNum(o.grade1_m4), grade2_m4:nullableNum(o.grade2_m4), grade3_m4:nullableNum(o.grade3_m4), nStudent_m4:nullableNum(o.nStudent_m4), gradeOther_m4:nullableNum(o.gradeOther_m4), gradeUnclassified_m4:nullableNum(o.gradeUnclassified_m4),
+        grade1_m5:nullableNum(o.grade1_m5), grade2_m5:nullableNum(o.grade2_m5), grade3_m5:nullableNum(o.grade3_m5), nStudent_m5:nullableNum(o.nStudent_m5), gradeOther_m5:nullableNum(o.gradeOther_m5), gradeUnclassified_m5:nullableNum(o.gradeUnclassified_m5),
+        grade1_m6:nullableNum(o.grade1_m6), grade2_m6:nullableNum(o.grade2_m6), grade3_m6:nullableNum(o.grade3_m6), nStudent_m6:nullableNum(o.nStudent_m6), gradeOther_m6:nullableNum(o.gradeOther_m6), gradeUnclassified_m6:nullableNum(o.gradeUnclassified_m6),
+        grade1_m7:nullableNum(o.grade1_m7), grade2_m7:nullableNum(o.grade2_m7), grade3_m7:nullableNum(o.grade3_m7), nStudent_m7:nullableNum(o.nStudent_m7), gradeOther_m7:nullableNum(o.gradeOther_m7), gradeUnclassified_m7:nullableNum(o.gradeUnclassified_m7),
+        grade1_m8:nullableNum(o.grade1_m8), grade2_m8:nullableNum(o.grade2_m8), grade3_m8:nullableNum(o.grade3_m8), nStudent_m8:nullableNum(o.nStudent_m8), gradeOther_m8:nullableNum(o.gradeOther_m8), gradeUnclassified_m8:nullableNum(o.gradeUnclassified_m8),
+        grade1_m9:nullableNum(o.grade1_m9), grade2_m9:nullableNum(o.grade2_m9), grade3_m9:nullableNum(o.grade3_m9), nStudent_m9:nullableNum(o.nStudent_m9), gradeOther_m9:nullableNum(o.gradeOther_m9), gradeUnclassified_m9:nullableNum(o.gradeUnclassified_m9),
+        grade1_m10:nullableNum(o.grade1_m10), grade2_m10:nullableNum(o.grade2_m10), grade3_m10:nullableNum(o.grade3_m10), nStudent_m10:nullableNum(o.nStudent_m10), gradeOther_m10:nullableNum(o.gradeOther_m10), gradeUnclassified_m10:nullableNum(o.gradeUnclassified_m10),
+        grade1_m11:nullableNum(o.grade1_m11), grade2_m11:nullableNum(o.grade2_m11), grade3_m11:nullableNum(o.grade3_m11), nStudent_m11:nullableNum(o.nStudent_m11), gradeOther_m11:nullableNum(o.gradeOther_m11), gradeUnclassified_m11:nullableNum(o.gradeUnclassified_m11),
+        grade1_m12:nullableNum(o.grade1_m12), grade2_m12:nullableNum(o.grade2_m12), grade3_m12:nullableNum(o.grade3_m12), nStudent_m12:nullableNum(o.nStudent_m12), gradeOther_m12:nullableNum(o.gradeOther_m12), gradeUnclassified_m12:nullableNum(o.gradeUnclassified_m12),
+        m1:nullableNum(o.m1!==undefined?o.m1:pick(o,["1월","01월"])), m2:nullableNum(o.m2!==undefined?o.m2:pick(o,["2월","02월"])), m3:nullableNum(o.m3!==undefined?o.m3:pick(o,["3월","03월"])),
+        m4:nullableNum(o.m4!==undefined?o.m4:pick(o,["4월","04월"])), m5:nullableNum(o.m5!==undefined?o.m5:pick(o,["5월","05월"])), m6:nullableNum(o.m6!==undefined?o.m6:pick(o,["6월","06월"])),
+        m7:nullableNum(o.m7!==undefined?o.m7:pick(o,["7월","07월"])), m8:nullableNum(o.m8!==undefined?o.m8:pick(o,["8월","08월"])), m9:nullableNum(o.m9!==undefined?o.m9:pick(o,["9월","09월"])),
+        m10:nullableNum(o.m10!==undefined?o.m10:pick(o,["10월"])), m11:nullableNum(o.m11!==undefined?o.m11:pick(o,["11월"])), m12:nullableNum(o.m12!==undefined?o.m12:pick(o,["12월"]))
       })).filter(r=>r.category1||r.category2||r.category3||r.code||r.inquiry);
 
       const normalizeCompare=v=>{ const t=String(v||"").trim().toLowerCase(); return ["전년","작년","previous","prev","prior"].includes(t)?"전년":"올해"; };
       const normalizeChannel=v=>{ const t=String(v||"").trim().toUpperCase().replace(/\s/g,""); return t==="ERMS"||t==="게시판"||t==="게시판상담"?"게시판 상담":"인바운드 상담"; };
       const periodRowsRaw=(typeof consultPeriodRaw!=="undefined"?consultPeriodRaw:[]).map(o=>({
-        analysisName:String(pick(o,["분석명","기간명","분석 기간명"])||"").trim(),
         compareType:String(o.__compareType||"").trim() || normalizeCompare(pick(o,["비교구분","구분","연도구분"])),
         startDate:asDate(pick(o,["시작일","분석시작일"])),
         endDate:asDate(pick(o,["종료일","분석종료일"])),
@@ -5457,25 +5841,29 @@ async function upload(file,type){
         category1:String(pick(o,["대분류"])||"").trim(),
         category2:String(pick(o,["중분류"])||"").trim(),
         category3:String(pick(o,["소분류"])||"").trim(),
+        rank:nullableNum(pick(o,["순위"])),
         code:String(pick(o,["코드▼","코드","상담유형코드"])||"").trim(),
         inquiry:String(pick(o,["문의 유형","문의유형"])||"").trim(),
-        count:nullableNum(pick(o,["건수","상담건수","실적"]))
-      })).filter(r=>r.analysisName && r.startDate && r.endDate && (r.category1||r.code||r.inquiry) && r.count!==null);
+        count:nullableNum(pick(o,["문의량 ▼","문의량","건수","상담건수","실적"])),
+        grade1:nullableNum(pick(o,["고1 ▼","고1"])),
+        grade2:nullableNum(pick(o,["고2 ▼","고2"])),
+        grade3:nullableNum(pick(o,["고3 ▼","고3"])),
+        nStudent:nullableNum(pick(o,["N수 ▼","N수","n수"])),
+        gradeOther:nullableNum(pick(o,["기타 ▼","기타"])),
+        gradeUnclassified:nullableNum(pick(o,["비회원 ▼","비회원","정보없음 ▼","정보없음"]))
+      })).filter(r=>r.startDate && r.endDate && r.channel && (r.category1||r.code||r.inquiry) && r.count!==null);
 
-      // 같은 분석명·비교구분·채널 안에 과거 기간 행이 함께 남아 있어도
-      // 종료일이 가장 최신인 한 기간만 업로드 대상으로 사용합니다.
-      // 예: 8/1~8/27 + 8/1~8/31이 함께 있으면 8/1~8/31만 유지.
+      // 분석명은 사용하지 않습니다. 비교구분·채널별로 종료일이 가장 최신인 한 기간만 업로드합니다.
       const latestPeriodByCombo=new Map();
       periodRowsRaw.forEach(r=>{
-        const combo=`${r.analysisName}|${r.compareType}|${r.channel}`;
-        const period=`${r.startDate}|${r.endDate}`;
+        const combo=`${r.compareType}|${r.channel}`;
         const prev=latestPeriodByCombo.get(combo);
         if(!prev || r.endDate>prev.endDate || (r.endDate===prev.endDate && r.startDate>prev.startDate)){
-          latestPeriodByCombo.set(combo,{startDate:r.startDate,endDate:r.endDate,period});
+          latestPeriodByCombo.set(combo,{startDate:r.startDate,endDate:r.endDate});
         }
       });
       const periodRows=periodRowsRaw.filter(r=>{
-        const combo=`${r.analysisName}|${r.compareType}|${r.channel}`;
+        const combo=`${r.compareType}|${r.channel}`;
         const latest=latestPeriodByCombo.get(combo);
         return latest && r.startDate===latest.startDate && r.endDate===latest.endDate;
       });
@@ -5490,15 +5878,14 @@ async function upload(file,type){
         messages.push(`월간 ${rows.length}개 유형 · ${years.join(", ")} · ${registeredMonths.join(", ")}`);
       }
       if(periodRows.length){
-        const uploadedNames=[...new Set(periodRows.map(r=>r.analysisName))];
-        const replaceKeys=new Set(periodRows.map(r=>`${r.analysisName}|${r.compareType}|${r.channel}`));
-        // 업로드된 조합은 기존 Firestore 행을 전부 제거한 뒤 최신 한 기간으로 교체합니다.
-        const kept=consultPeriodData.filter(r=>!replaceKeys.has(`${r.analysisName}|${r.compareType}|${r.channel}`)).map(({__id,...r})=>r);
+        const replaceKeys=new Set(periodRows.map(r=>`${r.compareType}|${r.channel}`));
+        // 업로드된 비교구분·채널 조합은 기존 Firestore 행을 제거한 뒤 최신 기간으로 교체합니다.
+        const kept=consultPeriodData.filter(r=>!replaceKeys.has(`${r.compareType}|${r.channel}`)).map(({__id,...r})=>r);
         const merged=[...kept,...periodRows];
         const safe=v=>String(v||"").replace(/[^0-9A-Za-z가-힣_-]/g,"_").slice(0,45);
-        await replaceCollection("consultPeriods",merged,(r,i)=>`cp_${safe(r.analysisName)}_${r.compareType==="전년"?"prev":"cur"}_${r.channel==="게시판 상담"?"erms":"call"}_${safe(r.code||r.inquiry)}_${String(i).padStart(4,"0")}`);
-        const comboText=[...replaceKeys].map(k=>{const [n,c,ch]=k.split("|");return `${n}·${c}·${ch==="게시판 상담"?"ERMS":"CALL"}`;});
-        messages.push(`특정기간 ${uploadedNames.length}개 분석 · ${comboText.join(" / ")}`);
+        await replaceCollection("consultPeriods",merged,(r,i)=>`cp_${r.compareType==="전년"?"prev":"cur"}_${r.channel==="게시판 상담"?"erms":"call"}_${safe(r.startDate)}_${safe(r.endDate)}_${safe(r.code||r.inquiry)}_${String(i).padStart(4,"0")}`);
+        const comboText=[...replaceKeys].map(k=>{const [c,ch]=k.split("|");return `${c}·${ch==="게시판 상담"?"ERMS":"CALL"}`;});
+        messages.push(`특정기간 ${periodRows.length}개 행 · ${comboText.join(" / ")}`);
       }
       if(!rows.length && !periodRows.length) throw new Error("상담유형 데이터를 인식하지 못했습니다.");
       await reload();
@@ -5541,11 +5928,11 @@ function renderRaw(){
     $("rawHead").innerHTML="<tr><th>일자</th><th>신청자</th><th>승인</th><th>반려</th><th>대기</th><th>뉴스타트구매자</th><th>N수</th><th>군수</th></tr>";
     $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.date}</td><td>${newsDisplay(r.applicant)}</td><td>${newsDisplay(r.approved)}</td><td>${newsDisplay(r.rejected)}</td><td>${newsDisplay(r.pending)}</td><td>${newsDisplay(r.purchaser)}</td><td>${newsDisplay(r.nsu)}</td><td>${newsDisplay(r.gunsu)}</td></tr>`).join("");
   }else if(type==="consulttype"){
-    $("rawHead").innerHTML="<tr><th>연도</th><th>상담구분</th><th>대분류</th><th>중분류</th><th>소분류</th><th>코드</th><th>문의유형</th>"+Array.from({length:12},(_,i)=>`<th>${i+1}월</th>`).join("")+"</tr>";
-    $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.year||"-"}</td><td>${r.channel||"-"}</td><td>${r.category1||""}</td><td>${r.category2||""}</td><td>${r.category3||""}</td><td>${r.code||""}</td><td>${r.inquiry||""}</td>${Array.from({length:12},(_,i)=>`<td>${r[`m${i+1}`]===null||r[`m${i+1}`]===undefined?"-":fmt(r[`m${i+1}`])}</td>`).join("")}</tr>`).join("");
+    $("rawHead").innerHTML="<tr><th>연도</th><th>상담구분</th><th>순위</th><th>대분류</th><th>중분류</th><th>소분류</th><th>코드</th><th>문의유형</th><th>문의량</th><th>고1</th><th>고2</th><th>고3</th><th>N수</th><th>기타</th><th>비회원</th>"+Array.from({length:12},(_,i)=>`<th>${i+1}월</th>`).join("")+"</tr>";
+    $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.year||"-"}</td><td>${r.channel||"-"}</td><td>${r.rank??"-"}</td><td>${r.category1||""}</td><td>${r.category2||""}</td><td>${r.category3||""}</td><td>${r.code||""}</td><td>${r.inquiry||""}</td><td>${r.count===null||r.count===undefined?"-":fmt(r.count)}</td><td>${r.grade1===null||r.grade1===undefined?"-":fmt(r.grade1)}</td><td>${r.grade2===null||r.grade2===undefined?"-":fmt(r.grade2)}</td><td>${r.grade3===null||r.grade3===undefined?"-":fmt(r.grade3)}</td><td>${r.nStudent===null||r.nStudent===undefined?"-":fmt(r.nStudent)}</td><td>${r.gradeOther===null||r.gradeOther===undefined?"-":fmt(r.gradeOther)}</td><td>${r.gradeUnclassified===null||r.gradeUnclassified===undefined?"-":fmt(r.gradeUnclassified)}</td>${Array.from({length:12},(_,i)=>`<td>${r[`m${i+1}`]===null||r[`m${i+1}`]===undefined?"-":fmt(r[`m${i+1}`])}</td>`).join("")}</tr>`).join("");
   }else if(type==="consultperiod"){
-    $("rawHead").innerHTML="<tr><th>분석명</th><th>비교구분</th><th>시작일</th><th>종료일</th><th>상담구분</th><th>대분류</th><th>중분류</th><th>소분류</th><th>코드</th><th>문의유형</th><th>건수</th></tr>";
-    $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.analysisName||""}</td><td>${r.compareType||""}</td><td>${r.startDate||""}</td><td>${r.endDate||""}</td><td>${r.channel||""}</td><td>${r.category1||""}</td><td>${r.category2||""}</td><td>${r.category3||""}</td><td>${r.code||""}</td><td>${r.inquiry||""}</td><td>${fmt(r.count)}</td></tr>`).join("");
+    $("rawHead").innerHTML="<tr><th>비교구분</th><th>시작일</th><th>종료일</th><th>상담구분</th><th>순위</th><th>대분류</th><th>중분류</th><th>소분류</th><th>코드</th><th>문의유형</th><th>문의량</th><th>고1</th><th>고2</th><th>고3</th><th>N수</th><th>기타</th><th>비회원</th></tr>";
+    $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.compareType||""}</td><td>${r.startDate||""}</td><td>${r.endDate||""}</td><td>${r.channel||""}</td><td>${r.rank??"-"}</td><td>${r.category1||""}</td><td>${r.category2||""}</td><td>${r.category3||""}</td><td>${r.code||""}</td><td>${r.inquiry||""}</td><td>${r.count===null||r.count===undefined?"-":fmt(r.count)}</td><td>${r.grade1===null||r.grade1===undefined?"-":fmt(r.grade1)}</td><td>${r.grade2===null||r.grade2===undefined?"-":fmt(r.grade2)}</td><td>${r.grade3===null||r.grade3===undefined?"-":fmt(r.grade3)}</td><td>${r.nStudent===null||r.nStudent===undefined?"-":fmt(r.nStudent)}</td><td>${r.gradeOther===null||r.gradeOther===undefined?"-":fmt(r.gradeOther)}</td><td>${r.gradeUnclassified===null||r.gradeUnclassified===undefined?"-":fmt(r.gradeUnclassified)}</td></tr>`).join("");
   }else if(type==="issues"){
     $("rawHead").innerHTML="<tr><th>일자</th><th>구분</th><th>제목</th><th>상세내용</th><th>영향채널</th><th>중요도</th><th>등록자</th></tr>";
     $("rawBody").innerHTML=rows.map(r=>`<tr><td>${issueEsc(r.date||"")}</td><td>${issueEsc(r.category||"")}</td><td>${issueEsc(r.title||"")}</td><td style="white-space:normal;min-width:280px">${issueEsc(r.detail||"")}</td><td>${issueEsc(r.channel||"")}</td><td>${issueEsc(r.severity||"")}</td><td>${issueEsc(r.createdBy||"")}</td></tr>`).join("");
@@ -5638,7 +6025,7 @@ function consultCategoryMap(channel,m){
   const year=consultSelectedYear(), map=new Map(), months=consultAvailableMonths(channel,year);
   consultTypeData.filter(r=>r.channel===channel && Number(r.year)===year).forEach(r=>{
     const v=consultSelectionValue(r,m,months); if(v===null) return;
-    const k=r.category1||"미분류"; map.set(k,(map.get(k)||0)+(Number(v)||0));
+    const k=r.category1||"비회원"; map.set(k,(map.get(k)||0)+(Number(v)||0));
   });
   return map;
 }
@@ -5675,24 +6062,162 @@ function consultPrevYearAggregates(channel,m){
 function consultAggregateBy(rows,keyField){
   const map=new Map();
   rows.forEach(r=>{
-    const key=(r[keyField]||'미분류').trim()||'미분류';
+    const key=(r[keyField]||'비회원').trim()||'비회원';
     const v=Number(r._v)||0; if(!v) return;
     map.set(key,(map.get(key)||0)+v);
   });
   return [...map.entries()].map(([name,value])=>({name,value})).sort((a,b)=>b.value-a.value);
 }
-function consultBuildTop10CategoryTable(items,total,compareMap){
-  if(!items.length) return '<tr><td colspan="5" style="text-align:center;color:#8a96a6;padding:22px">데이터가 없습니다.</td></tr>';
+
+const CONSULT_GRADE_META=[
+  {key:"grade1",label:"고1",color:"#3b82f6"},{key:"grade2",label:"고2",color:"#38b26f"},{key:"grade3",label:"고3",color:"#f0a43a"},
+  {key:"nStudent",label:"N수",color:"#8b62d3"},{key:"gradeOther",label:"기타",color:"#94a3b8"},{key:"gradeUnclassified",label:"비회원",color:"#cbd5e1"}
+];
+function consultGradeEligibleRow(r){
+  const ch=String(r?.channel||"").trim();
+  const y=Number(r?.year)||Number(String(r?.startDate||"").slice(0,4))||0;
+  const call=(ch==="인바운드 상담"||ch.toUpperCase()==="CALL"||ch==="Call");
+  return call && y>=2026;
+}
+function consultGradeEligibleRows(rows){ return (rows||[]).filter(consultGradeEligibleRow); }
+function consultGradeMonthValue(r,key,m){
+  const mk=`${key}_m${m}`;
+  if(Object.prototype.hasOwnProperty.call(r||{},mk)){
+    const v=r?.[mk]; return v===null||v===undefined||v===""?null:(Number(v)||0);
+  }
+  // 기존 1단 헤더 파일 호환: 월별 학년필드가 전혀 없을 때만 상위 필드 사용
+  const hasAnyMonthly=CONSULT_GRADE_META.some(g=>Array.from({length:12},(_,i)=>`${g.key}_m${i+1}`).some(k=>Object.prototype.hasOwnProperty.call(r||{},k) && r[k]!==null && r[k]!==undefined));
+  if(hasAnyMonthly) return null;
+  const v=r?.[key]; return v===null||v===undefined||v===""?null:(Number(v)||0);
+}
+function consultGradeValueForSelection(r,key,selection,months){
+  if(r?.startDate) { const v=r?.[key]; return v===null||v===undefined||v===""?null:(Number(v)||0); }
+  if(String(selection)!=="all") return consultGradeMonthValue(r,key,Number(selection));
+  let total=0,has=false;
+  (months||consultAvailableMonths(r?.channel||"인바운드 상담",Number(r?.year)||consultSelectedYear())).forEach(m=>{const v=consultGradeMonthValue(r,key,m);if(v!==null){total+=Number(v)||0;has=true;}});
+  return has?total:null;
+}
+function consultAttachGradeSelection(r,selection,months){
+  const out={...r};
+  CONSULT_GRADE_META.forEach(g=>out[g.key]=consultGradeValueForSelection(r,g.key,selection,months));
+  return out;
+}
+function consultGradeStats(rows,selection="all",months=null){
+  const totals={}; CONSULT_GRADE_META.forEach(g=>totals[g.key]=0); let has=false;
+  consultGradeEligibleRows(rows).forEach(r=>CONSULT_GRADE_META.forEach(g=>{const v=consultGradeValueForSelection(r,g.key,selection,months); if(v!==null&&v!==undefined&&v!==""){totals[g.key]+=Number(v)||0;has=true;}}));
+  const total=CONSULT_GRADE_META.reduce((a,g)=>a+totals[g.key],0);
+  return {totals,total,has};
+}
+function consultGradeCategoryMap(rows,selection="all",months=null){
+  const map=new Map();
+  consultGradeEligibleRows(rows).forEach(r=>{const name=(r.category1||"비회원").trim()||"비회원"; if(!map.has(name)) map.set(name,[]); map.get(name).push(r);});
+  const out=new Map(); map.forEach((rs,name)=>out.set(name,consultGradeStats(rs,selection,months))); return out;
+}
+function gradeStackHtml(stats,compact=false){
+  if(!stats?.has||!stats.total) return '<span style="color:#9aa6b5">-</span>';
+  return `<div class="${compact?'mini-grade-stack':'grade-stack'}">${CONSULT_GRADE_META.map(g=>{const p=stats.total?stats.totals[g.key]/stats.total*100:0;return p>0?`<span style="width:${p.toFixed(2)}%;background:${g.color}" title="${g.label} ${fmt(stats.totals[g.key])}건 (${p.toFixed(1)}%)"></span>`:'';}).join('')}</div>${compact?`<div class="mini-grade-legend">${CONSULT_GRADE_META.filter(g=>stats.totals[g.key]>0).map(g=>`${g.label} ${(stats.totals[g.key]/stats.total*100).toFixed(0)}%`).join(' · ')}</div>`:''}`;
+}
+function renderGradeModule(rows,prefix,basisText,selection="all",months=null){
+  const stats=consultGradeStats(rows,selection,months), kpis=$(prefix+'GradeKpis'), stack=$(prefix+'GradeStack'), legend=$(prefix+'GradeLegend');
+  if($(prefix+'GradeBasis')) $(prefix+'GradeBasis').textContent=basisText||'등록된 학년정보 기준';
+  if(!kpis||!stack||!legend) return;
+  if(!stats.has||!stats.total){ kpis.innerHTML='<div class="consult-empty" style="grid-column:1/-1"><div class="consult-empty-title">학년정보 등록 후 표시됩니다.</div></div>'; stack.innerHTML=''; legend.innerHTML=''; if($(prefix+'GradeBars')) $(prefix+'GradeBars').innerHTML=''; if($(prefix+'GradeTopTypes')) $(prefix+'GradeTopTypes').innerHTML='<div class="consult-empty-title">학년정보는 CALL 데이터에 한해 2026년부터 제공됩니다.</div>'; return; }
+  kpis.innerHTML=CONSULT_GRADE_META.map(g=>{const v=stats.totals[g.key],p=stats.total?v/stats.total*100:0;return `<div class="grade-kpi"><div class="glabel">${g.label}</div><div class="gvalue">${fmt(v)}</div><div class="gpct">${p.toFixed(1)}%</div></div>`;}).join('');
+  stack.innerHTML=CONSULT_GRADE_META.map(g=>{const p=stats.total?stats.totals[g.key]/stats.total*100:0;return p?`<span style="width:${p.toFixed(2)}%;background:${g.color}"></span>`:'';}).join('');
+  legend.innerHTML=CONSULT_GRADE_META.map(g=>`<span><i style="background:${g.color}"></i>${g.label} ${stats.total?(stats.totals[g.key]/stats.total*100).toFixed(1):'0.0'}%</span>`).join('');
+  if($(prefix+'GradeBars')) $(prefix+'GradeBars').innerHTML=CONSULT_GRADE_META.map(g=>{const p=stats.total?stats.totals[g.key]/stats.total*100:0;return `<div class="consult-grade-row"><div class="consult-grade-name">${g.label}</div><div class="consult-grade-track"><div class="consult-grade-fill" style="width:${p.toFixed(2)}%;background:${g.color}"></div></div><div class="consult-grade-val">${fmt(stats.totals[g.key])} · ${p.toFixed(1)}%</div></div>`;}).join('');
+  if($(prefix+'GradeTopTypes')){
+    const ranked=CONSULT_GRADE_META.map(g=>{let best=null;consultGradeEligibleRows(rows).forEach(r=>{const v=Number(consultGradeValueForSelection(r,g.key,selection,months))||0;if(!best||v>best.v) best={v,name:r.inquiry||r.category3||r.category2||r.category1||'-'};});return {g,best};});
+    $(prefix+'GradeTopTypes').innerHTML=ranked.map(x=>`<div class="consult-grade-row"><div class="consult-grade-name">${x.g.label}</div><div style="grid-column:2/4;color:#44556b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${consultEsc(x.best?.name||'-')} <b>${x.best?.v?fmt(x.best.v)+'건':''}</b></div></div>`).join('');
+  }
+  if(prefix==='overview'){
+    const ranked=CONSULT_GRADE_META.map(g=>({g,v:stats.totals[g.key]})).sort((a,b)=>b.v-a.v), top=ranked[0], unknown=stats.totals.gradeUnclassified||0;
+    if($('overviewGradeInsight')) $('overviewGradeInsight').innerHTML=`가장 많은 상담은 <b>${top.g.label}</b> ${fmt(top.v)}건으로, 학년정보 보유 상담의 <b>${(top.v/stats.total*100).toFixed(1)}%</b>입니다.`;
+    if($('overviewGradeQuality')) $('overviewGradeQuality').innerHTML=`비회원 ${fmt(unknown)}건 · <b>${(unknown/stats.total*100).toFixed(1)}%</b>${unknown/stats.total>.15?' — 학년정보 수집 보완이 필요합니다.':' — 학년정보 분류 상태가 양호합니다.'}`;
+  }
+}
+function consultRowsForGradeCurrent(){
+  const channel=consultSelectedChannel();
+  const isBoard=channel==="게시판 상담" || String(channel).toUpperCase()==="ERMS";
+  if(isBoard) return [];
+  const gradeChannel="인바운드 상담"; // 전체 선택이어도 학년정보는 CALL만 집계
+  if(consultMode()==='period'){
+    const name=$("consultPeriodSelect")?.value||consultPeriodNames().at(-1)||'';
+    return consultGradeEligibleRows(consultPeriodChannelRows(name,'올해',gradeChannel));
+  }
+  const y=consultSelectedYear();
+  if(y<2026) return [];
+  return consultGradeEligibleRows(consultRowsFor(gradeChannel,y));
+}
+function renderConsultGradeCurrent(){
+  const channel=consultSelectedChannel(), y=consultSelectedYear();
+  const isBoard=channel==="게시판 상담" || String(channel).toUpperCase()==="ERMS";
+  const isAll=channel==="all";
+  const rows=consultRowsForGradeCurrent();
+  let basis='CALL · 2026년 이후 데이터 기준';
+  if(isBoard) basis='학년정보 미적용 · ERMS/스마트러닝 제외';
+  else if(consultMode()==='period') basis=isAll?'특정기간 · 전체 상담 중 CALL 학년정보':'특정기간 · CALL · 2026년 이후';
+  else basis=isAll?`${y}년 · 전체 상담 중 CALL 학년정보`: `${y}년 · CALL${y<2026?' · 학년정보 미적용':''}`;
+  const selection=consultMode()==='period'?'all':($('consultMonthSelectLive')?.value||'all');
+  const months=consultMode()==='period'?null:consultAvailableMonths('인바운드 상담',y);
+  renderGradeModule(rows,'consult',basis,selection,months);
+}
+function renderOverviewGradeSummary(startDate,endDate){
+  let rows=[],basis='CALL · 2026년 이후 데이터 기준',selection='all',months=null;
+  const hasGradeData = r => CONSULT_GRADE_META.some(g=>{
+    const v=r?.[g.key];
+    if(v!==null && v!==undefined && v!=="") return true;
+    return Array.from({length:12},(_,i)=>r?.[`${g.key}_m${i+1}`]).some(x=>x!==null && x!==undefined && x!=="");
+  });
+
+  // 특정기간 데이터에 실제 학년정보가 있을 때만 우선 사용합니다.
+  // 특정기간(CALL)에 학년정보가 없으면 2026_CALL 월별 학년정보로 자동 보완합니다.
+  const periodRows=(consultPeriodData||[]).filter(r=>
+    r.compareType==='올해' && consultGradeEligibleRow(r) && hasGradeData(r) &&
+    (!startDate||!endDate||((r.startDate||'')<=endDate&&(r.endDate||'')>=startDate))
+  );
+  if(periodRows.length){
+    rows=periodRows;
+    const starts=rows.map(r=>r.startDate).filter(Boolean).sort(),ends=rows.map(r=>r.endDate).filter(Boolean).sort();
+    basis=`CALL · ${starts[0]||''} ~ ${ends.at(-1)||''}`;
+  } else if(consultTypeData?.length){
+    const sy=Number(String(startDate||'').slice(0,4));
+    const ey=Number(String(endDate||'').slice(0,4))||consultSelectedYear();
+    const y=ey;
+    if(y>=2026){
+      rows=consultTypeData.filter(r=>Number(r.year)===y && consultGradeEligibleRow(r) && hasGradeData(r));
+      if(rows.length){
+        // 통합현황 선택기간이 같은 연도 안이면 해당 월만 집계합니다.
+        if(startDate && endDate && sy===ey){
+          const sm=Math.max(1,Number(String(startDate).slice(5,7))||1);
+          const em=Math.min(12,Number(String(endDate).slice(5,7))||12);
+          months=Array.from({length:Math.max(0,em-sm+1)},(_,i)=>sm+i);
+          basis=`CALL · ${startDate} ~ ${endDate}`;
+        }else{
+          months=consultAvailableMonths('인바운드 상담',y);
+          basis=`${y}년 · CALL 학년정보`;
+        }
+      }else basis=`${y}년 · CALL 학년정보 미등록`;
+    } else basis=`${y}년 · 학년정보 미적용`;
+  }
+  renderGradeModule(rows,'overview',basis,selection,months);
+}
+
+function consultBuildTop10CategoryTable(items,total,compareMap,gradeMap=null){
+  if(!items.length) return '<tr><td colspan="6" style="text-align:center;color:#8a96a6;padding:22px">데이터가 없습니다.</td></tr>';
   const body=items.map((x,i)=>{
     const base=compareMap?.get(x.name), share=total?x.value/total*100:0;
     const compareText=base===undefined?'-':`<span class="${consultRateClass(x.value,base)}">${consultRateText(x.value,base)}</span>`;
-    return `<tr><td class="consult-rank">${i+1}</td><td><b>${consultEsc(x.name)}</b></td><td class="num"><b>${fmt(x.value)}</b></td><td class="num">${share.toFixed(1)}%</td><td class="num">${compareText}</td></tr>`;
+    const gradeHtml=gradeStackHtml(gradeMap?.get(x.name),true);
+    return `<tr><td class="consult-rank">${i+1}</td><td><b>${consultEsc(x.name)}</b></td><td class="num"><b>${fmt(x.value)}</b></td><td class="num">${share.toFixed(1)}%</td><td class="grade-cell">${gradeHtml}</td><td class="num">${compareText}</td></tr>`;
   }).join('');
   const topTotal=items.reduce((s,x)=>s+(Number(x.value)||0),0);
   const topShare=total?topTotal/total*100:0;
   const baseTopTotal=compareMap && compareMap.size ? items.reduce((s,x)=>s+(Number(compareMap.get(x.name))||0),0) : null;
   const compareText=baseTopTotal===null?'-':`<span class="${consultRateClass(topTotal,baseTopTotal)}">${consultRateText(topTotal,baseTopTotal)}</span>`;
-  return body+`<tr class="consult-total-row"><td></td><td>총합계</td><td class="num">${fmt(topTotal)}</td><td class="num">${topShare.toFixed(1)}%</td><td class="num">${compareText}</td></tr>`;
+  const totalRows=[]; if(gradeMap) items.forEach(x=>{const st=gradeMap.get(x.name); if(st?.has){ const pseudo={}; CONSULT_GRADE_META.forEach(g=>pseudo[g.key]=st.totals[g.key]); totalRows.push({...pseudo,channel:'인바운드 상담',year:2026}); }});
+  const totalGrade=gradeStackHtml(consultGradeStats(totalRows),true);
+  return body+`<tr class="consult-total-row"><td></td><td>총합계</td><td class="num">${fmt(topTotal)}</td><td class="num">${topShare.toFixed(1)}%</td><td class="grade-cell">${totalGrade}</td><td class="num">${compareText}</td></tr>`;
 }
 function consultRenderTop10Chart(items,compareMap,currentLabel,compareLabel){
   const canvas=$("consultTop10Chart"); if(!canvas) return;
@@ -5745,9 +6270,24 @@ function consultExportCurrent(){
   XLSX.writeFile(wb,`상담유형_분석_${consultSelectedYear()}_${selection==='all'?'전체':selection+'월'}.xlsx`);
 }
 function consultMode(){ return $("consultModeSelect")?.value||"monthly"; }
-function consultPeriodNames(){ return [...new Set(consultPeriodData.map(r=>r.analysisName).filter(Boolean))]; }
-function consultPeriodChannelRows(name,compareType,channel=consultSelectedChannel()){
-  return consultPeriodData.filter(r=>r.analysisName===name && r.compareType===compareType && (channel==="all"||r.channel===channel));
+function consultPeriodNames(){
+  return [...new Set(consultPeriodData.filter(r=>r.compareType==="올해"&&r.startDate&&r.endDate).map(r=>`${r.startDate}|${r.endDate}`))].sort();
+}
+function consultPeriodChannelRows(periodKey,compareType,channel=consultSelectedChannel()){
+  const [start,end]=String(periodKey||"").split("|");
+  if(compareType==="올해"){
+    return consultPeriodData.filter(r=>r.compareType==="올해" && r.startDate===start && r.endDate===end && (channel==="all"||r.channel===channel));
+  }
+  // 전년은 선택한 채널별 최신 등록 기간을 사용합니다.
+  let rows=consultPeriodData.filter(r=>r.compareType==="전년" && (channel==="all"||r.channel===channel));
+  if(!rows.length) return [];
+  const latestByChannel=new Map();
+  rows.forEach(r=>{
+    const ch=r.channel||"";
+    const prev=latestByChannel.get(ch);
+    if(!prev || r.endDate>prev.endDate || (r.endDate===prev.endDate && r.startDate>prev.startDate)) latestByChannel.set(ch,{startDate:r.startDate,endDate:r.endDate});
+  });
+  return rows.filter(r=>{const p=latestByChannel.get(r.channel||"");return p&&r.startDate===p.startDate&&r.endDate===p.endDate;});
 }
 function consultPeriodRowKey(r){ return `${r.code||""}|${r.inquiry||""}|${r.category1||""}|${r.category2||""}|${r.category3||""}`; }
 function consultAggregatePeriodRows(source){
@@ -5759,8 +6299,8 @@ function consultAggregatePeriodRows(source){
   });
   return [...map.values()];
 }
-function consultPeriodDateRange(name,type){
-  const rows=consultPeriodData.filter(r=>r.analysisName===name&&r.compareType===type);
+function consultPeriodDateRange(periodKey,type){
+  const rows=consultPeriodChannelRows(periodKey,type,"all");
   if(!rows.length) return "-";
   const starts=rows.map(r=>r.startDate).filter(Boolean).sort(), ends=rows.map(r=>r.endDate).filter(Boolean).sort();
   const withWeekday=(dateStr)=>{
@@ -5783,7 +6323,7 @@ function renderConsultPeriod(){
     periodSel.innerHTML=""; $("consultMonthHelp").textContent="관리자 Excel의 올해_CALL / 올해_ERMS / 전년_CALL / 전년_ERMS 시트에 특정기간 데이터를 등록해 주세요."; consultRenderEmpty(); return;
   }
   const old=periodSel.value;
-  periodSel.innerHTML=names.map(n=>`<option value="${consultEsc(n)}">${consultEsc(n)}</option>`).join("");
+  periodSel.innerHTML=names.map(n=>{const [s,e]=String(n).split("|");return `<option value="${consultEsc(n)}">${consultEsc(s)} ~ ${consultEsc(e)}</option>`;}).join("");
   periodSel.value=names.includes(old)?old:names.at(-1);
   const name=periodSel.value, channel=consultSelectedChannel(), channelLabel=consultChannelLabel(channel);
   const curRaw=consultPeriodChannelRows(name,"올해",channel), prevRaw=consultPeriodChannelRows(name,"전년",channel);
@@ -5800,10 +6340,10 @@ function renderConsultPeriod(){
 
   $("consultNoData")?.classList.add("hidden");
   $("consultPeriodDateText").textContent=`올해 ${curRange} / 전년 ${prevRange}`;
-  $("consultMonthHelp").textContent=`특정기간 · ${name} · ${channelLabel}`;
+  $("consultMonthHelp").textContent=`특정기간 · ${channelLabel}`;
   $("consultPrevLabel").textContent="전년 대비";
   $("consultYoYLabel").textContent="비교기간";
-  $("consultTotal").textContent=fmt(total)+" 건"; $("consultTotalSub").textContent=`${name} · 올해 기간 합계`;
+  $("consultTotal").textContent=fmt(total)+" 건"; $("consultTotalSub").textContent=`올해 기간 합계`;
   if(prevTotal!==null){ $("consultPrevChange").textContent=consultRateText(total,prevTotal); $("consultPrevChange").className=`val ${total>prevTotal?'up':total<prevTotal?'down':''}`; $("consultPrevSub").textContent=`전년 ${fmt(prevTotal)}건 대비 ${total>=prevTotal?'+':''}${fmt(total-prevTotal)}건`; }
   else { $("consultPrevChange").textContent="-"; $("consultPrevChange").className="val"; $("consultPrevSub").textContent="전년 비교 데이터 미등록"; }
   $("consultYoYChange").textContent=curRange; $("consultYoYChange").className="val"; $("consultYoYChange").style.fontSize="13px"; $("consultYoYSub").textContent=`전년 비교 ${prevRange}`;
@@ -5812,14 +6352,16 @@ function renderConsultPeriod(){
   $("consultChangeTitle").textContent="전년 대비 주요 변화"; $("consultIncreaseTitle").textContent="전년 대비 증가 TOP5"; $("consultDecreaseTitle").textContent="전년 대비 감소 TOP5"; $("consultTopCompareHead").textContent="전년 대비"; $("consultCompareModeWrap")?.classList.add("hidden"); document.querySelectorAll("#consulttype .consult-monthly-yoy-col").forEach(el=>el.classList.add("hidden"));
   $("consultTopShareNote").textContent="※ 비중은 올해 분석기간 기준"; $("consultDetailSectionNum").textContent="4"; $("consultCompareNote").textContent="※ 전년 비교기간 대비 증감률은 소수점 첫째자리 반올림 기준입니다.";
   $("consultDetailMonthHead").textContent="올해"; $("consultDetailPrevHead").textContent="전년";
-  $("consultTop10CategoryBody").innerHTML=consultBuildTop10CategoryTable(top10,total,prevCatMap,null,false);
+  const periodGradeMap=consultGradeCategoryMap(curRaw);
+  $("consultTop10CategoryBody").innerHTML=consultBuildTop10CategoryTable(top10,total,prevCatMap,periodGradeMap);
+  renderConsultGradeCurrent();
   requestAnimationFrame(()=>consultRenderTop10Chart(top10,prevCatMap,"올해 상담건수","전년 상담건수"));
   if(prevRows.length){ $("consultIncreaseBody").innerHTML=consultMakeChangeTable(inc,"증가한 문의유형이 없습니다.","전년","올해"); $("consultDecreaseBody").innerHTML=consultMakeChangeTable(dec,"감소한 문의유형이 없습니다.","전년","올해"); }
   else { const msg='<div class="consult-empty"><div class="consult-empty-title">전년 비교 데이터 등록 시 표시</div></div>'; $("consultIncreaseBody").innerHTML=msg; $("consultDecreaseBody").innerHTML=msg; }
 
   const drillSel=$("consultDrillCategorySelect"), catNames=categoryAgg.map(x=>x.name), oldDrill=drillSel?.value||"";
   if(drillSel){ drillSel.innerHTML=catNames.map(x=>`<option value="${consultEsc(x)}">${consultEsc(x)}</option>`).join(""); drillSel.value=catNames.includes(oldDrill)?oldDrill:(catNames[0]||""); drillSel.onchange=renderConsultPeriod; }
-  const selectedCat=drillSel?.value||(catNames[0]||""), drillRows=active.filter(r=>(r.category1||"미분류")===selectedCat);
+  const selectedCat=drillSel?.value||(catNames[0]||""), drillRows=active.filter(r=>(r.category1||"비회원")===selectedCat);
   $("consultMidTopBody").innerHTML=consultMakeSimpleTopTable(consultAggregateBy(drillRows,"category2").slice(0,10),"name","중분류 데이터가 없습니다.");
   $("consultSmallTopBody").innerHTML=consultMakeSimpleTopTable(consultAggregateBy(drillRows,"category3").slice(0,10),"name","소분류 데이터가 없습니다.");
   $("consultMonthlyTrendPanel")?.classList.add("hidden");
@@ -5834,14 +6376,15 @@ function consultGroupDetailRows(rows){
   const map=new Map();
   rows.forEach(r=>{
     const key=consultRowKey(r);
-    if(!map.has(key)) map.set(key,{...r,_cur:0,_prev:0,_prevHas:false,_yoy:0,_yoyHas:false,_channels:new Set()});
+    if(!map.has(key)) map.set(key,{...r,_cur:0,_prev:0,_prevHas:false,_yoy:0,_yoyHas:false,_channels:new Set(),_grade1:0,_grade1Has:false,_grade2:0,_grade2Has:false,_grade3:0,_grade3Has:false,_nStudent:0,_nStudentHas:false,_gradeOther:0,_gradeOtherHas:false,_gradeUnclassified:0,_gradeUnclassifiedHas:false});
     const item=map.get(key);
     item._cur+=(Number(r._cur)||0);
     if(r._prev!==null && r._prev!==undefined){ item._prev+=(Number(r._prev)||0); item._prevHas=true; }
     if(r._yoy!==null && r._yoy!==undefined){ item._yoy+=(Number(r._yoy)||0); item._yoyHas=true; }
+    [["grade1","_grade1","_grade1Has"],["grade2","_grade2","_grade2Has"],["grade3","_grade3","_grade3Has"],["nStudent","_nStudent","_nStudentHas"],["gradeOther","_gradeOther","_gradeOtherHas"],["gradeUnclassified","_gradeUnclassified","_gradeUnclassifiedHas"]].forEach(([src,sum,has])=>{ if(r[src]!==null && r[src]!==undefined && r[src]!==""){ item[sum]+=(Number(r[src])||0); item[has]=true; } });
     if(r.channel) item._channels.add(r.channel);
   });
-  return [...map.values()].map(r=>({...r,channel:consultDetailChannelLabel(r._channels),_prev:r._prevHas?r._prev:null,_yoy:r._yoyHas?r._yoy:null}));
+  return [...map.values()].map(r=>({...r,channel:consultDetailChannelLabel(r._channels),_prev:r._prevHas?r._prev:null,_yoy:r._yoyHas?r._yoy:null,grade1:r._grade1Has?r._grade1:null,grade2:r._grade2Has?r._grade2:null,grade3:r._grade3Has?r._grade3:null,nStudent:r._nStudentHas?r._nStudent:null,gradeOther:r._gradeOtherHas?r._gradeOther:null,gradeUnclassified:r._gradeUnclassifiedHas?r._gradeUnclassified:null}));
 }
 function renderConsultPeriodDetail(){
   const name=$("consultPeriodSelect")?.value||"", pageChannel=consultSelectedChannel();
@@ -5859,7 +6402,7 @@ function renderConsultPeriodDetail(){
   const cat=$("consultCatFilter")?.value||"", mid=$("consultMidFilter")?.value||"", small=$("consultSmallFilter")?.value||"", q=($("consultSearch")?.value||"").trim().toLowerCase(), mode=document.querySelector('#consulttype .consult-toggle-group button.active')?.dataset.filter||"all";
   const rows=grouped.filter(r=>(!cat||r.category1===cat)&&(!mid||r.category2===mid)&&(!small||r.category3===small)&&(!q||`${r.channel||''} ${r.inquiry||''} ${r.category1||''} ${r.category2||''} ${r.category3||''}`.toLowerCase().includes(q)));
   const filtered=rows.filter(r=>mode==="increase"?r._prev!==null&&r._cur>r._prev:mode==="decrease"?r._prev!==null&&r._cur<r._prev:mode==="new"?r._prev!==null&&r._prev===0&&r._cur>0:true).sort((a,b)=>b._cur-a._cur);
-  $("consultDetailBody").innerHTML=filtered.map(r=>`<tr><td><span class="consult-badge">${consultEsc(r.channel||'-')}</span></td><td>${consultEsc(r.category1||'-')}</td><td>${consultEsc(r.category2||'-')}</td><td>${consultEsc(r.category3||'-')}</td><td>${consultEsc(r.inquiry||'-')}</td><td class="num">${fmt(r._cur)}</td><td class="num">${r._prev===null?'-':fmt(r._prev)}</td><td class="num">${r._prev===null?'-':`<span class="${consultRateClass(r._cur,r._prev)}">${consultRateText(r._cur,r._prev)}</span>`}</td><td class="num consult-monthly-yoy-col hidden">-</td><td class="num consult-monthly-yoy-col hidden">-</td></tr>`).join("") || '<tr><td colspan="10" style="text-align:center;color:#8a96a6;padding:22px">조건에 맞는 상담유형이 없습니다.</td></tr>';
+  $("consultDetailBody").innerHTML=filtered.map(r=>`<tr><td><span class="consult-badge">${consultEsc(r.channel||'-')}</span></td><td>${consultEsc(r.category1||'-')}</td><td>${consultEsc(r.category2||'-')}</td><td>${consultEsc(r.category3||'-')}</td><td>${consultEsc(r.inquiry||'-')}</td><td class="num">${r.grade1===null||r.grade1===undefined?'-':fmt(r.grade1)}</td><td class="num">${r.grade2===null||r.grade2===undefined?'-':fmt(r.grade2)}</td><td class="num">${r.grade3===null||r.grade3===undefined?'-':fmt(r.grade3)}</td><td class="num">${r.nStudent===null||r.nStudent===undefined?'-':fmt(r.nStudent)}</td><td class="num">${r.gradeOther===null||r.gradeOther===undefined?'-':fmt(r.gradeOther)}</td><td class="num">${r.gradeUnclassified===null||r.gradeUnclassified===undefined?'-':fmt(r.gradeUnclassified)}</td><td class="num">${fmt(r._cur)}</td><td class="num">${r._prev===null?'-':fmt(r._prev)}</td><td class="num">${r._prev===null?'-':`<span class="${consultRateClass(r._cur,r._prev)}">${consultRateText(r._cur,r._prev)}</span>`}</td><td class="num consult-monthly-yoy-col hidden">-</td><td class="num consult-monthly-yoy-col hidden">-</td></tr>`).join("") || '<tr><td colspan="16" style="text-align:center;color:#8a96a6;padding:22px">조건에 맞는 상담유형이 없습니다.</td></tr>';
 }
 function renderConsultType(){
   const sel=$("consultMonthSelectLive"), channelSel=$("consultChannelSelect"), yearSel=$("consultYearSelect"), modeSel=$("consultModeSelect");
@@ -5941,7 +6484,9 @@ function renderConsultType(){
   if(nextBtn){ nextBtn.disabled=isAll || available.indexOf(Number(sel.value))===-1 || available.indexOf(Number(sel.value))>=available.length-1; nextBtn.onclick=()=>{const idx=available.indexOf(Number(sel.value)); if(idx>=0 && idx<available.length-1){ sel.value=String(available[idx+1]); renderConsultType(); }}; }
 
   // Top 10 categories section
-  $('consultTop10CategoryBody').innerHTML=consultBuildTop10CategoryTable(top10Categories,total,isAll?new Map():compareCatMap);
+  const monthlyGradeMap=consultGradeCategoryMap(base,m,available);
+  $('consultTop10CategoryBody').innerHTML=consultBuildTop10CategoryTable(top10Categories,total,isAll?new Map():compareCatMap,monthlyGradeMap);
+  renderConsultGradeCurrent();
   requestAnimationFrame(()=>consultRenderTop10Chart(top10Categories,isAll?new Map():compareCatMap,isAll?"전체 상담건수":"선택월 상담건수",isAll?"비교 없음":`${compareLabel} 상담건수`));
 
   // Change sections
@@ -5958,7 +6503,7 @@ function renderConsultType(){
     drillSel.onchange=()=>renderConsultType();
   }
   const selectedCat=drillSel?.value || (catNames[0]||'');
-  const drillRows=active.filter(r=>(r.category1||'미분류')===selectedCat);
+  const drillRows=active.filter(r=>(r.category1||'비회원')===selectedCat);
   const midAgg=consultAggregateBy(drillRows,'category2').slice(0,10).map(x=>({name:x.name,value:x.value}));
   const smallAgg=consultAggregateBy(drillRows,'category3').slice(0,10).map(x=>({name:x.name,value:x.value}));
   $('consultMidTopBody').innerHTML=consultMakeSimpleTopTable(midAgg,'name','중분류 데이터가 없습니다.');
@@ -5977,6 +6522,197 @@ function renderConsultType(){
   document.querySelectorAll('#consulttype .consult-toggle-group button').forEach(btn=>{ btn.onclick=()=>{ document.querySelectorAll('#consulttype .consult-toggle-group button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderConsultDetail(); }; });
   const toggleBtn=$('consultDetailToggleBtn'), detailWrap=$('consultDetailWrap'); if(toggleBtn && detailWrap){ toggleBtn.onclick=()=>{ detailWrap.classList.toggle('hidden'); toggleBtn.textContent=detailWrap.classList.contains('hidden')?'상세 데이터 펼쳐보기 ▼':'상세 데이터 접기 ▲'; }; }
 }
+
+let gradePageChart=null;
+let gradeTrendSelected='all';
+function gradePageRows(){
+  const y=Number($('gradePageYear')?.value)||2026;
+  return (consultTypeData||[]).filter(r=>Number(r.year)===y && consultGradeEligibleRow(r));
+}
+function gradePageSelection(){ return $('gradePageMonth')?.value||'all'; }
+function gradePageAvailableYears(){
+  return [...new Set((consultTypeData||[]).filter(consultGradeEligibleRow).map(r=>Number(r.year)).filter(y=>y>=2026))].sort((a,b)=>b-a);
+}
+function gradePageUpdateFilters(rows){
+  const cat=$('gradePageCatFilter'), mid=$('gradePageMidFilter'), small=$('gradePageSmallFilter'); if(!cat||!mid||!small) return;
+  const oldC=cat.value, oldM=mid.value, oldS=small.value;
+  const cats=[...new Set(rows.map(r=>r.category1).filter(Boolean))].sort();
+  cat.innerHTML='<option value="">대분류 전체</option>'+cats.map(x=>`<option value="${consultEsc(x)}">${consultEsc(x)}</option>`).join(''); if(cats.includes(oldC)) cat.value=oldC;
+  const mids=[...new Set(rows.filter(r=>!cat.value||r.category1===cat.value).map(r=>r.category2).filter(Boolean))].sort();
+  mid.innerHTML='<option value="">중분류 전체</option>'+mids.map(x=>`<option value="${consultEsc(x)}">${consultEsc(x)}</option>`).join(''); if(mids.includes(oldM)) mid.value=oldM;
+  const smalls=[...new Set(rows.filter(r=>(!cat.value||r.category1===cat.value)&&(!mid.value||r.category2===mid.value)).map(r=>r.category3).filter(Boolean))].sort();
+  small.innerHTML='<option value="">소분류 전체</option>'+smalls.map(x=>`<option value="${consultEsc(x)}">${consultEsc(x)}</option>`).join(''); if(smalls.includes(oldS)) small.value=oldS;
+}
+function renderGradePageDetail(rows,selection,months){
+  const cat=$('gradePageCatFilter')?.value||'',mid=$('gradePageMidFilter')?.value||'',small=$('gradePageSmallFilter')?.value||'',q=($('gradePageSearch')?.value||'').trim().toLowerCase();
+  const agg=consultAggregateForSelection(rows,selection,months).map(r=>consultAttachGradeSelection(r,selection,months)).filter(r=>(Number(r._v)||0)>0);
+  const list=agg.filter(r=>(!cat||r.category1===cat)&&(!mid||r.category2===mid)&&(!small||r.category3===small)&&(!q||String(r.inquiry||'').toLowerCase().includes(q))).sort((a,b)=>(Number(b._v)||0)-(Number(a._v)||0));
+  const body=$('gradePageDetailBody'); if(!body) return;
+  body.innerHTML=list.length?list.slice(0,200).map(r=>`<tr><td>${consultEsc(r.category1||'-')}</td><td>${consultEsc(r.category2||'-')}</td><td>${consultEsc(r.category3||'-')}</td><td>${consultEsc(r.inquiry||'-')}</td><td class="num"><b>${fmt(Number(r._v)||0)}</b></td>${CONSULT_GRADE_META.map(g=>`<td class="num">${r[g.key]===null||r[g.key]===undefined?'-':fmt(Number(r[g.key])||0)}</td>`).join('')}</tr>`).join(''):'<tr><td colspan="11" style="text-align:center;color:#8a96a6;padding:22px">조건에 맞는 데이터가 없습니다.</td></tr>';
+}
+function renderGradePageChart(rows,months){
+  const canvas=$('gradePageMonthlyChart'); if(!canvas||typeof Chart==='undefined') return;
+  if(gradePageChart){gradePageChart.destroy();gradePageChart=null;}
+  const year=Number($('gradePageYear')?.value)||2026;
+  const labels=months.map(m=>m+'월');
+  const monthStats=months.map(m=>consultGradeStats(rows,String(m),months));
+  const selection=gradePageSelection();
+  const baseMonth=selection==='all'?(months.at(-1)||null):Number(selection);
+  const baseIndex=baseMonth?months.indexOf(baseMonth):-1;
+  const cur=baseMonth?consultGradeStats(rows,String(baseMonth),months):null;
+  const prevMonth=baseMonth>1?baseMonth-1:null;
+  const prev=prevMonth?consultGradeStats(rows,String(prevMonth),months):null;
+  const prevYearRows=(consultTypeData||[]).filter(r=>Number(r.year)===year-1 && consultGradeEligibleRow(r));
+  const yoy=baseMonth&&prevYearRows.length?consultGradeStats(prevYearRows,String(baseMonth),[]):null;
+  const share=(st,key)=>st?.total?((Number(st.totals[key])||0)/st.total*100):null;
+  const delta=(a,b)=>a===null||b===null?null:a-b;
+  const fmtDelta=v=>v===null?'-':`${v>0?'▲ ':v<0?'▼ ':''}${Math.abs(v).toFixed(1)}%p`;
+
+  const tabs=[...document.querySelectorAll('#gradeTrendTabs .grade-trend-tab')];
+  if(!tabs.some(b=>b.dataset.grade===gradeTrendSelected)) gradeTrendSelected='all';
+  tabs.forEach(b=>{b.classList.toggle('active',b.dataset.grade===gradeTrendSelected);b.onclick=()=>{gradeTrendSelected=b.dataset.grade;renderGradePageChart(rows,months);};});
+
+  if(gradeTrendSelected==='all'){
+    const datasets=CONSULT_GRADE_META.map(g=>({label:g.label,data:monthStats.map(st=>st.total?Number(((st.totals[g.key]||0)/st.total*100).toFixed(2)):0),backgroundColor:g.color,borderColor:g.color,borderWidth:0,stack:'grades'}));
+    gradePageChart=new Chart(canvas,{type:'bar',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:11,boxHeight:11}},tooltip:{mode:'index',intersect:false,callbacks:{label:(ctx)=>{const st=monthStats[ctx.dataIndex],g=CONSULT_GRADE_META[ctx.datasetIndex],cnt=Number(st?.totals?.[g.key])||0;return `${g.label} ${ctx.parsed.y.toFixed(1)}% · ${fmt(cnt)}건`;}}}},scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,max:100,ticks:{callback:v=>v+'%'},grid:{color:'#edf1f6'}}}}});
+    if($('gradeTrendModeLabel')) $('gradeTrendModeLabel').textContent='전체 학년 구성비 · 100% 기준';
+  }else{
+    const g=CONSULT_GRADE_META.find(x=>x.key===gradeTrendSelected)||CONSULT_GRADE_META[0];
+    const data=monthStats.map(st=>st.total?Number(((st.totals[g.key]||0)/st.total*100).toFixed(2)):null);
+    gradePageChart=new Chart(canvas,{type:'line',data:{labels,datasets:[{label:g.label,data,borderColor:g.color,backgroundColor:g.color,borderWidth:2.5,pointRadius:3,pointHoverRadius:5,tension:.28,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>{const st=monthStats[ctx.dataIndex],cnt=Number(st?.totals?.[g.key])||0;return `${g.label} ${Number(ctx.parsed.y||0).toFixed(1)}% · ${fmt(cnt)}건`;}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,ticks:{callback:v=>v+'%'},grid:{color:'#edf1f6'}}}}});
+    if($('gradeTrendModeLabel')) $('gradeTrendModeLabel').textContent=`${g.label} 월별 비중 변화`;
+  }
+
+  const monthShareBody=$('gradeMonthShareBody');
+  if(monthShareBody){
+    monthShareBody.innerHTML=months.map((m,i)=>{const st=monthStats[i];const cells=CONSULT_GRADE_META.map(g=>{const pct=st?.total?((Number(st.totals[g.key])||0)/st.total*100):0;return `<td>${pct.toFixed(1)}%</td>`;}).join('');return `<tr${m===baseMonth?' style="background:#f7fbff"':''}><td>${m}월</td>${cells}<td>${st?.total?'100.0%':'-'}</td></tr>`;}).join('');
+  }
+
+  const yoyCard=$('gradeTrendYoyCard'), kpis=$('gradeTrendKpis');
+  const hasYoy=!!(yoy&&yoy.total);
+  yoyCard?.classList.toggle('show',hasYoy); kpis?.classList.toggle('yoy-on',hasYoy);
+  const selectedMeta=gradeTrendSelected==='all'?null:CONSULT_GRADE_META.find(g=>g.key===gradeTrendSelected);
+  const cp=selectedMeta?share(cur,selectedMeta.key):null, pp=selectedMeta?share(prev,selectedMeta.key):null, yp=selectedMeta?share(yoy,selectedMeta.key):null;
+  if($('gradeTrendPrimaryLabel')) $('gradeTrendPrimaryLabel').textContent=selectedMeta?`${baseMonth||'-'}월 ${selectedMeta.label} 비중`:'기준월';
+  if($('gradeTrendPrimary')) $('gradeTrendPrimary').textContent=selectedMeta?(cp===null?'-':cp.toFixed(1)+'%'):(baseMonth?`${year}년 ${baseMonth}월`:'-');
+  if($('gradeTrendPrimarySub')) $('gradeTrendPrimarySub').textContent=selectedMeta?'전체 학년정보 상담 중 비중':'선택월 또는 최신월';
+  if($('gradeTrendTotal')) $('gradeTrendTotal').textContent=selectedMeta?(cur?.total?fmt(Number(cur.totals[selectedMeta.key])||0)+'건':'-'):(cur?.total?fmt(cur.total)+'건':'-');
+  if($('gradeTrendTotalSub')) $('gradeTrendTotalSub').textContent=selectedMeta?`${selectedMeta.label} 상담건수`:'기준월 학년정보 합계';
+
+  const momRank=CONSULT_GRADE_META.map(g=>({g,d:delta(share(cur,g.key),share(prev,g.key))})).filter(x=>x.d!==null).sort((a,b)=>b.d-a.d);
+  const yoyRank=CONSULT_GRADE_META.map(g=>({g,d:delta(share(cur,g.key),share(yoy,g.key))})).filter(x=>x.d!==null).sort((a,b)=>b.d-a.d);
+  if(selectedMeta){
+    if($('gradeTrendMomTop')) $('gradeTrendMomTop').textContent=fmtDelta(delta(cp,pp));
+    if($('gradeTrendMomSub')) $('gradeTrendMomSub').textContent=prevMonth?`${prevMonth}월 ${selectedMeta.label} 비중 대비`:'전월 비교 없음';
+    if($('gradeTrendYoyTop')) $('gradeTrendYoyTop').textContent=fmtDelta(delta(cp,yp));
+    if($('gradeTrendYoySub')) $('gradeTrendYoySub').textContent=hasYoy?`${year-1}년 ${baseMonth}월 대비`:'전년 비교 없음';
+  }else{
+    const mt=momRank[0],yt=yoyRank[0];
+    if($('gradeTrendMomTop')) $('gradeTrendMomTop').textContent=mt?`${mt.g.label} ${fmtDelta(mt.d)}`:'-';
+    if($('gradeTrendMomSub')) $('gradeTrendMomSub').textContent=prevMonth?`${prevMonth}월 대비 최대 상승`:'전월 비교 없음';
+    if($('gradeTrendYoyTop')) $('gradeTrendYoyTop').textContent=yt?`${yt.g.label} ${fmtDelta(yt.d)}`:'-';
+    if($('gradeTrendYoySub')) $('gradeTrendYoySub').textContent=hasYoy?`${year-1}년 ${baseMonth}월 대비 최대 상승`:'전년 비교 없음';
+  }
+
+  const note=$('gradeTrendChangeNote');
+  if(note){
+    if(!cur?.total||!prev?.total){note.innerHTML='전월 데이터가 등록되면 학년별 주요 변화가 자동으로 표시됩니다.';}
+    else{
+      const changes=momRank.slice().sort((a,b)=>Math.abs(b.d)-Math.abs(a.d)).slice(0,3);
+      note.innerHTML=`<b>${prevMonth}월 → ${baseMonth}월 주요 변화</b> · `+changes.map(x=>`${x.g.label} ${x.d>0?'▲':x.d<0?'▼':'-'} ${Math.abs(x.d).toFixed(1)}%p`).join(' · ');
+    }
+  }
+
+  const tbody=$('gradeTrendBody'); if(tbody) tbody.innerHTML='';
+}
+function renderGradePageVerticalChart(stats){
+  const el=$('gradePageVerticalChart'); if(!el) return;
+  if(!stats?.has||!stats.total){ el.innerHTML='<div class="consult-empty-title" style="grid-column:1/-1;align-self:center">학년정보 등록 후 표시됩니다.</div>'; return; }
+  const max=Math.max(...CONSULT_GRADE_META.map(g=>Number(stats.totals[g.key])||0),1);
+  el.innerHTML=CONSULT_GRADE_META.map(g=>{
+    const v=Number(stats.totals[g.key])||0, p=stats.total?v/stats.total*100:0, h=max?v/max*100:0;
+    return `<div class="grade-vbar-col"><div class="grade-vbar-value">${fmt(v)}건 <span class="grade-vbar-pct">${p.toFixed(1)}%</span></div><div class="grade-vbar-area"><div class="grade-vbar" style="height:${Math.max(h,1.5).toFixed(1)}%;background:${g.color}" title="${g.label} ${fmt(v)}건 (${p.toFixed(1)}%)"></div></div><div class="grade-vbar-label">${g.label}</div></div>`;
+  }).join('');
+}
+let gradePageTopGradeKey='';
+function gradePageInquiryTop10(rows,selection,months,gradeKey){
+  const meta=CONSULT_GRADE_META.find(g=>g.key===gradeKey)||CONSULT_GRADE_META[0];
+  const map=new Map();
+  consultGradeEligibleRows(rows).forEach(r=>{
+    const v=Number(consultGradeValueForSelection(r,meta.key,selection,months))||0;
+    if(v<=0) return;
+    const name=(r.inquiry||r.category3||r.category2||r.category1||'비회원').trim()||'비회원';
+    map.set(name,(map.get(name)||0)+v);
+  });
+  return [...map.entries()].map(([name,value])=>({name,value})).sort((a,b)=>b.value-a.value).slice(0,10);
+}
+function renderGradePageInquiryTop10(rows,selection,months,stats){
+  const sel=$('gradePageTopGradeSelect'), box=$('gradePageGradeTopTypes'); if(!sel||!box) return;
+  const ranked=CONSULT_GRADE_META.map(g=>({g,v:Number(stats?.totals?.[g.key])||0})).sort((a,b)=>b.v-a.v);
+  const valid=CONSULT_GRADE_META.filter(g=>(Number(stats?.totals?.[g.key])||0)>0);
+  if(!valid.length){ sel.innerHTML=''; box.innerHTML='<div class="consult-empty-title">학년정보 등록 후 표시됩니다.</div>'; return; }
+  if(!valid.some(g=>g.key===gradePageTopGradeKey)) gradePageTopGradeKey=ranked.find(x=>x.v>0)?.g.key||valid[0].key;
+  sel.innerHTML=valid.map(g=>`<option value="${g.key}">${g.label}</option>`).join(''); sel.value=gradePageTopGradeKey;
+  const g=CONSULT_GRADE_META.find(x=>x.key===gradePageTopGradeKey)||valid[0], total=Number(stats.totals[g.key])||0;
+  const top=gradePageInquiryTop10(rows,selection,months,g.key), max=top[0]?.value||1;
+  box.innerHTML=top.length?top.map((x,i)=>{const p=total?x.value/total*100:0,w=max?x.value/max*100:0;return `<div class="grade-inquiry-top10-row"><div class="grade-inquiry-rank">${i+1}</div><div class="grade-inquiry-name" title="${consultEsc(x.name)}">${consultEsc(x.name)}</div><div class="grade-inquiry-count">${fmt(x.value)}건</div><div class="grade-inquiry-share">${p.toFixed(1)}%</div><div class="grade-inquiry-track"><div class="grade-inquiry-fill" style="width:${w.toFixed(1)}%;background:${g.color}"></div></div></div>`;}).join(''):'<div class="consult-empty-title">해당 학년의 문의유형 데이터가 없습니다.</div>';
+  sel.onchange=()=>{gradePageTopGradeKey=sel.value;renderGradePageInquiryTop10(rows,selection,months,stats);};
+}
+function renderConsultGradePage(){
+  const yearSel=$('gradePageYear'), monthSel=$('gradePageMonth'); if(!yearSel||!monthSel) return;
+  const years=gradePageAvailableYears();
+  if(!years.length){$('gradePageNoData')?.classList.remove('hidden'); if($('gradePageTotal')) $('gradePageTotal').textContent='-'; return;}
+  $('gradePageNoData')?.classList.add('hidden');
+  const oldY=Number(yearSel.value); yearSel.innerHTML=years.map(y=>`<option value="${y}">${y}년</option>`).join(''); yearSel.value=String(years.includes(oldY)?oldY:years[0]);
+  const y=Number(yearSel.value), rows=gradePageRows(), months=consultAvailableMonths('인바운드 상담',y);
+  const oldM=monthSel.value; monthSel.innerHTML='<option value="all">전체</option>'+months.map(m=>`<option value="${m}">${m}월</option>`).join(''); monthSel.value=(oldM==='all'||months.includes(Number(oldM)))?oldM:(months.length?String(months.at(-1)):'all');
+  const selection=gradePageSelection();
+  const stats=consultGradeStats(rows,selection,months);
+  if($('gradePageGradeBasis')) $('gradePageGradeBasis').textContent=`${y}년 · CALL${selection==='all'?' 전체':` · ${selection}월`}`;
+  renderGradePageVerticalChart(stats);
+  renderGradePageInquiryTop10(rows,selection,months,stats);
+  if($('gradePageHelp')) $('gradePageHelp').textContent=`${y}년 CALL 등록 월: ${months.length?months.map(m=>m+'월').join(' · '):'없음'}`;
+  if($('gradePageTotal')) $('gradePageTotal').textContent=stats.has?fmt(stats.total)+' 건':'-';
+  const rankedGrades=CONSULT_GRADE_META.map(g=>({g,v:stats.totals[g.key]||0})).sort((a,b)=>b.v-a.v), topG=rankedGrades[0];
+  if($('gradePageTopGrade')) $('gradePageTopGrade').textContent=stats.total?topG.g.label:'-';
+  if($('gradePageTopGradeSub')) $('gradePageTopGradeSub').textContent=stats.total?`${fmt(topG.v)}건 · ${(topG.v/stats.total*100).toFixed(1)}%`:'-';
+  const unknown=stats.totals.gradeUnclassified||0, ur=stats.total?unknown/stats.total*100:0;
+  if($('gradePageUnknownRate')) $('gradePageUnknownRate').textContent=stats.total?ur.toFixed(1)+'%':'-';
+  if($('gradePageUnknownSub')) $('gradePageUnknownSub').textContent=stats.total?`비회원 ${fmt(unknown)}건`:'학년정보 없음';
+
+  const active=consultAggregateForSelection(rows,selection,months).filter(r=>(Number(r._v)||0)>0);
+  const total=active.reduce((a,r)=>a+(Number(r._v)||0),0), cats=consultAggregateBy(active,'category1'), topCat=cats[0];
+  if($('gradePageTopCategory')) $('gradePageTopCategory').textContent=topCat?.name||'-'; if($('gradePageTopCategorySub')) $('gradePageTopCategorySub').textContent=topCat?`${fmt(topCat.value)}건 · ${total?(topCat.value/total*100).toFixed(1):'0.0'}%`:'-';
+  const topInquiry=active.slice().sort((a,b)=>(Number(b._v)||0)-(Number(a._v)||0))[0];
+  if($('gradePageTopInquiry')) $('gradePageTopInquiry').textContent=topInquiry?.inquiry||'-'; if($('gradePageTopInquirySub')) $('gradePageTopInquirySub').textContent=topInquiry?`${fmt(Number(topInquiry._v)||0)}건`:'-';
+
+  const top10=cats.slice(0,10), body=$('gradePageTop10Body');
+  if(body) body.innerHTML=top10.length?top10.map((x,i)=>{
+    // TOP10의 상담유형(대분류)과 동일한 원본 CALL 행에서 학년값을 직접 합산합니다.
+    const categoryRows=consultGradeEligibleRows(rows).filter(r=>((r.category1||'비회원').trim()||'비회원')===x.name);
+    const gv={};
+    CONSULT_GRADE_META.forEach(g=>{
+      let sum=0, has=false;
+      categoryRows.forEach(r=>{ const v=consultGradeValueForSelection(r,g.key,selection,months); if(v!==null&&v!==undefined&&v!==''){sum+=Number(v)||0;has=true;} });
+      gv[g.key]=has?sum:null;
+    });
+    const gradeTotal=CONSULT_GRADE_META.reduce((s,g)=>s+(Number(gv[g.key])||0),0);
+    const gradeCell=(g)=>{
+      const raw=gv[g.key];
+      if(raw===null||raw===undefined) return `<td class="num grade-num-cell"><span class="grade-num-pct">-</span></td>`;
+      const v=Number(raw)||0, pct=gradeTotal?(v/gradeTotal*100):0;
+      return `<td class="num grade-num-cell"><span class="grade-num-main">${fmt(v)}</span><span class="grade-num-pct">${pct.toFixed(1)}%</span></td>`;
+    };
+    return `<tr><td>${i+1}</td><td><b>${consultEsc(x.name)}</b></td><td class="num"><b>${fmt(x.value)}</b></td><td class="num">${total?(x.value/total*100).toFixed(1):'0.0'}%</td>${CONSULT_GRADE_META.map(gradeCell).join('')}</tr>`;
+  }).join(''):'<tr><td colspan="10" style="text-align:center;color:#8a96a6;padding:22px">학년정보 데이터가 없습니다.</td></tr>';
+
+  gradePageUpdateFilters(rows); renderGradePageDetail(rows,selection,months); renderGradePageChart(rows,months);
+  yearSel.onchange=()=>{monthSel.value='';renderConsultGradePage();}; monthSel.onchange=renderConsultGradePage;
+  $('gradePageCatFilter').onchange=()=>{gradePageUpdateFilters(rows);renderGradePageDetail(rows,selection,months);};
+  $('gradePageMidFilter').onchange=()=>{gradePageUpdateFilters(rows);renderGradePageDetail(rows,selection,months);};
+  $('gradePageSmallFilter').onchange=()=>renderGradePageDetail(rows,selection,months); $('gradePageSearch').oninput=()=>renderGradePageDetail(rows,selection,months);
+}
+
 function refreshConsultMidFilter(){
   const cat=$('consultCatFilter')?.value||'', mid=$('consultMidFilter'); if(!mid) return;
   const old=mid.value, base=consultCurrentFilterBase();
@@ -6004,12 +6740,12 @@ function renderConsultDetail(){
   }
   const prepared=base
     .filter(r=>!detailChannel||r.channel===detailChannel)
-    .map(r=>{const v=consultSelectionValue(r,m,available); let pv=null; if(!isAll&&prev>=1){ const t=consultMonthValue(r,prev); pv=t===null?0:t; } const yv=!isAll?(yoyByChannelKey.get(`${r.channel||''}|${consultRowKey(r)}`)??0):null; return {...r,_cur:v,_prev:pv,_yoy:yv};})
+    .map(r=>{const v=consultSelectionValue(r,m,available); let pv=null; if(!isAll&&prev>=1){ const t=consultMonthValue(r,prev); pv=t===null?0:t; } const yv=!isAll?(yoyByChannelKey.get(`${r.channel||''}|${consultRowKey(r)}`)??0):null; return consultAttachGradeSelection({...r,_cur:v,_prev:pv,_yoy:yv},m,available);})
     .filter(r=>r._cur!==null);
   const grouped=consultGroupDetailRows(prepared);
   const rows=grouped.filter(r=>(!cat||r.category1===cat)&&(!mid||r.category2===mid)&&(!small||r.category3===small)&&(!q||`${r.channel||''} ${r.inquiry||''} ${r.category1||''} ${r.category2||''} ${r.category3||''}`.toLowerCase().includes(q)));
   const filtered=rows.filter(r=>{ if(mode==='increase') return r._prev!==null && r._cur>r._prev; if(mode==='decrease') return r._prev!==null && r._cur<r._prev; if(mode==='new') return r._prev!==null && (Number(r._prev)||0)===0 && (Number(r._cur)||0)>0; return true; }).sort((a,b)=>(Number(b._cur)||0)-(Number(a._cur)||0));
-  $('consultDetailBody').innerHTML=filtered.map(r=>`<tr><td><span class="consult-badge">${consultEsc(r.channel||'-')}</span></td><td>${consultEsc(r.category1||'-')}</td><td>${consultEsc(r.category2||'-')}</td><td>${consultEsc(r.category3||'-')}</td><td>${consultEsc(r.inquiry||'-')}</td><td class="num">${r._cur===null?'-':fmt(r._cur)}</td><td class="num">${r._prev===null?'-':fmt(r._prev)}</td><td class="num">${r._cur===null||r._prev===null?'-':`<span class="${consultRateClass(r._cur,r._prev)}">${consultRateText(r._cur,r._prev)}</span>`}</td><td class="num consult-monthly-yoy-col${isAll?' hidden':''}">${r._yoy===null?'-':fmt(r._yoy)}</td><td class="num consult-monthly-yoy-col${isAll?' hidden':''}">${r._cur===null||r._yoy===null?'-':`<span class="${consultRateClass(r._cur,r._yoy)}">${consultRateText(r._cur,r._yoy)}</span>`}</td></tr>`).join('') || '<tr><td colspan="10" style="text-align:center;color:#8a96a6;padding:22px">조건에 맞는 상담유형이 없습니다.</td></tr>';
+  $('consultDetailBody').innerHTML=filtered.map(r=>`<tr><td><span class="consult-badge">${consultEsc(r.channel||'-')}</span></td><td>${consultEsc(r.category1||'-')}</td><td>${consultEsc(r.category2||'-')}</td><td>${consultEsc(r.category3||'-')}</td><td>${consultEsc(r.inquiry||'-')}</td><td class="num">${r.grade1===null||r.grade1===undefined?'-':fmt(r.grade1)}</td><td class="num">${r.grade2===null||r.grade2===undefined?'-':fmt(r.grade2)}</td><td class="num">${r.grade3===null||r.grade3===undefined?'-':fmt(r.grade3)}</td><td class="num">${r.nStudent===null||r.nStudent===undefined?'-':fmt(r.nStudent)}</td><td class="num">${r.gradeOther===null||r.gradeOther===undefined?'-':fmt(r.gradeOther)}</td><td class="num">${r.gradeUnclassified===null||r.gradeUnclassified===undefined?'-':fmt(r.gradeUnclassified)}</td><td class="num">${r._cur===null?'-':fmt(r._cur)}</td><td class="num">${r._prev===null?'-':fmt(r._prev)}</td><td class="num">${r._cur===null||r._prev===null?'-':`<span class="${consultRateClass(r._cur,r._prev)}">${consultRateText(r._cur,r._prev)}</span>`}</td><td class="num consult-monthly-yoy-col${isAll?' hidden':''}">${r._yoy===null?'-':fmt(r._yoy)}</td><td class="num consult-monthly-yoy-col${isAll?' hidden':''}">${r._cur===null||r._yoy===null?'-':`<span class="${consultRateClass(r._cur,r._yoy)}">${consultRateText(r._cur,r._yoy)}</span>`}</td></tr>`).join('') || '<tr><td colspan="16" style="text-align:center;color:#8a96a6;padding:22px">조건에 맞는 상담유형이 없습니다.</td></tr>';
 }
 function consultRenderMonthlyChart(channel,available){
   const canvas=$('consultMonthlyChart'); if(!canvas) return; consultDestroyChart('consultMonthly'); consultDestroyChart('consultTop10Compare');
@@ -6042,7 +6778,7 @@ function consultRenderMonthlyChart(channel,available){
   };
 
   const selectedSeries=selectedCats.map((cat,idx)=>{
-    const catRows=baseAll.filter(r=>(r.category1||'미분류')===cat);
+    const catRows=baseAll.filter(r=>(r.category1||'비회원')===cat);
     return {
       label:getDisplayLabel(cat,catRows),
       data:months.map(m=>catRows.reduce((s,r)=>s+(consultMonthValue(r,m)??0),0)),
@@ -6136,10 +6872,11 @@ function consultRenderMonthlyChart(channel,available){
   });
 }
 function consultRenderEmpty(){
+  renderGradeModule([],'consult','학년정보 없음');
   $('consultNoData')?.classList.remove('hidden');
   ['consultTotal','consultPrevChange','consultYoYChange','consultTopCategoryKpi','consultTopIncreaseKpi'].forEach(id=>{if($(id)) $(id).textContent='-';});
   if($('consultTop10CategoryBody')) $('consultTop10CategoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;color:#8a96a6;padding:22px">관리자에서 상담유형 Excel을 등록해 주세요.</td></tr>';
-  if($('consultDetailBody')) $('consultDetailBody').innerHTML='<tr><td colspan="10" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr>';
+  if($('consultDetailBody')) $('consultDetailBody').innerHTML='<tr><td colspan="16" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr>';
   if($('consultMidTopBody')) $('consultMidTopBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr>';
   if($('consultSmallTopBody')) $('consultSmallTopBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:#8a96a6;padding:22px">데이터 등록 후 표시됩니다.</td></tr>';
   consultDestroyChart('consultMonthly');
@@ -6191,39 +6928,59 @@ function newsStartSample(){
 }
 
 function consultTypeSample(){
-  const h=["대분류","중분류","소분류","코드▼","문의 유형","1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
-  const call2026=[
-    ["회원 정보","학생/일반회원","ID/PW","P1101","ID/PW 문의",1759,1538,1497,1402,1360,1290,1497,"","","","",""],
-    ["강좌/교재 신청, 배송","강좌신청","강좌신청 문의","R1105","수강권 관련 문의",6733,7272,7400,8120,9050,10210,13177,"","","","",""],
-    ["강좌/교재 신청, 배송","반송","교환/반품","R5102","반품 접수 담당자 처리",5328,3805,4200,4550,5100,6200,3203,"","","","",""],
-    ["결제, 취소, 환불","취소/환불","부분환불","S2203","학습량 기준 부분 현금 환불",1165,1425,1510,1670,1810,2050,1480,"","","","",""]
+  const months=Array.from({length:12},(_,i)=>`${i+1}월`);
+  const subs=["문의량 ▼","고1 ▼","고2 ▼","고3 ▼","N수 ▼","기타 ▼","비회원 ▼"];
+  const makeHeader=()=>{
+    const h1=["대분류","중분류","소분류","코드▼","문의 유형"],h2=["","","","",""];
+    months.forEach(m=>{ h1.push(m,...Array(subs.length-1).fill("")); h2.push(...subs); });
+    return [h1,h2];
+  };
+  const makeRow=(base,monthly,withGrade)=>{
+    const row=[...base];
+    for(let m=1;m<=12;m++){
+      const q=monthly[m-1];
+      if(q===""||q===null||q===undefined){ row.push("","","","","","",""); continue; }
+      if(withGrade){
+        const g1=Math.round(q*.22),g2=Math.round(q*.24),g3=Math.round(q*.25),ns=Math.round(q*.18),other=Math.round(q*.04),unknown=q-g1-g2-g3-ns-other;
+        row.push(q,g1,g2,g3,ns,other,unknown);
+      }else row.push(q,"","","","","","");
+    }
+    return row;
+  };
+  const callBase=[
+    [["회원 정보","학생/일반회원","ID/PW","P1101","ID/PW 문의"],[1759,1538,1497,1402,1360,1290,1497,"","","","",""]],
+    [["강좌/교재 신청, 배송","강좌신청","강좌신청 문의","R1105","수강권 관련 문의"],[6733,7272,7400,8120,9050,10210,13177,"","","","",""]],
+    [["강좌/교재 신청, 배송","반송","교환/반품","R5102","반품 접수 담당자 처리"],[5328,3805,4200,4550,5100,6200,3203,"","","","",""]],
+    [["결제, 취소, 환불","취소/환불","부분환불","S2203","학습량 기준 부분 현금 환불"],[1165,1425,1510,1670,1810,2050,1480,"","","","",""]]
   ];
-  const erms2026=[
-    ["회원 정보","학생/일반회원","ID/PW","P1101","ID/PW 문의",145,120,180,190,210,230,261,"","","","",""],
-    ["강좌/교재 신청, 배송","강좌신청","강좌신청 문의","R1105","수강권 관련 문의",1833,1420,1510,1660,1750,1980,2223,"","","","",""],
-    ["결제, 취소, 환불","취소/환불","부분환불","S2203","학습량 기준 부분 현금 환불",2110,2020,2160,2250,2430,2710,3013,"","","","",""]
+  const ermsBase=[
+    [["회원 정보","학생/일반회원","ID/PW","P1101","ID/PW 문의"],[145,120,180,190,210,230,261,"","","","",""]],
+    [["강좌/교재 신청, 배송","강좌신청","강좌신청 문의","R1105","수강권 관련 문의"],[1833,1420,1510,1660,1750,1980,2223,"","","","",""]]
   ];
-  const call2025=call2026.map(r=>[...r.slice(0,5),...r.slice(5).map(v=>typeof v==='number'?Math.round(v*0.72):v)]);
-  const erms2025=erms2026.map(r=>[...r.slice(0,5),...r.slice(5).map(v=>typeof v==='number'?Math.round(v*0.78):v)]);
   const wb=XLSX.utils.book_new();
-  [["2026_CALL",call2026],["2026_ERMS",erms2026],["2025_CALL",call2025],["2025_ERMS",erms2025]].forEach(([name,rows])=>{
-    const ws=XLSX.utils.aoa_to_sheet([h,...rows]);
-    ws["!cols"]=[{wch:24},{wch:24},{wch:20},{wch:12},{wch:34},...Array.from({length:12},()=>({wch:10}))];
+  const addGrouped=(name,defs,withGrade)=>{
+    const [h1,h2]=makeHeader();
+    const rows=defs.map(([base,monthly])=>makeRow(base,monthly,withGrade));
+    const ws=XLSX.utils.aoa_to_sheet([h1,h2,...rows]);
+    ws['!merges']=[];
+    for(let m=0;m<12;m++){ const c=5+m*7; ws['!merges'].push({s:{r:0,c},e:{r:0,c:c+6}}); }
+    for(let c=0;c<5;c++) ws['!merges'].push({s:{r:0,c},e:{r:1,c}});
+    ws['!cols']=[{wch:24},{wch:24},{wch:20},{wch:12},{wch:34},...Array.from({length:84},()=>({wch:10}))];
     XLSX.utils.book_append_sheet(wb,ws,name);
-  });
-  const ph=["분석명","시작일","종료일","대분류","중분류","소분류","코드▼","문의 유형","건수"];
+  };
+  addGrouped('2026_CALL',callBase,true);
+  addGrouped('2026_ERMS',ermsBase,false);
+  addGrouped('2025_CALL',callBase.map(([b,ms])=>[b,ms.map(v=>typeof v==='number'?Math.round(v*.72):v)]),false);
+  addGrouped('2025_ERMS',ermsBase.map(([b,ms])=>[b,ms.map(v=>typeof v==='number'?Math.round(v*.78):v)]),false);
+  const ph=["시작일","종료일","순위","대분류","중분류","소분류","코드▼","문의유형","문의량 ▼","고1 ▼","고2 ▼","고3 ▼","N수 ▼","기타 ▼","비회원 ▼"];
   const periodSheets=[
-    ["올해_CALL",[["7월 집중기간","2026-07-01","2026-07-15","강좌/교재 신청, 배송","강좌신청","강좌신청 문의","R1105","수강권 관련 문의",1524]]],
-    ["올해_ERMS",[["7월 집중기간","2026-07-01","2026-07-15","게시판 전용 문의","교재문의(추가구매)","교재 재구매","Z2203","재수강",63]]],
-    ["전년_CALL",[["7월 집중기간","2025-07-02","2025-07-16","강좌/교재 신청, 배송","강좌신청","강좌신청 문의","R1105","수강권 관련 문의",1183]]],
-    ["전년_ERMS",[["7월 집중기간","2025-07-02","2025-07-16","게시판 전용 문의","교재문의(추가구매)","교재 재구매","Z2203","재수강",48]]]
+    ["올해_CALL",[["2026-07-01","2026-07-15",1,"강좌/교재 신청, 배송","강좌신청","강좌신청 문의","R1105","수강권 관련 문의",1524,180,210,390,650,44,50]]],
+    ["올해_ERMS",[["2026-07-01","2026-07-15",1,"게시판 전용 문의","교재문의(추가구매)","교재 재구매","Z2203","재수강",63,"","","","","",""]]],
+    ["전년_CALL",[["2025-07-02","2025-07-16",1,"강좌/교재 신청, 배송","강좌신청","강좌신청 문의","R1105","수강권 관련 문의",1183,"","","","","",""]]],
+    ["전년_ERMS",[["2025-07-02","2025-07-16",1,"게시판 전용 문의","교재문의(추가구매)","교재 재구매","Z2203","재수강",48,"","","","","",""]]]
   ];
-  periodSheets.forEach(([name,rows])=>{
-    const pws=XLSX.utils.aoa_to_sheet([ph,...rows]);
-    pws["!cols"]=[{wch:18},{wch:13},{wch:13},{wch:24},{wch:24},{wch:20},{wch:12},{wch:34},{wch:10}];
-    XLSX.utils.book_append_sheet(wb,pws,name);
-  });
-  XLSX.writeFile(wb,"상담유형_월간_특정기간_4시트_샘플.xlsx");
+  periodSheets.forEach(([name,rows])=>{ const ws=XLSX.utils.aoa_to_sheet([ph,...rows]); XLSX.utils.book_append_sheet(wb,ws,name); });
+  XLSX.writeFile(wb,"상담유형_월간_2단헤더_특정기간_샘플.xlsx");
 }
 
 const ACCESS_COLLECTION="dashboardAccess";
