@@ -3213,7 +3213,8 @@ import {
   getFirestore, collection, getDocs, doc, getDoc, setDoc, writeBatch, deleteDoc
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 import {
-  getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+  getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged,
+  setPersistence, browserSessionPersistence
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 
@@ -3468,6 +3469,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 const auth = getAuth(app);
+
+// 로그인은 브라우저 세션 동안만 유지합니다.
+// 브라우저를 완전히 종료한 뒤 다시 접속하면 재로그인이 필요합니다.
+await setPersistence(auth, browserSessionPersistence);
 
 // Chart.js 글꼴을 대시보드 본문과 통일
 Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
