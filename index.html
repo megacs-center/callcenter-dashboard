@@ -2383,15 +2383,6 @@ body.auth-pending .app{visibility:hidden}
   </div>
 
 
-
-  <div class="card grade-summary-card overview-grade-card" id="overviewGradeCard">
-    <div class="grade-summary-head"><h3>상담 학년별 구성</h3><span class="grade-summary-note" id="overviewGradeBasis">CALL · 2026년 이후 데이터 기준</span></div>
-    <div class="grade-kpi-grid" id="overviewGradeKpis"></div>
-    <div class="grade-stack" id="overviewGradeStack"></div>
-    <div class="grade-legend" id="overviewGradeLegend"></div>
-    <div class="grade-insight-grid"></div>
-  </div>
-
   <div class="bottom-section-title">일자별 추이</div>
   <div class="bottom">
     <div class="card mini">
@@ -5132,7 +5123,6 @@ async function applyFilter(){
 
 
   renderMainInquiryAnswerChart(rows,yoyRows);
-  renderOverviewGradeSummary(s,e);
 
   // 우측 채널 =  / 선택기간 총문의량 대비 %
 
