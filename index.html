@@ -2181,6 +2181,13 @@ body.auth-pending .app{visibility:hidden}
 .grade-note-uniform b,.grade-note-uniform strong{font-size:inherit !important;}
 #consultgrade .consult-note-small{font-size:11px;color:#7a889b;margin-top:10px;line-height:inherit;}
 #consultgrade .consult-note-small .grade-note-uniform,#consultgrade .consult-note-small .grade-note-uniform b,#consultgrade .consult-note-small .grade-note-uniform strong{font-size:11px !important;}
+
+/* v77 상품별 일별 환불 추이 선택 필터 */
+.refund-product-trend-card .refund-trend-head{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.refund-trend-filter{display:flex;align-items:center;gap:7px;flex:0 0 auto;}
+.refund-trend-filter label{font-size:11px;font-weight:700;color:#64748b;}
+.refund-trend-filter select{height:30px;min-width:110px;padding:0 28px 0 10px;border:1px solid #d7e0ea;border-radius:7px;background:#fff;color:#0f2747;font-size:11px;font-weight:700;outline:none;}
+.refund-trend-filter select:focus{border-color:#5b8def;box-shadow:0 0 0 2px rgba(37,99,235,.08);}
 </style>
 
 <style>
@@ -2946,7 +2953,20 @@ body.auth-pending .app{visibility:hidden}
     <div class="refund-trend-wrap"><canvas id="refundDailyTrendChart"></canvas></div>
   </div>
   <div class="refund-card refund-trend-card refund-product-trend-card">
-    <div class="refund-trend-head"><div><div class="refund-trend-title">상품별 일별 환불 추이</div><div class="refund-trend-sub">강좌 · 교재 · 수강권 · 캐쉬 · 스마트기기</div></div></div>
+    <div class="refund-trend-head">
+      <div><div class="refund-trend-title">상품별 일별 환불 추이</div><div class="refund-trend-sub" id="refundProductTrendSub">전체 상품 비교</div></div>
+      <div class="refund-trend-filter">
+        <label for="refundProductTrendSelect">상품</label>
+        <select id="refundProductTrendSelect">
+          <option value="전체">전체</option>
+          <option value="강좌">강좌</option>
+          <option value="교재">교재</option>
+          <option value="수강권">수강권</option>
+          <option value="캐쉬">캐쉬</option>
+          <option value="스마트기기">스마트기기</option>
+        </select>
+      </div>
+    </div>
     <div class="refund-trend-wrap"><canvas id="refundProductDailyTrendChart"></canvas></div>
   </div>
   <div class="refund-three-fixed-grid">
@@ -4262,11 +4282,16 @@ function renderRefundDashboard(s,e){
   });
   const productDailyRows=[...productDailyMap.values()].sort((a,b)=>a.date.localeCompare(b.date));
   const productTrendLabels=productDailyRows.map(x=>formatDateLabel(x.date));
+  const productTrendSelect=$("refundProductTrendSelect");
+  const selectedProduct=(productTrendSelect&&productTrendSelect.value)||"전체";
+  const visibleProducts=selectedProduct==="전체"?productTrendOrder:productTrendOrder.filter(x=>x===selectedProduct);
+  const productTrendSub=$("refundProductTrendSub");
+  if(productTrendSub) productTrendSub.textContent=selectedProduct==="전체"?"전체 상품 비교":`${selectedProduct} 일별 환불건수`;
   if(charts.refundProductDailyTrendChart) charts.refundProductDailyTrendChart.destroy();
   if($("refundProductDailyTrendChart")){
     charts.refundProductDailyTrendChart=new Chart($("refundProductDailyTrendChart"),{
       type:"line",
-      data:{labels:productTrendLabels,datasets:productTrendOrder.map(item=>({label:item,data:productDailyRows.map(x=>Number(x[item])||0),borderColor:productTrendColors[item],backgroundColor:productTrendColors[item],borderWidth:2.2,tension:.38,fill:false,pointRadius:productDailyRows.length<=30?2.4:0,pointHoverRadius:5,pointHitRadius:12}))},
+      data:{labels:productTrendLabels,datasets:visibleProducts.map(item=>({label:item,data:productDailyRows.map(x=>Number(x[item])||0),borderColor:productTrendColors[item],backgroundColor:productTrendColors[item],borderWidth:selectedProduct==="전체"?2.2:2.8,tension:.38,fill:false,pointRadius:productDailyRows.length<=30?2.4:0,pointHoverRadius:5,pointHitRadius:12}))},
       options:{
         responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
         layout:{padding:{top:16,right:8,left:4,bottom:useDiagonalDateTicks(productTrendLabels)?8:0}},
@@ -4276,6 +4301,15 @@ function renderRefundDashboard(s,e){
     });
   }
 }
+
+/* v77 상품 선택 시 현재 조회기간 기준으로 차트만 다시 그림 */
+document.addEventListener("change",function(e){
+  if(e.target&&e.target.id==="refundProductTrendSelect"){
+    const s=$("startDate")?.value||"";
+    const en=$("endDate")?.value||"";
+    if(s&&en) renderRefundDashboard(s,en);
+  }
+});
 
 function formatDateLabel(dateStr, dayStr){
   const dayMap=["일","월","화","수","목","금","토"];
