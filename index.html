@@ -2946,7 +2946,7 @@ body.auth-pending .app{visibility:hidden}
   </div>
   <div class="refund-two-col">
     <div class="refund-card"><div class="refund-card-head"><b>환불 구성</b><span>선택기간 상품 기준</span></div><div class="refund-chart-wrap"><canvas id="refundMixChart"></canvas></div></div>
-    <div class="refund-card"><div class="refund-card-head"><b>바로취소 사유 TOP5</b><span>상품 기준</span></div><div class="refund-chart-wrap"><canvas id="refundReasonChart"></canvas></div><div class="refund-reason-insight">주문 변경성 사유 비중 <b id="refundOrderChangeShare">-</b></div></div>
+    <div class="refund-card"><div class="refund-card-head"><b>바로취소 사유</b><span>상품 기준</span></div><div class="refund-chart-wrap"><canvas id="refundReasonChart"></canvas></div><div class="refund-reason-insight">주문 변경성 사유 비중 <b id="refundOrderChangeShare">-</b></div></div>
   </div>
   <div class="refund-card refund-trend-card">
     <div class="refund-trend-head"><div><div class="refund-trend-title">일별 환불 추이</div><div class="refund-trend-sub">올해 환불건수 막대 · 전년 동기간 회색 점선 · 바로취소율</div></div></div>
@@ -6154,6 +6154,24 @@ async function upload(file,type){
         }
       });
       if(!matched.length && !consultPeriodRaw.length) throw new Error("월간 시트(예: 2026_CALL/2026_ERMS) 또는 기간 시트(올해_CALL/올해_ERMS/전년_CALL/전년_ERMS)를 확인해 주세요.");
+    }else if(type==="refundstatus"){
+      // 환불현황은 연도별 시트(예: 2025, 2026)를 모두 읽어 하나로 합칩니다.
+      // 작성안내/설정 등 비연도 시트는 자동 제외합니다.
+      const yearSheets=wb.SheetNames.filter(name=>/^20\d{2}$/.test(String(name||"").trim()));
+      const targetSheets=yearSheets.length ? yearSheets : wb.SheetNames.filter(name=>{
+        const n=String(name||"").trim();
+        return !/^(작성안내|설정|안내|README)$/i.test(n);
+      }).slice(0,1);
+      const importedSheets=[];
+      targetSheets.forEach(name=>{
+        const rows=XLSX.utils.sheet_to_json(wb.Sheets[name],{defval:"",raw:true});
+        if(rows.length){
+          raw.push(...rows.map(o=>({...o,__sourceSheet:String(name)})));
+          importedSheets.push(String(name));
+        }
+      });
+      if(!raw.length) throw new Error("환불현황 데이터 시트를 찾지 못했습니다. 연도별 시트명은 2025, 2026처럼 4자리 연도로 지정해 주세요.");
+      raw.__refundImportedSheets=importedSheets;
     }else{
       const ws=wb.Sheets[wb.SheetNames[0]];
       raw=XLSX.utils.sheet_to_json(ws,{defval:"",raw:true});
@@ -6216,7 +6234,11 @@ async function upload(file,type){
       rows.sort((a,b)=>a.date.localeCompare(b.date)||a.kind.localeCompare(b.kind)||a.item.localeCompare(b.item));
       await replaceCollection("refundDaily",rows,(r,i)=>`${r.date}_${r.kind}_${r.item}_${i}`.replace(/[^0-9A-Za-z가-힣_-]/g,"_"));
       await reload(); await applyFilter(); renderRaw();
-      alert(`${rows.length}행 환불 현황 데이터를 Firestore에 교체 등록했습니다.`);
+      const sourceSheets=[...new Set(raw.map(r=>String(r.__sourceSheet||"").trim()).filter(Boolean))];
+      const sheetText=sourceSheets.length ? `\n대상 시트: ${sourceSheets.join(", ")}` : "";
+      const years=[...new Set(rows.map(r=>String(r.date||"").slice(0,4)).filter(Boolean))].sort();
+      const yearText=years.length ? `\n등록 연도: ${years.join(", ")}` : "";
+      alert(`${rows.length}행 환불 현황 데이터를 Firestore에 교체 등록했습니다.${sheetText}${yearText}`);
     }else if(type==="refund"){
       const rows=raw.map((o,i)=>{
         const ad=asDate(pick(o,["환불신청일"]));
