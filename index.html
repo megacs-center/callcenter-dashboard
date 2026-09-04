@@ -6243,24 +6243,66 @@ async function upload(file,type){
       })).filter(r=>r.date&&r.kind&&r.item);
       if(!rows.length) throw new Error("일자/구분/항목 컬럼을 인식하지 못했습니다.");
       rows.sort((a,b)=>a.date.localeCompare(b.date)||a.kind.localeCompare(b.kind)||a.item.localeCompare(b.item));
-      await replaceCollection("refundDaily",rows,(r,i)=>`${r.date}_${r.kind}_${r.item}_${i}`.replace(/[^0-9A-Za-z가-힣_-]/g,"_"));
-      await reload(); await applyFilter(); renderRaw();
+
+      // 업로드 결과 메시지는 Firestore 저장 직후 먼저 확정합니다.
+      // 이후 reload/applyFilter 중 오류가 나더라도 등록 완료 안내가 사라지지 않도록 분리합니다.
       const sourceSheets=[...new Set(raw.map(r=>String(r.__sourceSheet||"").trim()).filter(Boolean))];
-      const sheetText=sourceSheets.length ? `\n대상 시트: ${sourceSheets.join(", ")}` : "";
       const years=[...new Set(rows.map(r=>String(r.date||"").slice(0,4)).filter(Boolean))].sort();
-      const yearText=years.length ? `\n등록 연도: ${years.join(", ")}` : "";
-      const sourceYearMap={};
-      raw.forEach(r=>{ const sh=String(r.__sourceSheet||"").trim(); if(!sh) return; sourceYearMap[sh]=sourceYearMap[sh]||new Set(); });
-      rows.forEach(r=>{});
       const countsBySheet={};
-      raw.forEach(r=>{ const sh=String(r.__sourceSheet||"").trim(); if(sh) countsBySheet[sh]=(countsBySheet[sh]||0)+1; });
-      const countText=Object.keys(countsBySheet).length ? `\n시트별 원본행: ${Object.entries(countsBySheet).map(([k,v])=>`${k} ${v}행`).join(" / ")}` : "";
+      const rangeBySheet={};
+      raw.forEach(r=>{
+        const sh=String(r.__sourceSheet||"").trim();
+        if(!sh) return;
+        countsBySheet[sh]=(countsBySheet[sh]||0)+1;
+        const d=asDate(pick(r,["일자","날짜"]));
+        if(d){
+          if(!rangeBySheet[sh]) rangeBySheet[sh]={min:d,max:d};
+          else{
+            if(d<rangeBySheet[sh].min) rangeBySheet[sh].min=d;
+            if(d>rangeBySheet[sh].max) rangeBySheet[sh].max=d;
+          }
+        }
+      });
+      const sheetLines=sourceSheets.map(sh=>{
+        const c=countsBySheet[sh]||0;
+        const rg=rangeBySheet[sh];
+        return `• ${sh}: ${c}행${rg?` · ${rg.min} ~ ${rg.max}`:" · 날짜 인식 없음"}`;
+      });
       const missingExpected=sourceSheets.filter(sh=>{
         const y=(String(sh).match(/20\d{2}/)||[])[0];
         return y && !years.includes(y);
       });
-      const warnText=missingExpected.length ? `\n⚠ 날짜 인식 실패 가능 시트: ${missingExpected.join(", ")}` : "";
-      alert(`${rows.length}행 환불 현황 데이터를 Firestore에 교체 등록했습니다.${sheetText}${yearText}${countText}${warnText}`);
+      const message=[
+        `${rows.length}행 환불 현황 데이터를 Firestore에 교체 등록했습니다.`,
+        sourceSheets.length ? `대상 시트: ${sourceSheets.join(", ")}` : "",
+        years.length ? `등록 연도: ${years.join(", ")}` : "",
+        sheetLines.length ? `시트별 등록 범위:\n${sheetLines.join("\n")}` : "",
+        missingExpected.length ? `⚠ 날짜 인식 실패 가능 시트: ${missingExpected.join(", ")}` : ""
+      ].filter(Boolean).join("\n");
+
+      const statusEl=$("refundStatusStatus");
+      if(statusEl){
+        statusEl.textContent="등록 중...";
+        statusEl.style.color="#52657c";
+      }
+
+      await replaceCollection("refundDaily",rows,(r,i)=>`${r.date}_${r.kind}_${r.item}_${i}`.replace(/[^0-9A-Za-z가-힣_-]/g,"_"));
+
+      // 완료 메시지를 먼저 표시
+      if(statusEl){
+        statusEl.innerHTML=`<b style="color:#16803d">등록 완료</b> · ${rows.length.toLocaleString()}행 · ${years.join(", ")||"연도 확인 필요"}<br><span style="white-space:pre-line">${sheetLines.join("\n")}</span>`;
+      }
+      alert(message);
+
+      // 화면 갱신 실패는 업로드 성공과 분리
+      try{
+        await reload();
+        await applyFilter();
+        renderRaw();
+      }catch(refreshErr){
+        console.warn("환불현황 업로드 후 화면 갱신 오류",refreshErr);
+        if(statusEl) statusEl.innerHTML += `<br><span style="color:#b26a00">※ 저장은 완료되었으나 화면 갱신 중 오류가 발생했습니다. 새로고침하면 반영됩니다.</span>`;
+      }
     }else if(type==="refund"){
       const rows=raw.map((o,i)=>{
         const ad=asDate(pick(o,["환불신청일"]));
