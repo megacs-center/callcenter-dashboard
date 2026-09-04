@@ -3526,7 +3526,7 @@ body.auth-pending .app{visibility:hidden}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 import {
-  getFirestore, collection, getDocs, doc, getDoc, setDoc, writeBatch, deleteDoc
+  getFirestore, collection, getDocs, doc, getDoc, setDoc, writeBatch, deleteDoc, query, where
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 import {
   getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged,
@@ -5269,6 +5269,41 @@ async function replaceCollection(name, rows, idFn){
   }
 }
 
+// 환불현황 전용 초고속 등록: 기존 연도 조회/삭제 없이 deterministic ID로 바로 덮어쓰기(upsert)
+// 동일한 일자+구분+항목은 즉시 갱신되고, 다른 연도/다른 행은 그대로 유지됩니다.
+async function upsertRefundRows(rows, years, onProgress){
+  if(currentRole!=="admin") throw new Error("관리자 권한이 필요합니다.");
+  const targetYears=[...new Set((years||[]).map(String).filter(y=>/^20\d{2}$/.test(y)))].sort();
+  if(!targetYears.length) throw new Error("환불현황 등록 연도를 확인할 수 없습니다.");
+
+  const cleanId=v=>String(v||"").trim().replace(/[^0-9A-Za-z가-힣_-]/g,"_");
+  const batchSize=450;
+  let written=0;
+  const total=rows.length;
+  onProgress?.(`등록 준비 완료 · ${total.toLocaleString()}행`);
+
+  for(let i=0;i<total;i+=batchSize){
+    const batch=writeBatch(firestore);
+    const part=rows.slice(i,i+batchSize);
+    part.forEach(r=>{
+      const id=cleanId(`${r.date}_${r.kind}_${r.item}`);
+      batch.set(doc(firestore,"refundDaily",id),r);
+    });
+    await batch.commit();
+    written += part.length;
+    const pct=total ? Math.round(written/total*100) : 100;
+    onProgress?.(`환불 현황 등록 중... ${written.toLocaleString()}/${total.toLocaleString()}행 (${pct}%)`);
+  }
+  return {written,years:targetYears};
+}
+
+function mergeRefundRowsLocal(rows){
+  const key=r=>`${r.date}|${r.kind}|${r.item}`;
+  const map=new Map((refundDaily||[]).map(r=>[key(r),r]));
+  (rows||[]).forEach(r=>map.set(key(r),r));
+  refundDaily=[...map.values()].sort((a,b)=>(a.date||"").localeCompare(b.date||"") || (a.kind||"").localeCompare(b.kind||"") || (a.item||"").localeCompare(b.item||""));
+}
+
 function previousDay(latest){
   const idx=daily.findIndex(r=>r.date===latest.date);
   return idx>0?daily[idx-1]:null;
@@ -6286,22 +6321,29 @@ async function upload(file,type){
         statusEl.style.color="#52657c";
       }
 
-      await replaceCollection("refundDaily",rows,(r,i)=>`${r.date}_${r.kind}_${r.item}_${i}`.replace(/[^0-9A-Za-z가-힣_-]/g,"_"));
+      const fastResult=await upsertRefundRows(rows,years,(txt)=>{
+        if(statusEl){
+          statusEl.textContent=txt;
+          statusEl.style.color="#52657c";
+        }
+      });
+
+      // Firestore 전체 재조회 없이 이번 업로드 행만 로컬 데이터에 즉시 병합합니다.
+      mergeRefundRowsLocal(rows);
 
       // 완료 메시지를 먼저 표시
       if(statusEl){
-        statusEl.innerHTML=`<b style="color:#16803d">등록 완료</b> · ${rows.length.toLocaleString()}행 · ${years.join(", ")||"연도 확인 필요"}<br><span style="white-space:pre-line">${sheetLines.join("\n")}</span>`;
+        statusEl.innerHTML=`<b style="color:#16803d">등록 완료</b> · ${fastResult.written.toLocaleString()}행 · ${fastResult.years.join(", ")}년<br><span style="white-space:pre-line">${sheetLines.join("\n")}</span><br><span style="color:#52657c">※ 기존 데이터 조회/삭제 없이 동일 일자·구분·항목만 즉시 덮어쓰기</span>`;
       }
-      alert(message);
+      alert(message.replace("교체 등록했습니다","덮어쓰기 등록했습니다") + `\n\n초고속 등록: 기존 데이터 조회/삭제 없음\n등록 ${fastResult.written.toLocaleString()}행`);
 
-      // 화면 갱신 실패는 업로드 성공과 분리
+      // 전체 reload 대신 현재 화면만 다시 계산하여 업로드 후 대기시간을 줄입니다.
       try{
-        await reload();
         await applyFilter();
         renderRaw();
       }catch(refreshErr){
         console.warn("환불현황 업로드 후 화면 갱신 오류",refreshErr);
-        if(statusEl) statusEl.innerHTML += `<br><span style="color:#b26a00">※ 저장은 완료되었으나 화면 갱신 중 오류가 발생했습니다. 새로고침하면 반영됩니다.</span>`;
+        if(statusEl) statusEl.innerHTML += `<br><span style="color:#b26a00">※ 저장은 완료되었습니다. 화면 표시가 이상하면 새로고침해 주세요.</span>`;
       }
     }else if(type==="refund"){
       const rows=raw.map((o,i)=>{
