@@ -2434,6 +2434,21 @@ body.auth-pending .app{visibility:hidden}
 <style>
 .refund-definition-note{font-size:11px;color:#6b7280;line-height:1.5;margin-top:6px;}
 </style>
+
+<style id="data-status-monitor-v85">
+.data-status-monitor{margin-top:14px;border:1px solid #d9e3ef;border-radius:14px;background:#fff;overflow:hidden}
+.data-status-monitor-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid #e7edf4}
+.data-status-monitor-head h3{margin:0;font-size:15px;color:#0f2747}.data-status-monitor-head .sub{font-size:11px;color:#7789a0;margin-top:3px}
+.data-status-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:12px}
+.data-status-item{border:1px solid #e2e9f2;border-radius:11px;padding:11px 12px;min-width:0;background:#fbfdff}
+.data-status-item-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.data-status-name{font-size:12px;font-weight:800;color:#132b4d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.data-status-badge{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:3px 8px;font-size:10px;font-weight:800;white-space:nowrap}
+.data-status-badge.ok{background:#eaf8ef;color:#16803d}.data-status-badge.uploading{background:#eaf2ff;color:#1769d1}.data-status-badge.resetting{background:#fff4dc;color:#a66300}.data-status-badge.reset{background:#eef2f6;color:#66788f}.data-status-badge.error{background:#fff0f0;color:#d33b3b}.data-status-badge.unknown{background:#f2f4f7;color:#7b8797}
+.data-status-meta{display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;font-size:10.5px;color:#596d85;line-height:1.35}.data-status-meta b{color:#203a5c;font-weight:800}.data-status-meta .wide{grid-column:1/-1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:1350px){.data-status-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.data-status-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body class="auth-pending">
 <div id="authGate" class="auth-gate">
@@ -3400,6 +3415,19 @@ body.auth-pending .app{visibility:hidden}
         <button class="btn secondary" id="logoutBtn">로그아웃</button>
       </div>
 
+      <div class="data-status-monitor" id="dataStatusMonitor">
+        <div class="data-status-monitor-head">
+          <div>
+            <h3>Firestore 데이터 상태</h3>
+            <div class="sub">항목별 데이터 유무 · 건수 · 기간 · 최근 업로드/초기화 상태</div>
+          </div>
+          <button class="btn secondary" id="dataStatusRefreshBtn" type="button">상태 새로고침</button>
+        </div>
+        <div class="data-status-grid" id="dataStatusGrid">
+          <div class="status" style="padding:6px 4px">Firestore 상태 확인 중...</div>
+        </div>
+      </div>
+
       <div class="uploadgrid">
         <div class="card upload">
           <h3>① 일일 운영실적 Excel</h3>
@@ -3468,7 +3496,7 @@ body.auth-pending .app{visibility:hidden}
           </select>
           <input id="rawSearch" placeholder="검색">
         </div>
-        <button class="btn danger" id="clearBtn">전체 데이터 초기화</button>
+        <button class="btn danger" id="clearBtn">선택 데이터 초기화</button>
       </div>
 
       <div class="tableWrap">
@@ -6157,7 +6185,103 @@ function parseConsultMonthlySheet(ws,year,channel,sheetName){
   return XLSX.utils.sheet_to_json(ws,{defval:"",raw:true}).map(o=>({...o,__channel:channel,__year:year,__sheet:sheetName,__groupedMonthly:false}));
 }
 
-async function upload(file,type){
+
+const DATA_STATUS_DEFS={
+  daily:{label:"일일 운영실적",collection:"daily"},
+  refundstatus:{label:"환불 현황",collection:"refundDaily"},
+  refund:{label:"환불 상세",collection:"refunds"},
+  mdm:{label:"MDM 원격",collection:"mdm"},
+  newsstart:{label:"뉴스타트 인증",collection:"newsstart"},
+  consulttype:{label:"상담유형 월간",collection:"consultTypes"},
+  consultperiod:{label:"상담유형 특정기간",collection:"consultPeriods"},
+  issues:{label:"운영 이슈",collection:"operationIssues"}
+};
+const DATA_STATUS_DOC_PREFIX="dataStatus_";
+function dataStatusDocRef(type){ return doc(firestore,"aiAnalysisJobs",DATA_STATUS_DOC_PREFIX+type); }
+function dataStatusNow(){ return new Date().toISOString(); }
+function dataStatusActor(){ return currentUser?.email || ""; }
+async function writeDataStatus(type,patch){
+  if(currentRole!=="admin" || !DATA_STATUS_DEFS[type]) return;
+  try{
+    await setDoc(dataStatusDocRef(type),{
+      kind:"dashboardDataStatus",type,label:DATA_STATUS_DEFS[type].label,updatedAt:dataStatusNow(),updatedBy:dataStatusActor(),...patch
+    },{merge:true});
+  }catch(e){
+    console.warn("데이터 상태 기록 실패",type,e);
+  }
+}
+function statusSourceRows(type){
+  if(type==="daily") return daily||[];
+  if(type==="refundstatus") return refundDaily||[];
+  if(type==="refund") return refunds||[];
+  if(type==="mdm") return mdmData||[];
+  if(type==="newsstart") return newsStartData||[];
+  if(type==="consulttype") return consultTypeData||[];
+  if(type==="consultperiod") return consultPeriodData||[];
+  if(type==="issues") return operationIssues||[];
+  return [];
+}
+function statusDateValue(type,r){
+  if(type==="refund") return r.applyDate||r.doneDate||r.approveDate||"";
+  if(type==="consulttype"){
+    const y=String(r.year||"");
+    if(/^20\d{2}$/.test(y)) return `${y}-01-01`;
+  }
+  if(type==="consultperiod") return r.endDate||r.startDate||"";
+  if(type==="issues") return r.endDate||r.startDate||r.date||"";
+  return r.date||"";
+}
+function statusLocalSummary(type){
+  const rows=statusSourceRows(type).filter(Boolean);
+  const dates=rows.map(r=>statusDateValue(type,r)).filter(d=>/^20\d{2}-\d{2}-\d{2}$/.test(String(d))).sort();
+  return {rowCount:rows.length,minDate:dates[0]||"",maxDate:dates.at(-1)||""};
+}
+function statusDateTimeText(v){
+  if(!v) return "-";
+  const d=new Date(v); if(Number.isNaN(d.getTime())) return String(v);
+  const p=n=>String(n).padStart(2,"0");
+  return `${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+function statusBadgeInfo(status,summary){
+  if(status==="uploading") return ["업로드 중","uploading"];
+  if(status==="resetting") return ["초기화 중","resetting"];
+  if(status==="error") return ["오류","error"];
+  if(status==="reset") return ["초기화됨","reset"];
+  if(status==="completed") return ["업로드 완료","ok"];
+  if(summary.rowCount>0) return ["데이터 있음","ok"];
+  return ["데이터 없음","unknown"];
+}
+async function readDataStatusDocs(){
+  const out={};
+  try{
+    const snap=await getDocs(collection(firestore,"aiAnalysisJobs"));
+    snap.docs.forEach(x=>{
+      if(!x.id.startsWith(DATA_STATUS_DOC_PREFIX)) return;
+      const d=x.data()||{}; if(d.kind!=="dashboardDataStatus") return;
+      out[x.id.slice(DATA_STATUS_DOC_PREFIX.length)]=d;
+    });
+  }catch(e){ console.warn("데이터 상태 문서 조회 실패",e); }
+  return out;
+}
+async function renderDataStatusMonitor(){
+  const grid=$("dataStatusGrid"); if(!grid || currentRole!=="admin") return;
+  grid.innerHTML='<div class="status" style="padding:6px 4px">Firestore 상태 확인 중...</div>';
+  const saved=await readDataStatusDocs();
+  const types=["daily","refundstatus","refund","mdm","consulttype","consultperiod","issues"];
+  grid.innerHTML=types.map(type=>{
+    const def=DATA_STATUS_DEFS[type], sum=statusLocalSummary(type), st=saved[type]||{};
+    const [badge,cls]=statusBadgeInfo(st.status,sum);
+    const count=(st.status==="reset" && !sum.rowCount)?0:sum.rowCount;
+    const range=sum.minDate&&sum.maxDate?`${sum.minDate} ~ ${sum.maxDate}`:"-";
+    const upload=st.lastUploadAt?statusDateTimeText(st.lastUploadAt):"-";
+    const reset=st.lastResetAt?statusDateTimeText(st.lastResetAt):"-";
+    const err=st.status==="error"&&st.error?`<div class="wide" title="${String(st.error).replace(/"/g,'&quot;')}"><b>오류</b> ${String(st.error)}</div>`:"";
+    return `<div class="data-status-item"><div class="data-status-item-top"><div class="data-status-name">${def.label}</div><span class="data-status-badge ${cls}">${badge}</span></div><div class="data-status-meta"><div><b>건수</b> ${Number(count||0).toLocaleString()}</div><div><b>최근 작업</b> ${st.lastAction==="reset"?"초기화":st.lastAction==="upload"?"업로드":"-"}</div><div class="wide"><b>데이터 기간</b> ${range}</div><div><b>최근 업로드</b> ${upload}</div><div><b>최근 초기화</b> ${reset}</div>${err}</div></div>`;
+  }).join("");
+}
+
+// 업로드 상태 추적 래퍼. 실제 업로드 함수는 uploadCore에서 처리합니다.
+async function uploadCore(file,type){
   if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
   if(!currentUser) return alert("관리자 로그인이 필요합니다.");
   if(!file) return;
@@ -6527,6 +6651,22 @@ async function upload(file,type){
     }
   }catch(e){
     console.error(e);
+    throw e;
+  }
+}
+
+async function upload(file,type){
+  if(!file) return;
+  await writeDataStatus(type,{status:"uploading",lastAction:"upload",uploadStartedAt:dataStatusNow(),fileName:file.name||"",error:""});
+  renderDataStatusMonitor();
+  try{
+    await uploadCore(file,type);
+    const sm=statusLocalSummary(type);
+    await writeDataStatus(type,{status:"completed",lastAction:"upload",lastUploadAt:dataStatusNow(),uploadFinishedAt:dataStatusNow(),rowCount:sm.rowCount,minDate:sm.minDate,maxDate:sm.maxDate,error:""});
+    await renderDataStatusMonitor();
+  }catch(e){
+    await writeDataStatus(type,{status:"error",lastAction:"upload",error:String(e?.message||e),errorAt:dataStatusNow()});
+    await renderDataStatusMonitor();
     alert("업로드 오류: "+(e?.message||e));
   }
 }
@@ -7757,6 +7897,7 @@ onAuthStateChanged(auth, async user=>{
       await loadAccessList();
       startAiJobPolling();
       await refreshAiJobStatus();
+      await renderDataStatusMonitor();
     }
   }catch(e){
     console.error(e);
@@ -7787,6 +7928,7 @@ $("newsStartSampleBtn").addEventListener("click",newsStartSample);
 $("consultTypeSampleBtn").addEventListener("click",consultTypeSample);
 $("rawType").addEventListener("change",renderRaw);
 $("rawSearch").addEventListener("input",renderRaw);
+$("dataStatusRefreshBtn")?.addEventListener("click",()=>renderDataStatusMonitor());
 $("aiHistorySelect")?.addEventListener("change",e=>renderAiAnalysis(e.target.value));
 $("aiPeriodSelect")?.addEventListener("change",()=>renderAiAnalysis());
 $("aiRunBtn")?.addEventListener("click",runAiFromDashboard);
@@ -7811,16 +7953,46 @@ function setDefaultRecent7Days(){
 $("clearBtn").addEventListener("click",async()=>{
   if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
   if(!currentUser) return alert("관리자 로그인이 필요합니다.");
-  if(!confirm("Firestore의 일일 운영실적, 환불, MDM 원격, 뉴스타트 인증, 상담유형(월간/특정기간) 데이터를 모두 삭제할까요?")) return;
-  await deleteCollectionDocs("daily");
-  await deleteCollectionDocs("refunds");
-  await deleteCollectionDocs("refundDaily");
-  await deleteCollectionDocs("mdm");
-  await deleteCollectionDocs("newsstart");
-  await deleteCollectionDocs("consultTypes");
-  await deleteCollectionDocs("consultPeriods");
-  await reload();
-  location.reload();
+
+  const type=$("rawType").value;
+  const targets={
+    daily:{label:"일일 운영실적", collections:["daily"]},
+    refundstatus:{label:"환불 현황", collections:["refundDaily"]},
+    refund:{label:"환불 상세", collections:["refunds"]},
+    mdm:{label:"MDM 원격", collections:["mdm"]},
+    newsstart:{label:"뉴스타트 인증", collections:["newsstart"]},
+    consulttype:{label:"상담유형 월간", collections:["consultTypes"]},
+    consultperiod:{label:"상담유형 특정기간", collections:["consultPeriods"]},
+    issues:{label:"운영 이슈", collections:["operationIssues"]}
+  };
+  const target=targets[type];
+  if(!target) return alert("초기화할 데이터 항목을 선택해 주세요.");
+
+  if(!confirm(`선택한 [${target.label}] 데이터를 모두 삭제할까요?\n\n이 작업은 되돌릴 수 없습니다.`)) return;
+
+  const btn=$("clearBtn");
+  const prev=btn.textContent;
+  btn.disabled=true;
+  btn.textContent=`${target.label} 초기화 중...`;
+  await writeDataStatus(type,{status:"resetting",lastAction:"reset",resetStartedAt:dataStatusNow(),error:""});
+  renderDataStatusMonitor();
+  try{
+    for(const col of target.collections) await deleteCollectionDocs(col);
+    await writeDataStatus(type,{status:"reset",lastAction:"reset",lastResetAt:dataStatusNow(),resetFinishedAt:dataStatusNow(),rowCount:0,minDate:"",maxDate:"",error:""});
+    await reload();
+    renderRaw();
+    await renderDataStatusMonitor();
+    alert(`[${target.label}] 데이터 초기화가 완료되었습니다.`);
+    btn.disabled=false;
+    btn.textContent=prev;
+  }catch(e){
+    console.error(e);
+    await writeDataStatus(type,{status:"error",lastAction:"reset",error:String(e?.message||e),errorAt:dataStatusNow()});
+    await renderDataStatusMonitor();
+    alert(`[${target.label}] 데이터 초기화 실패: ${e.message||e}`);
+    btn.disabled=false;
+    btn.textContent=prev;
+  }
 });
 
 /* 좌측 메뉴 이동은 아래 독립 스크립트에서 처리 */
