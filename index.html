@@ -2193,6 +2193,7 @@ body.auth-pending .app{visibility:hidden}
 .refund-trend-filter label{font-size:11px;font-weight:700;color:#64748b;}
 .refund-trend-filter select{height:30px;min-width:110px;padding:0 28px 0 10px;border:1px solid #d7e0ea;border-radius:7px;background:#fff;color:#0f2747;font-size:11px;font-weight:700;outline:none;}
 .refund-trend-filter select:focus{border-color:#5b8def;box-shadow:0 0 0 2px rgba(37,99,235,.08);}
+/* v95: 관리자 데이터 관리 카드의 중복 로그아웃 버튼 DOM 완전 제거 */
 </style>
 
 <style>
@@ -3442,7 +3443,6 @@ document.addEventListener('DOMContentLoaded',()=>{
           <h3 style="margin:0">관리자 데이터 관리</h3>
           <div class="sub" id="adminUserText">Firebase 연결됨</div>
         </div>
-        <button class="btn secondary" id="logoutBtn"></button>
       </div>
 
       <div class="firestore-usage-monitor" id="firestoreUsageMonitor">
@@ -3517,6 +3517,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             </div>
           </div>
           <div id="refundStatusStatus" class="status">Firestore 확인 중...</div>
+        <div style="margin-top:6px;font-size:11px;color:#6b7b8f;line-height:1.45">누적본 전체를 업로드해도 <b>신규·변경 행만 저장</b>하고 동일 행은 자동으로 건너뜁니다.</div>
           <div class="status">※ 컬럼: 일자 / 구분 / 항목 / 전체건수 / 전체금액 / 전체회원수 / 부분환불건수 / 부분환불금액 / 부분환불회원수 / 바로취소건수 / 바로취소금액 / 바로취소회원수 / 바로취소율 / 재구매회원수 / 재구매율 / 결제방법변경 / 상품변경 / 타사이용 / 학원수강&amp;PMP&amp;기간부족 / 잘못선택</div>
           <div class="status" style="color:#52657c">※ 하루 9행: 상품 5개 + 환불방법 4개. 전체 KPI는 상품 기준으로 계산해 이중집계를 방지합니다.</div>
         </div>
@@ -5466,8 +5467,44 @@ async function replaceCollection(name, rows, idFn){
   if(activeType) reportDataStatusProgress(activeType,100,"등록 마무리 중...",total,total,true);
 }
 
-// 환불현황 전용 초고속 등록: 기존 연도 조회/삭제 없이 deterministic ID로 바로 덮어쓰기(upsert)
-// 동일한 일자+구분+항목은 즉시 갱신되고, 다른 연도/다른 행은 그대로 유지됩니다.
+// 환불현황 누적본 증분 등록
+// 1) 이미 화면에 로드된 refundDaily 데이터를 기준으로 신규/변경/동일을 판별합니다.
+// 2) 동일 행은 Firestore write를 하지 않습니다.
+// 3) 신규/변경 행만 deterministic ID(date+kind+item)로 batch upsert합니다.
+// 별도 Firestore 비교 조회를 하지 않으므로 업로드 판별 자체로 추가 read를 소비하지 않습니다.
+function refundRowKey(r){
+  return `${String(r?.date||"").trim()}|${refundNormalizeKind(r?.kind)}|${refundNormalizeItem(r?.item)}`;
+}
+function refundComparable(r){
+  const n=v=>Number(v)||0;
+  return {
+    date:String(r?.date||"").trim(), kind:refundNormalizeKind(r?.kind), item:refundNormalizeItem(r?.item),
+    totalCount:n(r?.totalCount), totalAmount:n(r?.totalAmount), totalMembers:n(r?.totalMembers),
+    partialCount:n(r?.partialCount), partialAmount:n(r?.partialAmount), partialMembers:n(r?.partialMembers),
+    instantCount:n(r?.instantCount), instantAmount:n(r?.instantAmount), instantMembers:n(r?.instantMembers),
+    repurchaseMembers:n(r?.repurchaseMembers), payMethodChange:n(r?.payMethodChange), productChange:n(r?.productChange),
+    competitorUse:n(r?.competitorUse), academyPmpPeriod:n(r?.academyPmpPeriod), wrongChoice:n(r?.wrongChoice)
+  };
+}
+function refundRowsEqual(a,b){
+  if(!a || !b) return false;
+  const aa=refundComparable(a), bb=refundComparable(b);
+  return Object.keys(aa).every(k=>aa[k]===bb[k]);
+}
+function analyzeRefundUploadDelta(rows){
+  const existing=new Map((refundDaily||[]).filter(r=>r?.date&&r?.kind&&r?.item).map(r=>[refundRowKey(r),r]));
+  const deduped=new Map();
+  (rows||[]).forEach(r=>{ if(r?.date&&r?.kind&&r?.item) deduped.set(refundRowKey(r),r); });
+  const added=[], changed=[], same=[];
+  deduped.forEach((r,k)=>{
+    const prev=existing.get(k);
+    if(!prev) added.push(r);
+    else if(refundRowsEqual(prev,r)) same.push(r);
+    else changed.push(r);
+  });
+  return {added,changed,same,writeRows:[...added,...changed],inputCount:(rows||[]).length,uniqueCount:deduped.size};
+}
+
 async function upsertRefundRows(rows, years, onProgress){
   if(currentRole!=="admin") throw new Error("관리자 권한이 필요합니다.");
   const targetYears=[...new Set((years||[]).map(String).filter(y=>/^20\d{2}$/.test(y)))].sort();
@@ -5477,7 +5514,8 @@ async function upsertRefundRows(rows, years, onProgress){
   const batchSize=Math.min(450,Math.max(50,Math.ceil(Math.max(rows.length,1)/20)));
   let written=0;
   const total=rows.length;
-  onProgress?.(`등록 준비 완료 · ${total.toLocaleString()}행`,{pct:1,done:0,total});
+  onProgress?.(total ? `실제 저장 대상 ${total.toLocaleString()}행 · 등록 준비 중` : `변경사항 없음 · Firestore 저장 생략`,{pct:total?1:100,done:0,total});
+  if(!total) return {written:0,years:targetYears};
 
   for(let i=0;i<total;i+=batchSize){
     const batch=writeBatch(firestore);
@@ -6721,22 +6759,41 @@ async function uploadCore(file,type){
         statusEl.style.color="#52657c";
       }
 
-      const fastResult=await upsertRefundRows(rows,years,(txt,meta)=>{
+      // 누적본 전체를 올려도 실제 Firestore 저장은 신규/변경 행만 수행합니다.
+      // 비교는 이미 화면에 로드된 refundDaily를 사용하므로 별도 비교 read가 발생하지 않습니다.
+      const delta=analyzeRefundUploadDelta(rows);
+      const deltaSummary=`총 ${delta.uniqueCount.toLocaleString()}행 확인 · 신규 ${delta.added.length.toLocaleString()} · 변경 ${delta.changed.length.toLocaleString()} · 동일 ${delta.same.length.toLocaleString()} · 실제 저장 ${delta.writeRows.length.toLocaleString()}`;
+      if(statusEl){
+        statusEl.textContent=deltaSummary;
+        statusEl.style.color="#52657c";
+      }
+      reportDataStatusProgress("refundstatus",delta.writeRows.length?1:100,deltaSummary,0,delta.writeRows.length);
+
+      const fastResult=await upsertRefundRows(delta.writeRows,years,(txt,meta)=>{
+        const progressText=`${deltaSummary} · ${txt}`;
         if(statusEl){
-          statusEl.textContent=txt;
+          statusEl.textContent=progressText;
           statusEl.style.color="#52657c";
         }
-        if(meta) reportDataStatusProgress("refundstatus",meta.pct,txt,meta.done,meta.total);
+        if(meta) reportDataStatusProgress("refundstatus",meta.pct,progressText,meta.done,meta.total);
       });
 
-      // Firestore 전체 재조회 없이 이번 업로드 행만 로컬 데이터에 즉시 병합합니다.
+      // Firestore 전체 재조회 없이 누적본을 로컬 데이터에 즉시 병합합니다.
+      // 동일행도 포함해 로컬 캐시를 최신 Excel 기준으로 맞춥니다.
       mergeRefundRowsLocal(rows);
 
       // 완료 메시지를 먼저 표시
       if(statusEl){
-        statusEl.innerHTML=`<b style="color:#16803d">등록 완료</b> · ${fastResult.written.toLocaleString()}행 · ${fastResult.years.join(", ")}년<br><span style="white-space:pre-line">${sheetLines.join("\n")}</span><br><span style="color:#52657c">※ 기존 데이터 조회/삭제 없이 동일 일자·구분·항목만 즉시 덮어쓰기</span>`;
+        statusEl.innerHTML=`<b style="color:#16803d">등록 완료</b> · ${fastResult.years.join(", ")}년<br>`+
+          `<b>${deltaSummary}</b><br>`+
+          `<span style="white-space:pre-line">${sheetLines.join("\n")}</span><br>`+
+          `<span style="color:#52657c">※ 동일 데이터는 저장하지 않고 신규·변경 데이터만 Firestore에 반영</span>`;
       }
-      alert(message.replace("교체 등록했습니다","덮어쓰기 등록했습니다") + `\n\n초고속 등록: 기존 데이터 조회/삭제 없음\n등록 ${fastResult.written.toLocaleString()}행`);
+      await setDataStatus("refundstatus","completed",{
+        message:`업로드 완료 · 신규 ${delta.added.length.toLocaleString()} · 변경 ${delta.changed.length.toLocaleString()} · 동일 ${delta.same.length.toLocaleString()} · 실제 저장 ${fastResult.written.toLocaleString()}행`,
+        progress:100, done:fastResult.written, total:fastResult.written, rowCount:(refundDaily||[]).length
+      }).catch(()=>{});
+      alert(`환불 현황 업로드 완료\n\n${deltaSummary}\n등록 연도: ${fastResult.years.join(", ")}\n\n※ 동일 행은 Firestore 쓰기 없이 자동 건너뜁니다.`);
 
       // 전체 reload 대신 현재 화면만 다시 계산하여 업로드 후 대기시간을 줄입니다.
       try{
@@ -8222,7 +8279,6 @@ onAuthStateChanged(auth, async user=>{
 $("gateLoginBtn")?.addEventListener("click",login);
 $("gatePassword")?.addEventListener("keydown",e=>{if(e.key==="Enter")login();});
 $("topLogoutBtn")?.addEventListener("click",logout);
-$("logoutBtn")?.addEventListener("click",logout);
 $("saveAccessBtn")?.addEventListener("click",saveAccess);
 $("refreshAccessBtn")?.addEventListener("click",loadAccessList);
 $("searchBtn").addEventListener("click",()=>applyFilter().catch(e=>{
