@@ -6789,9 +6789,18 @@ async function uploadCore(file,type){
           `<span style="white-space:pre-line">${sheetLines.join("\n")}</span><br>`+
           `<span style="color:#52657c">※ 동일 데이터는 저장하지 않고 신규·변경 데이터만 Firestore에 반영</span>`;
       }
-      await setDataStatus("refundstatus","completed",{
-        message:`업로드 완료 · 신규 ${delta.added.length.toLocaleString()} · 변경 ${delta.changed.length.toLocaleString()} · 동일 ${delta.same.length.toLocaleString()} · 실제 저장 ${fastResult.written.toLocaleString()}행`,
-        progress:100, done:fastResult.written, total:fastResult.written, rowCount:(refundDaily||[]).length
+      await writeDataStatus("refundstatus",{
+        status:"completed",
+        lastAction:"upload",
+        lastUploadAt:dataStatusNow(),
+        uploadFinishedAt:dataStatusNow(),
+        rowCount:(refundDaily||[]).length,
+        error:"",
+        progressPct:100,
+        progressDone:fastResult.written,
+        progressTotal:fastResult.written,
+        progressMessage:`업로드 완료 · 신규 ${delta.added.length.toLocaleString()} · 변경 ${delta.changed.length.toLocaleString()} · 동일 ${delta.same.length.toLocaleString()} · 실제 저장 ${fastResult.written.toLocaleString()}행`,
+        heartbeatAt:dataStatusNow()
       }).catch(()=>{});
       alert(`환불 현황 업로드 완료\n\n${deltaSummary}\n등록 연도: ${fastResult.years.join(", ")}\n\n※ 동일 행은 Firestore 쓰기 없이 자동 건너뜁니다.`);
 
