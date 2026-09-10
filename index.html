@@ -8785,6 +8785,14 @@ function addDashboardDateQuickFooter(instance){
     setDashboardPeriodDates(range.start,range.end);
     instance.close();
   });
+  const basic=document.createElement("button");
+  basic.type="button"; basic.textContent="기본 기간";
+  basic.addEventListener("click",()=>{
+    const end=dashboardLatestCompletedDate();
+    const start=dateShift(end,-13); // 최신 운영데이터 기준 14일
+    setDashboardPeriodDates(start,end);
+    instance.close();
+  });
   const recent=document.createElement("button");
   recent.type="button"; recent.textContent="최근 7일";
   recent.addEventListener("click",()=>{
@@ -8793,7 +8801,7 @@ function addDashboardDateQuickFooter(instance){
     setDashboardPeriodDates(start,end);
     instance.close();
   });
-  footer.append(yoy,recent);
+  footer.append(yoy,basic,recent);
   instance.calendarContainer.appendChild(footer);
 }
 function initDashboardDatePickers(){
@@ -8860,7 +8868,7 @@ function setDefaultRecent7Days(){
   const end=daily.at(-1).date;
   const endDt=new Date(end+"T00:00:00");
   const startDt=new Date(endDt);
-  startDt.setDate(startDt.getDate()-6);
+  startDt.setDate(startDt.getDate()-13); // 기본 조회기간: 최신 운영데이터 기준 14일
   const y=startDt.getFullYear();
   const m=String(startDt.getMonth()+1).padStart(2,"0");
   const d=String(startDt.getDate()).padStart(2,"0");
