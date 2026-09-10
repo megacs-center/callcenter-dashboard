@@ -2350,6 +2350,38 @@ table tbody tr:not(.total-row):not(.summary-row):hover > td{
 /* 정보 아이콘/이슈 안내는 즉시 의미 확인 가능 */
 .data-info-btn{ --tip-offset:0; }
 
+
+/* v119: 운영 이슈 '장애' 구분 강조 */
+#issueListBody .issue-row[data-issue-category="장애"]{
+  border-left:3px solid #d93025;
+}
+#issueListBody .issue-row[data-issue-category="장애"] .issue-category,
+#issueListBody .issue-row[data-issue-category="장애"] td.issue-category{
+  color:#c62828 !important;
+  font-weight:700;
+}
+
+
+/* v120: 운영 이슈 '장애' 행 전체 빨간색 강조 */
+#issueListBody .issue-row[data-issue-category="장애"]{
+  background:#fff1f0 !important;
+  border-left:3px solid #d93025 !important;
+}
+#issueListBody .issue-row[data-issue-category="장애"] > td,
+#issueListBody .issue-row[data-issue-category="장애"] td,
+#issueListBody .issue-row[data-issue-category="장애"] div,
+#issueListBody .issue-row[data-issue-category="장애"] span{
+  color:#c62828 !important;
+  font-weight:700;
+}
+#issueListBody .issue-row[data-issue-category="장애"]:hover{
+  background:#ffe5e2 !important;
+  box-shadow:inset 3px 0 0 #d93025 !important;
+}
+#issueListBody .issue-row[data-issue-category="장애"]:hover > td{
+  background:#ffe5e2 !important;
+}
+
 </style>
 
 <style>
@@ -8991,6 +9023,34 @@ setInterval(()=>{
     applyDashboardHoverTips();
   }
   new MutationObserver(applyDashboardHoverTips).observe(document.documentElement,{childList:true,subtree:true});
+})();
+</script>
+
+
+<script>
+(function(){
+  function markOutageIssues(){
+    const root=document.getElementById('issueListBody');
+    if(!root) return;
+    root.querySelectorAll('.issue-row').forEach(row=>{
+      let found=false;
+      row.querySelectorAll('td,div,span').forEach(el=>{
+        const t=(el.textContent||'').trim();
+        if(t==='장애'){
+          found=true;
+          el.classList.add('issue-category');
+        }
+      });
+      if(found) row.setAttribute('data-issue-category','장애');
+      else row.removeAttribute('data-issue-category');
+    });
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', markOutageIssues, {once:true});
+  }else{
+    markOutageIssues();
+  }
+  new MutationObserver(markOutageIssues).observe(document.documentElement,{childList:true,subtree:true});
 })();
 </script>
 
