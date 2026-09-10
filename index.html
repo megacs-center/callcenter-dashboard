@@ -2233,6 +2233,8 @@ body.auth-pending .app{visibility:hidden}
 .flatpickr-day{max-width:34.85px!important;height:32px!important;line-height:32px!important;font-size:11px!important;}
 .dashboard-date-quick{padding:8px 9px!important;gap:6px!important;}
 .dashboard-date-quick button{font-size:11px!important;padding:5px 4px!important;}
+
+
 </style>
 
 <style>
@@ -2531,6 +2533,29 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
 });
 </script>
+
+<style>
+/* v113: 데이터 상태 + 업로드 통합 관리 */
+.integrated-data-manager{overflow:visible}
+.integrated-data-manager .data-status-monitor-head{border-bottom:0}
+.integrated-data-manager #dataStatusGrid{display:none !important;padding:0 !important}
+.integrated-uploadgrid{align-items:start}
+.integrated-uploadgrid .upload{padding:14px 15px}
+.integrated-uploadgrid .upload>h3{margin:0 0 10px;font-size:14px;color:#102b4c}
+.integrated-status-slot{margin-bottom:10px}
+.integrated-status-slot:empty{display:none}
+.integrated-status-slot .data-status-item{background:#f8fbff;border-color:#d9e5f3;padding:10px 11px}
+.integrated-status-slot .data-status-name{font-size:11.5px}
+.integrated-status-slot .data-status-meta{font-size:10px;gap:4px 10px}
+.integrated-status-slot .data-status-item-top{margin-bottom:6px}
+.integrated-uploadgrid .drop{margin-top:8px;padding:15px}
+.consult-status-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:2px}
+.consult-status-pair .integrated-status-slot{margin-bottom:0}
+.issue-status-card{min-height:0}
+.issue-status-guide{border:1px dashed #ccd8e7;background:#fafcff;border-radius:10px;padding:14px 15px;color:#61738a;font-size:10.5px;line-height:1.6}
+.issue-status-guide b{color:#23405f}
+@media(max-width:1000px){.consult-status-pair{grid-template-columns:1fr}}
+</style>
 </head>
 <body class="auth-pending">
 <div id="authGate" class="auth-gate">
@@ -3504,41 +3529,40 @@ document.addEventListener('DOMContentLoaded',()=>{
         <div class="firestore-usage-foot" id="firestoreUsageFoot">※ 관리자 화면 진입 시 1회만 조회하며 자동 반복조회하지 않습니다. Monitoring 수치는 최대 수분 지연될 수 있습니다.</div>
       </div>
 
-      <div class="data-status-monitor" id="dataStatusMonitor">
+      <div class="data-status-monitor integrated-data-manager" id="dataStatusMonitor">
         <div class="data-status-monitor-head">
           <div>
-            <h3>Firestore 데이터 상태</h3>
-            <div class="sub">항목별 데이터 유무 · 건수 · 기간 · 최근 업로드/초기화 상태 · 작업 중 강제중단/할당량 보호</div>
+            <h3>데이터 관리</h3>
+            <div class="sub">데이터 상태 확인과 Excel 업로드를 항목별 카드에서 함께 관리합니다.</div>
           </div>
           <button class="btn secondary" id="dataStatusRefreshBtn" type="button">상태 새로고침</button>
         </div>
-        <div class="data-status-grid" id="dataStatusGrid">
-          <div class="status" style="padding:6px 4px">Firestore 상태 확인 중...</div>
-        </div>
+        <div class="data-status-grid" id="dataStatusGrid" aria-hidden="true"></div>
       </div>
 
-      <div class="uploadgrid">
+      <div class="uploadgrid integrated-uploadgrid">
         <div class="card upload">
-          <h3>① 일일 운영실적 Excel</h3>
+          <h3>① 일일 운영실적</h3>
+          <div class="integrated-status-slot" data-status-type="daily"></div>
           <div class="drop">
             <div class="upload-file-row">
               <input id="dailyFile" type="file" accept=".xlsx,.xls,.csv">
               <button class="btn secondary" id="dailySampleBtn" type="button">샘플 Excel</button>
             </div>
           </div>
-          <div id="dailyStatus" class="status">Firestore 확인 중...</div><div class="status" style="color:#c2410c">※ 날짜 완전보정 적용본: Excel 날짜를 일련번호 기준으로 저장합니다. 기존 데이터는 반드시 다시 업로드해 주세요.<br>※ 전화 응답률 열은 샘플/업로드용으로 추가되며, 대시보드 응답률은 총응답호 ÷ 전화인입호로 계산합니다.</div>
+          <div id="dailyStatus" class="status" style="display:none"></div>
         </div>
 
         <div class="card upload">
-          <h3>② MDM 원격 Excel</h3>
+          <h3>② MDM 원격</h3>
+          <div class="integrated-status-slot" data-status-type="mdm"></div>
           <div class="drop">
             <div class="upload-file-row">
               <input id="mdmFile" type="file" accept=".xlsx,.xls,.csv">
               <button class="btn secondary" id="mdmSampleBtn" type="button">샘플 Excel</button>
             </div>
           </div>
-          <div id="mdmStatus" class="status">Firestore 확인 중...</div>
-          <div class="status">※ 컬럼: 날짜 / 해제 건 수 / 설치 건 수 / 합계 / 웹 접수 건 수 / 웹 접수 비율</div>
+          <div id="mdmStatus" class="status" style="display:none"></div>
         </div>
 
         <div class="card upload" style="display:none">
@@ -3549,37 +3573,34 @@ document.addEventListener('DOMContentLoaded',()=>{
               <button class="btn secondary" id="newsStartSampleBtn" type="button">샘플 Excel</button>
             </div>
           </div>
-          <div id="newsStartStatus" class="status">Firestore 확인 중...</div>
-          <div class="status">※ 컬럼: 일자 / 신청자 / 승인 / 반려 / 대기 / 뉴스타트구매자 / N수 / 군수</div>
+          <div id="newsStartStatus" class="status" style="display:none"></div>
         </div>
 
         <div class="card upload">
-          <h3>③ 환불 현황 Excel</h3>
+          <h3>③ 환불 현황</h3>
+          <div class="integrated-status-slot" data-status-type="refundstatus"></div>
           <div class="drop">
             <div class="upload-file-row">
               <input id="refundStatusFile" type="file" accept=".xlsx,.xls,.csv">
               <button class="btn secondary" id="refundStatusSampleBtn" type="button">샘플 Excel</button>
             </div>
           </div>
-          <div id="refundStatusStatus" class="status">Firestore 확인 중...</div>
-        <div style="margin-top:6px;font-size:11px;color:#6b7b8f;line-height:1.45">누적본 전체를 업로드해도 <b>신규·변경 행만 저장</b>하고 동일 행은 자동으로 건너뜁니다.</div>
-          <div class="status">※ 컬럼: 일자 / 구분 / 항목 / 전체건수 / 전체금액 / 전체회원수 / 부분환불건수 / 부분환불금액 / 부분환불회원수 / 바로취소건수 / 바로취소금액 / 바로취소회원수 / 바로취소율 / 재구매회원수 / 재구매율 / 결제방법변경 / 상품변경 / 타사이용 / 학원수강&amp;PMP&amp;기간부족 / 잘못선택</div>
-          <div class="status" style="color:#52657c">※ 하루 9행: 상품 5개 + 환불방법 4개. 전체 KPI는 상품 기준으로 계산해 이중집계를 방지합니다.</div>
+          <div id="refundStatusStatus" class="status" style="display:none"></div>
         </div>
 
         <div class="card upload">
-          <h3>④ 상담유형 Excel</h3>
+          <h3>④ 상담유형</h3>
+          <div class="consult-status-pair">
+            <div class="integrated-status-slot" data-status-type="consulttype"></div>
+            <div class="integrated-status-slot" data-status-type="consultperiod"></div>
+          </div>
           <div class="drop">
             <div class="upload-file-row">
               <input id="consultTypeFile" type="file" accept=".xlsx,.xls,.csv">
               <button class="btn secondary" id="consultTypeSampleBtn" type="button">샘플 Excel</button>
             </div>
           </div>
-          <div id="consultTypeStatus" class="status">Firestore 확인 중...</div>
-          <div class="status">※ Excel 시트명: <b>2026_CALL / 2026_ERMS / 2025_CALL / 2025_ERMS</b> 형식</div>
-          <div class="status">※ CALL = 인바운드 상담 / ERMS = 게시판 상담</div>
-          <div class="status">※ 각 시트 컬럼: 대분류 / 중분류 / 소분류 / 코드▼ / 문의 유형 / 1월 ~ 12월</div>
-          <div class="status" style="color:#52657c">※ 연도별·채널별 월간 시트를 한 파일에서 누적 관리하며, 빈 월은 미등록으로 처리합니다.<br>※ 특정기간 비교는 <b>올해_CALL / 올해_ERMS / 전년_CALL / 전년_ERMS</b> 4개 시트로 구분해 등록합니다.<br>※ 학년정보(고1/고2/고3/N수/기타/비회원)는 <b>CALL 데이터에 한해 2026년부터 적용</b>하며, ERMS·스마트러닝에는 적용하지 않습니다.<br>※ 2026_CALL 월간 시트는 <b>2단 헤더</b>를 지원합니다: 1월~12월(상위) → 문의량 / 고1 / 고2 / 고3 / N수 / 기타 / 비회원(하위).<br>※ 기간 시트 컬럼: 시작일 / 종료일 / 대분류 / 중분류 / 소분류 / 코드▼ / 문의 유형 / 건수 / 고1 / 고2 / 고3 / N수 / 기타 / 비회원<br>※ 분석명은 사용하지 않습니다. 기간 시트만 별도로 업로드해도 기존 월간 데이터는 유지되며, 같은 비교구분·채널 조합은 최신 기간으로 갱신됩니다.</div>
+          <div id="consultTypeStatus" class="status" style="display:none"></div>
         </div>
       </div>
 
@@ -5330,6 +5351,22 @@ function aiAnalysisIsNewerThanJob(job){
   return !isNaN(resultTime) && !isNaN(jobTime) && resultTime.getTime()>=jobTime.getTime()-2000;
 }
 
+
+function friendlyAiErrorMessage(raw){
+  const text=String(raw||"");
+  const low=text.toLowerCase();
+  if(low.includes("resource_exhausted") || low.includes("quota exceeded") || low.includes("code\": 429") || low.includes("(429)")){
+    return "Firestore 일일 사용량 한도에 도달하여 AI 분석을 실행할 수 없습니다. 사용량이 초기화된 후 다시 실행해 주세요. 기존 대시보드 조회에는 영향이 없습니다.";
+  }
+  if(low.includes("permission-denied") || low.includes("permission_denied") || low.includes("insufficient permissions")){
+    return "AI 분석에 필요한 Firestore 접근 권한을 확인해 주세요.";
+  }
+  if(low.includes("deadline") || low.includes("timeout") || low.includes("timed out")){
+    return "AI 분석 요청 시간이 초과되었습니다. 잠시 후 다시 시도해 주세요.";
+  }
+  return text ? `AI 분석을 완료하지 못했습니다. ${text}` : "AI 분석을 완료하지 못했습니다. 잠시 후 다시 시도해 주세요.";
+}
+
 function aiLatestJobForSelected(){
   const sel=aiSelectedPeriodInfo();
   if(!sel) return null;
@@ -5367,7 +5404,7 @@ function aiApplyPersistedJobStatus(){
     if(btn){btn.disabled=false;btn.textContent="AI 분석 실행";}
   } else if(job.status==="failed"){
     if(btn){btn.disabled=false;btn.textContent="AI 분석 실행";}
-    if(status){status.textContent=`🔴 AI 분석 실패 · ${job.error||"오류 내용을 확인해 주세요."}`;status.classList.add("error");}
+    if(status){status.textContent=`🔴 ${friendlyAiErrorMessage(job.error)}`;status.classList.add("error");}
   }
 }
 
@@ -5471,6 +5508,15 @@ async function runAiFromDashboard(){
     url=getAiWebAppUrl();
   }
   try{
+    const usage=LAST_FIRESTORE_USAGE;
+    if(usage && usage.limits){
+      const readLimit=Number(usage.limits.read||50000), readUsed=Number(usage.read||0);
+      if(readLimit>0 && readUsed/readLimit>=0.98){
+        const status=$("aiStatus");
+        if(status){status.textContent="🔴 Firestore 읽기 사용량이 일일 한도에 근접하거나 도달했습니다. 사용량 초기화 후 AI 분석을 실행해 주세요.";status.classList.add("error");}
+        return;
+      }
+    }
     aiSetRunBusy(true,"선택기간 데이터 변경 여부를 확인하는 중입니다...");
     const idToken=await currentUser.getIdToken(true);
     const requestId=`ai_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
@@ -5502,7 +5548,7 @@ async function runAiFromDashboard(){
     aiActiveRequestId="";
     aiSetRunBusy(false);
     const status=$("aiStatus");
-    if(status){status.textContent="AI 분석 요청 실패: "+(e?.message||e);status.classList.add("error");}
+    if(status){status.textContent=`🔴 ${friendlyAiErrorMessage(e?.message||e)}`;status.classList.add("error");}
   }
 }
 
@@ -5520,7 +5566,7 @@ window.addEventListener("message",async e=>{
   refreshAiJobStatus().catch(()=>{});
   if(!data.ok){
     const status=$("aiStatus");
-    if(status){status.textContent="AI 분석 실패: "+(data.error||"알 수 없는 오류");status.classList.add("error");}
+    if(status){status.textContent=`🔴 ${friendlyAiErrorMessage(data.error)}`;status.classList.add("error");}
     return;
   }
   try{
@@ -6419,6 +6465,44 @@ async function applyFilter(){
   renderRaw();
 }
 
+function latestDateFromRows(rows, keys=["date"]){
+  const values=[];
+  (rows||[]).forEach(r=>{
+    for(const k of keys){
+      const v=String(r?.[k]||"").trim();
+      const m=v.match(/^(\d{4}-\d{2}-\d{2})/);
+      if(m){ values.push(m[1]); break; }
+    }
+  });
+  return values.length ? values.sort().at(-1) : "";
+}
+function latestConsultMonthLabel(){
+  let latest="";
+  (consultTypeData||[]).forEach(r=>{
+    const y=Number(r?.year||r?.__year);
+    if(!y) return;
+    const directMonth=Number(r?.month||r?.월);
+    if(directMonth>=1&&directMonth<=12){
+      const key=`${y}-${String(directMonth).padStart(2,"0")}`;
+      if(key>latest) latest=key;
+    }
+    for(let m=1;m<=12;m++){
+      const v=r?.[`m${m}`];
+      if(v!==null && v!==undefined && String(v).trim()!==""){
+        const key=`${y}-${String(m).padStart(2,"0")}`;
+        if(key>latest) latest=key;
+      }
+    }
+  });
+  if(!latest) return "";
+  const [y,m]=latest.split("-");
+  return `${y}년 ${Number(m)}월`;
+}
+function setLatestSummaryValue(id,value){
+  const el=$(id); if(!el) return;
+  el.textContent=value||"-";
+  el.classList.toggle("empty",!value);
+}
 function updateStatus(){
   if(daily.length){
     $("dailyStatus").innerHTML=`Firestore 등록 <b>${daily.length}일</b> · ${daily[0].date} ~ ${daily.at(-1).date}<br>최근일 총문의 ${fmt(daily.at(-1).totalQ)} / 총답변 ${fmt(daily.at(-1).totalA)}`;
@@ -6702,11 +6786,19 @@ async function readDataStatusDocs(){
   return out;
 }
 async function renderDataStatusMonitor(){
-  const grid=$("dataStatusGrid"); if(!grid || currentRole!=="admin") return;
-  grid.innerHTML='<div class="status" style="padding:6px 4px">Firestore 상태 확인 중...</div>';
+  const grid=$("dataStatusGrid");
+  const slots=[...document.querySelectorAll(".integrated-status-slot[data-status-type]")];
+  if((!grid && !slots.length) || currentRole!=="admin") return;
+
+  slots.forEach(slot=>{
+    slot.innerHTML='<div class="status" style="padding:6px 4px">Firestore 상태 확인 중...</div>';
+  });
+
   const saved=await readDataStatusDocs();
   const types=["daily","refundstatus","mdm","consulttype","consultperiod","issues"];
-  grid.innerHTML=types.filter(type=>DATA_STATUS_DEFS[type]).map(type=>{
+  const cards={};
+
+  types.filter(type=>DATA_STATUS_DEFS[type]).forEach(type=>{
     const def=DATA_STATUS_DEFS[type], sum=statusLocalSummary(type), st=saved[type]||{};
     const [badge,cls]=statusBadgeInfo(st.status,sum);
     const count=(st.status==="reset" && !sum.rowCount)?0:sum.rowCount;
@@ -6719,9 +6811,17 @@ async function renderDataStatusMonitor(){
     const phaseLabel=st.status==="resetting"?"초기화 진행":st.status==="canceling"?"중단 처리":"업로드 진행";
     const stopBtn=inProgress?`<button type="button" class="data-status-stop" data-stop-type="${type}">${st.status==="canceling"?"중단 처리 중...":"강제 중단"}</button>`:"";
     const progress=inProgress?`<div class="data-status-progress ${st.status}"><div class="data-status-progress-line"><span>${phaseLabel}</span><strong class="data-status-progress-pct">${p}%</strong><span class="data-status-progress-count">${Number(st.progressTotal)>0?`${Number(st.progressDone||0).toLocaleString()} / ${Number(st.progressTotal).toLocaleString()}`:"진행 중"}</span></div><div class="data-status-progress-track"><div class="data-status-progress-fill" style="width:${p}%"></div></div><div class="data-status-progress-msg">${st.progressMessage||"처리 중..."}</div>${stopBtn}</div>`:"";
-    return `<div class="data-status-item" id="dataStatusItem_${type}"><div class="data-status-item-top"><div class="data-status-name">${def.label}</div><span class="data-status-badge ${cls}">${badge}</span></div><div class="data-status-meta"><div><b>건수</b> ${Number(count||0).toLocaleString()}</div><div><b>최근 작업</b> ${st.lastAction==="reset"?"초기화":st.lastAction==="upload"?"업로드":"-"}</div><div class="wide"><b>데이터 기간</b> ${range}</div><div><b>최근 업로드</b> ${upload}</div><div><b>최근 초기화</b> ${reset}</div>${progress}${err}</div></div>`;
-  }).join("");
-  grid.querySelectorAll("[data-stop-type]").forEach(btn=>btn.addEventListener("click",async()=>{
+    cards[type]=`<div class="data-status-item" id="dataStatusItem_${type}"><div class="data-status-item-top"><div class="data-status-name">${def.label}</div><span class="data-status-badge ${cls}">${badge}</span></div><div class="data-status-meta"><div><b>건수</b> ${Number(count||0).toLocaleString()}</div><div><b>최근 작업</b> ${st.lastAction==="reset"?"초기화":st.lastAction==="upload"?"업로드":"-"}</div><div class="wide"><b>데이터 기간</b> ${range}</div><div><b>최근 업로드</b> ${upload}</div><div><b>최근 초기화</b> ${reset}</div>${progress}${err}</div></div>`;
+  });
+
+  slots.forEach(slot=>{
+    const type=slot.dataset.statusType;
+    slot.innerHTML=cards[type]||'<div class="status">상태 정보 없음</div>';
+  });
+
+  if(grid) grid.innerHTML="";
+
+  document.querySelectorAll(".integrated-status-slot [data-stop-type]").forEach(btn=>btn.addEventListener("click",async()=>{
     const type=btn.dataset.stopType; if(!type) return;
     if(!confirm(`[${operationLabel(type)}] 작업을 중단할까요?\n현재 실행 중인 배치는 완료된 뒤 중단됩니다.`)) return;
     btn.disabled=true; btn.textContent="중단 요청 중...";
