@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- v98 달력 빠른선택 + Firestore 사용량 새로고침 수정 -->
+<!-- v99 Firestore 반복조회 최적화 + AI quota 오류 구분 -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -5502,8 +5502,32 @@ function aiAnalysisIsNewerThanJob(job){
 function friendlyAiErrorMessage(raw){
   const text=String(raw||"");
   const low=text.toLowerCase();
-  if(low.includes("resource_exhausted") || low.includes("quota exceeded") || low.includes("code\": 429") || low.includes("(429)")){
-    return "Firestore 일일 사용량 한도에 도달하여 AI 분석을 실행할 수 없습니다. 사용량이 초기화된 후 다시 실행해 주세요. 기존 대시보드 조회에는 영향이 없습니다.";
+
+  // Firestore quota 초과는 Firestore 관련 식별자가 함께 있는 경우에만 확정합니다.
+  const isFirestoreQuota =
+    (low.includes("firestore") || low.includes("firestore.googleapis.com") || low.includes("document read") || low.includes("read requests")) &&
+    (low.includes("resource_exhausted") || low.includes("quota exceeded") || low.includes("429") || low.includes("할당량"));
+  if(isFirestoreQuota){
+    return "Firestore 일일 사용량 한도에 도달했습니다. 태평양 시간 기준 일일 할당량 초기화 후 다시 실행해 주세요.";
+  }
+
+  // OpenAI/API 429는 Firestore 오류와 구분합니다.
+  const isOpenAiQuota =
+    low.includes("openai") ||
+    low.includes("insufficient_quota") ||
+    low.includes("rate_limit_exceeded") ||
+    low.includes("billing") ||
+    low.includes("credit") ||
+    low.includes("requests per min") ||
+    low.includes("tokens per min") ||
+    low.includes("exceeded your current quota");
+  if(isOpenAiQuota && (low.includes("429") || low.includes("quota") || low.includes("rate_limit"))){
+    return "OpenAI API 사용 한도 또는 크레딧 문제로 AI 분석을 실행하지 못했습니다. OpenAI 사용량/결제 상태를 확인해 주세요.";
+  }
+
+  // 출처를 특정할 수 없는 429는 Firestore라고 단정하지 않습니다.
+  if(low.includes("code\": 429") || low.includes("(429)") || /(^|\D)429(\D|$)/.test(low)){
+    return "AI 분석 요청이 429 오류로 실패했습니다. OpenAI API 한도/크레딧 또는 Firestore 사용량 중 어느 쪽인지 원본 오류를 확인해 주세요.";
   }
   if(low.includes("permission-denied") || low.includes("permission_denied") || low.includes("insufficient permissions")){
     return "AI 분석에 필요한 Firestore 접근 권한을 확인해 주세요.";
@@ -5571,9 +5595,17 @@ function formatUsageNumber(v){return Number(v||0).toLocaleString("ko-KR");}
 function usageLevel(p){return p>=90?"danger":p>=70?"warn":"";}
 function renderFirestoreUsage(data){
   const grid=$("firestoreUsageGrid"), foot=$("firestoreUsageFoot");
-  if(data && !data.error) LAST_FIRESTORE_USAGE={...data,limits:{...(data.limits||{read:50000,write:20000,delete:20000})}};
+  if(data && !data.error){
+    LAST_FIRESTORE_USAGE={
+      ...data,
+      limits:{...(data.limits||{read:50000,write:20000,delete:20000})},
+      __fetchedAt:Date.now()
+    };
+  }
   if(!grid) return;
   if(!data || data.error){
+    // 조회 실패 시 이전 사용량 값으로 AI 실행을 잘못 차단하지 않도록 폐기합니다.
+    LAST_FIRESTORE_USAGE=null;
     grid.innerHTML=`<div class="firestore-usage-error">${escapeHtml(data?.error||"Firestore 사용량을 불러오지 못했습니다.")}</div>`;
     return;
   }
@@ -5625,11 +5657,13 @@ async function refreshFirestoreProjectUsage(){
     setTimeout(()=>{
       if(firestoreUsageRequestId!==requestId) return;
       firestoreUsageRequestId="";
+      LAST_FIRESTORE_USAGE=null;
       if(btn){btn.disabled=false;btn.textContent="사용량 새로고침";}
       if(grid) grid.innerHTML='<div class="firestore-usage-error">사용량 조회 응답이 없습니다. Apps Script v23 배포 및 Cloud Monitoring API 권한을 확인해 주세요.</div>';
     },30000);
   }catch(e){
     firestoreUsageRequestId="";
+    LAST_FIRESTORE_USAGE=null;
     if(btn){btn.disabled=false;btn.textContent="사용량 새로고침";}
     if(grid) grid.innerHTML=`<div class="firestore-usage-error">${escapeHtml(e?.message||String(e))}</div>`;
   }
@@ -5656,11 +5690,14 @@ async function runAiFromDashboard(){
   }
   try{
     const usage=LAST_FIRESTORE_USAGE;
-    if(usage && usage.limits){
+    const usageAgeMs=usage?.__fetchedAt ? Date.now()-Number(usage.__fetchedAt) : Infinity;
+    const usageIsFresh=!!(usage && usage.limits && usageAgeMs>=0 && usageAgeMs<=10*60*1000);
+    // Cloud Monitoring 조회가 실제 성공했고 10분 이내의 최신 값일 때만 보호 차단합니다.
+    if(usageIsFresh){
       const readLimit=Number(usage.limits.read||50000), readUsed=Number(usage.read||0);
       if(readLimit>0 && readUsed/readLimit>=0.98){
         const status=$("aiStatus");
-        if(status){status.textContent="🔴 Firestore 읽기 사용량이 일일 한도에 근접하거나 도달했습니다. 사용량 초기화 후 AI 분석을 실행해 주세요.";status.classList.add("error");}
+        if(status){status.textContent="🔴 Firestore 읽기 사용량이 일일 한도에 근접하거나 도달했습니다. 사용량 초기화 후 다시 실행해 주세요.";status.classList.add("error");}
         return;
       }
     }
@@ -6122,8 +6159,8 @@ function renderNewsStart(s,e){
 }
 
 async function applyFilter(){
-  await reload();
-
+  // 기간조회는 이미 메모리에 로드된 데이터를 사용합니다.
+  // 조회 버튼을 누를 때마다 Firestore 전체 컬렉션을 다시 읽지 않습니다.
   const s=$("startDate").value;
   const e=$("endDate").value;
   if(!s||!e) return alert("기간을 선택해 주세요.");
