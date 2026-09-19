@@ -4121,7 +4121,7 @@ const sum = (rows,key) => rows.reduce((s,r)=>s+(Number(r[key])||0),0);
 const pct = (a,b) => b ? (a/b*100) : 0;
 
 let daily = [];
-let refunds = [];          // 관리자 로그인 시에만 원본 로드
+let refunds = [];          // 대용량 환불 원본은 로그인 시 미로드(필요 시 업로드 작업에서만 사용)
 let refundDaily = [];      // 일반 조회용 일자별 환불 집계
 let mdmData = [];          // MDM 원격 일자별 현황
 let consultTypeData = [];  // 상담유형 월별 현황
@@ -5172,60 +5172,194 @@ async function deleteOperationIssue(id){
   catch(e){alert("삭제 실패: "+(e?.message||e));}
 }
 
-async function fetchCollection(name){
-  const snap=await getDocs(collection(firestore,name));
-  return snap.docs.map(d=>({__id:d.id,...d.data()}));
+const DASH_CACHE_DB_NAME="callcenterDashboardCache";
+const DASH_CACHE_DB_VERSION=1;
+const DASH_CACHE_STORE="datasets";
+const DASH_META_DOC_ID="__dashboard_meta__";
+const DASH_CACHEABLE_COLLECTIONS=["daily","refundDaily","mdm","consultTypes","consultPeriods","newsstart"];
+let DASH_CACHE_DB_PROMISE=null;
+let DASH_REMOTE_META=null;
+
+function dashboardMetaRef(){ return doc(firestore,"operationIssues",DASH_META_DOC_ID); }
+function dashboardNewVersion(){ return `${Date.now()}_${Math.random().toString(36).slice(2,8)}`; }
+function dashboardCacheable(name){ return DASH_CACHEABLE_COLLECTIONS.includes(name); }
+
+function dashboardOpenCacheDb(){
+  if(DASH_CACHE_DB_PROMISE) return DASH_CACHE_DB_PROMISE;
+  DASH_CACHE_DB_PROMISE=new Promise((resolve,reject)=>{
+    if(!window.indexedDB) return reject(new Error("IndexedDB를 사용할 수 없습니다."));
+    const req=indexedDB.open(DASH_CACHE_DB_NAME,DASH_CACHE_DB_VERSION);
+    req.onupgradeneeded=()=>{
+      const db=req.result;
+      if(!db.objectStoreNames.contains(DASH_CACHE_STORE)) db.createObjectStore(DASH_CACHE_STORE,{keyPath:"name"});
+    };
+    req.onsuccess=()=>resolve(req.result);
+    req.onerror=()=>reject(req.error||new Error("IndexedDB 열기 실패"));
+  }).catch(e=>{console.warn("대시보드 캐시 DB 사용 불가",e);DASH_CACHE_DB_PROMISE=null;return null;});
+  return DASH_CACHE_DB_PROMISE;
+}
+async function dashboardCacheGet(name){
+  const db=await dashboardOpenCacheDb(); if(!db) return null;
+  return await new Promise(resolve=>{
+    try{
+      const tx=db.transaction(DASH_CACHE_STORE,"readonly");
+      const req=tx.objectStore(DASH_CACHE_STORE).get(name);
+      req.onsuccess=()=>resolve(req.result||null);
+      req.onerror=()=>resolve(null);
+    }catch(_){resolve(null);}
+  });
+}
+async function dashboardCachePut(name,data,version){
+  const db=await dashboardOpenCacheDb(); if(!db) return false;
+  return await new Promise(resolve=>{
+    try{
+      const tx=db.transaction(DASH_CACHE_STORE,"readwrite");
+      tx.objectStore(DASH_CACHE_STORE).put({name,version:String(version||""),updatedAt:new Date().toISOString(),data:Array.isArray(data)?data:[]});
+      tx.oncomplete=()=>resolve(true); tx.onerror=()=>resolve(false); tx.onabort=()=>resolve(false);
+    }catch(_){resolve(false);}
+  });
+}
+async function dashboardCacheDelete(name){
+  const db=await dashboardOpenCacheDb(); if(!db) return false;
+  return await new Promise(resolve=>{
+    try{
+      const tx=db.transaction(DASH_CACHE_STORE,"readwrite");
+      tx.objectStore(DASH_CACHE_STORE).delete(name);
+      tx.oncomplete=()=>resolve(true); tx.onerror=()=>resolve(false); tx.onabort=()=>resolve(false);
+    }catch(_){resolve(false);}
+  });
+}
+async function dashboardReadRemoteMeta(){
+  try{
+    const snap=await getDoc(dashboardMetaRef());
+    if(!snap.exists()) return {ok:true,exists:false,data:null};
+    const data=snap.data()||{};
+    DASH_REMOTE_META=data;
+    return {ok:true,exists:true,data};
+  }catch(e){
+    console.warn("대시보드 버전정보 조회 실패 · 로컬 캐시 우선 사용",e);
+    return {ok:false,exists:false,data:null,error:e};
+  }
+}
+async function dashboardWriteVersions(patch){
+  if(currentRole!=="admin" || !patch || !Object.keys(patch).length) return null;
+  const ref=dashboardMetaRef();
+  let current={};
+  try{const snap=await getDoc(ref); if(snap.exists()) current=snap.data()?.versions||{};}catch(_){current=DASH_REMOTE_META?.versions||{};}
+  const versions={...current,...patch};
+  const payload={kind:"dashboardCacheMeta",versions,updatedAt:new Date().toISOString(),updatedBy:currentUser?.email||""};
+  await setDoc(ref,payload,{merge:true});
+  DASH_REMOTE_META={...(DASH_REMOTE_META||{}),...payload};
+  return versions;
+}
+async function dashboardCacheCommit(name,rows,version=""){
+  if(!dashboardCacheable(name)) return "";
+  const v=version||dashboardNewVersion();
+  await dashboardCachePut(name,rows,v);
+  if(currentRole==="admin"){
+    try{await dashboardWriteVersions({[name]:v});}
+    catch(e){console.warn(`버전정보 갱신 실패(${name})`,e);}
+  }
+  return v;
+}
+function dashboardAssignDataset(name,rows){
+  const data=Array.isArray(rows)?rows:[];
+  if(name==="daily") daily=data;
+  else if(name==="refundDaily") refundDaily=data;
+  else if(name==="mdm") mdmData=data;
+  else if(name==="consultTypes") consultTypeData=data;
+  else if(name==="consultPeriods") consultPeriodData=data;
+  else if(name==="newsstart"){
+    newsStartUsingFallback=!data.length;
+    newsStartData=data.length?data:NEWSSTART_INITIAL_DATA.map(r=>({...r}));
+  }
+}
+function dashboardSortLoadedData(){
+  daily.sort((a,b)=>(a.date||"").localeCompare(b.date||""));
+  refundDaily.sort((a,b)=>(a.date||"").localeCompare(b.date||"") || String(a.kind||"").localeCompare(String(b.kind||"")) || String(a.item||"").localeCompare(String(b.item||"")));
+  mdmData.sort((a,b)=>(a.date||"").localeCompare(b.date||""));
+  consultTypeData.sort((a,b)=>String(a.code||"").localeCompare(String(b.code||"")));
+  consultPeriodData.sort((a,b)=>String(a.startDate||"").localeCompare(String(b.startDate||"")) || String(a.endDate||"").localeCompare(String(b.endDate||"")) || String(a.compareType||"").localeCompare(String(b.compareType||"")) || String(a.channel||"").localeCompare(String(b.channel||"")) || String(a.code||"").localeCompare(String(b.code||"")));
+  newsStartData.sort((a,b)=>(a.date||"").localeCompare(b.date||""));
+  updateAiLatestDailyDate();
+}
+async function dashboardLoadCachedCollections({force=false}={}){
+  const metaResult=await dashboardReadRemoteMeta();
+  const remoteVersions=metaResult.exists?(metaResult.data?.versions||{}):{};
+  const localEntries={};
+  await Promise.all(DASH_CACHEABLE_COLLECTIONS.map(async name=>{localEntries[name]=await dashboardCacheGet(name);}));
+  const hasAllLocal=DASH_CACHEABLE_COLLECTIONS.every(name=>Array.isArray(localEntries[name]?.data));
+
+  // Cloud/Firestore가 일시적으로 막혀도 기존 브라우저 캐시가 있으면 대시보드는 계속 열립니다.
+  if(!metaResult.ok && !force && hasAllLocal){
+    DASH_CACHEABLE_COLLECTIONS.forEach(name=>dashboardAssignDataset(name,localEntries[name].data));
+    dashboardSortLoadedData();
+    return {source:"cache-offline",fetched:[]};
+  }
+
+  const fetched=[];
+  const bootstrapVersions={};
+  for(const name of DASH_CACHEABLE_COLLECTIONS){
+    const local=localEntries[name];
+    const remoteVersion=String(remoteVersions[name]||"");
+    const canUseCache=!force && metaResult.exists && remoteVersion && local && local.version===remoteVersion && Array.isArray(local.data);
+    if(canUseCache){
+      dashboardAssignDataset(name,local.data);
+      continue;
+    }
+    const rows=await fetchCollection(name);
+    dashboardAssignDataset(name,rows);
+    fetched.push(name);
+    const version=remoteVersion||dashboardNewVersion();
+    bootstrapVersions[name]=version;
+    await dashboardCachePut(name,rows,version);
+  }
+
+  // 버전 문서가 처음 도입된 환경에서는 관리자 1회 접속으로 메타정보를 초기화합니다.
+  if(!metaResult.exists && currentRole==="admin"){
+    try{
+      const versions={};
+      for(const name of DASH_CACHEABLE_COLLECTIONS){
+        const entry=await dashboardCacheGet(name);
+        versions[name]=entry?.version||bootstrapVersions[name]||dashboardNewVersion();
+      }
+      await dashboardWriteVersions(versions);
+    }catch(e){console.warn("대시보드 버전정보 초기화 실패",e);}
+  }
+  dashboardSortLoadedData();
+  return {source:fetched.length?"firestore+cache":"cache",fetched};
 }
 
-async function reload(){
-  daily = await fetchCollection("daily");
-  daily.sort((a,b)=>(a.date||"").localeCompare(b.date||""));
-  updateAiLatestDailyDate();
+async function fetchCollection(name){
+  const snap=await getDocs(collection(firestore,name));
+  return snap.docs.filter(d=>d.id!==DASH_META_DOC_ID).map(d=>({__id:d.id,...d.data()}));
+}
 
-  refundDaily = await fetchCollection("refundDaily");
-  refundDaily.sort((a,b)=>(a.date||"").localeCompare(b.date||""));
+async function reload({force=false}={}){
+  await dashboardLoadCachedCollections({force});
 
-  mdmData = await fetchCollection("mdm");
-  mdmData.sort((a,b)=>(a.date||"").localeCompare(b.date||""));
-
-  consultTypeData = await fetchCollection("consultTypes");
-  consultTypeData.sort((a,b)=>String(a.code||"").localeCompare(String(b.code||"")));
-
-  consultPeriodData = await fetchCollection("consultPeriods");
-  consultPeriodData.sort((a,b)=>String(a.startDate||"").localeCompare(String(b.startDate||"")) || String(a.endDate||"").localeCompare(String(b.endDate||"")) || String(a.compareType||"").localeCompare(String(b.compareType||"")) || String(a.channel||"").localeCompare(String(b.channel||"")) || String(a.code||"").localeCompare(String(b.code||"")));
-
+  // 소량·수시변경 데이터만 로그인/새로고침 시 직접 확인합니다.
   try {
     operationIssues = await fetchCollection("operationIssues");
     operationIssues.sort((a,b)=>String(a.date||"").localeCompare(String(b.date||"")) || String(a.createdAt||"").localeCompare(String(b.createdAt||"")));
   } catch(e) {
     console.warn("operationIssues 조회 실패",e);
-    operationIssues = [];
+    operationIssues = operationIssues||[];
   }
   renderOperationIssues();
 
-  // AI 분석 컬렉션은 기존 Firestore 규칙에 아직 권한이 없을 수 있으므로
-  // 로그인 자체가 막히지 않도록 선택적으로 로드합니다.
   try {
     aiAnalysisData = await fetchCollection("aiAnalysis");
     aiAnalysisData.sort((a,b)=>String(aiValue(a,["analysisAt","분석일시"],a.__id)||"").localeCompare(String(aiValue(b,["analysisAt","분석일시"],b.__id)||"")));
   } catch (e) {
-    console.warn("aiAnalysis 컬렉션을 읽을 권한이 없어 AI 분석 데이터만 건너뜁니다.", e);
-    aiAnalysisData = [];
+    console.warn("aiAnalysis 컬렉션 조회 실패", e);
+    aiAnalysisData = aiAnalysisData||[];
   }
 
-  const newsStored = await fetchCollection("newsstart");
-  newsStartUsingFallback = !newsStored.length;
-  newsStartData = (newsStored.length ? newsStored : NEWSSTART_INITIAL_DATA.map(r=>({...r})));
-  newsStartData.sort((a,b)=>(a.date||"").localeCompare(b.date||""));
+  // 대용량 환불 원본은 로그인 시 읽지 않습니다. 집계(refundDaily)만 사용합니다.
+  refunds=[];
+  aiJobData=[];
 
-  if(currentUser && currentRole==="admin"){
-    refunds = await fetchCollection("refunds");
-    refunds.sort((a,b)=>(a.applyDate||"").localeCompare(b.applyDate||""));
-    aiJobData = []; // Firestore 폴링/작업상태 조회 제거
-  }else{
-    refunds = [];
-    aiJobData = [];
-  }
   updateStatus();
   renderConsultType();
   renderConsultGradePage();
@@ -5776,7 +5910,8 @@ async function deleteCollectionDocs(name,onProgress){
   const activeType=ACTIVE_DATA_STATUS_TYPE;
   assertDataOperationContinue(activeType,"reset","read",0);
   const snap=await getDocs(collection(firestore,name));
-  const docs=snap.docs;
+  // operationIssues 컬렉션 안의 캐시 버전 메타 문서는 초기화/교체 대상에서 제외합니다.
+  const docs=snap.docs.filter(d=>d.id!==DASH_META_DOC_ID);
   const total=docs.length;
   addEstimatedUsage("read",total);
   assertDataOperationContinue(activeType,"reset","delete",Math.min(450,total));
@@ -5830,6 +5965,8 @@ async function replaceCollection(name, rows, idFn){
     }
   }
   if(activeType) reportDataStatusProgress(activeType,100,"등록 마무리 중...",total,total,true);
+  // 방금 업로드한 데이터는 다시 Firestore에서 읽지 않고 IndexedDB 캐시와 버전정보를 즉시 갱신합니다.
+  if(dashboardCacheable(name)) await dashboardCacheCommit(name,rows);
 }
 
 // 환불현황 누적본 증분 등록
@@ -6959,13 +7096,14 @@ function statusBadgeInfo(status,summary){
 }
 async function readDataStatusDocs(){
   const out={};
+  const types=["daily","refundstatus","mdm","consulttype","consultperiod","issues"];
   try{
-    const snap=await getDocs(collection(firestore,"aiAnalysisJobs"));
-    snap.docs.forEach(x=>{
-      if(!x.id.startsWith(DATA_STATUS_DOC_PREFIX)) return;
-      const d=x.data()||{}; if(d.kind!=="dashboardDataStatus") return;
-      out[x.id.slice(DATA_STATUS_DOC_PREFIX.length)]=d;
-    });
+    await Promise.all(types.map(async type=>{
+      const snap=await getDoc(dataStatusDocRef(type));
+      if(!snap.exists()) return;
+      const d=snap.data()||{};
+      if(d.kind==="dashboardDataStatus") out[type]=d;
+    }));
   }catch(e){ console.warn("데이터 상태 문서 조회 실패",e); }
   return out;
 }
@@ -7121,7 +7259,8 @@ async function uploadCore(file,type){
       const lastDate=rows.at(-1).date;
 
       await replaceCollection("daily",rows,r=>r.date);
-      await reload();
+      daily=rows.slice();
+      dashboardSortLoadedData();
       setDefaultRecent7Days();
       await applyFilter();
       alert(`${rows.length}일 데이터를 Firestore에 교체 등록했습니다.\n날짜 확인: ${firstDate} ~ ${lastDate}\n※ Excel 원본의 첫/마지막 날짜와 반드시 동일한지 확인해 주세요.`);
@@ -7200,6 +7339,7 @@ async function uploadCore(file,type){
       // Firestore 전체 재조회 없이 누적본을 로컬 데이터에 즉시 병합합니다.
       // 동일행도 포함해 로컬 캐시를 최신 Excel 기준으로 맞춥니다.
       mergeRefundRowsLocal(rows);
+      await dashboardCacheCommit("refundDaily",refundDaily);
 
       // 완료 메시지를 먼저 표시
       if(statusEl){
@@ -7268,8 +7408,8 @@ async function uploadCore(file,type){
       });
       const summaries=Object.values(map).sort((a,b)=>a.date.localeCompare(b.date));
       await replaceCollection("refundDaily",summaries,r=>r.date);
-
-      await reload();
+      refundDaily=summaries.slice();
+      dashboardSortLoadedData();
       await applyFilter();
       alert(`${rows.length}건 환불 데이터를 Firestore에 교체 등록했습니다.`);
     }else if(type==="mdm"){
@@ -7292,7 +7432,8 @@ async function uploadCore(file,type){
       if(!rows.length) throw new Error("날짜 컬럼을 인식하지 못했습니다. 날짜는 YYYY-MM-DD 또는 01월 03일 형식을 사용할 수 있습니다.");
       rows.sort((a,b)=>a.date.localeCompare(b.date));
       await replaceCollection("mdm",rows,r=>r.date);
-      await reload();
+      mdmData=rows.slice();
+      dashboardSortLoadedData();
       await applyFilter();
       alert(`${rows.length}일 MDM 원격 데이터를 Firestore에 교체 등록했습니다.`);
     }else if(type==="newsstart"){
@@ -7309,7 +7450,9 @@ async function uploadCore(file,type){
       if(!rows.length) throw new Error("일자 컬럼을 인식하지 못했습니다.");
       rows.sort((a,b)=>a.date.localeCompare(b.date));
       await replaceCollection("newsstart",rows,r=>r.date);
-      await reload();
+      newsStartUsingFallback=!rows.length;
+      newsStartData=rows.slice();
+      dashboardSortLoadedData();
       await applyFilter();
       alert(`${rows.length}일 뉴스타트 인증 데이터를 Firestore에 교체 등록했습니다.`);
     }else if(type==="consulttype"){
@@ -7404,7 +7547,12 @@ async function uploadCore(file,type){
         messages.push(`특정기간 ${periodRows.length}개 행 · ${comboText.join(" / ")}`);
       }
       if(!rows.length && !periodRows.length) throw new Error("상담유형 데이터를 인식하지 못했습니다.");
-      await reload();
+      if(rows.length) consultTypeData=rows.slice();
+      if(periodRows.length){
+        const cachedPeriods=await dashboardCacheGet("consultPeriods");
+        if(cachedPeriods?.data) consultPeriodData=cachedPeriods.data.slice();
+      }
+      dashboardSortLoadedData();
       // 데이터 등록 직후 AI 분석기간을 가장 최신 특정기간으로 자동 전환합니다.
       populateAiPeriodSelect(true);
       renderAiAnalysis();
@@ -8738,6 +8886,7 @@ onAuthStateChanged(auth, async user=>{
     setGateStatus("접근 권한 확인 중...");
     currentRole=await resolveUserRole(user);
     applyRoleUI();
+    // 로그인 시 대용량 컬렉션은 버전 1건만 확인하고, 변경이 없으면 IndexedDB 캐시를 사용합니다.
     await reload();
     if(daily.length){
       setDefaultRecent7Days();
@@ -8956,6 +9105,10 @@ $("clearBtn").addEventListener("click",async()=>{
         reportDataStatusProgress(type,pct,msg,done,total,meta.phase==="deleting");
         btn.textContent=`${target.label} 초기화 중... ${pct}%${batchText}`;
       });
+      if(dashboardCacheable(col)){
+        dashboardAssignDataset(col,[]);
+        await dashboardCacheCommit(col,[]);
+      }
     }
     reportDataStatusProgress(type,100,"초기화 완료",1,1,true);
     await writeDataStatus(type,{status:"reset",lastAction:"reset",lastResetAt:dataStatusNow(),resetFinishedAt:dataStatusNow(),rowCount:0,minDate:"",maxDate:"",error:"",progressPct:100,progressMessage:"초기화 완료",heartbeatAt:dataStatusNow()});
