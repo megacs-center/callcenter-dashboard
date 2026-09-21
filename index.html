@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- v99 Firestore 반복조회 최적화 + AI quota 오류 구분 -->
+<!-- v102 운영보고 AI 관리자전용 + Firestore 증분 업로드 최적화 -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -2702,6 +2702,80 @@ document.addEventListener('DOMContentLoaded',()=>{
 .issue-status-guide{border:1px dashed #ccd8e7;background:#fafcff;border-radius:10px;padding:14px 15px;color:#61738a;font-size:10.5px;line-height:1.6}
 .issue-status-guide b{color:#23405f}
 @media(max-width:1000px){.consult-status-pair{grid-template-columns:1fr}}
+
+
+/* ===== 운영보고 통합 화면 ===== */
+#report{padding-bottom:18px}
+.op-report-wrap{display:flex;flex-direction:column;gap:10px;min-width:0}
+.op-report-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:2px 2px 0}
+.op-report-titlebox{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.op-report-title{font-size:27px;font-weight:900;letter-spacing:-.9px;color:#0e2b54}
+.op-report-datebox{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:800;color:#18345d}
+.op-report-datebox input{height:38px;border:1px solid #d7e3f2;border-radius:8px;padding:0 10px;background:#fff;color:#18345d;font-weight:800}
+.op-report-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.op-report-basis{font-size:10px;color:#71849d;white-space:nowrap}
+.op-report-btn{height:36px;border:1px solid #d7e3f2;border-radius:8px;background:#fff;color:#1767d9;padding:0 13px;font-size:11px;font-weight:900;cursor:pointer}
+.op-report-btn:hover{background:#f4f8ff}
+.op-report-ai{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(285px,.8fr);gap:14px;padding:14px 18px;border:1px solid #cfe2fb;border-radius:12px;background:linear-gradient(110deg,#e9f5ff 0%,#eef7ff 64%,#e4f1ff 64%,#f6fbff 100%)}
+.op-report-ai-title{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:900;color:#173866;margin-bottom:8px}
+.op-report-ai-basis{display:inline-flex;margin-left:4px;padding:4px 8px;border-radius:999px;background:#d8ebff;color:#2c67ad;font-size:9.5px;font-weight:800;vertical-align:middle}
+.op-report-ai-list{display:flex;flex-direction:column;gap:6px}
+.op-report-ai-item{display:grid;grid-template-columns:18px 1fr;gap:7px;align-items:start;color:#18345d;font-size:11.5px;line-height:1.45}
+.op-report-ai-check{width:15px;height:15px;border-radius:50%;display:grid;place-items:center;background:#2f80ed;color:#fff;font-size:9px;font-weight:900;margin-top:1px}
+.op-report-ai-quote{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:116px;background:rgba(255,255,255,.5);border-radius:10px;padding:12px 15px;color:#15345f}
+.op-report-ai-quote-label{padding:5px 11px;border-radius:6px;background:#d8eaff;color:#1767d9;font-size:10px;font-weight:900;margin-bottom:10px}
+.op-report-ai-quote strong{font-size:16px;line-height:1.6;word-break:keep-all}
+.op-report-kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.op-report-kpi{min-width:0;padding:11px 11px 10px;background:#fff;border:1px solid #dfe8f3;border-radius:10px;box-shadow:0 3px 10px rgba(31,70,116,.05)}
+.op-report-kpi-head{display:flex;align-items:center;gap:7px;font-size:10.5px;font-weight:900;color:#284366;white-space:nowrap}
+.op-report-kpi-ico{width:25px;height:25px;border-radius:8px;display:grid;place-items:center;background:#eaf3ff;color:#2276e8;font-size:12px}
+.op-report-kpi-value{text-align:center;margin-top:8px;font-size:23px;font-weight:900;color:#102c53;letter-spacing:-.6px;white-space:nowrap}
+.op-report-kpi-change{text-align:center;margin-top:6px;font-size:11px;font-weight:900;min-height:16px}
+.op-report-kpi-prev{text-align:center;margin-top:7px;padding-top:7px;border-top:1px solid #eef2f7;color:#657891;font-size:10px}
+.op-report-up{color:#ff315b}.op-report-down{color:#1670e5}.op-report-flat{color:#7a8798}
+.op-report-mid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,.88fr) minmax(300px,.95fr);gap:9px;align-items:stretch}
+.op-report-bottom{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;align-items:stretch}
+.op-report-card{background:#fff;border:1px solid #dfe8f3;border-radius:10px;box-shadow:0 3px 10px rgba(31,70,116,.05);padding:12px 13px;min-width:0;overflow:hidden}
+.op-report-card-title{font-size:13px;font-weight:900;color:#17355f;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.op-report-card-title small{font-size:9.5px;color:#6f8199;font-weight:700}
+.op-report-chart{height:215px;position:relative}
+.op-report-share-wrap{display:grid;grid-template-columns:minmax(140px,.95fr) minmax(105px,.7fr);gap:6px;align-items:center;height:215px}
+.op-report-share-chart{height:190px;position:relative}
+.op-report-legend{display:flex;flex-direction:column;gap:9px;font-size:10px;color:#334e70}
+.op-report-legend-row{display:grid;grid-template-columns:9px 1fr auto;gap:6px;align-items:center}
+.op-report-dot{width:8px;height:8px;border-radius:50%}
+.op-report-change-tabs{display:grid;grid-template-columns:1fr 1fr;background:#edf2f8;border-radius:7px;overflow:hidden;margin-bottom:5px}
+.op-report-change-tabs button{height:27px;border:0;background:transparent;color:#526985;font-size:10px;font-weight:900;cursor:pointer}
+.op-report-change-tabs button.active{background:#fff0f4;color:#f02f5e;box-shadow:inset 0 0 0 1px #ff5b7d}
+.op-report-change-list{display:flex;flex-direction:column}
+.op-report-change-row{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:6px;align-items:center;min-height:31px;border-bottom:1px solid #edf2f7;font-size:10.5px}
+.op-report-change-row:last-child{border-bottom:0}
+.op-report-rank{width:21px;height:21px;border-radius:50%;display:grid;place-items:center;background:#fbe8ee;color:#ef4268;font-weight:900}
+.op-report-change-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#28405f;font-weight:800}
+.op-report-change-value{font-weight:900;white-space:nowrap}
+.op-report-table{width:100%;min-width:0!important;border-collapse:collapse;table-layout:fixed}
+.op-report-table th,.op-report-table td{position:static!important;padding:6px 5px;border-bottom:1px solid #edf2f7;font-size:9.5px;white-space:normal;overflow:hidden;text-overflow:ellipsis}
+.op-report-table th{background:#f3f7fb;color:#5d708a;font-weight:900}
+.op-report-table td{color:#294361}
+.op-report-table td.num,.op-report-table th.num{text-align:right}
+.op-report-table tr:last-child td{border-bottom:0}
+.op-report-small-rank{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#eaf3ff;color:#1767d9;font-size:9px;font-weight:900}
+.op-report-small-rank.green{background:#e8f8f2;color:#11a274}.op-report-small-rank.pink{background:#ffeaf0;color:#ef4268}
+.op-report-issue-table{width:100%;min-width:0!important;border-collapse:collapse;table-layout:fixed}
+.op-report-issue-table th,.op-report-issue-table td{position:static!important;padding:5px 5px;font-size:9px;border-bottom:1px solid #edf2f7;white-space:normal;line-height:1.35;vertical-align:top}
+.op-report-issue-table th{background:#f3f7fb;color:#5d708a}.op-report-issue-table td{color:#294361}
+.op-report-checkbox{margin-top:8px;padding:9px 10px;background:linear-gradient(100deg,#e7fbf4,#f0fff9);border-radius:8px}
+.op-report-check-title{font-size:11px;font-weight:900;color:#0e9f78;margin-bottom:6px}
+.op-report-check-item{display:grid;grid-template-columns:13px 1fr;gap:5px;font-size:9px;color:#315a52;margin-top:4px;line-height:1.35}
+.op-report-empty{padding:18px 6px;text-align:center;color:#8997a8;font-size:10px}
+.op-report-period-note{font-size:9px;color:#788aa1;margin-top:-2px;margin-bottom:7px}
+@media(max-width:1450px){.op-report-kpis{grid-template-columns:repeat(4,minmax(0,1fr))}.op-report-bottom{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1100px){.op-report-ai{grid-template-columns:1fr}.op-report-mid{grid-template-columns:1fr}.op-report-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.op-report-bottom,.op-report-kpis{grid-template-columns:1fr}.op-report-title{font-size:22px}.op-report-share-wrap{grid-template-columns:1fr;height:auto}.op-report-share-chart{height:190px}}
+@media print{
+  body{background:#fff!important}.side,.top,#authGate{display:none!important}.app{display:block!important}.main{padding:0!important}.section{display:none!important}#report{display:block!important}.op-report-btn{display:none!important}.op-report-card,.op-report-kpi,.op-report-ai{box-shadow:none!important;break-inside:avoid}
+}
+
 </style>
 </head>
 <body class="auth-pending">
@@ -2724,6 +2798,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   <div class="brand">☰ <small>megastudy</small> <img class="brand-m-symbol" src="data:image/png;base64,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" alt="M"></div>
   <div class="menu">
     <button class="active" data-target="overview">⌂　<span>통합현황</span></button>
+    <button data-target="report">▣　<span>운영보고</span></button>
     <button data-target="call">☎　<span>콜</span></button>
     <button data-target="erms">✉　<span>ERMS 스마트러닝</span></button>
     <button data-target="chat">💬　<span>챗봇 이용</span></button>
@@ -2961,6 +3036,82 @@ document.addEventListener('DOMContentLoaded',()=>{
     </div>
   </div>
   <div class="bottom-summary-note">※ 건수 지표는 선택 기간 합계, CPH는 운영일 평균 기준이며, 비교값은 직전 동기간 및 전년 동기간과 비교한 값입니다.</div>
+</section>
+
+
+
+<section id="report" class="section">
+  <div class="op-report-wrap">
+    <div class="op-report-head">
+      <div class="op-report-titlebox">
+        <div class="op-report-title">일일 운영보고</div>
+        <div class="op-report-datebox">📅 <input id="opReportDate" type="date" aria-label="운영보고 기준일"></div>
+      </div>
+      <div class="op-report-actions">
+        <span class="op-report-basis" id="opReportBasis">데이터 기준일: -</span>
+        <button class="op-report-btn" id="opReportRefreshBtn" type="button">↻ 데이터 새로고침</button>
+        <button class="op-report-btn" id="opReportPrintBtn" type="button">⇩ PDF로 저장</button>
+      </div>
+    </div>
+
+    <div class="op-report-ai" data-role="admin">
+      <div>
+        <div class="op-report-ai-title">🤖 AI 운영 요약 <span class="op-report-ai-basis" id="opReportAiBasis">관리자 전용 · AI 분석 메뉴 저장 결과</span></div>
+        <div class="op-report-ai-list" id="opReportAiList"><div class="op-report-empty">저장된 AI 분석 결과를 불러오는 중입니다.</div></div>
+      </div>
+      <div class="op-report-ai-quote">
+        <div class="op-report-ai-quote-label">AI가 분석한 오늘의 한마디</div>
+        <strong id="opReportAiQuote">AI 분석 메뉴에서 저장된 결과가 있으면 핵심 내용을 표시합니다.</strong>
+      </div>
+    </div>
+
+    <div class="op-report-kpis" id="opReportKpis"></div>
+
+    <div class="op-report-mid">
+      <div class="op-report-card">
+        <div class="op-report-card-title">채널별 문의 추이 <small>(최근 7개 운영일)</small></div>
+        <div class="op-report-chart"><canvas id="opReportTrendChart"></canvas></div>
+      </div>
+      <div class="op-report-card">
+        <div class="op-report-card-title">채널 비중 <small>(기준일)</small></div>
+        <div class="op-report-share-wrap">
+          <div class="op-report-share-chart"><canvas id="opReportShareChart"></canvas></div>
+          <div class="op-report-legend" id="opReportShareLegend"></div>
+        </div>
+      </div>
+      <div class="op-report-card">
+        <div class="op-report-card-title">📌 주요 변화 TOP 5 <small>(직전 운영일 대비)</small></div>
+        <div class="op-report-change-tabs"><button class="active" type="button" data-report-change="up">증가 TOP 5</button><button type="button" data-report-change="down">감소 TOP 5</button></div>
+        <div class="op-report-change-list" id="opReportChanges"></div>
+      </div>
+    </div>
+
+    <div class="op-report-bottom">
+      <div class="op-report-card">
+        <div class="op-report-card-title">☎ CALL 상담유형 TOP 5</div>
+        <div class="op-report-period-note" id="opReportCallPeriod">상담유형 기준기간 -</div>
+        <div id="opReportCallTop"></div>
+      </div>
+      <div class="op-report-card">
+        <div class="op-report-card-title">▣ ERMS 상담유형 TOP 5</div>
+        <div class="op-report-period-note" id="opReportErmsPeriod">상담유형 기준기간 -</div>
+        <div id="opReportErmsTop"></div>
+      </div>
+      <div class="op-report-card">
+        <div class="op-report-card-title">↻ 환불 사유 TOP 5</div>
+        <div class="op-report-period-note">기준일 상품 환불 데이터</div>
+        <div id="opReportRefundTop"></div>
+      </div>
+      <div class="op-report-card">
+        <div class="op-report-card-title">⚠ 오늘의 운영이슈 및 조치사항</div>
+        <div id="opReportIssues"></div>
+        <div class="op-report-checkbox">
+          <div class="op-report-check-title">☑ 다음 운영일 체크 포인트</div>
+          <div id="opReportChecks"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="call" class="section">
@@ -3806,11 +3957,12 @@ document.addEventListener('DOMContentLoaded',()=>{
       target.classList.add('active');
 
       const topFilters=document.querySelector('.top .filters');
-      if(topFilters) topFilters.style.display=(targetId==='consulttype'||targetId==='consultgrade'||targetId==='ai')?'none':'flex';
+      if(topFilters) topFilters.style.display=(targetId==='consulttype'||targetId==='consultgrade'||targetId==='ai'||targetId==='report')?'none':'flex';
 
       const pop=document.getElementById('dataInfoPopover');
       if(pop){ pop.classList.remove('open'); pop.setAttribute('aria-hidden','true'); }
       if(targetId==='consultgrade' && typeof renderConsultGradePage==='function') renderConsultGradePage();
+      if(targetId==='report' && typeof window.renderOperationReport==='function') window.renderOperationReport();
 
       window.dispatchEvent(new Event('resize'));
     });
@@ -5244,8 +5396,11 @@ async function dashboardReadRemoteMeta(){
 async function dashboardWriteVersions(patch){
   if(currentRole!=="admin" || !patch || !Object.keys(patch).length) return null;
   const ref=dashboardMetaRef();
-  let current={};
-  try{const snap=await getDoc(ref); if(snap.exists()) current=snap.data()?.versions||{};}catch(_){current=DASH_REMOTE_META?.versions||{};}
+  // 로그인 시 이미 읽은 메타 버전을 우선 사용합니다. 업로드마다 메타문서를 다시 읽지 않습니다.
+  let current=(DASH_REMOTE_META?.versions && typeof DASH_REMOTE_META.versions==="object") ? {...DASH_REMOTE_META.versions} : {};
+  if(!Object.keys(current).length){
+    try{const snap=await getDoc(ref); if(snap.exists()) current=snap.data()?.versions||{};}catch(_){current={};}
+  }
   const versions={...current,...patch};
   const payload={kind:"dashboardCacheMeta",versions,updatedAt:new Date().toISOString(),updatedBy:currentUser?.email||""};
   await setDoc(ref,payload,{merge:true});
@@ -5845,7 +6000,10 @@ async function runAiFromDashboard(){
       requestId,
         startDate:option.dataset.start||"",
       endDate:option.dataset.end||"",
-      channel:option.dataset.channel||""
+      channel:option.dataset.channel||"",
+      // Apps Script/OpenAI 분석에서 같은 기간의 운영이슈·환불 요약을 함께 활용할 수 있도록 전달합니다.
+      operationIssuesJson:JSON.stringify((operationIssues||[]).filter(r=>issueRangesOverlap(r,option.dataset.start||"",option.dataset.end||"")).map(r=>({startDate:getIssueStartDate(r),endDate:getIssueEndDate(r),category:r.category||"기타",title:r.title||"",detail:r.detail||"",occurrenceTime:r.occurrenceTime||"",endedAt:r.endedAt||""}))),
+      refundSummaryJson:JSON.stringify(reportRefundSummary(option.dataset.start||"",option.dataset.end||""))
     });
     aiJobData.push({__id:requestId,requestId,status:"running",startDate:option.dataset.start||"",endDate:option.dataset.end||"",channel:option.dataset.channel||"",startedAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
     aiSetRunBusy(true,`🟡 AI 분석 요청 접수 · ${option.dataset.start} ~ ${option.dataset.end}${option.dataset.channel?` · ${option.dataset.channel}`:""} · 응답이 완료되면 자동 반영됩니다.`);
@@ -5967,6 +6125,138 @@ async function replaceCollection(name, rows, idFn){
   if(activeType) reportDataStatusProgress(activeType,100,"등록 마무리 중...",total,total,true);
   // 방금 업로드한 데이터는 다시 Firestore에서 읽지 않고 IndexedDB 캐시와 버전정보를 즉시 갱신합니다.
   if(dashboardCacheable(name)) await dashboardCacheCommit(name,rows);
+}
+
+
+// 대용량 컬렉션 증분 동기화
+// - 브라우저/IndexedDB에 이미 로드된 데이터를 기준으로 신규·변경·삭제분만 Firestore에 반영합니다.
+// - 동일 행은 write/delete를 전혀 발생시키지 않습니다.
+// - 과거 캐시에 __id가 없는 상담유형 데이터는 최초 1회만 해당 컬렉션을 읽어 문서 ID를 보강합니다.
+function syncPlainRow(row){
+  const out={};
+  Object.keys(row||{}).sort().forEach(k=>{
+    if(k==="__id" || k.startsWith("__")) return;
+    const v=row[k];
+    if(v!==undefined) out[k]=v;
+  });
+  return out;
+}
+function syncRowsEqual(a,b){
+  if(!a || !b) return false;
+  return JSON.stringify(syncPlainRow(a))===JSON.stringify(syncPlainRow(b));
+}
+function syncHash32(text){
+  let h=2166136261;
+  const str=String(text||"");
+  for(let i=0;i<str.length;i++){
+    h^=str.charCodeAt(i);
+    h=Math.imul(h,16777619);
+  }
+  return (h>>>0).toString(36);
+}
+function syncStableDocId(prefix,key){ return `${prefix}_${syncHash32(key)}`; }
+function syncSummaryText(r){
+  return `총 ${r.total.toLocaleString()} · 신규 ${r.added.toLocaleString()} · 변경 ${r.changed.toLocaleString()} · 동일 ${r.same.toLocaleString()} · 삭제 ${r.removed.toLocaleString()} · 실제 쓰기 ${r.written.toLocaleString()}`;
+}
+async function syncCollectionIncremental(name,incomingRows,{existingRows=[],keyFn,idFn,label=name,hydrateIdsIfMissing=false}={}){
+  if(currentRole!=="admin") throw new Error("관리자 권한이 필요합니다.");
+  const activeType=ACTIVE_DATA_STATUS_TYPE;
+  let existing=Array.isArray(existingRows)?existingRows.slice():[];
+
+  // 이전 버전 캐시가 문서 ID를 보존하지 않았던 경우, 상담유형 계열은 최초 1회만 ID를 보강합니다.
+  if(hydrateIdsIfMissing && existing.length && existing.some(r=>!r?.__id)){
+    reportDataStatusProgress(activeType,2,`${label} 기존 문서 ID 확인 중...`,0,existing.length);
+    existing=await fetchCollection(name);
+    addEstimatedUsage("read",existing.length);
+  }
+
+  const incomingMap=new Map();
+  for(const r of (incomingRows||[])){
+    const key=String(keyFn(r)||"").trim();
+    if(!key) continue;
+    if(incomingMap.has(key)) throw new Error(`${label} 업로드 데이터에 중복 키가 있습니다: ${key}`);
+    incomingMap.set(key,r);
+  }
+  const existingMap=new Map();
+  const duplicateExisting=[];
+  for(const r of existing){
+    const key=String(keyFn(r)||"").trim();
+    if(!key) continue;
+    if(existingMap.has(key)) duplicateExisting.push(r);
+    else existingMap.set(key,r);
+  }
+
+  const added=[], changed=[], same=[], removed=[];
+  incomingMap.forEach((row,key)=>{
+    const prev=existingMap.get(key);
+    if(!prev) added.push({key,row,docId:String(idFn(row,key)||"")});
+    else if(syncRowsEqual(prev,row)) same.push({key,row,prev,docId:String(prev.__id||idFn(row,key)||"")});
+    else changed.push({key,row,prev,docId:String(prev.__id||idFn(row,key)||"")});
+  });
+  existingMap.forEach((row,key)=>{
+    if(!incomingMap.has(key)) removed.push({key,row,docId:String(row.__id||idFn(row,key)||"")});
+  });
+  // 혹시 과거 데이터에 동일 의미의 중복 문서가 남아 있으면 함께 정리합니다.
+  duplicateExisting.forEach(row=>removed.push({key:String(keyFn(row)||""),row,docId:String(row.__id||idFn(row,String(keyFn(row)||""))||"")}));
+
+  const writes=[...added,...changed].filter(x=>x.docId);
+  const deletes=removed.filter(x=>x.docId);
+  const totalOps=writes.length+deletes.length;
+  const totalIncoming=incomingMap.size;
+  let done=0;
+
+  if(!totalOps){
+    const out=[...incomingMap.entries()].map(([key,row])=>{
+      const prev=existingMap.get(key);
+      const docId=String(prev?.__id||idFn(row,key)||"");
+      return {...syncPlainRow(row),...(docId?{__id:docId}:{})};
+    });
+    // 메타 버전은 바꾸지 않고 ID가 보강된 캐시만 저장합니다.
+    const currentVersion=String(DASH_REMOTE_META?.versions?.[name]||"");
+    if(dashboardCacheable(name)) await dashboardCachePut(name,out,currentVersion);
+    return {rows:out,total:totalIncoming,added:0,changed:0,same:same.length,removed:0,written:0,deleted:0};
+  }
+
+  // 변경/신규만 쓰기
+  const writeBatchSize=450;
+  for(let i=0;i<writes.length;i+=writeBatchSize){
+    const part=writes.slice(i,i+writeBatchSize);
+    const batch=writeBatch(firestore);
+    part.forEach(x=>batch.set(doc(firestore,name,x.docId),syncPlainRow(x.row)));
+    await commitBatchSafely(batch,{type:activeType,action:"upload",quotaKey:"write",delta:part.length,label:`${label} 증분 저장 ${Math.floor(i/writeBatchSize)+1}/${Math.ceil(writes.length/writeBatchSize)||1}`});
+    done+=part.length;
+    const pct=totalOps?Math.max(1,Math.round(done/totalOps*100)):100;
+    reportDataStatusProgress(activeType,pct,`${label} 변경분 저장 중... ${done.toLocaleString()}/${totalOps.toLocaleString()}건`,done,totalOps);
+  }
+
+  // Excel 전체본에 더 이상 없는 행만 삭제
+  const deleteBatchSize=450;
+  for(let i=0;i<deletes.length;i+=deleteBatchSize){
+    const part=deletes.slice(i,i+deleteBatchSize);
+    const batch=writeBatch(firestore);
+    part.forEach(x=>batch.delete(doc(firestore,name,x.docId)));
+    await commitBatchSafely(batch,{type:activeType,action:"upload",quotaKey:"delete",delta:part.length,label:`${label} 삭제분 반영 ${Math.floor(i/deleteBatchSize)+1}/${Math.ceil(deletes.length/deleteBatchSize)||1}`});
+    done+=part.length;
+    const pct=totalOps?Math.max(1,Math.round(done/totalOps*100)):100;
+    reportDataStatusProgress(activeType,pct,`${label} 삭제분 반영 중... ${done.toLocaleString()}/${totalOps.toLocaleString()}건`,done,totalOps);
+  }
+
+  const writtenIds=new Map();
+  writes.forEach(x=>writtenIds.set(x.key,x.docId));
+  const out=[...incomingMap.entries()].map(([key,row])=>{
+    const prev=existingMap.get(key);
+    const docId=String(writtenIds.get(key)||prev?.__id||idFn(row,key)||"");
+    return {...syncPlainRow(row),...(docId?{__id:docId}:{})};
+  });
+  if(dashboardCacheable(name)) await dashboardCacheCommit(name,out);
+  reportDataStatusProgress(activeType,100,`${label} 증분 반영 완료`,totalOps,totalOps,true);
+  return {rows:out,total:totalIncoming,added:added.length,changed:changed.length,same:same.length,removed:deletes.length,written:writes.length,deleted:deletes.length};
+}
+function consultTypeSyncKey(r){
+  return [r?.year,r?.channel,r?.code,r?.category1,r?.category2,r?.category3,r?.inquiry].map(v=>String(v??"").trim()).join("|");
+}
+function consultPeriodSyncKey(r){
+  return [r?.compareType,r?.channel,r?.startDate,r?.endDate,r?.code,r?.category1,r?.category2,r?.category3,r?.inquiry].map(v=>String(v??"").trim()).join("|");
 }
 
 // 환불현황 누적본 증분 등록
@@ -6294,6 +6584,180 @@ function renderNewsStart(s,e){
     <td>${newsDisplay(r.purchaser)}</td><td>${newsDisplay(r.nsu)}</td><td>${newsDisplay(r.gunsu)}</td>
   </tr>`).join("");
 }
+
+
+
+/* ===== 운영보고 동적 렌더링 ===== */
+let opReportChangeMode="up";
+
+function reportDayLabel(dateStr){
+  if(!dateStr) return "-";
+  const d=new Date(dateStr+"T00:00:00");
+  const days=["일","월","화","수","목","금","토"];
+  return `${d.getFullYear()}년 ${String(d.getMonth()+1).padStart(2,"0")}월 ${String(d.getDate()).padStart(2,"0")}일 (${days[d.getDay()]})`;
+}
+function reportLatestAvailableDate(){ return (daily||[]).reduce((m,r)=>String(r.date||"")>m?String(r.date||""):m,""); }
+function reportRowForDate(dateStr){ return (daily||[]).find(r=>String(r.date||"")===String(dateStr||""))||null; }
+function reportPrevRow(dateStr){
+  const rows=(daily||[]).filter(r=>r.date<dateStr).sort((a,b)=>a.date.localeCompare(b.date));
+  return rows.at(-1)||null;
+}
+function reportPctChange(cur,prev){
+  cur=Number(cur)||0; prev=Number(prev)||0;
+  if(prev===0) return cur>0?{v:100,text:"▲ 신규",cls:"op-report-up"}:{v:0,text:"-",cls:"op-report-flat"};
+  const d=(cur-prev)/Math.abs(prev)*100;
+  return {v:d,text:`${d>0?"▲":d<0?"▼":"-"} ${Math.abs(d).toFixed(1)}%`,cls:d>0?"op-report-up":d<0?"op-report-down":"op-report-flat"};
+}
+function reportPpChange(cur,prev){
+  const d=(Number(cur)||0)-(Number(prev)||0);
+  return {v:d,text:`${d>0?"▲":d<0?"▼":"-"} ${Math.abs(d).toFixed(1)}%p`,cls:d>0?"op-report-up":d<0?"op-report-down":"op-report-flat"};
+}
+function reportDiffChange(cur,prev,digits=1){
+  const d=(Number(cur)||0)-(Number(prev)||0);
+  return {v:d,text:`${d>0?"▲":d<0?"▼":"-"} ${Math.abs(d).toFixed(digits)}`,cls:d>0?"op-report-up":d<0?"op-report-down":"op-report-flat"};
+}
+function reportRefundSummary(s,e){
+  const rr=(refundDaily||[]).filter(r=>r.date>=s&&r.date<=e&&r.kind&&r.item);
+  const prod=refundAggRows(rr,"상품");
+  const sumf=(arr,f)=>arr.reduce((a,r)=>a+(Number(r[f])||0),0);
+  return {
+    totalCount:sumf(prod,"totalCount"), totalAmount:sumf(prod,"totalAmount"), totalMembers:sumf(prod,"totalMembers"),
+    reasons:{"결제방법 변경":sumf(prod,"payMethodChange"),"상품변경":sumf(prod,"productChange"),"타사 이용":sumf(prod,"competitorUse"),"학원 수강·PMP·기간부족":sumf(prod,"academyPmpPeriod"),"잘못선택":sumf(prod,"wrongChoice")}
+  };
+}
+function reportKpiHtml(label,icon,value,change,prevText){
+  return `<div class="op-report-kpi"><div class="op-report-kpi-head"><span class="op-report-kpi-ico">${icon}</span>${label}</div><div class="op-report-kpi-value">${value}</div><div class="op-report-kpi-change ${change.cls}">${change.text} <span style="font-size:9px;color:#74859a;font-weight:700">(직전 대비)</span></div><div class="op-report-kpi-prev">${prevText}</div></div>`;
+}
+function reportConsultName(r){ return String(r.inquiry||r.category3||r.category2||r.category1||"-").trim()||"-"; }
+function reportConsultKey(r){ return `${r.code||""}|${r.inquiry||""}|${r.category1||""}|${r.category2||""}|${r.category3||""}`; }
+function reportConsultPeriodForDate(dateStr,channelKeyword){
+  const base=(consultPeriodData||[]).filter(r=>String(r.compareType||"").trim()==="올해" && String(r.channel||"").includes(channelKeyword) && r.startDate && r.endDate);
+  const periods=[...new Map(base.map(r=>[`${r.startDate}|${r.endDate}|${r.channel}`,{start:r.startDate,end:r.endDate,channel:r.channel}])).values()];
+  const containing=periods.filter(p=>p.start<=dateStr&&p.end>=dateStr).sort((a,b)=>((new Date(a.end)-new Date(a.start))-(new Date(b.end)-new Date(b.start)))||b.end.localeCompare(a.end));
+  const p=containing[0] || periods.filter(p=>p.end<=dateStr).sort((a,b)=>b.end.localeCompare(a.end))[0] || null;
+  if(!p) return {period:null,rows:[],prevRows:[]};
+  const rows=base.filter(r=>r.startDate===p.start&&r.endDate===p.end&&r.channel===p.channel).sort((a,b)=>(Number(b.count)||0)-(Number(a.count)||0));
+  const prevP=periods.filter(x=>x.channel===p.channel&&x.end<p.start).sort((a,b)=>b.end.localeCompare(a.end))[0]||null;
+  const prevRows=prevP?base.filter(r=>r.startDate===prevP.start&&r.endDate===prevP.end&&r.channel===prevP.channel):[];
+  return {period:p,rows,prevRows,prevPeriod:prevP};
+}
+function reportConsultTable(rows,colorClass=""){ 
+  if(!rows.length) return '<div class="op-report-empty">표시할 상담유형 데이터가 없습니다.</div>';
+  const top=rows.slice(0,5), total=rows.reduce((a,r)=>a+(Number(r.count)||0),0);
+  return `<table class="op-report-table"><thead><tr><th style="width:34px">순위</th><th>상담유형</th><th class="num" style="width:52px">건수</th><th class="num" style="width:50px">비중</th></tr></thead><tbody>${top.map((r,i)=>`<tr><td><span class="op-report-small-rank ${colorClass}">${i+1}</span></td><td>${issueEsc(reportConsultName(r))}</td><td class="num">${fmt(r.count||0)}</td><td class="num">${total?((Number(r.count)||0)/total*100).toFixed(1):"0.0"}%</td></tr>`).join("")}</tbody></table>`;
+}
+function reportFindAiForDate(dateStr){
+  return [...(aiAnalysisData||[])].filter(r=>{
+    const raw=String(aiValue(r,["operationPeriod","운영분석기간"],"")||"");
+    const m=raw.match(/(\d{4}-\d{2}-\d{2})\s*~\s*(\d{4}-\d{2}-\d{2})/);
+    return m && m[1]<=dateStr && m[2]>=dateStr;
+  }).sort((a,b)=>String(aiValue(b,["analysisAt","분석일시","createdAt"],"")).localeCompare(String(aiValue(a,["analysisAt","분석일시","createdAt"],""))))[0]||null;
+}
+function reportPlainLines(v,limit=2){
+  return String(v||"").replace(/<br\s*\/?>/gi,"\n").replace(/\*\*/g,"").split(/\r?\n/).map(x=>x.replace(/^[-•\d.)\s]+/,"").trim()).filter(Boolean).slice(0,limit);
+}
+function reportRenderAi(dateStr){
+  // 운영보고에서는 OpenAI를 실행하거나 재분석하지 않습니다.
+  // 관리자에게만 AI 분석 메뉴에서 이미 저장된 결과를 조회하여 표시합니다.
+  if(currentRole!=="admin") return;
+  const row=reportFindAiForDate(dateStr), list=$("opReportAiList"), quote=$("opReportAiQuote");
+  const issueCount=(operationIssues||[]).filter(r=>isDateInIssueRange(dateStr,r)).length;
+  if($("opReportAiBasis")) $("opReportAiBasis").textContent=`관리자 전용 · 저장 결과 · 운영이슈 ${issueCount}건`;
+  if(!row){
+    if(list) list.innerHTML='<div class="op-report-ai-item"><span class="op-report-ai-check">!</span><span>선택한 날짜를 포함하는 저장된 AI 분석 결과가 없습니다. 운영보고에서는 AI를 자동 실행하거나 재분석하지 않습니다.</span></div>';
+    if(quote) quote.textContent="저장된 AI 분석 결과가 없습니다.";
+    return;
+  }
+  const lines=[...reportPlainLines(aiValue(row,["issues","주요이슈"]),2),...reportPlainLines(aiValue(row,["operationAnalysis","운영분석"]),1),...reportPlainLines(aiValue(row,["consultAnalysis","상담유형분석"]),1)].slice(0,4);
+  if(list) list.innerHTML=lines.length?lines.map(x=>`<div class="op-report-ai-item"><span class="op-report-ai-check">✓</span><span>${aiInline(x)}</span></div>`).join(""):'<div class="op-report-empty">AI 분석 내용이 없습니다.</div>';
+  const q=reportPlainLines(aiValue(row,["improvement","개선제안"],""),1)[0]||reportPlainLines(aiValue(row,["issues","주요이슈"],""),1)[0]||"AI 분석 결과를 확인해 주세요.";
+  if(quote) quote.innerHTML=`“${aiInline(q)}”`;
+}
+function reportReasonRows(dateStr){
+  const cur=reportRefundSummary(dateStr,dateStr), prevDate=reportPrevRow(dateStr)?.date||"", prev=prevDate?reportRefundSummary(prevDate,prevDate):{reasons:{}};
+  return Object.keys(cur.reasons).map(name=>({name,cur:Number(cur.reasons[name])||0,prev:Number(prev.reasons?.[name])||0,chg:reportPctChange(cur.reasons[name],prev.reasons?.[name]||0)})).sort((a,b)=>b.cur-a.cur);
+}
+function reportRefundTable(dateStr){
+  const rows=reportReasonRows(dateStr).slice(0,5), total=rows.reduce((a,r)=>a+r.cur,0);
+  if(!rows.some(r=>r.cur>0)) return '<div class="op-report-empty">기준일 환불사유 데이터가 없습니다.</div>';
+  return `<table class="op-report-table"><thead><tr><th style="width:34px">순위</th><th>사유</th><th class="num" style="width:52px">건수</th><th class="num" style="width:50px">비중</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td><span class="op-report-small-rank pink">${i+1}</span></td><td>${issueEsc(r.name)}</td><td class="num">${fmt(r.cur)}</td><td class="num">${total?(r.cur/total*100).toFixed(1):"0.0"}%</td></tr>`).join("")}</tbody></table>`;
+}
+function reportChanges(dateStr,mode="up"){
+  const call=reportConsultPeriodForDate(dateStr,"인바운드"), erms=reportConsultPeriodForDate(dateStr,"게시판");
+  const candidates=[];
+  const addConsult=(obj,prefix)=>{
+    const prevMap=new Map((obj.prevRows||[]).map(r=>[reportConsultKey(r),Number(r.count)||0]));
+    (obj.rows||[]).forEach(r=>{const cur=Number(r.count)||0, prev=prevMap.get(reportConsultKey(r)); if(prev===undefined) return; const ch=reportPctChange(cur,prev); candidates.push({name:`${prefix} · ${reportConsultName(r)}`,change:ch.v,text:ch.text});});
+  };
+  addConsult(call,"CALL"); addConsult(erms,"ERMS");
+  reportReasonRows(dateStr).forEach(r=>candidates.push({name:`환불 · ${r.name}`,change:r.chg.v,text:r.chg.text}));
+  const filtered=candidates.filter(x=>mode==="up"?x.change>0:x.change<0).sort((a,b)=>mode==="up"?b.change-a.change:a.change-b.change).slice(0,5);
+  return filtered;
+}
+function renderReportChanges(dateStr){
+  const rows=reportChanges(dateStr,opReportChangeMode), el=$("opReportChanges"); if(!el) return;
+  el.innerHTML=rows.length?rows.map((r,i)=>`<div class="op-report-change-row"><span class="op-report-rank">${i+1}</span><span class="op-report-change-name">${issueEsc(r.name)}</span><span class="op-report-change-value ${r.change>0?"op-report-up":"op-report-down"}">${issueEsc(r.text)}</span></div>`).join(""):'<div class="op-report-empty">비교 가능한 변화 데이터가 없습니다.</div>';
+}
+function renderReportIssues(dateStr){
+  const rows=(operationIssues||[]).filter(r=>isDateInIssueRange(dateStr,r)).sort((a,b)=>String(a.occurrenceTime||"").localeCompare(String(b.occurrenceTime||""))).slice(0,5);
+  const el=$("opReportIssues");
+  if(el) el.innerHTML=rows.length?`<table class="op-report-issue-table"><thead><tr><th style="width:48px">시간</th><th>이슈 내용</th><th>조치사항</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${issueEsc(r.occurrenceTime||"-")}</td><td>${issueEsc(r.title||"-")}</td><td>${issueEsc(r.detail||"-")}</td></tr>`).join("")}</tbody></table>`:'<div class="op-report-empty">기준일에 등록된 운영이슈가 없습니다.</div>';
+  const ai=reportFindAiForDate(dateStr); const checks=ai?reportPlainLines(aiValue(ai,["improvement","개선제안"]),3):[];
+  const checkEl=$("opReportChecks");
+  if(checkEl) checkEl.innerHTML=checks.length?checks.map(x=>`<div class="op-report-check-item"><span>●</span><span>${aiInline(x)}</span></div>`).join(""):(rows.length?'<div class="op-report-check-item"><span>●</span><span>등록된 운영이슈의 후속 조치 여부를 확인해 주세요.</span></div>':'<div class="op-report-check-item"><span>●</span><span>추가 확인이 필요한 운영이슈가 없습니다.</span></div>');
+}
+function renderOperationReport(){
+  const input=$("opReportDate"); if(!input) return;
+  const latest=reportLatestAvailableDate(); if(!input.value) input.value=latest; if(latest) input.max=latest;
+  let dateStr=input.value||latest; let row=reportRowForDate(dateStr);
+  if(!row && latest){ dateStr=latest; input.value=latest; row=reportRowForDate(latest); }
+  if(!row){ $("opReportKpis").innerHTML='<div class="op-report-empty">운영실적 데이터가 없습니다.</div>'; return; }
+  const prev=reportPrevRow(dateStr), cur=periodMetrics([row]), prv=prev?periodMetrics([prev]):periodMetrics([]), refund=reportRefundSummary(dateStr,dateStr), prevRefund=prev?reportRefundSummary(prev.date,prev.date):{totalCount:0};
+  if($("opReportBasis")) $("opReportBasis").textContent=`데이터 기준일: ${dateStr} 23:59`;
+  const kpis=[
+    ["총 문의수","💬",fmt(cur.totalQ)+"건",reportPctChange(cur.totalQ,prv.totalQ),`${fmt(prv.totalQ)}건 (직전)`],
+    ["CALL 인입","☎",fmt(cur.phoneIn)+"건",reportPctChange(cur.phoneIn,prv.phoneIn),`${fmt(prv.phoneIn)}건 (직전)`],
+    ["CALL 응답률","🎧",cur.phoneRate.toFixed(1)+"%",reportPpChange(cur.phoneRate,prv.phoneRate),`${prv.phoneRate.toFixed(1)}% (직전)`],
+    ["ERMS 문의","▤",fmt(cur.erms)+"건",reportPctChange(cur.erms,prv.erms),`${fmt(prv.erms)}건 (직전)`],
+    ["챗봇 문의","🤖",fmt(cur.chatUse)+"건",reportPctChange(cur.chatUse,prv.chatUse),`${fmt(prv.chatUse)}건 (직전)`],
+    ["환불 문의","↻",fmt(refund.totalCount)+"건",reportPctChange(refund.totalCount,prevRefund.totalCount||0),`${fmt(prevRefund.totalCount||0)}건 (직전)`],
+    ["CPH","◷",cur.cph.toFixed(1),reportDiffChange(cur.cph,prv.cph,1),`${prv.cph.toFixed(1)} (직전)`]
+  ];
+  $("opReportKpis").innerHTML=kpis.map(x=>reportKpiHtml(...x)).join("");
+
+  const upto=(daily||[]).filter(r=>r.date<=dateStr).sort((a,b)=>a.date.localeCompare(b.date)).slice(-7);
+  if(charts.opReportTrend) charts.opReportTrend.destroy();
+  charts.opReportTrend=new Chart($("opReportTrendChart"),{type:"line",data:{labels:upto.map(r=>formatDateLabel(r.date,r.day)),datasets:[
+    {label:"CALL",data:upto.map(r=>Number(r.phoneIn)||0),borderColor:"#2f80ed",backgroundColor:"#2f80ed",tension:.35,borderWidth:2,pointRadius:2.5},
+    {label:"ERMS",data:upto.map(r=>Number(r.ermsCount)||0),borderColor:"#12b886",backgroundColor:"#12b886",tension:.35,borderWidth:2,pointRadius:2.5},
+    {label:"챗봇",data:upto.map(r=>Number(r.chatUse)||0),borderColor:"#ff7a2f",backgroundColor:"#ff7a2f",tension:.35,borderWidth:2,pointRadius:2.5},
+    {label:"스마트러닝",data:upto.map(r=>Number(r.smart)||0),borderColor:"#7890ad",backgroundColor:"#7890ad",tension:.35,borderWidth:2,pointRadius:2.5}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"top",align:"end",labels:{boxWidth:8,boxHeight:8,usePointStyle:true,font:{size:9}}}},scales:{x:{grid:{display:false},ticks:{font:{size:9}}},y:{beginAtZero:true,grid:{color:"#e9eef5"},ticks:{font:{size:9},callback:v=>fmt(v)}}}}});
+
+  const shares=[{name:"CALL",v:cur.phoneIn,c:"#2f80ed"},{name:"ERMS",v:cur.erms,c:"#12b886"},{name:"챗봇",v:cur.chatUse,c:"#ff8a3d"},{name:"스마트",v:cur.smart,c:"#8a9db5"}], shareTotal=shares.reduce((a,x)=>a+x.v,0);
+  if(charts.opReportShare) charts.opReportShare.destroy();
+  charts.opReportShare=new Chart($("opReportShareChart"),{type:"doughnut",data:{labels:shares.map(x=>x.name),datasets:[{data:shares.map(x=>x.v),backgroundColor:shares.map(x=>x.c),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:"62%",plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.label}: ${fmt(c.raw)}건 (${shareTotal?(c.raw/shareTotal*100).toFixed(1):"0.0"}%)`}}}}});
+  $("opReportShareLegend").innerHTML=shares.map(x=>`<div class="op-report-legend-row"><span class="op-report-dot" style="background:${x.c}"></span><span>${x.name}</span><b>${shareTotal?(x.v/shareTotal*100).toFixed(1):"0.0"}%</b></div>`).join("");
+
+  renderReportChanges(dateStr);
+  const call=reportConsultPeriodForDate(dateStr,"인바운드"), erms=reportConsultPeriodForDate(dateStr,"게시판");
+  $("opReportCallPeriod").textContent=call.period?`${call.period.start} ~ ${call.period.end}`:"상담유형 기준기간 없음";
+  $("opReportErmsPeriod").textContent=erms.period?`${erms.period.start} ~ ${erms.period.end}`:"상담유형 기준기간 없음";
+  $("opReportCallTop").innerHTML=reportConsultTable(call.rows,"");
+  $("opReportErmsTop").innerHTML=reportConsultTable(erms.rows,"green");
+  $("opReportRefundTop").innerHTML=reportRefundTable(dateStr);
+  reportRenderAi(dateStr); renderReportIssues(dateStr);
+
+  if(!input.dataset.bound){
+    input.dataset.bound="1";
+    input.addEventListener("change",renderOperationReport);
+    $("opReportRefreshBtn")?.addEventListener("click",renderOperationReport);
+    $("opReportPrintBtn")?.addEventListener("click",()=>window.print());
+    document.querySelectorAll('[data-report-change]').forEach(btn=>btn.addEventListener('click',()=>{opReportChangeMode=btn.dataset.reportChange||"up";document.querySelectorAll('[data-report-change]').forEach(x=>x.classList.toggle('active',x===btn));renderReportChanges($("opReportDate")?.value||reportLatestAvailableDate());}));
+  }
+}
+window.renderOperationReport=renderOperationReport;
+
 
 async function applyFilter(){
   // 기간조회는 이미 메모리에 로드된 데이터를 사용합니다.
@@ -7258,12 +7722,17 @@ async function uploadCore(file,type){
       const firstDate=rows[0].date;
       const lastDate=rows.at(-1).date;
 
-      await replaceCollection("daily",rows,r=>r.date);
-      daily=rows.slice();
+      const dailySync=await syncCollectionIncremental("daily",rows,{
+        existingRows:daily,
+        keyFn:r=>r.date,
+        idFn:r=>r.date,
+        label:"일일 운영실적"
+      });
+      daily=dailySync.rows;
       dashboardSortLoadedData();
       setDefaultRecent7Days();
       await applyFilter();
-      alert(`${rows.length}일 데이터를 Firestore에 교체 등록했습니다.\n날짜 확인: ${firstDate} ~ ${lastDate}\n※ Excel 원본의 첫/마지막 날짜와 반드시 동일한지 확인해 주세요.`);
+      alert(`일일 운영실적 업로드 완료\n${syncSummaryText(dailySync)}\n날짜 확인: ${firstDate} ~ ${lastDate}\n※ 동일 데이터는 Firestore 쓰기 없이 건너뜁니다.`);
     }else if(type==="refundstatus"){
       const rows=raw.map(o=>({
         date:asDate(pick(o,["일자","날짜"])), kind:refundNormalizeKind(pick(o,["구분"])), item:refundNormalizeItem(pick(o,["항목"])) ,
@@ -7431,11 +7900,16 @@ async function uploadCore(file,type){
 
       if(!rows.length) throw new Error("날짜 컬럼을 인식하지 못했습니다. 날짜는 YYYY-MM-DD 또는 01월 03일 형식을 사용할 수 있습니다.");
       rows.sort((a,b)=>a.date.localeCompare(b.date));
-      await replaceCollection("mdm",rows,r=>r.date);
-      mdmData=rows.slice();
+      const mdmSync=await syncCollectionIncremental("mdm",rows,{
+        existingRows:mdmData,
+        keyFn:r=>r.date,
+        idFn:r=>r.date,
+        label:"MDM 원격"
+      });
+      mdmData=mdmSync.rows;
       dashboardSortLoadedData();
       await applyFilter();
-      alert(`${rows.length}일 MDM 원격 데이터를 Firestore에 교체 등록했습니다.`);
+      alert(`MDM 원격 업로드 완료\n${syncSummaryText(mdmSync)}\n※ 동일 데이터는 Firestore 쓰기 없이 건너뜁니다.`);
     }else if(type==="newsstart"){
       const rows=raw.map(o=>({
         date:asDate(pick(o,["일자","날짜"])),
@@ -7449,12 +7923,17 @@ async function uploadCore(file,type){
       })).filter(r=>r.date);
       if(!rows.length) throw new Error("일자 컬럼을 인식하지 못했습니다.");
       rows.sort((a,b)=>a.date.localeCompare(b.date));
-      await replaceCollection("newsstart",rows,r=>r.date);
-      newsStartUsingFallback=!rows.length;
-      newsStartData=rows.slice();
+      const newsSync=await syncCollectionIncremental("newsstart",rows,{
+        existingRows:newsStartData,
+        keyFn:r=>r.date,
+        idFn:r=>r.date,
+        label:"뉴스타트 인증"
+      });
+      newsStartUsingFallback=!newsSync.rows.length;
+      newsStartData=newsSync.rows;
       dashboardSortLoadedData();
       await applyFilter();
-      alert(`${rows.length}일 뉴스타트 인증 데이터를 Firestore에 교체 등록했습니다.`);
+      alert(`뉴스타트 인증 업로드 완료\n${syncSummaryText(newsSync)}\n※ 동일 데이터는 Firestore 쓰기 없이 건너뜁니다.`);
     }else if(type==="consulttype"){
       const rows=raw.map((o,i)=>({
         year:Number(o.__year)||new Date().getFullYear(),
@@ -7532,26 +8011,35 @@ async function uploadCore(file,type){
         const registeredMonths=[];
         for(let m=1;m<=12;m++) if(rows.some(r=>r[`m${m}`]!==null)) registeredMonths.push(`${m}월`);
         if(!registeredMonths.length) throw new Error("월간 시트의 1월~12월 중 등록된 건수가 없습니다.");
-        await replaceCollection("consultTypes",rows,(r,i)=>`ct_${r.year}_${r.channel==="게시판 상담"?"erms":"call"}_${String(i).padStart(5,"0")}`);
+        const consultTypeSync=await syncCollectionIncremental("consultTypes",rows,{
+          existingRows:consultTypeData,
+          keyFn:consultTypeSyncKey,
+          idFn:(r,key)=>syncStableDocId(`ct_${r.year}_${r.channel==="게시판 상담"?"erms":"call"}`,key),
+          label:"상담유형 월간",
+          hydrateIdsIfMissing:true
+        });
+        consultTypeData=consultTypeSync.rows;
         const years=[...new Set(rows.map(r=>r.year))].sort((a,b)=>b-a);
-        messages.push(`월간 ${rows.length}개 유형 · ${years.join(", ")} · ${registeredMonths.join(", ")}`);
+        messages.push(`월간 ${rows.length}개 유형 · ${years.join(", ")} · ${registeredMonths.join(", ")}\n  ${syncSummaryText(consultTypeSync)}`);
       }
       if(periodRows.length){
         const replaceKeys=new Set(periodRows.map(r=>`${r.compareType}|${r.channel}`));
         // 업로드된 비교구분·채널 조합은 기존 Firestore 행을 제거한 뒤 최신 기간으로 교체합니다.
         const kept=consultPeriodData.filter(r=>!replaceKeys.has(`${r.compareType}|${r.channel}`)).map(({__id,...r})=>r);
         const merged=[...kept,...periodRows];
-        const safe=v=>String(v||"").replace(/[^0-9A-Za-z가-힣_-]/g,"_").slice(0,45);
-        await replaceCollection("consultPeriods",merged,(r,i)=>`cp_${r.compareType==="전년"?"prev":"cur"}_${r.channel==="게시판 상담"?"erms":"call"}_${safe(r.startDate)}_${safe(r.endDate)}_${safe(r.code||r.inquiry)}_${String(i).padStart(4,"0")}`);
+        const consultPeriodSync=await syncCollectionIncremental("consultPeriods",merged,{
+          existingRows:consultPeriodData,
+          keyFn:consultPeriodSyncKey,
+          idFn:(r,key)=>syncStableDocId(`cp_${r.compareType==="전년"?"prev":"cur"}_${r.channel==="게시판 상담"?"erms":"call"}`,key),
+          label:"상담유형 특정기간",
+          hydrateIdsIfMissing:true
+        });
+        consultPeriodData=consultPeriodSync.rows;
         const comboText=[...replaceKeys].map(k=>{const [c,ch]=k.split("|");return `${c}·${ch==="게시판 상담"?"ERMS":"CALL"}`;});
-        messages.push(`특정기간 ${periodRows.length}개 행 · ${comboText.join(" / ")}`);
+        messages.push(`특정기간 ${periodRows.length}개 행 · ${comboText.join(" / ")}\n  ${syncSummaryText(consultPeriodSync)}`);
       }
       if(!rows.length && !periodRows.length) throw new Error("상담유형 데이터를 인식하지 못했습니다.");
-      if(rows.length) consultTypeData=rows.slice();
-      if(periodRows.length){
-        const cachedPeriods=await dashboardCacheGet("consultPeriods");
-        if(cachedPeriods?.data) consultPeriodData=cachedPeriods.data.slice();
-      }
+      // syncCollectionIncremental에서 메모리용 행과 IndexedDB 캐시까지 이미 최신 상태로 맞춥니다.
       dashboardSortLoadedData();
       // 데이터 등록 직후 AI 분석기간을 가장 최신 특정기간으로 자동 전환합니다.
       populateAiPeriodSelect(true);
