@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- v102 운영보고 AI 관리자전용 + Firestore 증분 업로드 최적화 -->
+<!-- v104 AI 주말·공휴일 분석 보정 + 운영이슈 이벤트 종료일 적용 -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -2716,15 +2716,23 @@ document.addEventListener('DOMContentLoaded',()=>{
 .op-report-basis{font-size:10px;color:#71849d;white-space:nowrap}
 .op-report-btn{height:36px;border:1px solid #d7e3f2;border-radius:8px;background:#fff;color:#1767d9;padding:0 13px;font-size:11px;font-weight:900;cursor:pointer}
 .op-report-btn:hover{background:#f4f8ff}
-.op-report-ai{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(285px,.8fr);gap:14px;padding:14px 18px;border:1px solid #cfe2fb;border-radius:12px;background:linear-gradient(110deg,#e9f5ff 0%,#eef7ff 64%,#e4f1ff 64%,#f6fbff 100%)}
-.op-report-ai-title{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:900;color:#173866;margin-bottom:8px}
-.op-report-ai-basis{display:inline-flex;margin-left:4px;padding:4px 8px;border-radius:999px;background:#d8ebff;color:#2c67ad;font-size:9.5px;font-weight:800;vertical-align:middle}
+.op-report-ai{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.op-report-ai-panel{min-width:0;min-height:132px;padding:14px 16px;border:1px solid #cfe2fb;border-radius:12px;background:linear-gradient(120deg,#eaf5ff 0%,#f7fbff 100%);box-shadow:0 3px 10px rgba(31,70,116,.05)}
+.op-report-ai-panel.check{border-color:#ccebdd;background:linear-gradient(120deg,#eafaf4 0%,#f8fffb 100%)}
+.op-report-ai-title-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+.op-report-ai-title{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:17px;font-weight:900;color:#173866}
+.op-report-ai-panel.check .op-report-ai-title{color:#19755d}
+.op-report-ai-basis{display:inline-flex;padding:4px 8px;border-radius:999px;background:#d8ebff;color:#2c67ad;font-size:9.5px;font-weight:800;vertical-align:middle}
+.op-report-ai-panel.check .op-report-ai-basis{background:#daf4e9;color:#148162}
+.op-report-ai-action{height:30px;border:1px solid #b8d6fb;border-radius:7px;background:#fff;color:#1767d9;padding:0 10px;font-size:10px;font-weight:900;cursor:pointer;white-space:nowrap}
+.op-report-ai-action:hover{background:#f3f8ff}
 .op-report-ai-list{display:flex;flex-direction:column;gap:6px}
 .op-report-ai-item{display:grid;grid-template-columns:18px 1fr;gap:7px;align-items:start;color:#18345d;font-size:11.5px;line-height:1.45}
 .op-report-ai-check{width:15px;height:15px;border-radius:50%;display:grid;place-items:center;background:#2f80ed;color:#fff;font-size:9px;font-weight:900;margin-top:1px}
-.op-report-ai-quote{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:116px;background:rgba(255,255,255,.5);border-radius:10px;padding:12px 15px;color:#15345f}
-.op-report-ai-quote-label{padding:5px 11px;border-radius:6px;background:#d8eaff;color:#1767d9;font-size:10px;font-weight:900;margin-bottom:10px}
-.op-report-ai-quote strong{font-size:16px;line-height:1.6;word-break:keep-all}
+.op-report-ai-panel.check .op-report-ai-check{background:#19a77b}
+.op-report-check-list{display:flex;flex-direction:column;gap:6px}
+.op-report-check-item{display:grid;grid-template-columns:18px 1fr;gap:7px;align-items:start;color:#315a52;font-size:11.5px;line-height:1.45}
+.op-report-check-item>span:first-child{width:15px;height:15px;border-radius:50%;display:grid;place-items:center;background:#19a77b;color:#fff;font-size:8px;font-weight:900;margin-top:1px}
 .op-report-kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
 .op-report-kpi{min-width:0;padding:11px 11px 10px;background:#fff;border:1px solid #dfe8f3;border-radius:10px;box-shadow:0 3px 10px rgba(31,70,116,.05)}
 .op-report-kpi-head{display:flex;align-items:center;gap:7px;font-size:10.5px;font-weight:900;color:#284366;white-space:nowrap}
@@ -2734,7 +2742,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 .op-report-kpi-prev{text-align:center;margin-top:7px;padding-top:7px;border-top:1px solid #eef2f7;color:#657891;font-size:10px}
 .op-report-up{color:#ff315b}.op-report-down{color:#1670e5}.op-report-flat{color:#7a8798}
 .op-report-mid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,.88fr) minmax(300px,.95fr);gap:9px;align-items:stretch}
-.op-report-bottom{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;align-items:stretch}
+.op-report-bottom{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;align-items:stretch}
 .op-report-card{background:#fff;border:1px solid #dfe8f3;border-radius:10px;box-shadow:0 3px 10px rgba(31,70,116,.05);padding:12px 13px;min-width:0;overflow:hidden}
 .op-report-card-title{font-size:13px;font-weight:900;color:#17355f;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .op-report-card-title small{font-size:9.5px;color:#6f8199;font-weight:700}
@@ -2761,14 +2769,16 @@ document.addEventListener('DOMContentLoaded',()=>{
 .op-report-table tr:last-child td{border-bottom:0}
 .op-report-small-rank{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#eaf3ff;color:#1767d9;font-size:9px;font-weight:900}
 .op-report-small-rank.green{background:#e8f8f2;color:#11a274}.op-report-small-rank.pink{background:#ffeaf0;color:#ef4268}
-.op-report-issue-table{width:100%;min-width:0!important;border-collapse:collapse;table-layout:fixed}
-.op-report-issue-table th,.op-report-issue-table td{position:static!important;padding:5px 5px;font-size:9px;border-bottom:1px solid #edf2f7;white-space:normal;line-height:1.35;vertical-align:top}
-.op-report-issue-table th{background:#f3f7fb;color:#5d708a}.op-report-issue-table td{color:#294361}
-.op-report-checkbox{margin-top:8px;padding:9px 10px;background:linear-gradient(100deg,#e7fbf4,#f0fff9);border-radius:8px}
-.op-report-check-title{font-size:11px;font-weight:900;color:#0e9f78;margin-bottom:6px}
-.op-report-check-item{display:grid;grid-template-columns:13px 1fr;gap:5px;font-size:9px;color:#315a52;margin-top:4px;line-height:1.35}
 .op-report-empty{padding:18px 6px;text-align:center;color:#8997a8;font-size:10px}
-.op-report-period-note{font-size:9px;color:#788aa1;margin-top:-2px;margin-bottom:7px}
+.op-report-consult-card{position:relative;border-width:2px;overflow:visible}
+.op-report-consult-card.call{border-color:#bfd9ff;background:linear-gradient(180deg,#f5f9ff 0,#fff 42%)}
+.op-report-consult-card.erms{border-color:#bfe8d8;background:linear-gradient(180deg,#f3fcf8 0,#fff 42%)}
+.op-report-consult-card .op-report-card-title{justify-content:space-between;margin-bottom:6px}
+.op-report-period-badge{display:inline-flex;align-items:center;padding:4px 7px;border-radius:999px;background:#e2efff;color:#1767d9;font-size:9px;font-weight:900;white-space:nowrap}
+.op-report-consult-card.erms .op-report-period-badge{background:#def5eb;color:#148162}
+.op-report-period-note{display:inline-flex;align-items:center;min-height:24px;padding:4px 8px;border-radius:7px;background:#edf5ff;color:#315f9a;font-size:9.5px;font-weight:900;margin:0 0 8px}
+.op-report-consult-card.erms .op-report-period-note{background:#eaf8f2;color:#26755e}
+.op-report-card:not(.op-report-consult-card)>.op-report-period-note{background:#f4f6f9;color:#788aa1;font-weight:700}
 @media(max-width:1450px){.op-report-kpis{grid-template-columns:repeat(4,minmax(0,1fr))}.op-report-bottom{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:1100px){.op-report-ai{grid-template-columns:1fr}.op-report-mid{grid-template-columns:1fr}.op-report-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.op-report-bottom,.op-report-kpis{grid-template-columns:1fr}.op-report-title{font-size:22px}.op-report-share-wrap{grid-template-columns:1fr;height:auto}.op-report-share-chart{height:190px}}
@@ -3054,14 +3064,19 @@ document.addEventListener('DOMContentLoaded',()=>{
       </div>
     </div>
 
-    <div class="op-report-ai" data-role="admin">
-      <div>
-        <div class="op-report-ai-title">🤖 AI 운영 요약 <span class="op-report-ai-basis" id="opReportAiBasis">관리자 전용 · AI 분석 메뉴 저장 결과</span></div>
+    <div class="op-report-ai">
+      <div class="op-report-ai-panel">
+        <div class="op-report-ai-title-row">
+          <div class="op-report-ai-title">🤖 AI 운영 요약 <span class="op-report-ai-basis" id="opReportAiBasis">저장된 AI 분석 결과</span></div>
+          <button class="op-report-ai-action" id="opReportAiManageBtn" type="button" data-role="admin" style="display:none" title="AI 분석 화면으로 이동">✦ AI 분석</button>
+        </div>
         <div class="op-report-ai-list" id="opReportAiList"><div class="op-report-empty">저장된 AI 분석 결과를 불러오는 중입니다.</div></div>
       </div>
-      <div class="op-report-ai-quote">
-        <div class="op-report-ai-quote-label">AI가 분석한 오늘의 한마디</div>
-        <strong id="opReportAiQuote">AI 분석 메뉴에서 저장된 결과가 있으면 핵심 내용을 표시합니다.</strong>
+      <div class="op-report-ai-panel check">
+        <div class="op-report-ai-title-row">
+          <div class="op-report-ai-title">☑ 다음 운영일 체크 포인트 <span class="op-report-ai-basis">저장된 AI 분석 결과</span></div>
+        </div>
+        <div class="op-report-check-list" id="opReportChecks"><div class="op-report-empty">저장된 체크 포인트를 불러오는 중입니다.</div></div>
       </div>
     </div>
 
@@ -3087,28 +3102,20 @@ document.addEventListener('DOMContentLoaded',()=>{
     </div>
 
     <div class="op-report-bottom">
-      <div class="op-report-card">
-        <div class="op-report-card-title">☎ CALL 상담유형 TOP 5</div>
-        <div class="op-report-period-note" id="opReportCallPeriod">상담유형 기준기간 -</div>
+      <div class="op-report-card op-report-consult-card call">
+        <div class="op-report-card-title"><span>☎ CALL 상담유형 TOP 5</span><span class="op-report-period-badge">특정기간 기준</span></div>
+        <div class="op-report-period-note" id="opReportCallPeriod">특정기간 · -</div>
         <div id="opReportCallTop"></div>
       </div>
-      <div class="op-report-card">
-        <div class="op-report-card-title">▣ ERMS 상담유형 TOP 5</div>
-        <div class="op-report-period-note" id="opReportErmsPeriod">상담유형 기준기간 -</div>
+      <div class="op-report-card op-report-consult-card erms">
+        <div class="op-report-card-title"><span>▣ ERMS 상담유형 TOP 5</span><span class="op-report-period-badge">특정기간 기준</span></div>
+        <div class="op-report-period-note" id="opReportErmsPeriod">특정기간 · -</div>
         <div id="opReportErmsTop"></div>
       </div>
       <div class="op-report-card">
         <div class="op-report-card-title">↻ 환불 사유 TOP 5</div>
         <div class="op-report-period-note">기준일 상품 환불 데이터</div>
         <div id="opReportRefundTop"></div>
-      </div>
-      <div class="op-report-card">
-        <div class="op-report-card-title">⚠ 오늘의 운영이슈 및 조치사항</div>
-        <div id="opReportIssues"></div>
-        <div class="op-report-checkbox">
-          <div class="op-report-check-title">☑ 다음 운영일 체크 포인트</div>
-          <div id="opReportChecks"></div>
-        </div>
       </div>
     </div>
   </div>
@@ -3773,7 +3780,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     </div>
     <div class="card issue-list-card">
       <div class="issue-list-head"><div><div class="issue-list-title">주요 이슈</div><div class="issue-summary" id="issuePeriodLabel">전체 기간</div></div><div style="display:flex;gap:8px;align-items:center"><select id="issueScopeFilter" aria-label="이슈 조회 범위"><option value="all" selected>전체</option><option value="period">조회기간</option></select><select id="issueCategoryFilter"><option value="">전체 구분</option><option>장애</option><option>이벤트</option><option>정책변경</option><option>배송·교재</option><option>결제·환불</option><option>모의고사</option><option>환급</option><option>기타</option></select></div></div>
-      <div class="issue-row issue-head"><div>발생일시</div><div>종료일시</div><div>구분</div><div>이슈</div><div>상세 내용</div><div>관리</div></div>
+      <div class="issue-row issue-head"><div>발생/시작</div><div>종료</div><div>구분</div><div>이슈</div><div>상세 내용</div><div>관리</div></div>
       <div id="issueListBody"></div>
     </div>
   </div>
@@ -4156,7 +4163,8 @@ const DATA_INFO = {
     title:"AI 운영 분석 · 데이터 기준",
     html:`
       <div class="data-info-section"><div class="data-info-label">데이터 흐름</div>
-        <div class="data-info-row">관리자 화면에서 업로드한 Firestore <span class="data-info-em">daily</span> / <span class="data-info-em">consultPeriods</span> 데이터를 사용합니다. AI 분석 화면에서 특정기간을 선택하고 <span class="data-info-em">AI 분석 실행</span>을 누르면 Apps Script 백엔드가 OpenAI 분석을 수행하고 결과를 <span class="data-info-em">aiAnalysis</span> 컬렉션에 저장한 뒤 이 화면에 바로 반영합니다.</div>
+        <div class="data-info-row">관리자 화면에서 업로드한 Firestore <span class="data-info-em">daily</span> / <span class="data-info-em">consultPeriods</span> 데이터와 같은 기간의 <span class="data-info-em">환불 현황 · 운영 이슈</span>를 함께 사용합니다. AI 분석 화면에서 특정기간을 선택하고 <span class="data-info-em">AI 분석 실행</span>을 누르면 Apps Script 백엔드가 OpenAI 분석을 수행하고 결과를 <span class="data-info-em">aiAnalysis</span> 컬렉션에 저장한 뒤 이 화면에 바로 반영합니다.</div>
+        <div class="data-info-row">AI 요청에는 선택기간의 <span class="data-info-em">요일 · 주말 · 대한민국 공휴일 정보</span>와 비교 원칙도 함께 전달합니다. 평일·주말·공휴일의 통상적인 운영 패턴 차이를 감안하고, 단순 전일 대비만으로 이상 여부나 원인을 단정하지 않도록 보정합니다.</div>
         <div class="data-info-row">분석 결과는 분석일시, 운영분석기간, 상담유형기준, 주요이슈, 운영분석, 상담유형분석, 확인필요, 개선제안으로 구성합니다.</div>
       </div>
       <div class="data-info-section"><div class="data-info-label">표시 기준</div>
@@ -4166,7 +4174,7 @@ const DATA_INFO = {
   },
   issues: {
     title:"운영 이슈 · 데이터 기준",
-    html:`<div class="data-info-row">관리자가 등록한 각종 오류, 이벤트, 정책변경, 배송·교재, 결제·환불, 모의고사, 환급 등 운영 이슈를 Firestore <span class="data-info-em">operationIssues</span>에 저장합니다.</div><div class="data-info-row">운영 이슈는 <span class="data-info-em">발생일시 / 종료일시 / 구분 / 이슈 / 상세 내용</span> 기준으로 관리합니다. 장애는 발생일시·종료일시를 24시간제로 표시하고, 그 외 구분은 발생일자 기준으로 관리하며 종료일자는 목록에서 - 로 표시합니다. 기본은 전체 이슈를 표시하며, 필요 시 조회기간 기준으로 전환할 수 있습니다.</div><div class="data-info-row">이슈가 등록된 날짜는 일자형 그래프 라벨에 <span class="data-info-em">⚑</span> 표시되며, 그래프에 마우스를 올리면 툴팁에서 이슈·상세 내용·발생일시를 바로 확인할 수 있습니다.</div><div class="data-info-row">이슈와 문의량 증감은 시점상 연관성을 빠르게 확인하기 위한 보조정보이며, 인과관계를 자동 확정하지 않습니다.</div>`
+    html:`<div class="data-info-row">관리자가 등록한 각종 오류, 이벤트, 정책변경, 배송·교재, 결제·환불, 모의고사, 환급 등 운영 이슈를 Firestore <span class="data-info-em">operationIssues</span>에 저장합니다.</div><div class="data-info-row">운영 이슈는 <span class="data-info-em">발생일시 / 종료일시 / 구분 / 이슈 / 상세 내용</span> 기준으로 관리합니다. <span class="data-info-em">장애</span>는 발생일시·종료일시를 24시간제로 관리하고, <span class="data-info-em">이벤트</span>는 시작일자·종료일자를 기간으로 관리합니다. 그 외 구분은 발생일자 중심으로 표시합니다. 기본은 전체 이슈를 표시하며, 필요 시 조회기간 기준으로 전환할 수 있습니다.</div><div class="data-info-row">이벤트의 시작일~종료일 사이 모든 날짜는 해당 이슈의 영향기간으로 처리되어 그래프의 <span class="data-info-em">⚑</span> 표시와 AI 분석 기간 매칭에 함께 반영됩니다.</div><div class="data-info-row">이슈가 등록된 날짜는 일자형 그래프 라벨에 <span class="data-info-em">⚑</span> 표시되며, 그래프에 마우스를 올리면 툴팁에서 이슈·상세 내용·발생일시를 바로 확인할 수 있습니다.</div><div class="data-info-row">이슈와 문의량 증감은 시점상 연관성을 빠르게 확인하기 위한 보조정보이며, 인과관계를 자동 확정하지 않습니다.</div>`
   },
   admin: {
     title:"관리자 · 데이터 기준",
@@ -5143,14 +5151,19 @@ function formatIssueOccurredAt(issue){
   return isError && t?`${d} ${t}`:d;
 }
 function formatIssueEndedAt(issue){
-  const isError=["장애","시스템오류"].includes(String(issue?.category||"").trim());
-  // 종료일시는 장애 이슈에만 표시합니다. 그 외 구분은 항상 하이픈으로 표시합니다.
-  if(!isError) return "-";
+  const category=String(issue?.category||"").trim();
+  const isError=["장애","시스템오류"].includes(category);
+  const isEvent=category==="이벤트";
   const raw=String(issue?.endedAt||"").trim();
   const d=String(issue?.endDate||"").trim() || (raw?raw.slice(0,10):"");
   if(!d) return "-";
-  const t=String(issue?.endTime||"").trim() || (raw.length>=16?raw.slice(11,16):"");
-  return t?`${d} ${t}`:d;
+  // 장애는 종료일시, 이벤트는 종료일자를 표시합니다.
+  if(isError){
+    const t=String(issue?.endTime||"").trim() || (raw.length>=16?raw.slice(11,16):"");
+    return t?`${d} ${t}`:d;
+  }
+  if(isEvent) return d;
+  return "-";
 }
 function formatIssuePeriodLabel(issue){
   const start=getIssueStartDate(issue);
@@ -5181,8 +5194,14 @@ function operationIssueTooltipLines(label){
   const lines=["",`⚑ 운영 이슈 ${list.length}건`];
   list.slice(0,4).forEach(x=>{
     lines.push(`• [${String(x.category||"기타").trim()==="시스템오류"?"장애":(x.category||"기타")}] ${x.title||"-"}`);
-    if(x.occurrenceTime) lines.push(`  발생일시: ${getIssueStartDate(x)} ${x.occurrenceTime}`);
-    const ended=formatIssueEndedAt(x); if(ended!=="-") lines.push(`  종료일시: ${ended}`);
+    const issueCategory=String(x.category||"").trim();
+    if(issueCategory==="이벤트"){
+      lines.push(`  이벤트 기간: ${formatIssuePeriodLabel(x)}`);
+    }else if(x.occurrenceTime){
+      lines.push(`  발생일시: ${getIssueStartDate(x)} ${x.occurrenceTime}`);
+    }
+    const ended=formatIssueEndedAt(x);
+    if(ended!=="-" && issueCategory!=="이벤트") lines.push(`  종료일시: ${ended}`);
     if(x.detail) lines.push(`  ${String(x.detail).slice(0,80)}${String(x.detail).length>80?"…":""}`);
   });
   if(list.length>4) lines.push(`  외 ${list.length-4}건`);
@@ -5258,7 +5277,10 @@ function editOperationIssue(id){
   if($("issueEditId")) $("issueEditId").value=id;
   if($("issueCategory")){ const c=String(r.category||"기타").trim(); $("issueCategory").value=(c==="시스템오류"?"장애":c); }
   syncIssueDateInputMode();
-  const isError=["장애","시스템오류"].includes(String(r.category||"").trim());
+  const issueCategory=String(r.category||"").trim();
+  const isError=["장애","시스템오류"].includes(issueCategory);
+  const isEvent=issueCategory==="이벤트";
+  const needsEnd=isError||isEvent;
   if($("issueOccurredAt")){
     const d=getIssueStartDate(r)||r.date||"";
     const t=String(r.occurrenceTime||"09:00").slice(0,5);
@@ -5266,9 +5288,13 @@ function editOperationIssue(id){
     setIssueDateTimePickerValue(issueOccurredAtPicker,$("issueOccurredAt"),v);
   }
   if($("issueEndedAt")){
-    const legacyEnded=(r.endDate && r.endTime)?`${r.endDate}T${String(r.endTime).slice(0,5)}`:"";
-    const v=isError ? (r.endedAt||legacyEnded||r.endDate||"") : (r.endDate||getIssueEndDate(r)||"");
-    setIssueDateTimePickerValue(issueEndedAtPicker,$("issueEndedAt"),v);
+    if(needsEnd){
+      const legacyEnded=(r.endDate && r.endTime)?`${r.endDate}T${String(r.endTime).slice(0,5)}`:"";
+      const v=isError ? (r.endedAt||legacyEnded||r.endDate||"") : (r.endDate||getIssueEndDate(r)||"");
+      setIssueDateTimePickerValue(issueEndedAtPicker,$("issueEndedAt"),v);
+    }else{
+      $("issueEndedAt").value="";
+    }
   }
   if($("issueTitle")) $("issueTitle").value=r.title||"";
   if($("issueDetail")) $("issueDetail").value=r.detail||"";
@@ -5281,20 +5307,22 @@ async function saveOperationIssue(){
   if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
   const category=$("issueCategory")?.value||"기타";
   const isError=["장애","시스템오류"].includes(category);
+  const isEvent=category==="이벤트";
+  const needsEnd=isError||isEvent;
   const occurredRaw=String($("issueOccurredAt")?.value||"").trim();
   const endedRaw=String($("issueEndedAt")?.value||"").trim();
   const occurredAt=isError?normalizeIssueDateTimeValue(occurredRaw):(occurredRaw?occurredRaw.slice(0,10):"");
-  const endedAt=isError?normalizeIssueDateTimeValue(endedRaw):(endedRaw?endedRaw.slice(0,10):"");
+  const endedAt=isError?normalizeIssueDateTimeValue(endedRaw):(isEvent&&endedRaw?endedRaw.slice(0,10):"");
   const issueDate=occurredAt?occurredAt.slice(0,10):"";
   const issueTime=isError && occurredAt.length>=16?occurredAt.slice(11,16):"";
-  const endDate=endedAt?endedAt.slice(0,10):"";
+  const endDate=needsEnd?(endedAt?endedAt.slice(0,10):""):issueDate;
   const endTime=isError && endedAt.length>=16?endedAt.slice(11,16):"";
   const title=String($("issueTitle")?.value||"").trim();
   const editId=$("issueEditId")?.value||"";
-  if(!occurredAt) return alert(isError?"발생일시를 선택해 주세요.":"발생일자를 선택해 주세요.");
-  if(!endedAt) return alert(isError?"종료일시를 선택해 주세요.":"종료일자를 선택해 주세요.");
+  if(!occurredAt) return alert(isError?"발생일시를 선택해 주세요.":isEvent?"시작일자를 선택해 주세요.":"발생일자를 선택해 주세요.");
+  if(needsEnd && !endedAt) return alert(isError?"종료일시를 선택해 주세요.":"종료일자를 선택해 주세요.");
   if(!title) return alert("이슈를 입력해 주세요.");
-  if(endedAt<occurredAt) return alert(isError?"종료일시는 발생일시보다 빠를 수 없습니다.":"종료일자는 발생일자보다 빠를 수 없습니다.");
+  if(needsEnd && endedAt<occurredAt) return alert(isError?"종료일시는 발생일시보다 빠를 수 없습니다.":"종료일자는 시작일자보다 빠를 수 없습니다.");
   const status=$("issueFormStatus");
   try{
     if(status) status.textContent=editId?"수정 중...":"등록 중...";
@@ -5966,6 +5994,137 @@ window.addEventListener("message",e=>{
   else renderFirestoreUsage(data);
 });
 
+
+// AI 분석용 달력 보정 정보.
+// 2025~2026 대한민국 공휴일/선거일을 포함하며, 주말은 날짜에서 자동 판별합니다.
+// 공휴일은 운영량 증감의 "원인"으로 단정하지 않고 비교조건을 보정하는 참고정보로만 사용합니다.
+const AI_KR_HOLIDAY_MAP={
+  "2025-01-01":"신정",
+  "2025-01-27":"설날 연휴","2025-01-28":"설날 연휴","2025-01-29":"설날","2025-01-30":"설날 연휴",
+  "2025-03-01":"삼일절","2025-03-03":"삼일절 대체공휴일",
+  "2025-05-01":"근로자의 날","2025-05-05":"어린이날·부처님오신날","2025-05-06":"어린이날 대체공휴일",
+  "2025-06-03":"대통령선거일","2025-06-06":"현충일",
+  "2025-08-15":"광복절",
+  "2025-10-03":"개천절","2025-10-05":"추석 연휴","2025-10-06":"추석","2025-10-07":"추석 연휴","2025-10-08":"추석 대체공휴일","2025-10-09":"한글날",
+  "2025-12-25":"성탄절",
+  "2026-01-01":"신정",
+  "2026-02-16":"설날 연휴","2026-02-17":"설날","2026-02-18":"설날 연휴",
+  "2026-03-01":"삼일절","2026-03-02":"삼일절 대체공휴일",
+  "2026-05-01":"노동절","2026-05-05":"어린이날","2026-05-24":"부처님오신날","2026-05-25":"부처님오신날 대체공휴일",
+  "2026-06-03":"전국동시지방선거일","2026-06-06":"현충일",
+  "2026-07-17":"제헌절",
+  "2026-08-15":"광복절","2026-08-17":"광복절 대체공휴일",
+  "2026-09-24":"추석 연휴","2026-09-25":"추석","2026-09-26":"추석 연휴",
+  "2026-10-03":"개천절","2026-10-05":"개천절 대체공휴일","2026-10-09":"한글날",
+  "2026-12-25":"성탄절"
+};
+const AI_WEEKDAY_KO=["일","월","화","수","목","금","토"];
+
+function aiCalendarDate(dateStr){
+  const s=String(dateStr||"").trim();
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(s)) return null;
+  const d=new Date(`${s}T12:00:00`);
+  return Number.isNaN(d.getTime())?null:d;
+}
+function aiShiftDate(dateStr,delta){
+  const d=aiCalendarDate(dateStr); if(!d) return "";
+  d.setDate(d.getDate()+Number(delta||0));
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+function aiCalendarDayInfo(dateStr){
+  const d=aiCalendarDate(dateStr);
+  if(!d) return {date:String(dateStr||""),weekday:"",isWeekend:false,holidayName:"",dayType:"미확인"};
+  const dow=d.getDay();
+  const holidayName=AI_KR_HOLIDAY_MAP[dateStr]||"";
+  const isWeekend=dow===0||dow===6;
+  return {
+    date:dateStr,
+    weekday:AI_WEEKDAY_KO[dow],
+    isWeekend,
+    holidayName,
+    dayType:holidayName?"공휴일":(isWeekend?"주말":"평일")
+  };
+}
+function aiCalendarRange(start,end,maxDays=370){
+  const a=aiCalendarDate(start), b=aiCalendarDate(end);
+  if(!a||!b||a>b) return [];
+  const out=[];
+  let cur=String(start);
+  for(let i=0;i<maxDays && cur<=end;i++){
+    out.push(aiCalendarDayInfo(cur));
+    cur=aiShiftDate(cur,1);
+    if(!cur) break;
+  }
+  return out;
+}
+function buildAiCalendarContext(start,end){
+  const days=aiCalendarRange(start,end);
+  const specialDays=days.filter(x=>x.isWeekend||x.holidayName).map(x=>({
+    date:x.date,weekday:x.weekday,dayType:x.dayType,holidayName:x.holidayName||""
+  }));
+  const weekdayCount=days.filter(x=>!x.isWeekend&&!x.holidayName).length;
+  const weekendCount=days.filter(x=>x.isWeekend&&!x.holidayName).length;
+  const holidayCount=days.filter(x=>!!x.holidayName).length;
+  const endInfo=days.length?days[days.length-1]:aiCalendarDayInfo(end);
+  const prevDay=aiCalendarDayInfo(aiShiftDate(end,-1));
+  const sameWeekdayPrev=aiCalendarDayInfo(aiShiftDate(end,-7));
+  return {
+    timezone:"Asia/Seoul",
+    period:{start:String(start||""),end:String(end||"")},
+    dayComposition:{totalDays:days.length,weekdayCount,weekendCount,holidayCount},
+    specialDays,
+    comparisonReference:{
+      periodEnd:endInfo,
+      previousDay:prevDay,
+      sameWeekdayPreviousWeek:sameWeekdayPrev
+    },
+    analysisRules:[
+      "평일·주말·공휴일은 운영 패턴과 인력·운영시간이 다를 수 있으므로 단순 절대량만으로 이상 여부를 판단하지 않는다.",
+      "주말 지표는 평일보다 동일 요일 또는 이전 주 같은 요일과의 흐름을 우선 참고한다.",
+      "공휴일 및 공휴일 전후는 일반 평일과 직접 비교해 원인을 단정하지 않고, 휴일 영향 가능성을 보조 요인으로만 표현한다.",
+      "월요일·연휴 직후처럼 문의가 누적될 수 있는 시점은 직전 하루뿐 아니라 이전 주 동일 요일 및 기간 추세를 함께 본다.",
+      "운영이슈와 지표 변화의 시점이 겹쳐도 인과관계를 확정하지 말고 '연관 가능성 확인 필요' 수준으로 표현한다."
+    ]
+  };
+}
+function aiCalendarContextText(ctx){
+  if(!ctx) return "";
+  const special=(ctx.specialDays||[]).map(x=>`${x.date}(${x.weekday}) ${x.holidayName||x.dayType}`).join(", ");
+  const end=ctx.comparisonReference?.periodEnd||{};
+  const prev=ctx.comparisonReference?.previousDay||{};
+  const same=ctx.comparisonReference?.sameWeekdayPreviousWeek||{};
+  return [
+    `분석기간 ${ctx.period?.start||""} ~ ${ctx.period?.end||""}`,
+    `기간 구성: 평일 ${ctx.dayComposition?.weekdayCount||0}일 / 주말 ${ctx.dayComposition?.weekendCount||0}일 / 공휴일 ${ctx.dayComposition?.holidayCount||0}일`,
+    special?`주말·공휴일 상세: ${special}`:"주말·공휴일 없음",
+    `종료일 비교 참고: ${end.date||""}(${end.weekday||""}, ${end.dayType||""}) / 직전일 ${prev.date||""}(${prev.weekday||""}, ${prev.dayType||""}) / 전주 동일요일 ${same.date||""}(${same.weekday||""}, ${same.dayType||""})`,
+    `분석 규칙: ${(ctx.analysisRules||[]).join(" ")}`
+  ].join("\n");
+}
+function buildAiOperationIssueContext(start,end){
+  const actual=(operationIssues||[])
+    .filter(r=>issueRangesOverlap(r,start,end))
+    .map(r=>({
+      startDate:getIssueStartDate(r),
+      endDate:getIssueEndDate(r),
+      category:r.category||"기타",
+      title:r.title||"",
+      detail:r.detail||"",
+      occurrenceTime:r.occurrenceTime||"",
+      endedAt:r.endedAt||""
+    }));
+  const calendar=buildAiCalendarContext(start,end);
+  const calendarRow={
+    startDate:start,
+    endDate:end,
+    category:"분석기준",
+    title:"요일·주말·공휴일 분석 보정",
+    detail:`※ 운영이슈가 아닌 AI 분석 보정 정보입니다.\n${aiCalendarContextText(calendar)}`,
+    isAnalysisContext:true
+  };
+  return {actual,calendar,combined:[calendarRow,...actual]};
+}
+
 async function runAiFromDashboard(){
   if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
   if(!currentUser) return alert("로그인이 필요합니다.");
@@ -5994,16 +6153,22 @@ async function runAiFromDashboard(){
     const idToken=await currentUser.getIdToken(true);
     const requestId=`ai_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
     aiActiveRequestId=requestId;
+    const aiStart=option.dataset.start||"";
+    const aiEnd=option.dataset.end||"";
+    const aiContext=buildAiOperationIssueContext(aiStart,aiEnd);
     aiSubmitHiddenForm(url,{
       action:"runAiAnalysis",
       firebaseIdToken:idToken,
       requestId,
-        startDate:option.dataset.start||"",
-      endDate:option.dataset.end||"",
+      startDate:aiStart,
+      endDate:aiEnd,
       channel:option.dataset.channel||"",
-      // Apps Script/OpenAI 분석에서 같은 기간의 운영이슈·환불 요약을 함께 활용할 수 있도록 전달합니다.
-      operationIssuesJson:JSON.stringify((operationIssues||[]).filter(r=>issueRangesOverlap(r,option.dataset.start||"",option.dataset.end||"")).map(r=>({startDate:getIssueStartDate(r),endDate:getIssueEndDate(r),category:r.category||"기타",title:r.title||"",detail:r.detail||"",occurrenceTime:r.occurrenceTime||"",endedAt:r.endedAt||""}))),
-      refundSummaryJson:JSON.stringify(reportRefundSummary(option.dataset.start||"",option.dataset.end||""))
+      // 실제 운영이슈에 달력 분석 보정정보를 함께 넣어 현재 Apps Script에서도 AI가 주말·공휴일 맥락을 참고할 수 있게 합니다.
+      operationIssuesJson:JSON.stringify(aiContext.combined),
+      // Apps Script를 추후 수정할 때는 아래 전용 필드를 직접 프롬프트에 넣을 수 있습니다.
+      calendarContextJson:JSON.stringify(aiContext.calendar),
+      analysisContextVersion:"kr-calendar-v1",
+      refundSummaryJson:JSON.stringify(reportRefundSummary(aiStart,aiEnd))
     });
     aiJobData.push({__id:requestId,requestId,status:"running",startDate:option.dataset.start||"",endDate:option.dataset.end||"",channel:option.dataset.channel||"",startedAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
     aiSetRunBusy(true,`🟡 AI 분석 요청 접수 · ${option.dataset.start} ~ ${option.dataset.end}${option.dataset.channel?` · ${option.dataset.channel}`:""} · 응답이 완료되면 자동 반영됩니다.`);
@@ -6657,21 +6822,17 @@ function reportPlainLines(v,limit=2){
   return String(v||"").replace(/<br\s*\/?>/gi,"\n").replace(/\*\*/g,"").split(/\r?\n/).map(x=>x.replace(/^[-•\d.)\s]+/,"").trim()).filter(Boolean).slice(0,limit);
 }
 function reportRenderAi(dateStr){
-  // 운영보고에서는 OpenAI를 실행하거나 재분석하지 않습니다.
-  // 관리자에게만 AI 분석 메뉴에서 이미 저장된 결과를 조회하여 표시합니다.
-  if(currentRole!=="admin") return;
-  const row=reportFindAiForDate(dateStr), list=$("opReportAiList"), quote=$("opReportAiQuote");
+  // 운영보고에서는 날짜 변경만으로 OpenAI를 실행하거나 재분석하지 않습니다.
+  // 일반/관리자 모두 AI 분석 메뉴에 저장된 결과를 조회해서 표시합니다.
+  const row=reportFindAiForDate(dateStr), list=$("opReportAiList");
   const issueCount=(operationIssues||[]).filter(r=>isDateInIssueRange(dateStr,r)).length;
-  if($("opReportAiBasis")) $("opReportAiBasis").textContent=`관리자 전용 · 저장 결과 · 운영이슈 ${issueCount}건`;
+  if($("opReportAiBasis")) $("opReportAiBasis").textContent=`저장 결과 · 기준일 운영이슈 ${issueCount}건`;
   if(!row){
-    if(list) list.innerHTML='<div class="op-report-ai-item"><span class="op-report-ai-check">!</span><span>선택한 날짜를 포함하는 저장된 AI 분석 결과가 없습니다. 운영보고에서는 AI를 자동 실행하거나 재분석하지 않습니다.</span></div>';
-    if(quote) quote.textContent="저장된 AI 분석 결과가 없습니다.";
+    if(list) list.innerHTML='<div class="op-report-ai-item"><span class="op-report-ai-check">!</span><span>선택한 날짜를 포함하는 저장된 AI 분석 결과가 없습니다. 관리자 AI 분석 후 표시됩니다.</span></div>';
     return;
   }
   const lines=[...reportPlainLines(aiValue(row,["issues","주요이슈"]),2),...reportPlainLines(aiValue(row,["operationAnalysis","운영분석"]),1),...reportPlainLines(aiValue(row,["consultAnalysis","상담유형분석"]),1)].slice(0,4);
-  if(list) list.innerHTML=lines.length?lines.map(x=>`<div class="op-report-ai-item"><span class="op-report-ai-check">✓</span><span>${aiInline(x)}</span></div>`).join(""):'<div class="op-report-empty">AI 분석 내용이 없습니다.</div>';
-  const q=reportPlainLines(aiValue(row,["improvement","개선제안"],""),1)[0]||reportPlainLines(aiValue(row,["issues","주요이슈"],""),1)[0]||"AI 분석 결과를 확인해 주세요.";
-  if(quote) quote.innerHTML=`“${aiInline(q)}”`;
+  if(list) list.innerHTML=lines.length?lines.map(x=>`<div class="op-report-ai-item"><span class="op-report-ai-check">✓</span><span>${aiInline(x)}</span></div>`).join(""):'<div class="op-report-empty">저장된 AI 운영 요약 내용이 없습니다.</div>';
 }
 function reportReasonRows(dateStr){
   const cur=reportRefundSummary(dateStr,dateStr), prevDate=reportPrevRow(dateStr)?.date||"", prev=prevDate?reportRefundSummary(prevDate,prevDate):{reasons:{}};
@@ -6698,13 +6859,18 @@ function renderReportChanges(dateStr){
   const rows=reportChanges(dateStr,opReportChangeMode), el=$("opReportChanges"); if(!el) return;
   el.innerHTML=rows.length?rows.map((r,i)=>`<div class="op-report-change-row"><span class="op-report-rank">${i+1}</span><span class="op-report-change-name">${issueEsc(r.name)}</span><span class="op-report-change-value ${r.change>0?"op-report-up":"op-report-down"}">${issueEsc(r.text)}</span></div>`).join(""):'<div class="op-report-empty">비교 가능한 변화 데이터가 없습니다.</div>';
 }
-function renderReportIssues(dateStr){
-  const rows=(operationIssues||[]).filter(r=>isDateInIssueRange(dateStr,r)).sort((a,b)=>String(a.occurrenceTime||"").localeCompare(String(b.occurrenceTime||""))).slice(0,5);
-  const el=$("opReportIssues");
-  if(el) el.innerHTML=rows.length?`<table class="op-report-issue-table"><thead><tr><th style="width:48px">시간</th><th>이슈 내용</th><th>조치사항</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${issueEsc(r.occurrenceTime||"-")}</td><td>${issueEsc(r.title||"-")}</td><td>${issueEsc(r.detail||"-")}</td></tr>`).join("")}</tbody></table>`:'<div class="op-report-empty">기준일에 등록된 운영이슈가 없습니다.</div>';
-  const ai=reportFindAiForDate(dateStr); const checks=ai?reportPlainLines(aiValue(ai,["improvement","개선제안"]),3):[];
+function renderReportChecks(dateStr){
+  const ai=reportFindAiForDate(dateStr);
+  const checks=ai?reportPlainLines(aiValue(ai,["improvement","개선제안"]),3):[];
   const checkEl=$("opReportChecks");
-  if(checkEl) checkEl.innerHTML=checks.length?checks.map(x=>`<div class="op-report-check-item"><span>●</span><span>${aiInline(x)}</span></div>`).join(""):(rows.length?'<div class="op-report-check-item"><span>●</span><span>등록된 운영이슈의 후속 조치 여부를 확인해 주세요.</span></div>':'<div class="op-report-check-item"><span>●</span><span>추가 확인이 필요한 운영이슈가 없습니다.</span></div>');
+  if(!checkEl) return;
+  if(checks.length){
+    checkEl.innerHTML=checks.map(x=>`<div class="op-report-check-item"><span>✓</span><span>${aiInline(x)}</span></div>`).join("");
+  }else if(ai){
+    checkEl.innerHTML='<div class="op-report-empty">저장된 AI 분석 결과에 체크 포인트가 없습니다.</div>';
+  }else{
+    checkEl.innerHTML='<div class="op-report-empty">저장된 AI 분석 결과가 없습니다. 관리자 AI 분석 후 표시됩니다.</div>';
+  }
 }
 function renderOperationReport(){
   const input=$("opReportDate"); if(!input) return;
@@ -6741,18 +6907,22 @@ function renderOperationReport(){
 
   renderReportChanges(dateStr);
   const call=reportConsultPeriodForDate(dateStr,"인바운드"), erms=reportConsultPeriodForDate(dateStr,"게시판");
-  $("opReportCallPeriod").textContent=call.period?`${call.period.start} ~ ${call.period.end}`:"상담유형 기준기간 없음";
-  $("opReportErmsPeriod").textContent=erms.period?`${erms.period.start} ~ ${erms.period.end}`:"상담유형 기준기간 없음";
+  $("opReportCallPeriod").textContent=call.period?`특정기간 · ${call.period.start} ~ ${call.period.end}`:"특정기간 · 데이터 없음";
+  $("opReportErmsPeriod").textContent=erms.period?`특정기간 · ${erms.period.start} ~ ${erms.period.end}`:"특정기간 · 데이터 없음";
   $("opReportCallTop").innerHTML=reportConsultTable(call.rows,"");
   $("opReportErmsTop").innerHTML=reportConsultTable(erms.rows,"green");
   $("opReportRefundTop").innerHTML=reportRefundTable(dateStr);
-  reportRenderAi(dateStr); renderReportIssues(dateStr);
+  reportRenderAi(dateStr); renderReportChecks(dateStr);
 
   if(!input.dataset.bound){
     input.dataset.bound="1";
     input.addEventListener("change",renderOperationReport);
     $("opReportRefreshBtn")?.addEventListener("click",renderOperationReport);
     $("opReportPrintBtn")?.addEventListener("click",()=>window.print());
+    $("opReportAiManageBtn")?.addEventListener("click",()=>{
+      if(currentRole!=="admin") return;
+      document.querySelector('.menu button[data-target="ai"]')?.click();
+    });
     document.querySelectorAll('[data-report-change]').forEach(btn=>btn.addEventListener('click',()=>{opReportChangeMode=btn.dataset.reportChange||"up";document.querySelectorAll('[data-report-change]').forEach(x=>x.classList.toggle('active',x===btn));renderReportChanges($("opReportDate")?.value||reportLatestAvailableDate());}));
   }
 }
@@ -8124,7 +8294,7 @@ function renderRaw(){
     $("rawHead").innerHTML="<tr><th>비교구분</th><th>시작일</th><th>종료일</th><th>상담구분</th><th>순위</th><th>대분류</th><th>중분류</th><th>소분류</th><th>코드</th><th>문의유형</th><th>문의량</th><th>고1</th><th>고2</th><th>고3</th><th>N수</th><th>기타</th><th>비회원</th></tr>";
     $("rawBody").innerHTML=rows.map(r=>`<tr><td>${r.compareType||""}</td><td>${r.startDate||""}</td><td>${r.endDate||""}</td><td>${r.channel||""}</td><td>${r.rank??"-"}</td><td>${r.category1||""}</td><td>${r.category2||""}</td><td>${r.category3||""}</td><td>${r.code||""}</td><td>${r.inquiry||""}</td><td>${r.count===null||r.count===undefined?"-":fmt(r.count)}</td><td>${r.grade1===null||r.grade1===undefined?"-":fmt(r.grade1)}</td><td>${r.grade2===null||r.grade2===undefined?"-":fmt(r.grade2)}</td><td>${r.grade3===null||r.grade3===undefined?"-":fmt(r.grade3)}</td><td>${r.nStudent===null||r.nStudent===undefined?"-":fmt(r.nStudent)}</td><td>${r.gradeOther===null||r.gradeOther===undefined?"-":fmt(r.gradeOther)}</td><td>${r.gradeUnclassified===null||r.gradeUnclassified===undefined?"-":fmt(r.gradeUnclassified)}</td></tr>`).join("");
   }else if(type==="issues"){
-    $("rawHead").innerHTML="<tr><th>발생일시</th><th>종료일시</th><th>구분</th><th>이슈</th><th>상세 내용</th><th>등록자</th></tr>";
+    $("rawHead").innerHTML="<tr><th>발생/시작</th><th>종료</th><th>구분</th><th>이슈</th><th>상세 내용</th><th>등록자</th></tr>";
     $("rawBody").innerHTML=rows.map(r=>`<tr><td>${issueEsc(formatIssueOccurredAt(r))}</td><td>${issueEsc(formatIssueEndedAt(r))}</td><td>${issueEsc(r.category||"")}</td><td>${issueEsc(r.title||"")}</td><td style="white-space:normal;min-width:280px">${issueEsc(r.detail||"")}</td><td>${issueEsc(r.createdBy||"")}</td></tr>`).join("");
   }else if(type==="consulthistory"){
     $("rawHead").innerHTML="<tr><th>상담일자</th><th>학년정보</th><th>대분류</th><th>중분류</th><th>소분류</th><th>문의유형</th><th>상담내용</th></tr>";
@@ -9498,6 +9668,8 @@ function initIssueDateTimePickers(){
   if(typeof flatpickr!=="function") return;
   const category=String($("issueCategory")?.value||"장애").trim();
   const isError=["장애","시스템오류"].includes(category);
+  const isEvent=category==="이벤트";
+  const needsEnd=isError||isEvent;
   const occurredValue=String($("issueOccurredAt")?.value||"").trim();
   const endedValue=String($("issueEndedAt")?.value||"").trim();
   destroyIssuePicker(issueOccurredAtPicker);
@@ -9514,19 +9686,32 @@ function initIssueDateTimePickers(){
     disableMobile:true,
     monthSelectorType:"static"
   };
-  if($("issueOccurredAt")) issueOccurredAtPicker=flatpickr($("issueOccurredAt"),common);
-  if($("issueEndedAt")) issueEndedAtPicker=flatpickr($("issueEndedAt"),common);
+  if($("issueOccurredAt")){
+    $("issueOccurredAt").disabled=false;
+    issueOccurredAtPicker=flatpickr($("issueOccurredAt"),common);
+  }
+  if($("issueEndedAt")){
+    $("issueEndedAt").disabled=!needsEnd;
+    if(needsEnd){
+      issueEndedAtPicker=flatpickr($("issueEndedAt"),common);
+    }else{
+      $("issueEndedAt").value="";
+    }
+  }
   if(occurredValue) setIssueDateTimePickerValue(issueOccurredAtPicker,$("issueOccurredAt"),isError?occurredValue:occurredValue.slice(0,10));
-  if(endedValue) setIssueDateTimePickerValue(issueEndedAtPicker,$("issueEndedAt"),isError?endedValue:endedValue.slice(0,10));
+  if(needsEnd && endedValue) setIssueDateTimePickerValue(issueEndedAtPicker,$("issueEndedAt"),isError?endedValue:endedValue.slice(0,10));
 }
 function syncIssueDateInputMode(){
   const category=String($("issueCategory")?.value||"").trim();
   const isError=["장애","시스템오류"].includes(category);
-  if($("issueOccurredLabel")) $("issueOccurredLabel").textContent=isError?"발생일시":"발생일자";
-  if($("issueEndedLabel")) $("issueEndedLabel").textContent=isError?"종료일시":"종료일자";
+  const isEvent=category==="이벤트";
+  const needsEnd=isError||isEvent;
+  if($("issueOccurredLabel")) $("issueOccurredLabel").textContent=isError?"발생일시":isEvent?"시작일자":"발생일자";
+  if($("issueEndedLabel")) $("issueEndedLabel").textContent=isError?"종료일시":isEvent?"종료일자":"종료일자";
   if($("issueOccurredAt")) $("issueOccurredAt").placeholder=isError?"YYYY-MM-DD HH:mm":"YYYY-MM-DD";
-  if($("issueEndedAt")) $("issueEndedAt").placeholder=isError?"YYYY-MM-DD HH:mm":"YYYY-MM-DD";
+  if($("issueEndedAt")) $("issueEndedAt").placeholder=isError?"YYYY-MM-DD HH:mm":isEvent?"YYYY-MM-DD":"해당 없음";
   initIssueDateTimePickers();
+  if($("issueEndedAt")) $("issueEndedAt").disabled=!needsEnd;
 }
 // 이전 함수명과의 호환
 function syncIssueEndDateState(){ syncIssueDateInputMode(); }
