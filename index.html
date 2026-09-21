@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- v104 AI 주말·공휴일 분석 보정 + 운영이슈 이벤트 종료일 적용 -->
+<!-- v112 운영보고 제거 + 기존 대시보드/AI/증분업로드 유지 -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -2704,87 +2704,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 @media(max-width:1000px){.consult-status-pair{grid-template-columns:1fr}}
 
 
-/* ===== 운영보고 통합 화면 ===== */
-#report{padding-bottom:18px}
-.op-report-wrap{display:flex;flex-direction:column;gap:10px;min-width:0}
-.op-report-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:2px 2px 0}
-.op-report-titlebox{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.op-report-title{font-size:27px;font-weight:900;letter-spacing:-.9px;color:#0e2b54}
-.op-report-datebox{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:800;color:#18345d}
-.op-report-datebox input{height:38px;border:1px solid #d7e3f2;border-radius:8px;padding:0 10px;background:#fff;color:#18345d;font-weight:800}
-.op-report-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.op-report-basis{font-size:10px;color:#71849d;white-space:nowrap}
-.op-report-btn{height:36px;border:1px solid #d7e3f2;border-radius:8px;background:#fff;color:#1767d9;padding:0 13px;font-size:11px;font-weight:900;cursor:pointer}
-.op-report-btn:hover{background:#f4f8ff}
-.op-report-ai{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.op-report-ai-panel{min-width:0;min-height:132px;padding:14px 16px;border:1px solid #cfe2fb;border-radius:12px;background:linear-gradient(120deg,#eaf5ff 0%,#f7fbff 100%);box-shadow:0 3px 10px rgba(31,70,116,.05)}
-.op-report-ai-panel.check{border-color:#ccebdd;background:linear-gradient(120deg,#eafaf4 0%,#f8fffb 100%)}
-.op-report-ai-title-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
-.op-report-ai-title{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:17px;font-weight:900;color:#173866}
-.op-report-ai-panel.check .op-report-ai-title{color:#19755d}
-.op-report-ai-basis{display:inline-flex;padding:4px 8px;border-radius:999px;background:#d8ebff;color:#2c67ad;font-size:9.5px;font-weight:800;vertical-align:middle}
-.op-report-ai-panel.check .op-report-ai-basis{background:#daf4e9;color:#148162}
-.op-report-ai-action{height:30px;border:1px solid #b8d6fb;border-radius:7px;background:#fff;color:#1767d9;padding:0 10px;font-size:10px;font-weight:900;cursor:pointer;white-space:nowrap}
-.op-report-ai-action:hover{background:#f3f8ff}
-.op-report-ai-list{display:flex;flex-direction:column;gap:6px}
-.op-report-ai-item{display:grid;grid-template-columns:18px 1fr;gap:7px;align-items:start;color:#18345d;font-size:11.5px;line-height:1.45}
-.op-report-ai-check{width:15px;height:15px;border-radius:50%;display:grid;place-items:center;background:#2f80ed;color:#fff;font-size:9px;font-weight:900;margin-top:1px}
-.op-report-ai-panel.check .op-report-ai-check{background:#19a77b}
-.op-report-check-list{display:flex;flex-direction:column;gap:6px}
-.op-report-check-item{display:grid;grid-template-columns:18px 1fr;gap:7px;align-items:start;color:#315a52;font-size:11.5px;line-height:1.45}
-.op-report-check-item>span:first-child{width:15px;height:15px;border-radius:50%;display:grid;place-items:center;background:#19a77b;color:#fff;font-size:8px;font-weight:900;margin-top:1px}
-.op-report-kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
-.op-report-kpi{min-width:0;padding:11px 11px 10px;background:#fff;border:1px solid #dfe8f3;border-radius:10px;box-shadow:0 3px 10px rgba(31,70,116,.05)}
-.op-report-kpi-head{display:flex;align-items:center;gap:7px;font-size:10.5px;font-weight:900;color:#284366;white-space:nowrap}
-.op-report-kpi-ico{width:25px;height:25px;border-radius:8px;display:grid;place-items:center;background:#eaf3ff;color:#2276e8;font-size:12px}
-.op-report-kpi-value{text-align:center;margin-top:8px;font-size:23px;font-weight:900;color:#102c53;letter-spacing:-.6px;white-space:nowrap}
-.op-report-kpi-change{text-align:center;margin-top:6px;font-size:11px;font-weight:900;min-height:16px}
-.op-report-kpi-prev{text-align:center;margin-top:7px;padding-top:7px;border-top:1px solid #eef2f7;color:#657891;font-size:10px}
-.op-report-up{color:#ff315b}.op-report-down{color:#1670e5}.op-report-flat{color:#7a8798}
-.op-report-mid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,.88fr) minmax(300px,.95fr);gap:9px;align-items:stretch}
-.op-report-bottom{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;align-items:stretch}
-.op-report-card{background:#fff;border:1px solid #dfe8f3;border-radius:10px;box-shadow:0 3px 10px rgba(31,70,116,.05);padding:12px 13px;min-width:0;overflow:hidden}
-.op-report-card-title{font-size:13px;font-weight:900;color:#17355f;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.op-report-card-title small{font-size:9.5px;color:#6f8199;font-weight:700}
-.op-report-chart{height:215px;position:relative}
-.op-report-share-wrap{display:grid;grid-template-columns:minmax(140px,.95fr) minmax(105px,.7fr);gap:6px;align-items:center;height:215px}
-.op-report-share-chart{height:190px;position:relative}
-.op-report-legend{display:flex;flex-direction:column;gap:9px;font-size:10px;color:#334e70}
-.op-report-legend-row{display:grid;grid-template-columns:9px 1fr auto;gap:6px;align-items:center}
-.op-report-dot{width:8px;height:8px;border-radius:50%}
-.op-report-change-tabs{display:grid;grid-template-columns:1fr 1fr;background:#edf2f8;border-radius:7px;overflow:hidden;margin-bottom:5px}
-.op-report-change-tabs button{height:27px;border:0;background:transparent;color:#526985;font-size:10px;font-weight:900;cursor:pointer}
-.op-report-change-tabs button.active{background:#fff0f4;color:#f02f5e;box-shadow:inset 0 0 0 1px #ff5b7d}
-.op-report-change-list{display:flex;flex-direction:column}
-.op-report-change-row{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:6px;align-items:center;min-height:31px;border-bottom:1px solid #edf2f7;font-size:10.5px}
-.op-report-change-row:last-child{border-bottom:0}
-.op-report-rank{width:21px;height:21px;border-radius:50%;display:grid;place-items:center;background:#fbe8ee;color:#ef4268;font-weight:900}
-.op-report-change-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#28405f;font-weight:800}
-.op-report-change-value{font-weight:900;white-space:nowrap}
-.op-report-table{width:100%;min-width:0!important;border-collapse:collapse;table-layout:fixed}
-.op-report-table th,.op-report-table td{position:static!important;padding:6px 5px;border-bottom:1px solid #edf2f7;font-size:9.5px;white-space:normal;overflow:hidden;text-overflow:ellipsis}
-.op-report-table th{background:#f3f7fb;color:#5d708a;font-weight:900}
-.op-report-table td{color:#294361}
-.op-report-table td.num,.op-report-table th.num{text-align:right}
-.op-report-table tr:last-child td{border-bottom:0}
-.op-report-small-rank{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#eaf3ff;color:#1767d9;font-size:9px;font-weight:900}
-.op-report-small-rank.green{background:#e8f8f2;color:#11a274}.op-report-small-rank.pink{background:#ffeaf0;color:#ef4268}
-.op-report-empty{padding:18px 6px;text-align:center;color:#8997a8;font-size:10px}
-.op-report-consult-card{position:relative;border-width:2px;overflow:visible}
-.op-report-consult-card.call{border-color:#bfd9ff;background:linear-gradient(180deg,#f5f9ff 0,#fff 42%)}
-.op-report-consult-card.erms{border-color:#bfe8d8;background:linear-gradient(180deg,#f3fcf8 0,#fff 42%)}
-.op-report-consult-card .op-report-card-title{justify-content:space-between;margin-bottom:6px}
-.op-report-period-badge{display:inline-flex;align-items:center;padding:4px 7px;border-radius:999px;background:#e2efff;color:#1767d9;font-size:9px;font-weight:900;white-space:nowrap}
-.op-report-consult-card.erms .op-report-period-badge{background:#def5eb;color:#148162}
-.op-report-period-note{display:inline-flex;align-items:center;min-height:24px;padding:4px 8px;border-radius:7px;background:#edf5ff;color:#315f9a;font-size:9.5px;font-weight:900;margin:0 0 8px}
-.op-report-consult-card.erms .op-report-period-note{background:#eaf8f2;color:#26755e}
-.op-report-card:not(.op-report-consult-card)>.op-report-period-note{background:#f4f6f9;color:#788aa1;font-weight:700}
-@media(max-width:1450px){.op-report-kpis{grid-template-columns:repeat(4,minmax(0,1fr))}.op-report-bottom{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:1100px){.op-report-ai{grid-template-columns:1fr}.op-report-mid{grid-template-columns:1fr}.op-report-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:700px){.op-report-bottom,.op-report-kpis{grid-template-columns:1fr}.op-report-title{font-size:22px}.op-report-share-wrap{grid-template-columns:1fr;height:auto}.op-report-share-chart{height:190px}}
-@media print{
-  body{background:#fff!important}.side,.top,#authGate{display:none!important}.app{display:block!important}.main{padding:0!important}.section{display:none!important}#report{display:block!important}.op-report-btn{display:none!important}.op-report-card,.op-report-kpi,.op-report-ai{box-shadow:none!important;break-inside:avoid}
-}
 
 </style>
 </head>
@@ -2808,7 +2727,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   <div class="brand">☰ <small>megastudy</small> <img class="brand-m-symbol" src="data:image/png;base64,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" alt="M"></div>
   <div class="menu">
     <button class="active" data-target="overview">⌂　<span>통합현황</span></button>
-    <button data-target="report">▣　<span>운영보고</span></button>
     <button data-target="call">☎　<span>콜</span></button>
     <button data-target="erms">✉　<span>ERMS 스마트러닝</span></button>
     <button data-target="chat">💬　<span>챗봇 이용</span></button>
@@ -3049,77 +2967,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 </section>
 
 
-
-<section id="report" class="section">
-  <div class="op-report-wrap">
-    <div class="op-report-head">
-      <div class="op-report-titlebox">
-        <div class="op-report-title">일일 운영보고</div>
-        <div class="op-report-datebox">📅 <input id="opReportDate" type="date" aria-label="운영보고 기준일"></div>
-      </div>
-      <div class="op-report-actions">
-        <span class="op-report-basis" id="opReportBasis">데이터 기준일: -</span>
-        <button class="op-report-btn" id="opReportRefreshBtn" type="button">↻ 데이터 새로고침</button>
-        <button class="op-report-btn" id="opReportPrintBtn" type="button">⇩ PDF로 저장</button>
-      </div>
-    </div>
-
-    <div class="op-report-ai">
-      <div class="op-report-ai-panel">
-        <div class="op-report-ai-title-row">
-          <div class="op-report-ai-title">🤖 AI 운영 요약 <span class="op-report-ai-basis" id="opReportAiBasis">저장된 AI 분석 결과</span></div>
-          <button class="op-report-ai-action" id="opReportAiManageBtn" type="button" data-role="admin" style="display:none" title="AI 분석 화면으로 이동">✦ AI 분석</button>
-        </div>
-        <div class="op-report-ai-list" id="opReportAiList"><div class="op-report-empty">저장된 AI 분석 결과를 불러오는 중입니다.</div></div>
-      </div>
-      <div class="op-report-ai-panel check">
-        <div class="op-report-ai-title-row">
-          <div class="op-report-ai-title">☑ 다음 운영일 체크 포인트 <span class="op-report-ai-basis">저장된 AI 분석 결과</span></div>
-        </div>
-        <div class="op-report-check-list" id="opReportChecks"><div class="op-report-empty">저장된 체크 포인트를 불러오는 중입니다.</div></div>
-      </div>
-    </div>
-
-    <div class="op-report-kpis" id="opReportKpis"></div>
-
-    <div class="op-report-mid">
-      <div class="op-report-card">
-        <div class="op-report-card-title">채널별 문의 추이 <small>(최근 7개 운영일)</small></div>
-        <div class="op-report-chart"><canvas id="opReportTrendChart"></canvas></div>
-      </div>
-      <div class="op-report-card">
-        <div class="op-report-card-title">채널 비중 <small>(기준일)</small></div>
-        <div class="op-report-share-wrap">
-          <div class="op-report-share-chart"><canvas id="opReportShareChart"></canvas></div>
-          <div class="op-report-legend" id="opReportShareLegend"></div>
-        </div>
-      </div>
-      <div class="op-report-card">
-        <div class="op-report-card-title">📌 주요 변화 TOP 5 <small>(직전 운영일 대비)</small></div>
-        <div class="op-report-change-tabs"><button class="active" type="button" data-report-change="up">증가 TOP 5</button><button type="button" data-report-change="down">감소 TOP 5</button></div>
-        <div class="op-report-change-list" id="opReportChanges"></div>
-      </div>
-    </div>
-
-    <div class="op-report-bottom">
-      <div class="op-report-card op-report-consult-card call">
-        <div class="op-report-card-title"><span>☎ CALL 상담유형 TOP 5</span><span class="op-report-period-badge">특정기간 기준</span></div>
-        <div class="op-report-period-note" id="opReportCallPeriod">특정기간 · -</div>
-        <div id="opReportCallTop"></div>
-      </div>
-      <div class="op-report-card op-report-consult-card erms">
-        <div class="op-report-card-title"><span>▣ ERMS 상담유형 TOP 5</span><span class="op-report-period-badge">특정기간 기준</span></div>
-        <div class="op-report-period-note" id="opReportErmsPeriod">특정기간 · -</div>
-        <div id="opReportErmsTop"></div>
-      </div>
-      <div class="op-report-card">
-        <div class="op-report-card-title">↻ 환불 사유 TOP 5</div>
-        <div class="op-report-period-note">기준일 상품 환불 데이터</div>
-        <div id="opReportRefundTop"></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section id="call" class="section">
   <div class="detail-head"><div class="detail-title-wrap"><div class="detail-title">Call 현황</div><button type="button" class="data-info-btn" data-info-page="call">ⓘ 데이터 기준</button></div><div class="detail-period" id="callPeriod"></div></div>
@@ -6125,6 +5972,24 @@ function buildAiOperationIssueContext(start,end){
   return {actual,calendar,combined:[calendarRow,...actual]};
 }
 
+function aiRefundSummary(startDate,endDate){
+  const rows=(refundDaily||[]).filter(r=>r.date>=startDate&&r.date<=endDate&&r.kind&&r.item);
+  const productRows=refundAggRows(rows,"상품");
+  const sumField=(arr,field)=>arr.reduce((sum,row)=>sum+(Number(row[field])||0),0);
+  return {
+    totalCount:sumField(productRows,"totalCount"),
+    totalAmount:sumField(productRows,"totalAmount"),
+    totalMembers:sumField(productRows,"totalMembers"),
+    reasons:{
+      "결제방법 변경":sumField(productRows,"payMethodChange"),
+      "상품변경":sumField(productRows,"productChange"),
+      "타사 이용":sumField(productRows,"competitorUse"),
+      "학원 수강·PMP·기간부족":sumField(productRows,"academyPmpPeriod"),
+      "잘못선택":sumField(productRows,"wrongChoice")
+    }
+  };
+}
+
 async function runAiFromDashboard(){
   if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
   if(!currentUser) return alert("로그인이 필요합니다.");
@@ -6168,7 +6033,7 @@ async function runAiFromDashboard(){
       // Apps Script를 추후 수정할 때는 아래 전용 필드를 직접 프롬프트에 넣을 수 있습니다.
       calendarContextJson:JSON.stringify(aiContext.calendar),
       analysisContextVersion:"kr-calendar-v1",
-      refundSummaryJson:JSON.stringify(reportRefundSummary(aiStart,aiEnd))
+      refundSummaryJson:JSON.stringify(aiRefundSummary(aiStart,aiEnd))
     });
     aiJobData.push({__id:requestId,requestId,status:"running",startDate:option.dataset.start||"",endDate:option.dataset.end||"",channel:option.dataset.channel||"",startedAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
     aiSetRunBusy(true,`🟡 AI 분석 요청 접수 · ${option.dataset.start} ~ ${option.dataset.end}${option.dataset.channel?` · ${option.dataset.channel}`:""} · 응답이 완료되면 자동 반영됩니다.`);
@@ -6195,14 +6060,17 @@ async function runAiFromDashboard(){
 
 window.addEventListener("message",async e=>{
   // Apps Script 웹앱은 script.googleusercontent.com 계열 중간 프레임을 거칠 수 있어
-  // e.source === iframe.contentWindow 비교가 실패할 수 있습니다.
-  // 대신 서버가 돌려주는 고유 source + 현재 requestId를 함께 검증합니다.
+  // 서버가 돌려주는 고유 source + 현재 requestId를 함께 검증합니다.
   const data=e.data||{};
   if(data.source!=="dashboard-ai-runner" || !data.requestId || data.requestId!==aiActiveRequestId) return;
-  const completedRequestId=aiActiveRequestId;
+  const completedRequestId=data.requestId;
   aiActiveRequestId="";
   const localJob=(aiJobData||[]).find(j=>(j.requestId||j.__id)===completedRequestId);
-  if(localJob){localJob.status=data.ok?"completed":"failed";localJob.updatedAt=new Date().toISOString();localJob.documentId=data.documentId||localJob.documentId||"";}
+  if(localJob){
+    localJob.status=data.ok?"completed":"failed";
+    localJob.updatedAt=new Date().toISOString();
+    localJob.documentId=data.documentId||localJob.documentId||"";
+  }
   aiSetRunBusy(false);
   refreshAiJobStatus().catch(()=>{});
   if(!data.ok){
@@ -6750,183 +6618,6 @@ function renderNewsStart(s,e){
   </tr>`).join("");
 }
 
-
-
-/* ===== 운영보고 동적 렌더링 ===== */
-let opReportChangeMode="up";
-
-function reportDayLabel(dateStr){
-  if(!dateStr) return "-";
-  const d=new Date(dateStr+"T00:00:00");
-  const days=["일","월","화","수","목","금","토"];
-  return `${d.getFullYear()}년 ${String(d.getMonth()+1).padStart(2,"0")}월 ${String(d.getDate()).padStart(2,"0")}일 (${days[d.getDay()]})`;
-}
-function reportLatestAvailableDate(){ return (daily||[]).reduce((m,r)=>String(r.date||"")>m?String(r.date||""):m,""); }
-function reportRowForDate(dateStr){ return (daily||[]).find(r=>String(r.date||"")===String(dateStr||""))||null; }
-function reportPrevRow(dateStr){
-  const rows=(daily||[]).filter(r=>r.date<dateStr).sort((a,b)=>a.date.localeCompare(b.date));
-  return rows.at(-1)||null;
-}
-function reportPctChange(cur,prev){
-  cur=Number(cur)||0; prev=Number(prev)||0;
-  if(prev===0) return cur>0?{v:100,text:"▲ 신규",cls:"op-report-up"}:{v:0,text:"-",cls:"op-report-flat"};
-  const d=(cur-prev)/Math.abs(prev)*100;
-  return {v:d,text:`${d>0?"▲":d<0?"▼":"-"} ${Math.abs(d).toFixed(1)}%`,cls:d>0?"op-report-up":d<0?"op-report-down":"op-report-flat"};
-}
-function reportPpChange(cur,prev){
-  const d=(Number(cur)||0)-(Number(prev)||0);
-  return {v:d,text:`${d>0?"▲":d<0?"▼":"-"} ${Math.abs(d).toFixed(1)}%p`,cls:d>0?"op-report-up":d<0?"op-report-down":"op-report-flat"};
-}
-function reportDiffChange(cur,prev,digits=1){
-  const d=(Number(cur)||0)-(Number(prev)||0);
-  return {v:d,text:`${d>0?"▲":d<0?"▼":"-"} ${Math.abs(d).toFixed(digits)}`,cls:d>0?"op-report-up":d<0?"op-report-down":"op-report-flat"};
-}
-function reportRefundSummary(s,e){
-  const rr=(refundDaily||[]).filter(r=>r.date>=s&&r.date<=e&&r.kind&&r.item);
-  const prod=refundAggRows(rr,"상품");
-  const sumf=(arr,f)=>arr.reduce((a,r)=>a+(Number(r[f])||0),0);
-  return {
-    totalCount:sumf(prod,"totalCount"), totalAmount:sumf(prod,"totalAmount"), totalMembers:sumf(prod,"totalMembers"),
-    reasons:{"결제방법 변경":sumf(prod,"payMethodChange"),"상품변경":sumf(prod,"productChange"),"타사 이용":sumf(prod,"competitorUse"),"학원 수강·PMP·기간부족":sumf(prod,"academyPmpPeriod"),"잘못선택":sumf(prod,"wrongChoice")}
-  };
-}
-function reportKpiHtml(label,icon,value,change,prevText){
-  return `<div class="op-report-kpi"><div class="op-report-kpi-head"><span class="op-report-kpi-ico">${icon}</span>${label}</div><div class="op-report-kpi-value">${value}</div><div class="op-report-kpi-change ${change.cls}">${change.text} <span style="font-size:9px;color:#74859a;font-weight:700">(직전 대비)</span></div><div class="op-report-kpi-prev">${prevText}</div></div>`;
-}
-function reportConsultName(r){ return String(r.inquiry||r.category3||r.category2||r.category1||"-").trim()||"-"; }
-function reportConsultKey(r){ return `${r.code||""}|${r.inquiry||""}|${r.category1||""}|${r.category2||""}|${r.category3||""}`; }
-function reportConsultPeriodForDate(dateStr,channelKeyword){
-  const base=(consultPeriodData||[]).filter(r=>String(r.compareType||"").trim()==="올해" && String(r.channel||"").includes(channelKeyword) && r.startDate && r.endDate);
-  const periods=[...new Map(base.map(r=>[`${r.startDate}|${r.endDate}|${r.channel}`,{start:r.startDate,end:r.endDate,channel:r.channel}])).values()];
-  const containing=periods.filter(p=>p.start<=dateStr&&p.end>=dateStr).sort((a,b)=>((new Date(a.end)-new Date(a.start))-(new Date(b.end)-new Date(b.start)))||b.end.localeCompare(a.end));
-  const p=containing[0] || periods.filter(p=>p.end<=dateStr).sort((a,b)=>b.end.localeCompare(a.end))[0] || null;
-  if(!p) return {period:null,rows:[],prevRows:[]};
-  const rows=base.filter(r=>r.startDate===p.start&&r.endDate===p.end&&r.channel===p.channel).sort((a,b)=>(Number(b.count)||0)-(Number(a.count)||0));
-  const prevP=periods.filter(x=>x.channel===p.channel&&x.end<p.start).sort((a,b)=>b.end.localeCompare(a.end))[0]||null;
-  const prevRows=prevP?base.filter(r=>r.startDate===prevP.start&&r.endDate===prevP.end&&r.channel===prevP.channel):[];
-  return {period:p,rows,prevRows,prevPeriod:prevP};
-}
-function reportConsultTable(rows,colorClass=""){ 
-  if(!rows.length) return '<div class="op-report-empty">표시할 상담유형 데이터가 없습니다.</div>';
-  const top=rows.slice(0,5), total=rows.reduce((a,r)=>a+(Number(r.count)||0),0);
-  return `<table class="op-report-table"><thead><tr><th style="width:34px">순위</th><th>상담유형</th><th class="num" style="width:52px">건수</th><th class="num" style="width:50px">비중</th></tr></thead><tbody>${top.map((r,i)=>`<tr><td><span class="op-report-small-rank ${colorClass}">${i+1}</span></td><td>${issueEsc(reportConsultName(r))}</td><td class="num">${fmt(r.count||0)}</td><td class="num">${total?((Number(r.count)||0)/total*100).toFixed(1):"0.0"}%</td></tr>`).join("")}</tbody></table>`;
-}
-function reportFindAiForDate(dateStr){
-  return [...(aiAnalysisData||[])].filter(r=>{
-    const raw=String(aiValue(r,["operationPeriod","운영분석기간"],"")||"");
-    const m=raw.match(/(\d{4}-\d{2}-\d{2})\s*~\s*(\d{4}-\d{2}-\d{2})/);
-    return m && m[1]<=dateStr && m[2]>=dateStr;
-  }).sort((a,b)=>String(aiValue(b,["analysisAt","분석일시","createdAt"],"")).localeCompare(String(aiValue(a,["analysisAt","분석일시","createdAt"],""))))[0]||null;
-}
-function reportPlainLines(v,limit=2){
-  return String(v||"").replace(/<br\s*\/?>/gi,"\n").replace(/\*\*/g,"").split(/\r?\n/).map(x=>x.replace(/^[-•\d.)\s]+/,"").trim()).filter(Boolean).slice(0,limit);
-}
-function reportRenderAi(dateStr){
-  // 운영보고에서는 날짜 변경만으로 OpenAI를 실행하거나 재분석하지 않습니다.
-  // 일반/관리자 모두 AI 분석 메뉴에 저장된 결과를 조회해서 표시합니다.
-  const row=reportFindAiForDate(dateStr), list=$("opReportAiList");
-  const issueCount=(operationIssues||[]).filter(r=>isDateInIssueRange(dateStr,r)).length;
-  if($("opReportAiBasis")) $("opReportAiBasis").textContent=`저장 결과 · 기준일 운영이슈 ${issueCount}건`;
-  if(!row){
-    if(list) list.innerHTML='<div class="op-report-ai-item"><span class="op-report-ai-check">!</span><span>선택한 날짜를 포함하는 저장된 AI 분석 결과가 없습니다. 관리자 AI 분석 후 표시됩니다.</span></div>';
-    return;
-  }
-  const lines=[...reportPlainLines(aiValue(row,["issues","주요이슈"]),2),...reportPlainLines(aiValue(row,["operationAnalysis","운영분석"]),1),...reportPlainLines(aiValue(row,["consultAnalysis","상담유형분석"]),1)].slice(0,4);
-  if(list) list.innerHTML=lines.length?lines.map(x=>`<div class="op-report-ai-item"><span class="op-report-ai-check">✓</span><span>${aiInline(x)}</span></div>`).join(""):'<div class="op-report-empty">저장된 AI 운영 요약 내용이 없습니다.</div>';
-}
-function reportReasonRows(dateStr){
-  const cur=reportRefundSummary(dateStr,dateStr), prevDate=reportPrevRow(dateStr)?.date||"", prev=prevDate?reportRefundSummary(prevDate,prevDate):{reasons:{}};
-  return Object.keys(cur.reasons).map(name=>({name,cur:Number(cur.reasons[name])||0,prev:Number(prev.reasons?.[name])||0,chg:reportPctChange(cur.reasons[name],prev.reasons?.[name]||0)})).sort((a,b)=>b.cur-a.cur);
-}
-function reportRefundTable(dateStr){
-  const rows=reportReasonRows(dateStr).slice(0,5), total=rows.reduce((a,r)=>a+r.cur,0);
-  if(!rows.some(r=>r.cur>0)) return '<div class="op-report-empty">기준일 환불사유 데이터가 없습니다.</div>';
-  return `<table class="op-report-table"><thead><tr><th style="width:34px">순위</th><th>사유</th><th class="num" style="width:52px">건수</th><th class="num" style="width:50px">비중</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td><span class="op-report-small-rank pink">${i+1}</span></td><td>${issueEsc(r.name)}</td><td class="num">${fmt(r.cur)}</td><td class="num">${total?(r.cur/total*100).toFixed(1):"0.0"}%</td></tr>`).join("")}</tbody></table>`;
-}
-function reportChanges(dateStr,mode="up"){
-  const call=reportConsultPeriodForDate(dateStr,"인바운드"), erms=reportConsultPeriodForDate(dateStr,"게시판");
-  const candidates=[];
-  const addConsult=(obj,prefix)=>{
-    const prevMap=new Map((obj.prevRows||[]).map(r=>[reportConsultKey(r),Number(r.count)||0]));
-    (obj.rows||[]).forEach(r=>{const cur=Number(r.count)||0, prev=prevMap.get(reportConsultKey(r)); if(prev===undefined) return; const ch=reportPctChange(cur,prev); candidates.push({name:`${prefix} · ${reportConsultName(r)}`,change:ch.v,text:ch.text});});
-  };
-  addConsult(call,"CALL"); addConsult(erms,"ERMS");
-  reportReasonRows(dateStr).forEach(r=>candidates.push({name:`환불 · ${r.name}`,change:r.chg.v,text:r.chg.text}));
-  const filtered=candidates.filter(x=>mode==="up"?x.change>0:x.change<0).sort((a,b)=>mode==="up"?b.change-a.change:a.change-b.change).slice(0,5);
-  return filtered;
-}
-function renderReportChanges(dateStr){
-  const rows=reportChanges(dateStr,opReportChangeMode), el=$("opReportChanges"); if(!el) return;
-  el.innerHTML=rows.length?rows.map((r,i)=>`<div class="op-report-change-row"><span class="op-report-rank">${i+1}</span><span class="op-report-change-name">${issueEsc(r.name)}</span><span class="op-report-change-value ${r.change>0?"op-report-up":"op-report-down"}">${issueEsc(r.text)}</span></div>`).join(""):'<div class="op-report-empty">비교 가능한 변화 데이터가 없습니다.</div>';
-}
-function renderReportChecks(dateStr){
-  const ai=reportFindAiForDate(dateStr);
-  const checks=ai?reportPlainLines(aiValue(ai,["improvement","개선제안"]),3):[];
-  const checkEl=$("opReportChecks");
-  if(!checkEl) return;
-  if(checks.length){
-    checkEl.innerHTML=checks.map(x=>`<div class="op-report-check-item"><span>✓</span><span>${aiInline(x)}</span></div>`).join("");
-  }else if(ai){
-    checkEl.innerHTML='<div class="op-report-empty">저장된 AI 분석 결과에 체크 포인트가 없습니다.</div>';
-  }else{
-    checkEl.innerHTML='<div class="op-report-empty">저장된 AI 분석 결과가 없습니다. 관리자 AI 분석 후 표시됩니다.</div>';
-  }
-}
-function renderOperationReport(){
-  const input=$("opReportDate"); if(!input) return;
-  const latest=reportLatestAvailableDate(); if(!input.value) input.value=latest; if(latest) input.max=latest;
-  let dateStr=input.value||latest; let row=reportRowForDate(dateStr);
-  if(!row && latest){ dateStr=latest; input.value=latest; row=reportRowForDate(latest); }
-  if(!row){ $("opReportKpis").innerHTML='<div class="op-report-empty">운영실적 데이터가 없습니다.</div>'; return; }
-  const prev=reportPrevRow(dateStr), cur=periodMetrics([row]), prv=prev?periodMetrics([prev]):periodMetrics([]), refund=reportRefundSummary(dateStr,dateStr), prevRefund=prev?reportRefundSummary(prev.date,prev.date):{totalCount:0};
-  if($("opReportBasis")) $("opReportBasis").textContent=`데이터 기준일: ${dateStr} 23:59`;
-  const kpis=[
-    ["총 문의수","💬",fmt(cur.totalQ)+"건",reportPctChange(cur.totalQ,prv.totalQ),`${fmt(prv.totalQ)}건 (직전)`],
-    ["CALL 인입","☎",fmt(cur.phoneIn)+"건",reportPctChange(cur.phoneIn,prv.phoneIn),`${fmt(prv.phoneIn)}건 (직전)`],
-    ["CALL 응답률","🎧",cur.phoneRate.toFixed(1)+"%",reportPpChange(cur.phoneRate,prv.phoneRate),`${prv.phoneRate.toFixed(1)}% (직전)`],
-    ["ERMS 문의","▤",fmt(cur.erms)+"건",reportPctChange(cur.erms,prv.erms),`${fmt(prv.erms)}건 (직전)`],
-    ["챗봇 문의","🤖",fmt(cur.chatUse)+"건",reportPctChange(cur.chatUse,prv.chatUse),`${fmt(prv.chatUse)}건 (직전)`],
-    ["환불 문의","↻",fmt(refund.totalCount)+"건",reportPctChange(refund.totalCount,prevRefund.totalCount||0),`${fmt(prevRefund.totalCount||0)}건 (직전)`],
-    ["CPH","◷",cur.cph.toFixed(1),reportDiffChange(cur.cph,prv.cph,1),`${prv.cph.toFixed(1)} (직전)`]
-  ];
-  $("opReportKpis").innerHTML=kpis.map(x=>reportKpiHtml(...x)).join("");
-
-  const upto=(daily||[]).filter(r=>r.date<=dateStr).sort((a,b)=>a.date.localeCompare(b.date)).slice(-7);
-  if(charts.opReportTrend) charts.opReportTrend.destroy();
-  charts.opReportTrend=new Chart($("opReportTrendChart"),{type:"line",data:{labels:upto.map(r=>formatDateLabel(r.date,r.day)),datasets:[
-    {label:"CALL",data:upto.map(r=>Number(r.phoneIn)||0),borderColor:"#2f80ed",backgroundColor:"#2f80ed",tension:.35,borderWidth:2,pointRadius:2.5},
-    {label:"ERMS",data:upto.map(r=>Number(r.ermsCount)||0),borderColor:"#12b886",backgroundColor:"#12b886",tension:.35,borderWidth:2,pointRadius:2.5},
-    {label:"챗봇",data:upto.map(r=>Number(r.chatUse)||0),borderColor:"#ff7a2f",backgroundColor:"#ff7a2f",tension:.35,borderWidth:2,pointRadius:2.5},
-    {label:"스마트러닝",data:upto.map(r=>Number(r.smart)||0),borderColor:"#7890ad",backgroundColor:"#7890ad",tension:.35,borderWidth:2,pointRadius:2.5}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"top",align:"end",labels:{boxWidth:8,boxHeight:8,usePointStyle:true,font:{size:9}}}},scales:{x:{grid:{display:false},ticks:{font:{size:9}}},y:{beginAtZero:true,grid:{color:"#e9eef5"},ticks:{font:{size:9},callback:v=>fmt(v)}}}}});
-
-  const shares=[{name:"CALL",v:cur.phoneIn,c:"#2f80ed"},{name:"ERMS",v:cur.erms,c:"#12b886"},{name:"챗봇",v:cur.chatUse,c:"#ff8a3d"},{name:"스마트",v:cur.smart,c:"#8a9db5"}], shareTotal=shares.reduce((a,x)=>a+x.v,0);
-  if(charts.opReportShare) charts.opReportShare.destroy();
-  charts.opReportShare=new Chart($("opReportShareChart"),{type:"doughnut",data:{labels:shares.map(x=>x.name),datasets:[{data:shares.map(x=>x.v),backgroundColor:shares.map(x=>x.c),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:"62%",plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.label}: ${fmt(c.raw)}건 (${shareTotal?(c.raw/shareTotal*100).toFixed(1):"0.0"}%)`}}}}});
-  $("opReportShareLegend").innerHTML=shares.map(x=>`<div class="op-report-legend-row"><span class="op-report-dot" style="background:${x.c}"></span><span>${x.name}</span><b>${shareTotal?(x.v/shareTotal*100).toFixed(1):"0.0"}%</b></div>`).join("");
-
-  renderReportChanges(dateStr);
-  const call=reportConsultPeriodForDate(dateStr,"인바운드"), erms=reportConsultPeriodForDate(dateStr,"게시판");
-  $("opReportCallPeriod").textContent=call.period?`특정기간 · ${call.period.start} ~ ${call.period.end}`:"특정기간 · 데이터 없음";
-  $("opReportErmsPeriod").textContent=erms.period?`특정기간 · ${erms.period.start} ~ ${erms.period.end}`:"특정기간 · 데이터 없음";
-  $("opReportCallTop").innerHTML=reportConsultTable(call.rows,"");
-  $("opReportErmsTop").innerHTML=reportConsultTable(erms.rows,"green");
-  $("opReportRefundTop").innerHTML=reportRefundTable(dateStr);
-  reportRenderAi(dateStr); renderReportChecks(dateStr);
-
-  if(!input.dataset.bound){
-    input.dataset.bound="1";
-    input.addEventListener("change",renderOperationReport);
-    $("opReportRefreshBtn")?.addEventListener("click",renderOperationReport);
-    $("opReportPrintBtn")?.addEventListener("click",()=>window.print());
-    $("opReportAiManageBtn")?.addEventListener("click",()=>{
-      if(currentRole!=="admin") return;
-      document.querySelector('.menu button[data-target="ai"]')?.click();
-    });
-    document.querySelectorAll('[data-report-change]').forEach(btn=>btn.addEventListener('click',()=>{opReportChangeMode=btn.dataset.reportChange||"up";document.querySelectorAll('[data-report-change]').forEach(x=>x.classList.toggle('active',x===btn));renderReportChanges($("opReportDate")?.value||reportLatestAvailableDate());}));
-  }
-}
-window.renderOperationReport=renderOperationReport;
 
 
 async function applyFilter(){
