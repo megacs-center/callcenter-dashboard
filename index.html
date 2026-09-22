@@ -6184,17 +6184,26 @@ async function runAiFromDashboard(){
     aiJobData.push({__id:requestId,requestId,status:"running",startDate:option.dataset.start||"",endDate:option.dataset.end||"",channel:option.dataset.channel||"",startedAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
     aiSetRunBusy(true,`🟡 AI 분석 요청 접수 · ${option.dataset.start} ~ ${option.dataset.end}${option.dataset.channel?` · ${option.dataset.channel}`:""} · 응답이 완료되면 자동 반영됩니다.`);
     startAiJobPolling();
-    // Firestore 폴링은 사용하지 않습니다. Apps Script 응답이 일정 시간 내 돌아오지 않으면 버튼만 복구합니다.
+    // 학사·패스상품 컨텍스트가 포함되면 분석 시간이 길어질 수 있습니다.
+    // 45초에는 실패 처리하지 않고 진행 상태만 안내하고, 최대 180초까지 정상 응답을 기다립니다.
+    setTimeout(()=>{
+      if(aiActiveRequestId!==requestId) return;
+      const st=$("aiStatus");
+      if(st){
+        st.textContent="🟡 AI 분석이 계속 진행 중입니다. 학사·패스상품 일정까지 함께 분석하고 있어 시간이 조금 더 걸릴 수 있습니다.";
+        st.classList.remove("error");
+      }
+    },45000);
     setTimeout(()=>{
       if(aiActiveRequestId!==requestId) return;
       aiActiveRequestId="";
       aiSetRunBusy(false);
       const st=$("aiStatus");
       if(st){
-        st.textContent="AI 분석 응답을 받지 못했습니다. Apps Script 실행내역 또는 웹 앱 연결 URL을 확인해 주세요.";
+        st.textContent="AI 분석 응답을 3분 동안 받지 못했습니다. Apps Script 실행내역에서 실패 여부를 확인해 주세요.";
         st.classList.add("error");
       }
-    },45000);
+    },180000);
   }catch(e){
     console.error(e);
     aiActiveRequestId="";
@@ -7651,14 +7660,35 @@ function aiRangeOverlap(start,end,targetStart,targetEnd){
   return (s||e)<=targetEnd && (e||s)>=targetStart;
 }
 function academicAiContext(startDate,endDate){
-  return (academicScheduleData||[]).filter(r=>aiRangeOverlap(r.startDate,r.endDate,startDate,endDate)).slice(0,80).map(r=>({
-    kind:r.scheduleKind||"",type:r.scheduleType||"",target:r.target||"",region:r.region||"",startDate:r.startDate||"",endDate:r.endDate||"",schedule:r.scheduleText||"",weeklyBreakdown:r.weeklyBreakdown||{}
-  }));
+  // AI에는 분석기간과 겹치는 핵심 일정만 전달합니다. 원본은 Firestore/로컬 캐시에 그대로 유지합니다.
+  return (academicScheduleData||[])
+    .filter(r=>aiRangeOverlap(r.startDate,r.endDate,startDate,endDate))
+    .slice(0,50)
+    .map(r=>({
+      kind:r.scheduleKind||"",type:r.scheduleType||"",target:r.target||"",region:r.region||"",
+      startDate:r.startDate||"",endDate:r.endDate||"",
+      schedule:String(r.scheduleText||"").slice(0,400)
+    }));
 }
 function passProductAiContext(startDate,endDate){
-  return (passProductScheduleData||[]).filter(r=>aiRangeOverlap(r.saleStartDate,r.saleEndDate,startDate,endDate)).slice(0,120).map(r=>({
-    saleStartDate:r.saleStartDate||"",saleEndDate:r.saleEndDate||"",grade:r.grade||"",category:r.category||"",productCode:r.productCode||"",productName:r.productName||"",price:r.price??null,coursePeriod:r.coursePeriod||"",paidUntil:r.paidUntil||"",freePeriod:r.freePeriod||"",refund:r.refund||"",composition:r.composition||"",serviceBenefits:r.serviceBenefits||""
-  }));
+  // 상품별 긴 서비스혜택 원문을 그대로 반복 전송하면 Apps Script/OpenAI 응답이 지연될 수 있어
+  // 분석에 필요한 핵심 필드만 압축합니다. 화면/Firestore의 원본 데이터는 변경하지 않습니다.
+  const rows=(passProductScheduleData||[])
+    .filter(r=>aiRangeOverlap(r.saleStartDate,r.saleEndDate,startDate,endDate))
+    .slice(0,60);
+  const seenBenefit=new Set();
+  return rows.map(r=>{
+    const benefit=String(r.serviceBenefits||"").replace(/\s+/g," ").trim();
+    const benefitKey=benefit.slice(0,300);
+    const compactBenefit=benefit && !seenBenefit.has(benefitKey) ? benefit.slice(0,600) : "";
+    if(benefitKey) seenBenefit.add(benefitKey);
+    return {
+      saleStartDate:r.saleStartDate||"",saleEndDate:r.saleEndDate||"",grade:r.grade||"",category:r.category||"",
+      productCode:r.productCode||"",productName:r.productName||"",price:r.price??null,
+      coursePeriod:r.coursePeriod||"",paidUntil:r.paidUntil||"",freePeriod:r.freePeriod||"",refund:r.refund||"",
+      composition:String(r.composition||"").slice(0,400),serviceBenefits:compactBenefit
+    };
+  });
 }
 
 // 업로드 상태 추적 래퍼. 실제 업로드 함수는 uploadCore에서 처리합니다.
