@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- v118 학사·입시/패스상품 일정 Excel 업로드 + AI 3컨텍스트 통합 -->
+<!-- v124 운영이슈 기간 표시 정리 + 기존 사전안내 데이터 호환 -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -657,9 +657,9 @@ button,input,select{font:inherit}
 #issueDetail{height:150px;min-height:150px;max-height:240px;resize:vertical;box-sizing:border-box;overflow-y:auto}#issueExpectedImpact{height:72px;min-height:72px;max-height:150px;resize:vertical;box-sizing:border-box}.issue-related-grid{display:flex;flex-wrap:wrap;gap:7px 14px;padding:9px 10px;border:1px solid #d7e0ea;border-radius:9px;background:#fbfdff}.issue-related-grid label{display:inline-flex;align-items:center;gap:5px;margin:0;font-size:11px;color:#344a63;cursor:pointer}.issue-related-grid input{width:auto;margin:0}.issue-stage-badge{display:inline-flex;margin-top:4px;padding:2px 6px;border-radius:999px;background:#f4f6f9;color:#65758a;font-size:9px;font-weight:800}.issue-context-mini{display:block;margin-top:3px;color:#5f7186;font-size:10px;line-height:1.35}.issue-example-guide{border:1px dashed #cfd9e6;border-radius:10px;background:#f8fbff;padding:10px 12px}.issue-example-guide summary{cursor:pointer;font-size:12px;font-weight:900;color:#245f9f}.issue-example-table-wrap{overflow-x:hidden;margin-top:10px}.issue-example-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:10px}.issue-example-table th,.issue-example-table td{border-bottom:1px solid #e6edf5;padding:7px 8px;text-align:left;vertical-align:top;line-height:1.4;white-space:normal;overflow-wrap:anywhere}.issue-example-table th{background:#eef5fc;color:#425b77;font-weight:900}.issue-example-table td:first-child,.issue-example-table td:nth-child(2){font-weight:800;color:#244d78}
 .issue-form label{display:block;font-size:11px;font-weight:800;color:#53657a;margin-bottom:5px}.issue-form input,.issue-form select,.issue-form textarea{width:100%;box-sizing:border-box;border:1px solid #d7e0ea;border-radius:9px;padding:9px 10px;background:#fff;color:#11263f;font:inherit}.issue-form textarea{min-height:38px;height:38px;resize:vertical;padding-top:9px}
 .issue-form-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:0;align-items:end;height:38px;grid-column:1/-1}.issue-list-card{padding:16px}.issue-list-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.issue-list-title{font-size:16px;font-weight:900;color:#102744}.issue-summary{font-size:11px;color:#74859a}
-.issue-row{display:grid;grid-template-columns:118px 125px 105px minmax(150px,1.05fr) minmax(175px,1.3fr) minmax(185px,1.35fr) 86px;gap:8px;align-items:start;padding:10px 8px;border-bottom:1px solid #edf1f5;font-size:11px;min-width:0}.issue-row:last-child{border-bottom:0}.issue-row.issue-head{font-weight:800;color:#66778b;background:#f8fafc;border-radius:8px;align-items:center}.issue-row>div{min-width:0;overflow-wrap:anywhere}.issue-title{font-weight:800;color:#102744}.issue-detail{display:block;color:#6d7d91;font-size:11px;margin-top:3px;white-space:normal;line-height:1.45}.issue-badge{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:4px 7px;font-size:10px;font-weight:800;background:#edf4ff;color:#2062b7}.issue-sev-high{background:#fff0f0;color:#d13a3a}.issue-sev-mid{background:#fff8e5;color:#b57400}.issue-sev-low{background:#eef8f1;color:#2d8a4b}.issue-empty{padding:24px;text-align:center;color:#8b98aa}.issue-delete{border:0;background:#fff1f1;color:#d23c3c;border-radius:7px;padding:5px 8px;cursor:pointer;font-weight:800}.issue-edit{border:0;background:#edf4ff;color:#1764c0;border-radius:7px;padding:5px 8px;cursor:pointer;font-weight:800}.issue-manage{display:flex;gap:5px;justify-content:center;align-items:center;flex-wrap:wrap}.issue-note{font-size:11px;color:#6e7f94;margin-top:8px}.issue-marker-note{font-size:11px;color:#a16400;font-weight:700}.issue-kpi-strip{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}.issue-kpi{background:#fff;border:1px solid #dfe7f0;border-radius:10px;padding:8px 11px;font-size:11px;color:#62748a}.issue-kpi b{color:#102744;font-size:13px;margin-left:4px}.issue-period-cell{font-weight:700;color:#314b68;line-height:1.45}.issue-period-cell .issue-period-end{display:block;color:#74859a;font-weight:600}.issue-subtype{display:block;margin-top:4px;color:#65758a;font-size:10px;line-height:1.35}.issue-recurrence{display:block;margin-top:4px;color:#78899c;font-size:10px}.issue-indicator-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:5px}.issue-indicator-tag{display:inline-flex;padding:2px 5px;border-radius:999px;background:#f0f5fa;color:#49647f;font-size:9px;font-weight:800}.issue-list-card{overflow-x:hidden}.issue-list-head select{max-width:150px}
-@media(max-width:1100px){.issue-row{grid-template-columns:105px 110px 90px minmax(130px,1fr) minmax(150px,1.2fr) minmax(160px,1.25fr) 78px;gap:6px;font-size:10px}.issue-list-card{padding:12px}.issue-list-head{align-items:flex-start;flex-wrap:wrap}.issue-list-head>div:last-child{flex-wrap:wrap}.issue-form-grid{grid-template-columns:1fr 1fr}.issue-example-table{font-size:9px}}
-@media(max-width:760px){.issue-form-grid{grid-template-columns:1fr}.issue-form-grid .issue-wide,.issue-form-actions{grid-column:1/-1}.issue-form-head{align-items:flex-start}.issue-row.issue-head{display:none}.issue-row{grid-template-columns:1fr 1fr;border:1px solid #e6edf4;border-radius:10px;margin-bottom:8px;padding:10px}.issue-row>div:nth-child(4),.issue-row>div:nth-child(5),.issue-row>div:nth-child(6){grid-column:1/-1}.issue-row>div:last-child{grid-column:1/-1;justify-self:end}.issue-example-table-wrap{overflow-x:auto}.issue-example-table{min-width:680px}}
+.issue-row{display:grid;grid-template-columns:145px 145px 120px minmax(230px,.9fr) minmax(300px,1.35fr) 76px;gap:10px;align-items:start;padding:10px 8px;border-bottom:1px solid #edf1f5;font-size:11px;min-width:0}.issue-row:last-child{border-bottom:0}.issue-row.issue-head{font-weight:800;color:#66778b;background:#f8fafc;border-radius:8px;align-items:center}.issue-row>div{min-width:0;overflow-wrap:anywhere}.issue-title{font-weight:800;color:#102744}.issue-detail{display:block;color:#6d7d91;font-size:11px;margin-top:3px;white-space:normal;line-height:1.45}.issue-badge{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:4px 7px;font-size:10px;font-weight:800;background:#edf4ff;color:#2062b7}.issue-sev-high{background:#fff0f0;color:#d13a3a}.issue-sev-mid{background:#fff8e5;color:#b57400}.issue-sev-low{background:#eef8f1;color:#2d8a4b}.issue-empty{padding:24px;text-align:center;color:#8b98aa}.issue-delete{border:0;background:#fff1f1;color:#d23c3c;border-radius:7px;padding:5px 8px;cursor:pointer;font-weight:800}.issue-edit{border:0;background:#edf4ff;color:#1764c0;border-radius:7px;padding:5px 8px;cursor:pointer;font-weight:800}.issue-manage{display:flex;gap:5px;justify-content:center;align-items:center;flex-wrap:wrap}.issue-note{font-size:11px;color:#6e7f94;margin-top:8px}.issue-marker-note{font-size:11px;color:#a16400;font-weight:700}.issue-kpi-strip{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}.issue-kpi{background:#fff;border:1px solid #dfe7f0;border-radius:10px;padding:8px 11px;font-size:11px;color:#62748a}.issue-kpi b{color:#102744;font-size:13px;margin-left:4px}.issue-period-cell{font-weight:700;color:#314b68;line-height:1.35}.issue-period-cell .issue-period-end{display:block;color:#74859a;font-weight:600}.issue-period-line{display:flex;align-items:center;gap:5px;white-space:nowrap;margin-bottom:4px}.issue-period-line:last-child{margin-bottom:0}.issue-period-kind{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;padding:2px 5px;border-radius:5px;font-size:9px;font-weight:900}.issue-period-kind.notice{background:#fff5dc;color:#a56600}.issue-period-kind.main{background:#eaf3ff;color:#1764c0}.issue-subtype{display:block;margin-top:4px;color:#65758a;font-size:10px;line-height:1.35}.issue-recurrence{display:block;margin-top:4px;color:#78899c;font-size:10px}.issue-indicator-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:5px}.issue-indicator-tag{display:inline-flex;padding:2px 5px;border-radius:999px;background:#f0f5fa;color:#49647f;font-size:9px;font-weight:800}.issue-list-card{overflow-x:hidden}.issue-list-head select{max-width:150px}
+@media(max-width:1100px){.issue-row{grid-template-columns:125px 125px 105px minmax(180px,.9fr) minmax(220px,1.2fr) 70px;gap:6px;font-size:10px}.issue-list-card{padding:12px}.issue-list-head{align-items:flex-start;flex-wrap:wrap}.issue-list-head>div:last-child{flex-wrap:wrap}.issue-form-grid{grid-template-columns:1fr 1fr}.issue-example-table{font-size:9px}}
+@media(max-width:760px){.issue-form-grid{grid-template-columns:1fr}.issue-form-grid .issue-wide,.issue-form-actions{grid-column:1/-1}.issue-form-head{align-items:flex-start}.issue-row.issue-head{display:none}.issue-row{grid-template-columns:1fr 1fr;border:1px solid #e6edf4;border-radius:10px;margin-bottom:8px;padding:10px}.issue-row>div:nth-child(4),.issue-row>div:nth-child(5){grid-column:1/-1}.issue-row>div:last-child{grid-column:1/-1;justify-self:end}.issue-example-table-wrap{overflow-x:auto}.issue-example-table{min-width:680px}}
 
 .notice{
   background:#fff8e6;border:1px solid #f2d58c;color:#7d5a00;
@@ -3615,29 +3615,27 @@ document.addEventListener('DOMContentLoaded',()=>{
       <div id="issueFormPanel" class="issue-form-panel hidden">
       <input id="issueEditId" type="hidden" value="">
       <div class="issue-form-grid">
-        <div><label id="issueOccurredLabel">발생일시</label><input id="issueOccurredAt" type="text" placeholder="YYYY-MM-DD HH:mm" autocomplete="off"></div>
-        <div><label id="issueEndedLabel">종료일시</label><input id="issueEndedAt" type="text" placeholder="YYYY-MM-DD HH:mm" autocomplete="off"></div>
+        <div><label>사전안내 시작일</label><input id="issueNoticeStart" type="text" placeholder="YYYY-MM-DD (선택)" autocomplete="off"></div>
+        <div><label>사전안내 종료일</label><input id="issueNoticeEnd" type="text" placeholder="YYYY-MM-DD (선택)" autocomplete="off"></div>
+        <div><label id="issueOccurredLabel">본 일정 시작일</label><input id="issueOccurredAt" type="text" placeholder="YYYY-MM-DD" autocomplete="off"></div>
+        <div><label id="issueEndedLabel">본 일정 종료일</label><input id="issueEndedAt" type="text" placeholder="YYYY-MM-DD" autocomplete="off"></div>
         <div><label>구분</label><select id="issueCategory"><option>장애</option><option>시스템점검</option><option>배송</option><option>반품·교환</option><option>환급</option><option>결제·환불</option><option>정책변경</option><option>콘텐츠</option><option>이벤트</option><option>기타</option></select></div>
         <div><label>세부유형</label><select id="issueSubType"></select></div>
-        <div><label>단계/상태</label><select id="issueStage"><option value="사전안내">사전안내</option><option value="오픈/시작">오픈/시작</option><option value="진행" selected>진행</option><option value="변경">변경</option><option value="마감임박">마감임박</option><option value="종료">종료</option><option value="해당없음">해당없음</option></select></div>
-        <div><label>이슈</label><input id="issueTitle" maxlength="100" placeholder="예: 환급 신청기간 / 임시점검 안내"></div>
+        <div><label>제목</label><input id="issueTitle" maxlength="100" placeholder="예: 환급 신청기간 / 임시점검 안내"></div>
         <div><label>반복 유형</label><select id="issueRecurrence"><option value="일회성" selected>일회성</option><option value="매년 반복">매년 반복</option><option value="매월 반복">매월 반복</option><option value="특정 이벤트 후">특정 이벤트 후</option><option value="상시">상시</option></select></div>
         <div class="issue-wide"><label>예상 영향</label><textarea id="issueExpectedImpact" maxlength="700" placeholder="예: 환급 대상/조건 문의 증가, 신청기간에는 신청방법·오류·지급일 문의 증가 예상"></textarea></div>
         <div class="issue-wide"><label>관련 지표</label><div class="issue-related-grid" id="issueRelatedIndicators"><label><input type="checkbox" value="CALL">CALL</label><label><input type="checkbox" value="ERMS">ERMS</label><label><input type="checkbox" value="챗봇">챗봇</label><label><input type="checkbox" value="스마트러닝">스마트러닝</label><label><input type="checkbox" value="교재신청">교재신청</label><label><input type="checkbox" value="반품·교환">반품·교환</label><label><input type="checkbox" value="환불">환불</label><label><input type="checkbox" value="CPH">CPH</label></div></div>
         <div class="issue-wide"><label>상세 내용</label><textarea id="issueDetail" maxlength="1000" placeholder="실제 공지 내용, 영향 범위, 조치사항, 확인할 문의유형 등을 입력"></textarea></div>
         <div class="issue-form-actions"><button class="btn secondary" id="issueResetBtn" type="button">초기화</button><button class="btn primary" id="issueSaveBtn" type="button">등록</button></div>
-        <details class="issue-example-guide issue-wide"><summary>운영 이슈 구분별 작성 예시 보기</summary><div class="issue-example-table-wrap"><table class="issue-example-table"><thead><tr><th>구분</th><th>세부유형</th><th>단계/상태</th><th>기간 예시</th><th>이슈 예시</th><th>예상 영향 / 관련 지표</th></tr></thead><tbody>
-          <tr><td>장애</td><td>동영상재생</td><td>진행</td><td>발생~복구</td><td>동영상 재생 장애</td><td>재생 실패·학습중단 문의 증가 / 스마트러닝·CALL</td></tr>
-          <tr><td>시스템점검</td><td>임시점검</td><td>사전안내</td><td>09/18</td><td>임시점검 안내</td><td>점검시간·이용제한 문의 / CALL·ERMS</td></tr>
-          <tr><td>시스템점검</td><td>임시점검</td><td>진행</td><td>09/20 02:00~05:00</td><td>임시점검 진행</td><td>로그인·결제·재생 이용 제한 / CALL·스마트러닝</td></tr>
-          <tr><td>배송</td><td>배송지연</td><td>진행</td><td>09/05~09/08</td><td>교재 배송 지연</td><td>배송조회·도착일·주소변경 문의 증가 / CALL·ERMS</td></tr>
-          <tr><td>반품·교환</td><td>증가시기</td><td>진행</td><td>09/10~09/20</td><td>반품·교환 문의 증가</td><td>반품·교환·오배송 문의 증가 / 반품·교환·CALL</td></tr>
-          <tr><td>환급</td><td>사전안내</td><td>사전안내</td><td>09/10</td><td>환급 오픈 예정 안내</td><td>대상·조건·신청일정 문의 증가 / CALL·ERMS</td></tr>
-          <tr><td>환급</td><td>신청기간</td><td>진행</td><td>09/20~10/20</td><td>환급 신청기간</td><td>신청방법·오류·서류·지급일 문의 증가 / CALL·ERMS·챗봇</td></tr>
-          <tr><td>결제·환불</td><td>결제오류</td><td>진행</td><td>09/15</td><td>일부 결제수단 오류</td><td>결제실패·중복결제·환불 문의 / CALL·ERMS·환불</td></tr>
-          <tr><td>정책변경</td><td>환불정책</td><td>변경</td><td>10/01</td><td>환불 기준 변경 안내</td><td>기존/신규 적용기준 문의 / CALL·ERMS·환불</td></tr>
-          <tr><td>콘텐츠</td><td>변경</td><td>변경</td><td>09/22</td><td>강좌 구성 변경</td><td>강좌 이용·구성·대체 콘텐츠 문의 / CALL·ERMS</td></tr>
-          <tr><td>이벤트</td><td>진행</td><td>진행</td><td>10/02~11/23</td><td>독학100 환급 이벤트</td><td>참여조건·신청방법·지급일 문의 / CALL·ERMS·챗봇</td></tr>
+        <details class="issue-example-guide issue-wide"><summary>운영 이슈 구분별 작성 예시 보기</summary><div class="issue-example-table-wrap"><table class="issue-example-table"><thead><tr><th>구분</th><th>세부유형</th><th>사전안내 기간</th><th>본 일정 기간</th><th>제목</th><th>예상 영향 / 관련 지표</th></tr></thead><tbody>
+          <tr><td>장애</td><td>동영상재생</td><td>-</td><td>09/20</td><td>동영상 재생 장애</td><td>재생 실패·학습중단 문의 증가 / 스마트러닝·CALL</td></tr>
+          <tr><td>시스템점검</td><td>임시점검</td><td>09/18~09/19</td><td>09/20</td><td>임시점검</td><td>점검시간·이용제한·로그인 문의 / CALL·ERMS</td></tr>
+          <tr><td>배송</td><td>명절배송</td><td>09/17~09/21</td><td>09/27~10/01</td><td>추석 연휴 교재 출고 및 배송 일정</td><td>배송조회·도착일·주소변경 문의 / CALL·ERMS·교재신청</td></tr>
+          <tr><td>환급</td><td>신청기간</td><td>09/10~09/19</td><td>09/20~10/20</td><td>환급 신청</td><td>대상·조건·신청방법·오류·지급일 문의 / CALL·ERMS·챗봇</td></tr>
+          <tr><td>결제·환불</td><td>결제오류</td><td>-</td><td>09/15</td><td>일부 결제수단 오류</td><td>결제실패·중복결제·환불 문의 / CALL·ERMS·환불</td></tr>
+          <tr><td>정책변경</td><td>환불정책</td><td>09/24~09/30</td><td>10/01~</td><td>환불 기준 변경</td><td>기존/신규 적용기준 문의 / CALL·ERMS·환불</td></tr>
+          <tr><td>콘텐츠</td><td>변경</td><td>09/20~09/21</td><td>09/22~</td><td>강좌 구성 변경</td><td>강좌 이용·구성·대체 콘텐츠 문의 / CALL·ERMS</td></tr>
+          <tr><td>이벤트</td><td>진행</td><td>09/17~10/01</td><td>10/02~11/23</td><td>독학100 환급 이벤트</td><td>참여조건·신청방법·지급일 문의 / CALL·ERMS·챗봇</td></tr>
         </tbody></table></div></details>
       </div>
       <div id="issueFormStatus" class="status">관리자만 등록·수정·삭제할 수 있습니다.</div>
@@ -3645,7 +3643,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     </div>
     <div class="card issue-list-card">
       <div class="issue-list-head"><div><div class="issue-list-title">주요 이슈</div><div class="issue-summary" id="issuePeriodLabel">전체 기간</div></div><div style="display:flex;gap:8px;align-items:center"><select id="issueScopeFilter" aria-label="이슈 조회 범위"><option value="all" selected>전체</option><option value="period">조회기간</option></select><select id="issueCategoryFilter"><option value="">전체 구분</option><option>장애</option><option>시스템점검</option><option>배송</option><option>반품·교환</option><option>환급</option><option>결제·환불</option><option>정책변경</option><option>콘텐츠</option><option>이벤트</option><option>기타</option></select></div></div>
-      <div class="issue-row issue-head"><div>기간</div><div>구분 / 세부유형</div><div>단계 / 반복</div><div>이슈</div><div>예상 영향</div><div>관련 지표 / 상세</div><div>관리</div></div>
+      <div class="issue-row issue-head"><div>사전안내</div><div>본 일정</div><div>구분</div><div>제목</div><div>내용</div><div>관리</div></div>
       <div id="issueListBody"></div>
     </div>
   </div>
@@ -4067,7 +4065,7 @@ const DATA_INFO = {
   },
   issues: {
     title:"운영 이슈 · 데이터 기준",
-    html:`<div class="data-info-row">관리자가 등록한 장애·시스템점검·배송·반품/교환·환급·결제/환불·정책변경·콘텐츠·이벤트 등 <span class="data-info-em">실제 운영 특이사항</span>을 Firestore <span class="data-info-em">operationIssues</span>에 저장합니다. 학사·입시 일정과 패스상품 일정은 운영이슈와 분리해 별도 기준정보로 관리하는 구조를 전제로 합니다.</div><div class="data-info-row">운영 이슈는 <span class="data-info-em">시작/발생일자 · 종료일자 · 구분 · 세부유형 · 단계/상태 · 반복 유형 · 예상 영향 · 관련 지표 · 상세 내용</span> 기준으로 관리합니다. <span class="data-info-em">장애</span>는 발생일시·종료일시를 24시간제로 관리하고, 그 외 항목은 단일 일자 또는 기간형으로 등록할 수 있습니다.</div><div class="data-info-row">사전공지와 실제 운영기간은 별도 건으로 등록할 수 있습니다. 예: <span class="data-info-em">환급 사전안내 09/10</span> + <span class="data-info-em">환급 신청기간 09/20~10/20</span>. 기간형 이슈는 시작일~종료일 전체가 영향기간으로 처리되어 그래프 <span class="data-info-em">⚑</span> 표시와 AI 분석 기간 매칭에 반영됩니다.</div><div class="data-info-row">이슈가 등록된 날짜는 일자형 그래프 라벨에 <span class="data-info-em">⚑</span> 표시되며, 그래프에 마우스를 올리면 툴팁에서 이슈·상세 내용·발생일시를 바로 확인할 수 있습니다.</div><div class="data-info-row">이슈와 문의량 증감은 시점상 연관성을 빠르게 확인하기 위한 보조정보이며, 인과관계를 자동 확정하지 않습니다.</div>`
+    html:`<div class="data-info-row">관리자가 등록한 장애·시스템점검·배송·반품/교환·환급·결제/환불·정책변경·콘텐츠·이벤트 등 <span class="data-info-em">실제 운영 특이사항</span>을 Firestore <span class="data-info-em">operationIssues</span>에 저장합니다. 학사·입시 일정과 패스상품 일정은 운영이슈와 분리해 별도 기준정보로 관리하는 구조를 전제로 합니다.</div><div class="data-info-row">운영 이슈는 <span class="data-info-em">사전안내 시작·종료일 · 본 일정 시작·종료일 · 구분 · 세부유형 · 제목 · 반복 유형 · 예상 영향 · 관련 지표 · 상세 내용</span> 기준으로 관리합니다. 주요 이슈 목록에는 핵심 항목만 표시하고, 예상 영향·관련 지표·상세 내용은 등록/수정 데이터와 AI 분석 컨텍스트에는 그대로 유지합니다. <span class="data-info-em">상태는 직접 입력하지 않고 날짜 기준으로 예정·사전안내·진행·종료를 자동 판정</span>합니다.</div><div class="data-info-row">사전안내가 있는 이슈는 한 건 안에서 <span class="data-info-em">사전안내 기간</span>과 <span class="data-info-em">본 일정 기간</span>을 함께 관리합니다. 예: 환급 사전안내 09/10~09/19 + 본 신청기간 09/20~10/20. 전체 영향기간은 사전안내 시작일부터 본 일정 종료일까지로 계산되어 그래프 <span class="data-info-em">⚑</span> 표시와 AI 분석 기간 매칭에 반영됩니다.</div><div class="data-info-row">이슈가 등록된 날짜는 일자형 그래프 라벨에 <span class="data-info-em">⚑</span> 표시되며, 그래프에 마우스를 올리면 툴팁에서 제목·상세 내용·기간을 바로 확인할 수 있습니다.</div><div class="data-info-row">이슈와 문의량 증감은 시점상 연관성을 빠르게 확인하기 위한 보조정보이며, 인과관계를 자동 확정하지 않습니다.</div>`
   },
   admin: {
     title:"관리자 · 데이터 기준",
@@ -5004,28 +5002,72 @@ function trend(cur,prev,suffix="%",dec=2){
 }
 
 
+function issueLegacyNoticeOnly(issue){
+  // v123 이전 데이터 중 '사전안내' 단계/세부유형으로 저장된 건은
+  // 기존 startDate/endDate를 본 일정이 아닌 사전안내 기간으로 해석합니다.
+  if(issue?.noticeStartDate || issue?.scheduleStartDate) return false;
+  const stage=String(issue?.stage||"").trim();
+  const subType=String(issue?.subType||"").trim();
+  return stage==="사전안내" || subType==="사전안내";
+}
+function getIssueNoticeStartDate(issue){
+  const explicit=String(issue?.noticeStartDate||"").slice(0,10);
+  if(explicit) return explicit;
+  return issueLegacyNoticeOnly(issue)?String(issue?.startDate||issue?.date||"").slice(0,10):"";
+}
+function getIssueNoticeEndDate(issue){
+  const explicit=String(issue?.noticeEndDate||"").slice(0,10);
+  if(explicit) return explicit;
+  return issueLegacyNoticeOnly(issue)?String(issue?.endDate||issue?.startDate||issue?.date||"").slice(0,10):"";
+}
+function getIssueScheduleStartDate(issue){
+  const explicit=String(issue?.scheduleStartDate||"").slice(0,10);
+  if(explicit) return explicit;
+  if(issueLegacyNoticeOnly(issue)) return "";
+  return String(issue?.startDate||issue?.date||"").slice(0,10);
+}
+function getIssueScheduleEndDate(issue){
+  const explicit=String(issue?.scheduleEndDate||"").slice(0,10);
+  if(explicit) return explicit;
+  if(issueLegacyNoticeOnly(issue)) return "";
+  return String(issue?.endDate||issue?.startDate||issue?.date||"").slice(0,10);
+}
 function getIssueStartDate(issue){
-  return String(issue?.startDate || issue?.date || "");
+  return getIssueNoticeStartDate(issue) || getIssueScheduleStartDate(issue);
 }
 function getIssueEndDate(issue){
-  return String(issue?.endDate || issue?.startDate || issue?.date || "");
+  return getIssueScheduleEndDate(issue) || getIssueNoticeEndDate(issue) || getIssueStartDate(issue);
+}
+function issueTodayString(){
+  const d=new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+function issueAutoStatus(issue,baseDate=issueTodayString()){
+  const today=String(baseDate||issueTodayString()).slice(0,10);
+  const ns=getIssueNoticeStartDate(issue), ne=getIssueNoticeEndDate(issue);
+  const ss=getIssueScheduleStartDate(issue), se=getIssueScheduleEndDate(issue);
+  if(se && today>se) return "종료";
+  if(ss && today>=ss && (!se || today<=se)) return "진행";
+  if(ns && today>=ns && (!ne || today<=ne)) return "사전안내";
+  return "예정";
 }
 function isDateInIssueRange(dateStr, issue){
   if(!dateStr) return false;
-  const start=getIssueStartDate(issue);
-  const end=getIssueEndDate(issue);
-  if(!start && !end) return false;
-  return (!start || String(dateStr)>=start) && (!end || String(dateStr)<=end);
+  const d=String(dateStr).slice(0,10);
+  const ns=getIssueNoticeStartDate(issue), ne=getIssueNoticeEndDate(issue);
+  const ss=getIssueScheduleStartDate(issue), se=getIssueScheduleEndDate(issue);
+  const inRange=(a,b)=>!!a && d>=a && d<=(b||a);
+  return inRange(ns,ne) || inRange(ss,se);
 }
 function issueRangesOverlap(issue, rangeStart, rangeEnd){
-  const start=getIssueStartDate(issue);
-  const end=getIssueEndDate(issue);
-  if(!start && !end) return false;
-  const aStart=start || end;
-  const aEnd=end || start;
-  const bStart=rangeStart || aStart;
-  const bEnd=rangeEnd || aEnd;
-  return aStart<=bEnd && aEnd>=bStart;
+  const bStart=String(rangeStart||"").slice(0,10), bEnd=String(rangeEnd||rangeStart||"").slice(0,10);
+  if(!bStart&&!bEnd) return false;
+  const overlaps=(a,b)=>{
+    if(!a) return false;
+    const x1=a, x2=b||a, y1=bStart||bEnd, y2=bEnd||bStart;
+    return x1<=y2 && x2>=y1;
+  };
+  return overlaps(getIssueNoticeStartDate(issue),getIssueNoticeEndDate(issue)) || overlaps(getIssueScheduleStartDate(issue),getIssueScheduleEndDate(issue));
 }
 function hasOperationIssueOnDate(dateStr){
   if(!dateStr) return false;
@@ -5039,33 +5081,35 @@ function issueSelectedRange(){
 }
 
 function formatIssueOccurredAt(issue){
-  const d=getIssueStartDate(issue);
-  const isError=["장애","시스템오류"].includes(String(issue?.category||"").trim());
-  const t=String(issue?.occurrenceTime||"").trim();
-  if(!d) return t||"-";
-  return isError && t?`${d} ${t}`:d;
+  return getIssueScheduleStartDate(issue) || "-";
 }
 function formatIssueEndedAt(issue){
-  const category=String(issue?.category||"").trim();
-  const isError=["장애","시스템오류"].includes(category);
-  const isEvent=category==="이벤트";
-  const raw=String(issue?.endedAt||"").trim();
-  const d=String(issue?.endDate||"").trim() || (raw?raw.slice(0,10):"");
-  const start=String(issue?.startDate||issue?.date||"").trim();
-  if(!d || (!isError && d===start)) return "-";
-  // 장애는 종료일시, 그 외 기간형 이슈는 종료일자를 표시합니다.
-  if(isError){
-    const t=String(issue?.endTime||"").trim() || (raw.length>=16?raw.slice(11,16):"");
-    return t?`${d} ${t}`:d;
-  }
+  const d=getIssueScheduleEndDate(issue);
+  const start=getIssueScheduleStartDate(issue);
+  if(!d || d===start) return "-";
   return d;
 }
+function formatIssueDateRangeCompact(start,end){
+  if(!start) return "-";
+  if(!end || start===end) return start;
+  // 같은 연도면 종료일은 MM-DD만 표시해 폭을 줄입니다.
+  const endText=start.slice(0,4)===end.slice(0,4)?end.slice(5):end;
+  return `${start} ~ ${endText}`;
+}
 function formatIssuePeriodLabel(issue){
-  const start=getIssueStartDate(issue);
-  const end=getIssueEndDate(issue);
-  if(!start && !end) return "-";
-  if(!end || start===end) return start || end;
-  return `${start} ~ ${end}`;
+  const ns=getIssueNoticeStartDate(issue), ne=getIssueNoticeEndDate(issue);
+  const ss=getIssueScheduleStartDate(issue), se=getIssueScheduleEndDate(issue);
+  const notice=ns?`사전안내 ${formatIssueDateRangeCompact(ns,ne)}`:"";
+  const main=ss?`본 일정 ${formatIssueDateRangeCompact(ss,se)}`:"";
+  return [notice,main].filter(Boolean).join(" / ") || "-";
+}
+function formatIssuePeriodHtml(issue){
+  const ns=getIssueNoticeStartDate(issue), ne=getIssueNoticeEndDate(issue);
+  const ss=getIssueScheduleStartDate(issue), se=getIssueScheduleEndDate(issue);
+  const lines=[];
+  if(ns) lines.push(`<div class="issue-period-line"><span class="issue-period-kind notice">사전안내</span><span>${issueEsc(formatIssueDateRangeCompact(ns,ne))}</span></div>`);
+  if(ss) lines.push(`<div class="issue-period-line"><span class="issue-period-kind main">본 일정</span><span>${issueEsc(formatIssueDateRangeCompact(ss,se))}</span></div>`);
+  return lines.join("")||"-";
 }
 function issueDateFromChartLabel(label){
   const raw=String(label||"").replace(/^⚑\s*/,"").trim();
@@ -5088,15 +5132,8 @@ function operationIssueTooltipLines(label){
   if(!list.length) return [];
   const lines=["",`⚑ 운영 이슈 ${list.length}건`];
   list.slice(0,4).forEach(x=>{
-    lines.push(`• [${String(x.category||"기타").trim()==="시스템오류"?"장애":(x.category||"기타")}${x.stage?` · ${x.stage}`:""}] ${x.title||"-"}`);
-    const issueCategory=String(x.category||"").trim();
-    if(issueCategory==="이벤트"){
-      lines.push(`  이벤트 기간: ${formatIssuePeriodLabel(x)}`);
-    }else if(x.occurrenceTime){
-      lines.push(`  발생일시: ${getIssueStartDate(x)} ${x.occurrenceTime}`);
-    }
-    const ended=formatIssueEndedAt(x);
-    if(ended!=="-" && issueCategory!=="이벤트") lines.push(`  종료일시: ${ended}`);
+    lines.push(`• [${String(x.category||"기타").trim()==="시스템오류"?"장애":(x.category||"기타")} · ${issueAutoStatus(x,date)}] ${x.title||"-"}`);
+    lines.push(`  기간: ${formatIssuePeriodLabel(x)}`);
     if(x.expectedImpact) lines.push(`  예상 영향: ${String(x.expectedImpact).slice(0,80)}${String(x.expectedImpact).length>80?"…":""}`);
     if(Array.isArray(x.relatedIndicators)&&x.relatedIndicators.length) lines.push(`  관련 지표: ${x.relatedIndicators.join(" · ")}`);
     if(x.detail) lines.push(`  ${String(x.detail).slice(0,80)}${String(x.detail).length>80?"…":""}`);
@@ -5180,10 +5217,14 @@ function renderOperationIssues(){
     const indicators=Array.isArray(r.relatedIndicators)?r.relatedIndicators:[];
     const displayCategory=issueDisplayCategory(r.category);
     const subType=String(r.subType||issueLegacySubType(r)||"").trim();
-    const startText=formatIssueOccurredAt(r);
-    const endText=formatIssueEndedAt(r);
+    const noticeStart=getIssueNoticeStartDate(r), noticeEnd=getIssueNoticeEndDate(r);
+    const scheduleStart=getIssueScheduleStartDate(r), scheduleEnd=getIssueScheduleEndDate(r);
+    const noticeHtml=noticeStart?issueEsc(formatIssueDateRangeCompact(noticeStart,noticeEnd)):"-";
+    const scheduleHtml=scheduleStart?issueEsc(formatIssueDateRangeCompact(scheduleStart,scheduleEnd)):"-";
     const indicatorHtml=indicators.length?`<div class="issue-indicator-tags">${indicators.map(v=>`<span class="issue-indicator-tag">${issueEsc(v)}</span>`).join("")}</div>`:"";
-    return `<div class="issue-row" data-issue-category="${issueEsc(displayCategory)}"><div class="issue-period-cell">${issueEsc(startText)}${endText&&endText!==startText?`<span class="issue-period-end">~ ${issueEsc(endText)}</span>`:""}</div><div><span class="issue-badge">${issueEsc(displayCategory)}</span><span class="issue-subtype">${issueEsc(subType||"-")}</span></div><div>${r.stage?`<span class="issue-stage-badge" style="margin-top:0">${issueEsc(r.stage)}</span>`:"-"}<span class="issue-recurrence">${issueEsc(r.recurrence||"-")}</span></div><div><span class="issue-title">${issueEsc(r.title||"-")}</span></div><div>${r.expectedImpact?`<span class="issue-detail" style="margin-top:0">${issueEsc(r.expectedImpact)}</span>`:"-"}</div><div>${indicatorHtml}${r.detail?`<span class="issue-detail" style="margin-top:0">${issueEsc(r.detail)}</span>`:(indicators.length?"":"-")}</div><div>${currentRole==="admin"?`<div class="issue-manage"><button class="issue-edit" type="button" data-issue-edit="${issueEsc(r.__id||"")}">수정</button><button class="issue-delete" type="button" data-issue-delete="${issueEsc(r.__id||"")}">삭제</button></div>`:"-"}</div></div>`;
+    const detailText=String(r.detail||"").trim();
+    const contentHtml=`${indicatorHtml}${detailText?`<span class="issue-detail">${issueEsc(detailText)}</span>`:(indicatorHtml?"":"-")}`;
+    return `<div class="issue-row" data-issue-category="${issueEsc(displayCategory)}"><div class="issue-period-cell">${noticeHtml}</div><div class="issue-period-cell">${scheduleHtml}</div><div><span class="issue-badge">${issueEsc(displayCategory)}</span><span class="issue-subtype">${issueEsc(subType||"-")}</span></div><div><span class="issue-title">${issueEsc(r.title||"-")}</span></div><div>${contentHtml}</div><div>${currentRole==="admin"?`<div class="issue-manage"><button class="issue-edit" type="button" data-issue-edit="${issueEsc(r.__id||"")}">수정</button><button class="issue-delete" type="button" data-issue-delete="${issueEsc(r.__id||"")}">삭제</button></div>`:"-"}</div></div>`;
   }).join("");
   body.querySelectorAll("[data-issue-edit]").forEach(btn=>btn.onclick=()=>editOperationIssue(btn.dataset.issueEdit));
   body.querySelectorAll("[data-issue-delete]").forEach(btn=>btn.onclick=()=>deleteOperationIssue(btn.dataset.issueDelete));
@@ -5214,13 +5255,14 @@ function resetOperationIssueForm(){
   if($("issueEditId")) $("issueEditId").value="";
   if($("issueCategory")) $("issueCategory").value="장애";
   syncIssueSubTypeOptions();
-  if($("issueStage")) $("issueStage").value="진행";
   if($("issueRecurrence")) $("issueRecurrence").value="일회성";
   document.querySelectorAll('#issueRelatedIndicators input[type="checkbox"]').forEach(x=>x.checked=false);
   if($("issueExpectedImpact")) $("issueExpectedImpact").value="";
   syncIssueDateInputMode();
-  setIssueDateTimePickerValue(issueOccurredAtPicker,$("issueOccurredAt"),`${defaultDate}T09:00`);
-  setIssueDateTimePickerValue(issueEndedAtPicker,$("issueEndedAt"),`${defaultDate}T09:00`);
+  setIssueDatePickerValue(issueNoticeStartPicker,$("issueNoticeStart"),"");
+  setIssueDatePickerValue(issueNoticeEndPicker,$("issueNoticeEnd"),"");
+  setIssueDatePickerValue(issueOccurredAtPicker,$("issueOccurredAt"),defaultDate);
+  setIssueDatePickerValue(issueEndedAtPicker,$("issueEndedAt"),defaultDate);
   if($("issueTitle")) $("issueTitle").value="";
   if($("issueDetail")) $("issueDetail").value="";
   
@@ -5240,22 +5282,10 @@ function editOperationIssue(id){
   const isError=["장애","시스템오류"].includes(issueCategory);
   const isEvent=issueCategory==="이벤트";
   const needsEnd=true;
-  if($("issueOccurredAt")){
-    const d=getIssueStartDate(r)||r.date||"";
-    const t=String(r.occurrenceTime||"09:00").slice(0,5);
-    const v=isError ? (r.occurredAt|| (d?`${d}T${t}`:"")) : d;
-    setIssueDateTimePickerValue(issueOccurredAtPicker,$("issueOccurredAt"),v);
-  }
-  if($("issueEndedAt")){
-    if(needsEnd){
-      const legacyEnded=(r.endDate && r.endTime)?`${r.endDate}T${String(r.endTime).slice(0,5)}`:"";
-      const v=isError ? (r.endedAt||legacyEnded||r.endDate||"") : (r.endDate||getIssueEndDate(r)||"");
-      setIssueDateTimePickerValue(issueEndedAtPicker,$("issueEndedAt"),v);
-    }else{
-      $("issueEndedAt").value="";
-    }
-  }
-  if($("issueStage")) $("issueStage").value=r.stage||"진행";
+  setIssueDatePickerValue(issueNoticeStartPicker,$("issueNoticeStart"),getIssueNoticeStartDate(r));
+  setIssueDatePickerValue(issueNoticeEndPicker,$("issueNoticeEnd"),getIssueNoticeEndDate(r));
+  if($("issueOccurredAt")) setIssueDatePickerValue(issueOccurredAtPicker,$("issueOccurredAt"),getIssueScheduleStartDate(r));
+  if($("issueEndedAt")) setIssueDatePickerValue(issueEndedAtPicker,$("issueEndedAt"),getIssueScheduleEndDate(r));
   if($("issueRecurrence")) $("issueRecurrence").value=r.recurrence||"일회성";
   if($("issueExpectedImpact")) $("issueExpectedImpact").value=r.expectedImpact||"";
   const related=new Set(Array.isArray(r.relatedIndicators)?r.relatedIndicators:[]);
@@ -5270,39 +5300,41 @@ function editOperationIssue(id){
 async function saveOperationIssue(){
   if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
   const category=$("issueCategory")?.value||"기타";
-  const isError=["장애","시스템오류"].includes(category);
-  const isEvent=category==="이벤트";
-  const needsEnd=isError;
-  const occurredRaw=String($("issueOccurredAt")?.value||"").trim();
-  const endedRaw=String($("issueEndedAt")?.value||"").trim();
-  const occurredAt=isError?normalizeIssueDateTimeValue(occurredRaw):(occurredRaw?occurredRaw.slice(0,10):"");
-  const endedAt=isError?normalizeIssueDateTimeValue(endedRaw):(endedRaw?endedRaw.slice(0,10):"");
-  const issueDate=occurredAt?occurredAt.slice(0,10):"";
-  const issueTime=isError && occurredAt.length>=16?occurredAt.slice(11,16):"";
-  const endDate=endedAt?endedAt.slice(0,10):issueDate;
-  const endTime=isError && endedAt.length>=16?endedAt.slice(11,16):"";
+  const noticeStart=String($("issueNoticeStart")?.value||"").trim().slice(0,10);
+  const noticeEnd=String($("issueNoticeEnd")?.value||"").trim().slice(0,10);
+  const scheduleStart=String($("issueOccurredAt")?.value||"").trim().slice(0,10);
+  const scheduleEnd=String($("issueEndedAt")?.value||"").trim().slice(0,10);
   const title=String($("issueTitle")?.value||"").trim();
   const editId=$("issueEditId")?.value||"";
-  if(!occurredAt) return alert(isError?"발생일시를 선택해 주세요.":isEvent?"시작일자를 선택해 주세요.":"발생일자를 선택해 주세요.");
-  if(isError && !endedAt) return alert("종료일시를 선택해 주세요.");
-  if(!title) return alert("이슈를 입력해 주세요.");
-  if(endedAt && endedAt<occurredAt) return alert(isError?"종료일시는 발생일시보다 빠를 수 없습니다.":"종료일자는 시작일자보다 빠를 수 없습니다.");
+  if(!scheduleStart) return alert("본 일정 시작일을 선택해 주세요.");
+  if(scheduleEnd && scheduleEnd<scheduleStart) return alert("본 일정 종료일은 시작일보다 빠를 수 없습니다.");
+  if((noticeStart && !noticeEnd) || (!noticeStart && noticeEnd)) return alert("사전안내 기간은 시작일과 종료일을 함께 입력해 주세요.");
+  if(noticeStart && noticeEnd && noticeEnd<noticeStart) return alert("사전안내 종료일은 시작일보다 빠를 수 없습니다.");
+  if(noticeEnd && scheduleStart && noticeEnd>scheduleStart) return alert("사전안내 종료일은 본 일정 시작일보다 늦을 수 없습니다.");
+  if(!title) return alert("제목을 입력해 주세요.");
   const status=$("issueFormStatus");
   try{
     if(status) status.textContent=editId?"수정 중...":"등록 중...";
-    const id=editId||`${issueDate}_${Date.now()}`;
+    const id=editId||`${scheduleStart}_${Date.now()}`;
     const prev=editId?(operationIssues||[]).find(x=>x.__id===editId):null;
+    const autoStatus=issueAutoStatus({noticeStartDate:noticeStart,noticeEndDate:noticeEnd,scheduleStartDate:scheduleStart,scheduleEndDate:scheduleEnd||scheduleStart});
     await setDoc(doc(firestore,"operationIssues",id),{
-      date:issueDate,startDate:issueDate,endDate,
+      date:scheduleStart,
+      startDate:scheduleStart,
+      endDate:scheduleEnd||scheduleStart,
+      noticeStartDate:noticeStart,
+      noticeEndDate:noticeEnd,
+      scheduleStartDate:scheduleStart,
+      scheduleEndDate:scheduleEnd||scheduleStart,
       category,
       subType:String($("issueSubType")?.value||"").trim(),
-      stage:String($("issueStage")?.value||"진행"),
+      stage:"",
+      autoStatus,
       recurrence:String($("issueRecurrence")?.value||"일회성"),
       expectedImpact:String($("issueExpectedImpact")?.value||"").trim(),
       relatedIndicators:Array.from(document.querySelectorAll('#issueRelatedIndicators input[type="checkbox"]:checked')).map(x=>x.value),
       title,detail:String($("issueDetail")?.value||"").trim(),
-      occurrenceTime:issueTime,
-      occurredAt,endedAt,endTime,
+      occurrenceTime:"",occurredAt:scheduleStart,endedAt:scheduleEnd||scheduleStart,endTime:"",
       createdAt:prev?.createdAt||new Date().toISOString(),
       createdBy:prev?.createdBy||currentUser?.email||"",
       updatedAt:new Date().toISOString(),updatedBy:currentUser?.email||""
@@ -5310,7 +5342,7 @@ async function saveOperationIssue(){
     operationIssues=await fetchCollection("operationIssues");
     operationIssues.sort((a,b)=>String(getIssueStartDate(a)).localeCompare(String(getIssueStartDate(b))));
     renderOperationIssues(); applyFilter(); resetOperationIssueForm();
-    if(status) status.textContent=editId?"수정 완료 · 해당 일자의 ⚑ 표시도 갱신되었습니다.":"등록 완료 · 해당 일자에 ⚑ 표시가 반영됩니다.";
+    if(status) status.textContent=editId?"수정 완료 · 날짜 기준 상태와 ⚑ 표시가 갱신되었습니다.":"등록 완료 · 날짜 기준 상태와 ⚑ 표시가 반영됩니다.";
   }catch(e){console.error(e);if(status) status.textContent=(editId?"수정 실패: ":"등록 실패: ")+(e?.message||e);}
 }
 
@@ -6093,8 +6125,12 @@ function buildAiOperationIssueContext(start,end){
     .map(r=>({
       startDate:getIssueStartDate(r),
       endDate:getIssueEndDate(r),
+      noticeStartDate:getIssueNoticeStartDate(r),
+      noticeEndDate:getIssueNoticeEndDate(r),
+      scheduleStartDate:getIssueScheduleStartDate(r),
+      scheduleEndDate:getIssueScheduleEndDate(r),
       category:r.category||"기타",
-      stage:r.stage||"",
+      stage:issueAutoStatus(r),
       recurrence:r.recurrence||"",
       expectedImpact:r.expectedImpact||"",
       relatedIndicators:Array.isArray(r.relatedIndicators)?r.relatedIndicators:[],
@@ -9613,6 +9649,8 @@ $("aiBackendBtn")?.addEventListener("click",configureAiBackend);
 
 let startDatePicker=null;
 let endDatePicker=null;
+let issueNoticeStartPicker=null;
+let issueNoticeEndPicker=null;
 let issueOccurredAtPicker=null;
 let issueEndedAtPicker=null;
 
@@ -9679,49 +9717,43 @@ function initDashboardDatePickers(){
 function destroyIssuePicker(picker){
   try{ picker?.destroy?.(); }catch(e){}
 }
+function setIssueDatePickerValue(picker,el,value){
+  const v=String(value||"").slice(0,10);
+  if(picker){ if(v) picker.setDate(v,false,"Y-m-d"); else picker.clear(); }
+  else if(el) el.value=v;
+}
 function initIssueDateTimePickers(){
   if(typeof flatpickr!=="function") return;
-  const category=String($("issueCategory")?.value||"장애").trim();
-  const isError=["장애","시스템오류"].includes(category);
-  const isEvent=category==="이벤트";
-  const needsEnd=true;
-  const occurredValue=String($("issueOccurredAt")?.value||"").trim();
-  const endedValue=String($("issueEndedAt")?.value||"").trim();
-  destroyIssuePicker(issueOccurredAtPicker);
-  destroyIssuePicker(issueEndedAtPicker);
-  issueOccurredAtPicker=null; issueEndedAtPicker=null;
+  const values={
+    noticeStart:String($("issueNoticeStart")?.value||"").slice(0,10),
+    noticeEnd:String($("issueNoticeEnd")?.value||"").slice(0,10),
+    scheduleStart:String($("issueOccurredAt")?.value||"").slice(0,10),
+    scheduleEnd:String($("issueEndedAt")?.value||"").slice(0,10)
+  };
+  [issueNoticeStartPicker,issueNoticeEndPicker,issueOccurredAtPicker,issueEndedAtPicker].forEach(destroyIssuePicker);
+  issueNoticeStartPicker=issueNoticeEndPicker=issueOccurredAtPicker=issueEndedAtPicker=null;
   const common={
     locale:(window.flatpickr?.l10ns?.ko)||"ko",
-    enableTime:isError,
-    time_24hr:true,
-    dateFormat:isError?"Y-m-d H:i":"Y-m-d",
-    enableSeconds:false,
-    minuteIncrement:1,
+    dateFormat:"Y-m-d",
     allowInput:true,
     disableMobile:true,
     monthSelectorType:"static"
   };
-  if($("issueOccurredAt")){
-    $("issueOccurredAt").disabled=false;
-    issueOccurredAtPicker=flatpickr($("issueOccurredAt"),common);
-  }
-  if($("issueEndedAt")){
-    $("issueEndedAt").disabled=false;
-    issueEndedAtPicker=flatpickr($("issueEndedAt"),common);
-  }
-  if(occurredValue) setIssueDateTimePickerValue(issueOccurredAtPicker,$("issueOccurredAt"),isError?occurredValue:occurredValue.slice(0,10));
-  if(needsEnd && endedValue) setIssueDateTimePickerValue(issueEndedAtPicker,$("issueEndedAt"),isError?endedValue:endedValue.slice(0,10));
+  if($("issueNoticeStart")) issueNoticeStartPicker=flatpickr($("issueNoticeStart"),common);
+  if($("issueNoticeEnd")) issueNoticeEndPicker=flatpickr($("issueNoticeEnd"),common);
+  if($("issueOccurredAt")) issueOccurredAtPicker=flatpickr($("issueOccurredAt"),common);
+  if($("issueEndedAt")) issueEndedAtPicker=flatpickr($("issueEndedAt"),common);
+  setIssueDatePickerValue(issueNoticeStartPicker,$("issueNoticeStart"),values.noticeStart);
+  setIssueDatePickerValue(issueNoticeEndPicker,$("issueNoticeEnd"),values.noticeEnd);
+  setIssueDatePickerValue(issueOccurredAtPicker,$("issueOccurredAt"),values.scheduleStart);
+  setIssueDatePickerValue(issueEndedAtPicker,$("issueEndedAt"),values.scheduleEnd);
 }
 function syncIssueDateInputMode(){
-  const category=String($("issueCategory")?.value||"").trim();
-  const isError=["장애","시스템오류"].includes(category);
-  const isEvent=category==="이벤트";
-  if($("issueOccurredLabel")) $("issueOccurredLabel").textContent=isError?"발생일시":"시작/발생일자";
-  if($("issueEndedLabel")) $("issueEndedLabel").textContent=isError?"종료일시":"종료일자(선택)";
-  if($("issueOccurredAt")) $("issueOccurredAt").placeholder=isError?"YYYY-MM-DD HH:mm":"YYYY-MM-DD";
-  if($("issueEndedAt")) $("issueEndedAt").placeholder=isError?"YYYY-MM-DD HH:mm":"YYYY-MM-DD (기간 이슈만)";
+  if($("issueOccurredLabel")) $("issueOccurredLabel").textContent="본 일정 시작일";
+  if($("issueEndedLabel")) $("issueEndedLabel").textContent="본 일정 종료일";
+  if($("issueOccurredAt")) $("issueOccurredAt").placeholder="YYYY-MM-DD";
+  if($("issueEndedAt")) $("issueEndedAt").placeholder="YYYY-MM-DD";
   initIssueDateTimePickers();
-  if($("issueEndedAt")) $("issueEndedAt").disabled=false;
 }
 // 이전 함수명과의 호환
 function syncIssueEndDateState(){ syncIssueDateInputMode(); }
