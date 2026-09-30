@@ -2473,11 +2473,18 @@ table tbody tr:not(.total-row):not(.summary-row):hover > td{
   .notice-inline-detail .issue-detail-content,.notice-inline-detail .issue-detail-actions{padding-left:78px}
 }
 
+
+/* v125 환불 KPI 5개 + 수강권 환불비중 */
+#refund .refund-kpi-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important;}
+@media(max-width:1280px){#refund .refund-kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}}
+@media(max-width:900px){#refund .refund-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
+@media(max-width:620px){#refund .refund-kpi-grid{grid-template-columns:1fr!important;}}
+
 </style>
 
 <style>
 /* v57 환불 현황 */
-.refund-dashboard-page{padding-bottom:24px}.refund-kpi-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin:12px 0 14px;align-items:stretch}.refund-kpi{background:#fff;border:1px solid #e1e8f0;border-radius:12px;padding:17px 16px 15px;min-height:106px;box-shadow:0 2px 8px rgba(31,61,96,.045);display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start}.refund-kpi span{display:flex;align-items:center;min-height:18px;color:#52657c;font-size:11px;font-weight:800;line-height:1.2}.refund-kpi strong{display:flex;align-items:center;min-height:32px;color:#102a4c;font-size:22px;line-height:1.2;margin:8px 0 0;letter-spacing:-.55px;white-space:nowrap}.refund-kpi small{color:#8c99aa;font-size:10px;line-height:1.35}.refund-two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:12px;margin-bottom:12px;align-items:stretch}.refund-card{background:#fff;border:1px solid #e1e8f0;border-radius:12px;padding:14px 14px 13px;box-shadow:0 2px 8px rgba(31,61,96,.04);margin-bottom:12px}.refund-two-col>.refund-card,.refund-bottom-grid>.refund-card{margin-bottom:0}.refund-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;min-height:22px}.refund-card-head b{font-size:13px;color:#172d49;font-weight:800}.refund-card-head span{font-size:10px;color:#8795a8;white-space:nowrap}.refund-chart-wrap{height:220px;position:relative;padding:2px 4px 0}.refund-table-wrap{overflow-x:auto;border:1px solid #e5ebf2;border-radius:8px}.refund-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:10.5px}.refund-table th{background:#f5f8fb;color:#435a75;font-weight:800;padding:7px 8px;border-bottom:1px solid #dfe6ef;text-align:center;white-space:nowrap}.refund-table td{padding:7px 8px;border-bottom:1px solid #edf1f5;text-align:right;color:#30455f;vertical-align:middle;white-space:nowrap}.refund-table tbody tr:last-child td{border-bottom:0}.refund-table td:first-child{text-align:left;font-weight:750;color:#1f3552}.refund-table th:first-child{text-align:left}.refund-product-card .refund-table th:nth-child(1){width:18%}.refund-product-card .refund-table th:nth-child(2){width:17%}.refund-product-card .refund-table th:nth-child(3){width:25%}.refund-product-card .refund-table th:nth-child(4){width:18%}.refund-product-card .refund-table th:nth-child(5){width:22%}.refund-bottom-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch;gap:12px;margin-bottom:12px}.refund-bottom-grid>.refund-card{height:100%;display:flex;flex-direction:column}.refund-bottom-grid .refund-table-wrap{flex:1}.refund-bottom-grid .refund-table{height:100%}.refund-repurchase-summary{display:flex;align-items:center;justify-content:center;gap:8px;background:#f7faff;border:1px solid #e2eaf4;border-radius:8px;padding:7px 9px;color:#4d6682;font-size:10px;font-weight:700}.refund-rate-cell{display:grid;grid-template-columns:52px minmax(70px,1fr);align-items:center;gap:8px;justify-content:end}.refund-rate-cell>span:first-child{text-align:right;font-weight:700;color:#344b67}.refund-rate-track{width:100%;height:6px;background:#e9eef4;border-radius:999px;overflow:hidden}.refund-rate-fill{display:block;height:100%;background:#1f73e8;border-radius:999px}.refund-method-amount{display:grid;grid-template-columns:110px minmax(85px,1fr);align-items:center;gap:8px}.refund-method-amount>span:first-child{text-align:right;font-weight:700}.refund-method-track{height:6px;background:#e9eef4;border-radius:999px;overflow:hidden}.refund-method-fill{display:block;height:100%;background:#1f73e8;border-radius:999px}.refund-insight{background:#eef6ff;border:1px solid #d7e8fb;color:#315b88;border-radius:9px;padding:10px 14px;font-size:10.5px;font-weight:700;margin-top:0}.refund-empty{background:#fff7ed;border:1px solid #fed7aa;color:#9a4b10;padding:10px 12px;border-radius:10px;margin:10px 0;font-size:11px}.refund-method-empty{color:#97a3b2;text-align:center!important;padding:18px!important}.refund-card.refund-product-card{padding-bottom:12px}.refund-card.refund-product-card .refund-card-head{margin-bottom:8px}@media(max-width:1280px){.refund-kpi-grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:900px){.refund-two-col,.refund-bottom-grid{grid-template-columns:1fr}.refund-kpi-grid{grid-template-columns:repeat(2,1fr)}.refund-method-amount{grid-template-columns:100px minmax(70px,1fr)}}
+.refund-dashboard-page{padding-bottom:24px}.refund-kpi-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:12px 0 14px;align-items:stretch}.refund-kpi{background:#fff;border:1px solid #e1e8f0;border-radius:12px;padding:17px 16px 15px;min-height:106px;box-shadow:0 2px 8px rgba(31,61,96,.045);display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start}.refund-kpi span{display:flex;align-items:center;min-height:18px;color:#52657c;font-size:11px;font-weight:800;line-height:1.2}.refund-kpi strong{display:flex;align-items:center;min-height:32px;color:#102a4c;font-size:22px;line-height:1.2;margin:8px 0 0;letter-spacing:-.55px;white-space:nowrap}.refund-kpi small{color:#8c99aa;font-size:10px;line-height:1.35}.refund-two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:12px;margin-bottom:12px;align-items:stretch}.refund-card{background:#fff;border:1px solid #e1e8f0;border-radius:12px;padding:14px 14px 13px;box-shadow:0 2px 8px rgba(31,61,96,.04);margin-bottom:12px}.refund-two-col>.refund-card,.refund-bottom-grid>.refund-card{margin-bottom:0}.refund-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;min-height:22px}.refund-card-head b{font-size:13px;color:#172d49;font-weight:800}.refund-card-head span{font-size:10px;color:#8795a8;white-space:nowrap}.refund-chart-wrap{height:220px;position:relative;padding:2px 4px 0}.refund-table-wrap{overflow-x:auto;border:1px solid #e5ebf2;border-radius:8px}.refund-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:10.5px}.refund-table th{background:#f5f8fb;color:#435a75;font-weight:800;padding:7px 8px;border-bottom:1px solid #dfe6ef;text-align:center;white-space:nowrap}.refund-table td{padding:7px 8px;border-bottom:1px solid #edf1f5;text-align:right;color:#30455f;vertical-align:middle;white-space:nowrap}.refund-table tbody tr:last-child td{border-bottom:0}.refund-table td:first-child{text-align:left;font-weight:750;color:#1f3552}.refund-table th:first-child{text-align:left}.refund-product-card .refund-table th:nth-child(1){width:18%}.refund-product-card .refund-table th:nth-child(2){width:17%}.refund-product-card .refund-table th:nth-child(3){width:25%}.refund-product-card .refund-table th:nth-child(4){width:18%}.refund-product-card .refund-table th:nth-child(5){width:22%}.refund-bottom-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch;gap:12px;margin-bottom:12px}.refund-bottom-grid>.refund-card{height:100%;display:flex;flex-direction:column}.refund-bottom-grid .refund-table-wrap{flex:1}.refund-bottom-grid .refund-table{height:100%}.refund-repurchase-summary{display:flex;align-items:center;justify-content:center;gap:8px;background:#f7faff;border:1px solid #e2eaf4;border-radius:8px;padding:7px 9px;color:#4d6682;font-size:10px;font-weight:700}.refund-rate-cell{display:grid;grid-template-columns:52px minmax(70px,1fr);align-items:center;gap:8px;justify-content:end}.refund-rate-cell>span:first-child{text-align:right;font-weight:700;color:#344b67}.refund-rate-track{width:100%;height:6px;background:#e9eef4;border-radius:999px;overflow:hidden}.refund-rate-fill{display:block;height:100%;background:#1f73e8;border-radius:999px}.refund-method-amount{display:grid;grid-template-columns:110px minmax(85px,1fr);align-items:center;gap:8px}.refund-method-amount>span:first-child{text-align:right;font-weight:700}.refund-method-track{height:6px;background:#e9eef4;border-radius:999px;overflow:hidden}.refund-method-fill{display:block;height:100%;background:#1f73e8;border-radius:999px}.refund-insight{background:#eef6ff;border:1px solid #d7e8fb;color:#315b88;border-radius:9px;padding:10px 14px;font-size:10.5px;font-weight:700;margin-top:0}.refund-empty{background:#fff7ed;border:1px solid #fed7aa;color:#9a4b10;padding:10px 12px;border-radius:10px;margin:10px 0;font-size:11px}.refund-method-empty{color:#97a3b2;text-align:center!important;padding:18px!important}.refund-card.refund-product-card{padding-bottom:12px}.refund-card.refund-product-card .refund-card-head{margin-bottom:8px}@media(max-width:1280px){.refund-kpi-grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:900px){.refund-two-col,.refund-bottom-grid{grid-template-columns:1fr}.refund-kpi-grid{grid-template-columns:repeat(2,1fr)}.refund-method-amount{grid-template-columns:100px minmax(70px,1fr)}}
 </style>
 
 <style>
@@ -3343,10 +3350,9 @@ tbody tr:hover{background:#fbfdff}
   <div class="refund-kpi-grid">
     <div class="refund-kpi"><span>총 환불 건수</span><strong id="refundTotalCount">-</strong><div class="refund-kpi-yoy" id="refundTotalCountYoy">전년 동기간 -</div></div>
     <div class="refund-kpi"><span>총 환불금액</span><strong id="refundTotalAmount">-</strong><div class="refund-kpi-yoy" id="refundTotalAmountYoy">전년 동기간 -</div></div>
-    <div class="refund-kpi"><span>환불 회원수</span><strong id="refundMemberCount">-</strong><div class="refund-kpi-yoy" id="refundMemberCountYoy">전년 동기간 -</div></div>
+    <div class="refund-kpi"><span>수강권 환불비중</span><strong id="refundPassAmountShare">-</strong><div class="refund-kpi-yoy" id="refundPassAmountShareYoy">전년 동기간 -</div></div>
     <div class="refund-kpi"><span>바로취소 건수</span><strong id="refundInstantCount">-</strong><div class="refund-kpi-yoy" id="refundInstantCountYoy">전년 동기간 -</div></div>
     <div class="refund-kpi"><span>바로취소율</span><strong id="refundInstantRate">-</strong><div class="refund-kpi-yoy" id="refundInstantRateYoy">전년 동기간 -</div></div>
-    <div class="refund-kpi"><span>재구매율</span><strong id="refundRepurchaseRate">-</strong><div class="refund-kpi-yoy" id="refundRepurchaseRateYoy">전년 동기간 -</div></div>
   </div>
   <div class="refund-two-col">
     <div class="refund-card"><div class="refund-card-head"><b>환불 구성</b><span>선택기간 상품 기준</span></div><div class="refund-chart-wrap"><canvas id="refundMixChart"></canvas></div></div>
@@ -3358,7 +3364,7 @@ tbody tr:hover{background:#fbfdff}
   </div>
   <div class="refund-card refund-trend-card refund-product-trend-card">
     <div class="refund-trend-head">
-      <div><div class="refund-trend-title">상품별 일별 환불 추이</div><div class="refund-trend-sub" id="refundProductTrendSub">전체 상품 비교</div></div>
+      <div><div class="refund-trend-title">상품별 일별 환불 추이</div><div class="refund-trend-sub" id="refundProductTrendSub">올해 실선 · 전년 동기간 점선</div></div>
       <div class="refund-trend-filter">
         <label for="refundProductTrendSelect">상품</label>
         <select id="refundProductTrendSelect">
@@ -4666,13 +4672,20 @@ function renderRefundDashboard(s,e){
   const total=sumf(prod,"totalCount"),amount=sumf(prod,"totalAmount"),members=sumf(prod,"totalMembers"),instant=sumf(prod,"instantCount"),instantMembers=sumf(prod,"instantMembers"),repurchase=sumf(prod,"repurchaseMembers"),partial=sumf(prod,"partialCount"),instantRate=total?instant/total*100:0,repRate=instantMembers?repurchase/instantMembers*100:0;
   const yoyTotal=sumf(yoyProd,"totalCount"),yoyAmount=sumf(yoyProd,"totalAmount"),yoyMembers=sumf(yoyProd,"totalMembers"),yoyInstant=sumf(yoyProd,"instantCount"),yoyInstantMembers=sumf(yoyProd,"instantMembers"),yoyRepurchase=sumf(yoyProd,"repurchaseMembers"),yoyInstantRate=yoyTotal?yoyInstant/yoyTotal*100:0,yoyRepRate=yoyInstantMembers?yoyRepurchase/yoyInstantMembers*100:0;
   const hasYoy=yoyRr.length>0&&yoyProd.length>0;
-  $("refundTotalCount").textContent=fmt(total)+"건";$("refundTotalAmount").textContent=money(amount);$("refundMemberCount").textContent=fmt(members)+"명";$("refundInstantCount").textContent=fmt(instant)+"건";$("refundInstantRate").textContent=instantRate.toFixed(1)+"%";$("refundRepurchaseRate").textContent=repRate.toFixed(1)+"%";
+  const passRow=prod.find(r=>refundNormalizeItem(r.item)==="수강권");
+  const yoyPassRow=yoyProd.find(r=>refundNormalizeItem(r.item)==="수강권");
+  const passAmountShare=amount?((Number(passRow?.totalAmount)||0)/amount*100):0;
+  const yoyPassAmountShare=yoyAmount?((Number(yoyPassRow?.totalAmount)||0)/yoyAmount*100):0;
+  $("refundTotalCount").textContent=fmt(total)+"건";
+  $("refundTotalAmount").textContent=money(amount);
+  $("refundPassAmountShare").textContent=passAmountShare.toFixed(1)+"%";
+  $("refundInstantCount").textContent=fmt(instant)+"건";
+  $("refundInstantRate").textContent=instantRate.toFixed(1)+"%";
   if($("refundTotalCountYoy")) $("refundTotalCountYoy").innerHTML=refundYoyMarkup(total,hasYoy?yoyTotal:null,{unit:"건"});
   if($("refundTotalAmountYoy")) $("refundTotalAmountYoy").innerHTML=refundYoyMarkup(amount,hasYoy?yoyAmount:null,{type:"amount"});
-  if($("refundMemberCountYoy")) $("refundMemberCountYoy").innerHTML=refundYoyMarkup(members,hasYoy?yoyMembers:null,{unit:"명"});
+  if($("refundPassAmountShareYoy")) $("refundPassAmountShareYoy").innerHTML=refundYoyMarkup(passAmountShare,hasYoy?yoyPassAmountShare:null,{type:"rate"});
   if($("refundInstantCountYoy")) $("refundInstantCountYoy").innerHTML=refundYoyMarkup(instant,hasYoy?yoyInstant:null,{unit:"건"});
   if($("refundInstantRateYoy")) $("refundInstantRateYoy").innerHTML=refundYoyMarkup(instantRate,hasYoy?yoyInstantRate:null,{type:"rate"});
-  if($("refundRepurchaseRateYoy")) $("refundRepurchaseRateYoy").innerHTML=refundYoyMarkup(repRate,hasYoy?yoyRepRate:null,{type:"rate"});
   const other=Math.max(0,total-instant-partial);if(charts.refundMixChart)charts.refundMixChart.destroy();charts.refundMixChart=new Chart($("refundMixChart"),{type:"doughnut",data:{labels:["바로취소(직접)","부분환불","전액환불(요청)"],datasets:[{data:[instant,partial,other],backgroundColor:["#2f6fed","#22a06b","#c7d1df"],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:"62%",layout:{padding:{top:8,right:8,bottom:4,left:8}},plugins:{legend:{position:"right",labels:{usePointStyle:false,boxWidth:14,boxHeight:14,padding:16,color:"#334155",font:{size:11,weight:"700"}}},tooltip:{callbacks:{label:c=>`${c.label}: ${fmt(c.raw)}건 (${total?(c.raw/total*100).toFixed(1):"0.0"}%)`}}}}});
   const reasons=[["상품변경",sumf(prod,"productChange")],["잘못선택",sumf(prod,"wrongChoice")],["결제방법변경",sumf(prod,"payMethodChange")],["학원수강&PMP&기간부족",sumf(prod,"academyPmpPeriod")],["타사이용",sumf(prod,"competitorUse")]].sort((a,b)=>b[1]-a[1]);if(charts.refundReasonChart)charts.refundReasonChart.destroy();charts.refundReasonChart=new Chart($("refundReasonChart"),{type:"bar",data:{labels:reasons.map(x=>x[0]),datasets:[{data:reasons.map(x=>x[1]),backgroundColor:"#2f6fed",borderRadius:5}]},options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,layout:{padding:{top:8,right:8,bottom:4,left:4}},plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.parsed.x||0)}건`}}},scales:{x:{beginAtZero:true,grid:{color:"#e8edf4"},border:{display:false},ticks:{color:"#516074",font:{size:10,weight:"700"},callback:v=>fmt(v)}},y:{grid:{display:false},border:{display:false},ticks:{color:"#516074",font:{size:10,weight:"700"}}}}}});
   const order=["강좌","교재","수강권","캐쉬","스마트기기"],pm=new Map(prod.map(r=>[r.item,r]));$("refundProductBody").innerHTML=order.map(item=>{const r=pm.get(item)||{item,totalCount:0,totalAmount:0,instantCount:0};const rate=r.totalCount?r.instantCount/r.totalCount*100:0;return `<tr><td>${item}</td><td>${fmt(r.totalCount)}건</td><td>${money(r.totalAmount)}</td><td>${fmt(r.instantCount)}건</td><td>${refundRateHtml(rate)}</td></tr>`}).join("");$("refundRepurchaseBody").innerHTML=order.map(item=>{const r=pm.get(item)||{instantMembers:0,repurchaseMembers:0};const rate=r.instantMembers?r.repurchaseMembers/r.instantMembers*100:0;return `<tr><td>${item}</td><td>${fmt(r.instantMembers)}명</td><td>${fmt(r.repurchaseMembers)}명</td><td>${refundRateHtml(rate)}</td></tr>`}).join("");if($("refundRepurchaseSummary")) $("refundRepurchaseSummary").textContent=`바로취소 회원 ${fmt(instantMembers)}명 → 재구매 ${fmt(repurchase)}명 → ${repRate.toFixed(1)}%`;
@@ -4758,23 +4771,77 @@ function renderRefundDashboard(s,e){
     if(!productDailyMap.has(d)) productDailyMap.set(d,{date:d});
     const x=productDailyMap.get(d);x[item]=(Number(x[item])||0)+(Number(r.totalCount)||0);
   });
+  const yoyProductDailyMap=new Map();
+  yoyRr.filter(r=>refundNormalizeKind(r.kind)==="상품").forEach(r=>{
+    const d=r.date,item=refundNormalizeItem(r.item);
+    if(!productTrendOrder.includes(item)) return;
+    if(!yoyProductDailyMap.has(d)) yoyProductDailyMap.set(d,{date:d});
+    const x=yoyProductDailyMap.get(d);x[item]=(Number(x[item])||0)+(Number(r.totalCount)||0);
+  });
   const productDailyRows=[...productDailyMap.values()].sort((a,b)=>a.date.localeCompare(b.date));
+  const yoyProductDailyRows=[...yoyProductDailyMap.values()].sort((a,b)=>a.date.localeCompare(b.date));
   const productTrendLabels=productDailyRows.map(x=>formatDateLabel(x.date));
   const productTrendSelect=$("refundProductTrendSelect");
   const selectedProduct=(productTrendSelect&&productTrendSelect.value)||"전체";
   const visibleProducts=selectedProduct==="전체"?productTrendOrder:productTrendOrder.filter(x=>x===selectedProduct);
   const productTrendSub=$("refundProductTrendSub");
-  if(productTrendSub) productTrendSub.textContent=selectedProduct==="전체"?"전체 상품 비교":`${selectedProduct} 일별 환불건수`;
+  if(productTrendSub) productTrendSub.textContent=selectedProduct==="전체"
+    ?"올해 상품별 환불건수 추이"
+    :`${selectedProduct} 환불건수 · 올해 / 전년`;
+  const productTrendDatasets=[];
+  visibleProducts.forEach(item=>{
+    productTrendDatasets.push({
+      label:selectedProduct==="전체"?item:`${item} 올해`,
+      data:productDailyRows.map(x=>Number(x[item])||0),
+      borderColor:productTrendColors[item],
+      backgroundColor:productTrendColors[item],
+      borderWidth:selectedProduct==="전체"?2.1:2.8,
+      tension:.38,fill:false,
+      pointRadius:productDailyRows.length<=30?(selectedProduct==="전체"?1.8:2.6):0,
+      pointHoverRadius:5,pointHitRadius:12
+    });
+    if(selectedProduct!=="전체"){
+      productTrendDatasets.push({
+        label:`${item} 전년`,
+        data:productDailyRows.map((_,i)=>yoyProductDailyRows[i] ? (Number(yoyProductDailyRows[i][item])||0) : null),
+        borderColor:productTrendColors[item],
+        backgroundColor:productTrendColors[item],
+        borderWidth:2.2,
+        borderDash:[5,4],
+        tension:.38,fill:false,
+        pointRadius:0,pointHoverRadius:4,pointHitRadius:12,
+        spanGaps:true
+      });
+    }
+  });
   if(charts.refundProductDailyTrendChart) charts.refundProductDailyTrendChart.destroy();
   if($("refundProductDailyTrendChart")){
     charts.refundProductDailyTrendChart=new Chart($("refundProductDailyTrendChart"),{
       type:"line",
-      data:{labels:productTrendLabels,datasets:visibleProducts.map(item=>({label:item,data:productDailyRows.map(x=>Number(x[item])||0),borderColor:productTrendColors[item],backgroundColor:productTrendColors[item],borderWidth:selectedProduct==="전체"?2.2:2.8,tension:.38,fill:false,pointRadius:productDailyRows.length<=30?2.4:0,pointHoverRadius:5,pointHitRadius:12}))},
+      data:{labels:productTrendLabels,datasets:productTrendDatasets},
       options:{
         responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
         layout:{padding:{top:16,right:8,left:4,bottom:useDiagonalDateTicks(productTrendLabels)?8:0}},
-        plugins:{legend:{position:"top",align:"center",fullSize:true,labels:{usePointStyle:false,boxWidth:14,boxHeight:14,padding:16,color:"#334155",font:{size:11,weight:"700"}}},tooltip:{callbacks:{label:(ctx)=>`${ctx.dataset.label}: ${fmt(ctx.parsed.y||0)}건`}}},
-        scales:{x:{grid:{display:false},border:{display:false},ticks:dateTickDisplayOptions(productTrendLabels,10,true,18)},y:{beginAtZero:true,ticks:{color:"#516074",font:{size:10,weight:"700"},callback:v=>fmt(v)},title:{display:true,text:"환불건수 (건)",align:"start",color:"#516074",font:{size:10,weight:"700"},padding:{bottom:8}},grid:{color:"#e8edf4"},border:{display:false}}}
+        plugins:{
+          legend:{position:"top",align:"center",fullSize:true,labels:{
+            usePointStyle:false,boxWidth:14,boxHeight:14,padding:selectedProduct==="전체"?10:16,
+            color:"#334155",font:{size:selectedProduct==="전체"?9.5:11,weight:"700"}
+          }},
+          tooltip:{callbacks:{
+            title:(items)=>{
+              const idx=items?.[0]?.dataIndex??-1;
+              const cur=productDailyRows[idx]?.date||"";
+              if(selectedProduct==="전체") return cur;
+              const prev=yoyProductDailyRows[idx]?.date||"";
+              return prev?`${cur} · 전년 비교 ${prev}`:cur;
+            },
+            label:(ctx)=>`${ctx.dataset.label}: ${fmt(ctx.parsed.y||0)}건`
+          }}
+        },
+        scales:{
+          x:{grid:{display:false},border:{display:false},ticks:dateTickDisplayOptions(productTrendLabels,10,true,18)},
+          y:{beginAtZero:true,ticks:{color:"#516074",font:{size:10,weight:"700"},callback:v=>fmt(v)},title:{display:true,text:"환불건수 (건)",align:"start",color:"#516074",font:{size:10,weight:"700"},padding:{bottom:8}},grid:{color:"#e8edf4"},border:{display:false}}
+        }
       }
     });
   }
