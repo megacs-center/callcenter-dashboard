@@ -3435,7 +3435,7 @@ tbody tr:hover{background:#fbfdff}
   <div class="consult-image-toolbar card">
     <div class="consult-image-toolbar-left">
       <div class="consult-filter-unit"><span class="consult-month-label">분석기준</span><select class="consult-month-select" id="consultModeSelect"><option value="monthly">월간</option><option value="period">특정기간</option></select></div>
-      <div class="consult-filter-unit"><span class="consult-month-label">상담구분</span><select class="consult-month-select" id="consultChannelSelect"><option value="all">전체</option><option value="인바운드 상담">Call</option><option value="게시판 상담">게시판</option></select></div>
+      <div class="consult-filter-unit"><span class="consult-month-label">상담구분</span><select class="consult-month-select" id="consultChannelSelect"><option value="all">전체(Call+게시판)</option><option value="인바운드 상담">Call</option><option value="게시판 상담">게시판</option></select></div>
       <div class="consult-mode-controls" id="consultMonthlyControls">
         <div class="consult-filter-unit"><span class="consult-month-label">분석연도</span><select class="consult-month-select" id="consultYearSelect"></select></div>
         <div class="consult-filter-unit"><span class="consult-month-label">분석월</span><select class="consult-month-select" id="consultMonthSelectLive"></select></div>
@@ -3515,7 +3515,7 @@ tbody tr:hover{background:#fbfdff}
     <div class="consult-number-title"><span class="num-box" id="consultDetailSectionNum">5</span><h3>상담유형 상세 데이터</h3></div>
     <div class="consult-toolbar consult-toolbar-extended">
       <select id="consultDetailChannelFilter">
-        <option value="">상담구분 전체</option>
+        <option value="">상담구분 전체(Call+게시판)</option>
         <option value="인바운드 상담">Call</option>
         <option value="게시판 상담">게시판</option>
       </select>
