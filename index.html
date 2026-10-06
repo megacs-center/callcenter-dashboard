@@ -2480,6 +2480,65 @@ table tbody tr:not(.total-row):not(.summary-row):hover > td{
 @media(max-width:900px){#refund .refund-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
 @media(max-width:620px){#refund .refund-kpi-grid{grid-template-columns:1fr!important;}}
 
+
+/* v128 관리자 전용 운영·성과 일일현황 */
+.performance-daily-page{padding-bottom:24px}
+.performance-daily-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin:2px 0 8px}
+.performance-daily-filters{display:flex;gap:7px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+.perf-datebox,.perf-comparebox{
+  min-height:40px;display:flex;align-items:center;gap:7px;background:#fff;border:1px solid #d7e0eb;
+  border-radius:8px;padding:0 9px;color:#5c7088;font-size:10.5px;font-weight:800
+}
+.perf-datebox input{border:0;outline:0;background:transparent;color:#223a57;font-size:11px;font-weight:800;width:112px}
+.perf-comparebox select{border:0;outline:0;background:transparent;color:#223a57;font-size:11px;font-weight:850}
+.perf-statusline{text-align:right;font-size:10px;color:#8190a2;margin-bottom:8px}
+.perf-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.perf-kpi{padding:14px 15px;min-height:138px}
+.perf-kpi-label{font-size:11px;color:#667a92;font-weight:850}
+.perf-kpi-value{font-size:25px;font-weight:950;color:#0f3158;margin:8px 0 9px;letter-spacing:-.5px}
+.perf-kpi-compare{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid #edf1f5;padding-top:6px;margin-top:5px;font-size:10px;color:#7c8da1}
+.perf-kpi-compare b{font-size:10.5px;color:#3d5672;font-weight:900}
+.perf-kpi-compare b.up{color:#ef3340}.perf-kpi-compare b.down{color:#1267de}.perf-kpi-compare b.neutral{color:#607389}
+.perf-trend-card,.perf-table-card{overflow:hidden;margin-bottom:12px}
+.perf-card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px 9px;border-bottom:1px solid #e7edf4}
+.perf-card-head h3{margin:0;font-size:14px;font-weight:900;color:#173757}
+.perf-mini-note{font-size:9.5px;color:#7d8da1;background:#f5f8fb;border:1px solid #e4eaf1;border-radius:999px;padding:4px 8px;font-weight:850}
+.perf-trend-wrap{height:245px;padding:6px 14px 14px}
+.perf-legend{display:flex;align-items:center;gap:9px;font-size:9.5px;color:#738399}
+.perf-dot{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:3px;vertical-align:-1px}
+.perf-dot.sat{background:#edf6ff;border:1px solid #c8e2ff}.perf-dot.sun{background:#fff0f0;border:1px solid #ffd0d0}.perf-dot.hol{background:#fff8da;border:1px solid #f0d36a}
+.perf-table-wrap{max-height:calc(100vh - 300px);overflow:auto;background:#fff}
+.perf-daily-table{width:100%;min-width:1240px;border-collapse:separate;border-spacing:0;table-layout:fixed;font-size:10px}
+.perf-daily-table thead th{
+  position:sticky;background:#f3f6f9;color:#334d68;border-right:1px solid #dde5ed;border-bottom:1px solid #d9e2ec;
+  text-align:center;font-weight:900;padding:8px 7px;white-space:nowrap;z-index:20
+}
+.perf-daily-table thead tr:first-child th{top:0;height:36px;z-index:26}
+.perf-daily-table thead tr:nth-child(2) th{top:36px;height:34px;z-index:25}
+.perf-daily-table thead .perf-day{background:#edf5fd}.perf-daily-table thead .perf-night{background:#f3effc}.perf-daily-table thead .perf-total{background:#edf8f4}
+.perf-daily-table tbody td{border-right:1px solid #edf1f5;border-bottom:1px solid #e8edf2;padding:8px;text-align:right;color:#2e435b;background:#fff;white-space:nowrap}
+.perf-daily-table tbody tr:hover td{background:#f7faff}
+.perf-daily-table tbody tr.saturday td{background:#f5faff}.perf-daily-table tbody tr.sunday td{background:#fff5f5}.perf-daily-table tbody tr.holiday td{background:#fff9e8}
+.perf-daily-table th:first-child,.perf-daily-table td:first-child{position:sticky;left:0;z-index:8;width:96px;min-width:96px}
+.perf-daily-table th:nth-child(2),.perf-daily-table td:nth-child(2){position:sticky;left:96px;z-index:8;width:58px;min-width:58px}
+.perf-daily-table thead th:first-child,.perf-daily-table thead th:nth-child(2){z-index:30;background:#edf2f7}
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday) td:first-child,
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday) td:nth-child(2){background:#fff}
+.perf-daily-table tbody tr.saturday td:first-child,.perf-daily-table tbody tr.saturday td:nth-child(2){background:#f5faff}
+.perf-daily-table tbody tr.sunday td:first-child,.perf-daily-table tbody tr.sunday td:nth-child(2){background:#fff5f5}
+.perf-daily-table tbody tr.holiday td:first-child,.perf-daily-table tbody tr.holiday td:nth-child(2){background:#fff9e8}
+.perf-date-cell{text-align:center!important;font-weight:900;color:#1e456d!important}
+.perf-weekday{text-align:center!important}
+.perf-weekday-badge{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:21px;border-radius:999px;background:#edf2f7;color:#51667e;font-size:9px;font-weight:900}
+tr.saturday .perf-weekday-badge{background:#e3f1ff;color:#2672bb}tr.sunday .perf-weekday-badge{background:#ffe8e8;color:#d04444}tr.holiday .perf-weekday-badge{background:#fff0b8;color:#ad6e00}
+.perf-rate{font-weight:900;color:#183b61!important}.perf-cph{font-weight:850;color:#536b84!important}.perf-total-metric{font-weight:950;color:#163e68!important;background:#fbfdfd!important}
+.perf-note{text-align:left!important;white-space:normal!important;line-height:1.4;color:#5b6e83!important}
+.perf-holiday-name{display:block;margin-top:3px;color:#9a6200;font-size:8.5px;font-weight:900}
+.perf-empty{text-align:center!important;padding:34px!important;color:#8999aa!important}
+.performance-daily-upload{border:1px solid #cfe0f5!important;background:#fbfdff}
+@media(max-width:1050px){.perf-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.performance-daily-head{flex-direction:column}.performance-daily-filters{justify-content:flex-start}}
+@media(max-width:650px){.perf-kpis{grid-template-columns:1fr}}
+
 </style>
 
 <style>
@@ -2877,6 +2936,7 @@ tbody tr:hover{background:#fbfdff}
     <button data-target="issues">⚑　<span>공지사항 및 주요 이슈</span></button>
     <button data-target="ai">✦　<span>AI 분석</span></button>
     <div class="sep"></div>
+    <button data-target="performanceDaily" data-role="admin" style="display:none">▣　<span>일일현황</span></button>
     <button data-target="admin" data-role="admin" style="display:none">🔒　<span>관리자</span></button>
   </div>
 </aside>
@@ -3784,6 +3844,120 @@ tbody tr:hover{background:#fbfdff}
   </div>
 </section>
 
+
+<section id="performanceDaily" class="section">
+  <div class="performance-daily-page">
+    <div class="performance-daily-head">
+      <div>
+        <div class="detail-title">일일현황</div>
+        <div class="detail-period">주간·야간 운영실적을 조회하고 전년 동기간과 비교합니다.</div>
+      </div>
+      <div class="performance-daily-filters">
+        <button class="btn secondary" id="perfLast7Btn" type="button">최근 7일</button>
+        <button class="btn secondary" id="perfYearBtn" type="button">올해</button>
+        <button class="btn secondary" id="perfMonthBtn" type="button">이번 달</button>
+        <div class="perf-datebox">
+          <span>기간</span>
+          <input type="date" id="perfStartDate">
+          <span>~</span>
+          <input type="date" id="perfEndDate">
+        </div>
+        <div class="perf-comparebox">
+          <span>비교 기준</span>
+          <select id="perfCompareBasis">
+            <option value="weekday" selected>요일보정</option>
+            <option value="sameDate">전년동일</option>
+          </select>
+        </div>
+        <button class="btn primary" id="perfSearchBtn" type="button">조회</button>
+      </div>
+    </div>
+
+    <div class="perf-statusline" id="perfTopStatus">관리자 데이터 로딩 전</div>
+
+    <div class="perf-kpis">
+      <div class="perf-kpi card">
+        <div class="perf-kpi-label">총 인입</div>
+        <div class="perf-kpi-value" id="perfKpiIn">-</div>
+        <div class="perf-kpi-compare"><span>전년 동기간</span><b id="perfKpiInPrev">-</b></div>
+        <div class="perf-kpi-compare"><span>전년대비</span><b id="perfKpiInYoy">-</b></div>
+      </div>
+      <div class="perf-kpi card">
+        <div class="perf-kpi-label">총 처리</div>
+        <div class="perf-kpi-value" id="perfKpiHandled">-</div>
+        <div class="perf-kpi-compare"><span>전년 동기간</span><b id="perfKpiHandledPrev">-</b></div>
+        <div class="perf-kpi-compare"><span>전년대비</span><b id="perfKpiHandledYoy">-</b></div>
+      </div>
+      <div class="perf-kpi card">
+        <div class="perf-kpi-label">응답률</div>
+        <div class="perf-kpi-value" id="perfKpiRate">-</div>
+        <div class="perf-kpi-compare"><span>전년 동기간</span><b id="perfKpiRatePrev">-</b></div>
+        <div class="perf-kpi-compare"><span>전년대비</span><b id="perfKpiRateYoy">-</b></div>
+      </div>
+      <div class="perf-kpi card">
+        <div class="perf-kpi-label">CPH</div>
+        <div class="perf-kpi-value" id="perfKpiCph">-</div>
+        <div class="perf-kpi-compare"><span>전년 동기간</span><b id="perfKpiCphPrev">-</b></div>
+        <div class="perf-kpi-compare"><span>전년대비</span><b id="perfKpiCphYoy">-</b></div>
+      </div>
+    </div>
+
+    <div class="card perf-trend-card">
+      <div class="perf-card-head">
+        <div>
+          <h3>일자별 운영 추이</h3>
+          <div class="sub" id="perfTrendLabel">총 인입건수 · 올해 / 전년</div>
+        </div>
+        <div class="perf-mini-note">총 인입건수 비교</div>
+      </div>
+      <div class="perf-trend-wrap"><canvas id="perfInboundTrend"></canvas></div>
+    </div>
+
+    <div class="card perf-table-card">
+      <div class="perf-card-head">
+        <div>
+          <h3>▣ 일일 현황</h3>
+          <div class="sub" id="perfPeriodLabel">조회기간을 선택해 주세요.</div>
+        </div>
+        <div class="perf-legend">
+          <span><i class="perf-dot sat"></i>토요일</span>
+          <span><i class="perf-dot sun"></i>일요일</span>
+          <span><i class="perf-dot hol"></i>공휴일</span>
+        </div>
+      </div>
+      <div class="perf-table-wrap">
+        <table class="perf-daily-table">
+          <colgroup>
+            <col style="width:96px"><col style="width:58px">
+            <col style="width:72px"><col style="width:72px"><col style="width:78px"><col style="width:64px">
+            <col style="width:72px"><col style="width:72px"><col style="width:78px"><col style="width:64px">
+            <col style="width:72px"><col style="width:72px"><col style="width:78px"><col style="width:64px">
+            <col style="width:220px">
+          </colgroup>
+          <thead>
+            <tr>
+              <th rowspan="2" class="perf-fixed-head">일자</th>
+              <th rowspan="2" class="perf-fixed-head">요일</th>
+              <th colspan="4" class="perf-group perf-day">주간 · 소싱</th>
+              <th colspan="4" class="perf-group perf-night">야간 · 소싱+본사</th>
+              <th colspan="4" class="perf-group perf-total">총합</th>
+              <th rowspan="2" class="perf-fixed-head">비고</th>
+            </tr>
+            <tr>
+              <th class="perf-day">인입</th><th class="perf-day">처리</th><th class="perf-day">응답률</th><th class="perf-day">CPH</th>
+              <th class="perf-night">인입</th><th class="perf-night">처리</th><th class="perf-night">응답률</th><th class="perf-night">CPH</th>
+              <th class="perf-total">인입</th><th class="perf-total">처리</th><th class="perf-total">응답률</th><th class="perf-total">CPH</th>
+            </tr>
+          </thead>
+          <tbody id="perfDailyBody">
+            <tr><td colspan="15" class="perf-empty">관리자에서 Excel 데이터를 등록해 주세요.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="admin" class="section">
   <div class="detail-head"><div class="detail-title-wrap"><div class="detail-title">관리자</div><button type="button" class="data-info-btn" data-info-page="admin">ⓘ 데이터 기준</button></div></div>
   <div id="adminLock" class="card adminbox hidden">
@@ -3844,6 +4018,18 @@ tbody tr:hover{background:#fbfdff}
       </div>
 
       <div class="uploadgrid integrated-uploadgrid">
+        <div class="card upload performance-daily-upload">
+          <h3>운영·성과 일일현황</h3>
+          <div class="sub">연도별 Sheet(예: 2025, 2026)의 주간·야간·총합 데이터를 한 번에 등록합니다.</div>
+          <div class="drop">
+            <div class="upload-file-row">
+              <input id="performanceDailyFile" type="file" accept=".xlsx,.xls">
+              <button class="btn secondary" id="performanceDailySampleBtn" type="button">샘플 Excel</button>
+            </div>
+          </div>
+          <div id="performanceDailyStatus" class="status">등록 전</div>
+        </div>
+
         <div class="card upload">
           <h3>① 일일 운영실적</h3>
           <div class="integrated-status-slot" data-status-type="daily"></div>
@@ -3980,7 +4166,7 @@ tbody tr:hover{background:#fbfdff}
       const btn=e.target.closest('button[data-target]');
       if(!btn || !menu.contains(btn)) return;
       const targetId=btn.getAttribute('data-target');
-      if(targetId==='admin' && window.__dashboardRole!=='admin') return;
+      if((targetId==='admin'||targetId==='performanceDaily') && window.__dashboardRole!=='admin') return;
       const target=document.getElementById(targetId);
       if(!target) return;
 
@@ -3990,12 +4176,13 @@ tbody tr:hover{background:#fbfdff}
       target.classList.add('active');
 
       const topFilters=document.querySelector('.top .filters');
-      if(topFilters) topFilters.style.display=(targetId==='consulttype'||targetId==='consultgrade'||targetId==='ai'||targetId==='report')?'none':'flex';
+      if(topFilters) topFilters.style.display=(targetId==='consulttype'||targetId==='consultgrade'||targetId==='ai'||targetId==='report'||targetId==='performanceDaily')?'none':'flex';
 
       const pop=document.getElementById('dataInfoPopover');
       if(pop){ pop.classList.remove('open'); pop.setAttribute('aria-hidden','true'); }
       if(targetId==='consultgrade' && typeof renderConsultGradePage==='function') renderConsultGradePage();
       if(targetId==='report' && typeof window.renderOperationReport==='function') window.renderOperationReport();
+      if(targetId==='performanceDaily' && typeof window.performanceDailyOpen==='function') window.performanceDailyOpen();
 
       window.dispatchEvent(new Event('resize'));
     });
@@ -9663,6 +9850,347 @@ function consultTypeSample(){
   XLSX.writeFile(wb,"상담유형_월간_2단헤더_특정기간_샘플.xlsx");
 }
 
+
+/* ===== 관리자 전용 운영·성과 일일현황 ===== */
+const PERFORMANCE_DAILY_COLLECTION="performanceDaily";
+let performanceDailyRows=[];
+let performanceDailyLoaded=false;
+let performanceDailyChart=null;
+
+const PERF_WD=["일","월","화","수","목","금","토"];
+const PERF_HOLIDAYS={
+  "2026-01-01":"신정","2026-02-16":"설 연휴","2026-02-17":"설날","2026-02-18":"설 연휴",
+  "2026-03-01":"삼일절","2026-03-02":"대체공휴일","2026-05-05":"어린이날","2026-05-24":"부처님오신날",
+  "2026-05-25":"대체공휴일","2026-06-06":"현충일","2026-08-15":"광복절","2026-08-17":"대체공휴일",
+  "2026-09-24":"추석 연휴","2026-09-25":"추석","2026-09-26":"추석 연휴",
+  "2026-10-03":"개천절","2026-10-05":"대체공휴일","2026-10-09":"한글날","2026-12-25":"성탄절"
+};
+
+function perfPad(n){return String(n).padStart(2,"0")}
+function perfDateStr(dt){return `${dt.getFullYear()}-${perfPad(dt.getMonth()+1)}-${perfPad(dt.getDate())}`}
+function perfWeekday(s){const d=new Date(s+"T00:00:00");return isNaN(d)?"":PERF_WD[d.getDay()]}
+function perfRowClass(date){
+  if(PERF_HOLIDAYS[date]) return "holiday";
+  const d=new Date(date+"T00:00:00");
+  return d.getDay()===6?"saturday":d.getDay()===0?"sunday":"";
+}
+function perfToNum(v){
+  if(v===null||v===undefined||v==="") return 0;
+  const n=Number(String(v).replace(/,/g,"").replace(/%/g,"").trim());
+  return Number.isFinite(n)?n:0;
+}
+function perfParseRate(v){
+  if(v===null||v===undefined||v==="") return NaN;
+  if(typeof v==="number") return Math.abs(v)<=1 ? v*100 : v;
+  const s=String(v).trim();
+  if(!s) return NaN;
+  const n=Number(s.replace(/,/g,"").replace("%",""));
+  if(!Number.isFinite(n)) return NaN;
+  return s.includes("%") ? n : (Math.abs(n)<=1?n*100:n);
+}
+function perfParseDate(v,yearHint=""){
+  if(v===null||v===undefined||v==="") return "";
+  if(typeof v==="number" && window.XLSX){
+    const o=XLSX.SSF.parse_date_code(v);
+    if(o?.y&&o?.m&&o?.d) return `${o.y}-${perfPad(o.m)}-${perfPad(o.d)}`;
+  }
+  if(v instanceof Date && !isNaN(v)) return `${v.getUTCFullYear()}-${perfPad(v.getUTCMonth()+1)}-${perfPad(v.getUTCDate())}`;
+  const s=String(v).trim();
+  let m=s.match(/^(\d{4})[-./](\d{1,2})[-./](\d{1,2})/);
+  if(m) return `${m[1]}-${perfPad(m[2])}-${perfPad(m[3])}`;
+  m=s.match(/^(\d{1,2})[-./](\d{1,2})$/);
+  if(m&&yearHint) return `${yearHint}-${perfPad(m[1])}-${perfPad(m[2])}`;
+  m=s.match(/^(\d{1,2})월\s*(\d{1,2})일$/);
+  if(m&&yearHint) return `${yearHint}-${perfPad(m[1])}-${perfPad(m[2])}`;
+  return "";
+}
+function perfNormalizeRate(rate,i,h){return Number.isFinite(rate)&&rate>0?rate:(i>0?h/i*100:NaN)}
+function perfNormalizeRow(r){
+  const totalIn=r.totalIn!==null&&r.totalIn!==undefined?Number(r.totalIn):(Number(r.dayIn||0)+Number(r.nightIn||0));
+  const totalHandled=r.totalHandled!==null&&r.totalHandled!==undefined?Number(r.totalHandled):(Number(r.dayHandled||0)+Number(r.nightHandled||0));
+  return {
+    ...r,
+    dayIn:Number(r.dayIn||0),dayHandled:Number(r.dayHandled||0),
+    dayRate:perfNormalizeRate(Number(r.dayRate),Number(r.dayIn||0),Number(r.dayHandled||0)),
+    dayCph:Number(r.dayCph||0),
+    nightIn:Number(r.nightIn||0),nightHandled:Number(r.nightHandled||0),
+    nightRate:perfNormalizeRate(Number(r.nightRate),Number(r.nightIn||0),Number(r.nightHandled||0)),
+    nightCph:Number(r.nightCph||0),
+    totalIn,totalHandled,totalRate:perfNormalizeRate(Number(r.totalRate),totalIn,totalHandled),
+    totalCph:Number(r.totalCph||0),note:String(r.note||"")
+  };
+}
+function perfFmtNum(v){const n=Number(v||0);return n===0?"-":n.toLocaleString("ko-KR")}
+function perfFmtPct(v){return !Number.isFinite(v)||Number(v)===0?"-":`${Number(v).toFixed(1)}%`}
+function perfFmtCph(v){return !Number.isFinite(v)||Number(v)===0?"-":Number(v).toFixed(1)}
+function perfWeightedCph(rows,key,weightKey){
+  let num=0,den=0;
+  rows.forEach(r=>{const v=Number(r[key]),w=Number(r[weightKey]||0);if(Number.isFinite(v)&&v>0&&w>0){num+=v*w;den+=w}});
+  return den?num/den:NaN;
+}
+function perfKpis(rows){
+  const totalIn=rows.reduce((a,r)=>a+Number(r.totalIn||0),0);
+  const totalHandled=rows.reduce((a,r)=>a+Number(r.totalHandled||0),0);
+  return {
+    totalIn,totalHandled,
+    responseRate:totalIn?totalHandled/totalIn*100:NaN,
+    cph:perfWeightedCph(rows,"totalCph","totalHandled")
+  };
+}
+function perfShiftYear(dateStr,delta){
+  const [y,m,d]=String(dateStr||"").split("-").map(Number);
+  if(!y) return "";
+  const dt=new Date(y+delta,m-1,d);
+  return perfDateStr(dt);
+}
+function perfShiftDays(dateStr,days){
+  const [y,m,d]=String(dateStr||"").split("-").map(Number);
+  if(!y) return "";
+  const dt=new Date(y,m-1,d);dt.setDate(dt.getDate()+days);return perfDateStr(dt);
+}
+function perfCompareDate(dateStr){
+  return $("perfCompareBasis")?.value==="sameDate"?perfShiftYear(dateStr,-1):perfShiftDays(dateStr,-364);
+}
+function perfCompareLabel(){return $("perfCompareBasis")?.value==="sameDate"?"전년동일":"요일보정"}
+function perfCurrentRows(){
+  const s=$("perfStartDate")?.value||"",e=$("perfEndDate")?.value||"";
+  return performanceDailyRows.filter(r=>(!s||r.date>=s)&&(!e||r.date<=e)).sort((a,b)=>a.date.localeCompare(b.date));
+}
+function perfPreviousRows(){
+  const s=$("perfStartDate")?.value||"",e=$("perfEndDate")?.value||"";
+  if(!s||!e) return [];
+  const ps=perfCompareDate(s),pe=perfCompareDate(e);
+  return performanceDailyRows.filter(r=>r.date>=ps&&r.date<=pe).sort((a,b)=>a.date.localeCompare(b.date));
+}
+function perfYoyPct(cur,prev){
+  if(!Number.isFinite(cur)||!Number.isFinite(prev)||prev===0) return {text:"-",cls:"neutral"};
+  const v=(cur-prev)/prev*100;
+  return {text:`${v>0?"▲ ":v<0?"▼ ":""}${Math.abs(v).toFixed(1)}%`,cls:v>0?"up":v<0?"down":"neutral"};
+}
+function perfYoyPoint(cur,prev,suffix="%p"){
+  if(!Number.isFinite(cur)||!Number.isFinite(prev)) return {text:"-",cls:"neutral"};
+  const v=cur-prev;
+  return {text:`${v>0?"▲ ":v<0?"▼ ":""}${Math.abs(v).toFixed(1)}${suffix}`,cls:v>0?"up":v<0?"down":"neutral"};
+}
+function perfSetCompare(id,obj,hasPrev){
+  const el=$(id); if(!el) return;
+  el.textContent=hasPrev?obj.text:"-"; el.className=hasPrev?obj.cls:"neutral";
+}
+async function performanceDailyLoad(force=false){
+  if(currentRole!=="admin") return;
+  if(performanceDailyLoaded&&!force) return;
+  const snap=await getDocs(collection(firestore,PERFORMANCE_DAILY_COLLECTION));
+  performanceDailyRows=snap.docs.map(d=>perfNormalizeRow({date:d.id,...d.data()})).filter(r=>r.date).sort((a,b)=>a.date.localeCompare(b.date));
+  performanceDailyLoaded=true;
+}
+function perfSetLatestYearRange(){
+  if(!performanceDailyRows.length) return;
+  const latest=performanceDailyRows.at(-1).date;
+  const y=latest.slice(0,4);
+  const yr=performanceDailyRows.filter(r=>r.date.startsWith(y+"-"));
+  $("perfStartDate").value=yr[0]?.date||`${y}-01-01`;
+  $("perfEndDate").value=latest;
+}
+function perfSetLatestMonthRange(){
+  if(!performanceDailyRows.length) return;
+  const latest=performanceDailyRows.at(-1).date;
+  const ym=latest.slice(0,7);
+  const rows=performanceDailyRows.filter(r=>r.date.startsWith(ym+"-"));
+  $("perfStartDate").value=rows[0]?.date||`${ym}-01`;
+  $("perfEndDate").value=rows.at(-1)?.date||latest;
+}
+function perfSetLast7Range(){
+  if(!performanceDailyRows.length) return;
+  const latest=performanceDailyRows.at(-1).date;
+  $("perfEndDate").value=latest;
+  $("perfStartDate").value=perfShiftDays(latest,-6);
+}
+function perfRenderTrend(rows){
+  const canvas=$("perfInboundTrend");
+  if(!canvas||typeof Chart==="undefined") return;
+  const map=new Map(performanceDailyRows.map(r=>[r.date,r]));
+  const labels=rows.map(r=>({date:r.date,label:r.date.slice(5).replace("-","/"),weekday:perfWeekday(r.date),holiday:PERF_HOLIDAYS[r.date]||""}));
+  const cur=rows.map(r=>Number(r.totalIn||0));
+  const prev=rows.map(r=>{const x=map.get(perfCompareDate(r.date));return x?Number(x.totalIn||0):null});
+  if(performanceDailyChart) performanceDailyChart.destroy();
+  performanceDailyChart=new Chart(canvas,{
+    type:"line",
+    data:{labels,datasets:[
+      {label:`${$("perfStartDate")?.value?.slice(0,4)||"올해"} 총 인입`,data:cur,borderWidth:2.3,pointRadius:2.2,pointHoverRadius:4,tension:.25,fill:false},
+      {label:"전년 총 인입",data:prev,borderWidth:1.8,borderDash:[5,4],pointRadius:0,pointHoverRadius:4,tension:.25,fill:false,spanGaps:true}
+    ]},
+    options:{
+      responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+      plugins:{
+        legend:{position:"top",align:"end",labels:{usePointStyle:true,boxWidth:8,font:{size:10,weight:"700"},color:"#52657c"}},
+        tooltip:{callbacks:{
+          title:(items)=>{
+            const idx=items?.[0]?.dataIndex??-1,curDate=rows[idx]?.date||"",prevDate=curDate?perfCompareDate(curDate):"";
+            const hol=curDate?(PERF_HOLIDAYS[curDate]||""):"";
+            return curDate?`${curDate}(${perfWeekday(curDate)})${hol?` · ${hol}`:""} | 비교 ${prevDate}`:"";
+          },
+          label:(ctx)=>`${ctx.dataset.label}: ${ctx.parsed.y===null?"-":Number(ctx.parsed.y).toLocaleString("ko-KR")+"건"}`
+        }}
+      },
+      scales:{
+        x:{grid:{display:false},ticks:{
+          color:(ctx)=>{const x=labels[ctx.index];if(!x)return"#718398";if(x.holiday)return"#c49100";if(x.weekday==="일")return"#ef3340";if(x.weekday==="토")return"#1267de";return"#718398"},
+          font:{size:9,weight:"700"},maxRotation:45,minRotation:45,autoSkip:true,maxTicksLimit:18,
+          callback:(value,index)=>{const x=labels[index];return x?[x.label,`(${x.weekday})`]:value}
+        }},
+        y:{beginAtZero:true,grid:{color:"#edf1f5"},ticks:{color:"#718398",font:{size:9},callback:v=>Number(v).toLocaleString("ko-KR")}}
+      }
+    }
+  });
+}
+function performanceDailyRender(){
+  if(currentRole!=="admin") return;
+  const rows=perfCurrentRows(),prevRows=perfPreviousRows();
+  const k=perfKpis(rows),pk=perfKpis(prevRows),hasPrev=prevRows.length>0;
+  $("perfKpiIn").textContent=rows.length?`${k.totalIn.toLocaleString("ko-KR")}건`:"-";
+  $("perfKpiHandled").textContent=rows.length?`${k.totalHandled.toLocaleString("ko-KR")}건`:"-";
+  $("perfKpiRate").textContent=rows.length&&Number.isFinite(k.responseRate)?`${k.responseRate.toFixed(1)}%`:"-";
+  $("perfKpiCph").textContent=rows.length&&Number.isFinite(k.cph)?k.cph.toFixed(1):"-";
+  $("perfKpiInPrev").textContent=hasPrev?`${pk.totalIn.toLocaleString("ko-KR")}건`:"-";
+  $("perfKpiHandledPrev").textContent=hasPrev?`${pk.totalHandled.toLocaleString("ko-KR")}건`:"-";
+  $("perfKpiRatePrev").textContent=hasPrev&&Number.isFinite(pk.responseRate)?`${pk.responseRate.toFixed(1)}%`:"-";
+  $("perfKpiCphPrev").textContent=hasPrev&&Number.isFinite(pk.cph)?pk.cph.toFixed(1):"-";
+  perfSetCompare("perfKpiInYoy",perfYoyPct(k.totalIn,pk.totalIn),hasPrev);
+  perfSetCompare("perfKpiHandledYoy",perfYoyPct(k.totalHandled,pk.totalHandled),hasPrev);
+  perfSetCompare("perfKpiRateYoy",perfYoyPoint(k.responseRate,pk.responseRate,"%p"),hasPrev);
+  perfSetCompare("perfKpiCphYoy",perfYoyPoint(k.cph,pk.cph,""),hasPrev);
+
+  const s=$("perfStartDate")?.value||"",e=$("perfEndDate")?.value||"";
+  const ps=s?perfCompareDate(s):"",pe=e?perfCompareDate(e):"";
+  $("perfTopStatus").textContent=`저장 ${performanceDailyRows.length}일 · 조회 ${rows.length}일 · ${perfCompareLabel()} 비교 ${prevRows.length}일`;
+  $("perfPeriodLabel").textContent=s&&e?`조회기간 ${s} ~ ${e} · ${rows.length}일 | ${perfCompareLabel()} 비교기간 ${ps} ~ ${pe}`:"조회기간을 선택해 주세요.";
+  $("perfTrendLabel").textContent=`총 인입건수 · 올해 / 전년 · ${perfCompareLabel()}`;
+
+  const body=$("perfDailyBody");
+  if(!rows.length){
+    body.innerHTML='<tr><td colspan="15" class="perf-empty">선택기간에 등록된 일일현황 데이터가 없습니다.</td></tr>';
+  }else{
+    body.innerHTML=rows.map(r=>{
+      const hol=PERF_HOLIDAYS[r.date]||"";
+      return `<tr class="${perfRowClass(r.date)}">
+        <td class="perf-date-cell">${r.date}</td>
+        <td class="perf-weekday"><span class="perf-weekday-badge">${perfWeekday(r.date)}</span></td>
+        <td>${perfFmtNum(r.dayIn)}</td><td>${perfFmtNum(r.dayHandled)}</td><td class="perf-rate">${perfFmtPct(r.dayRate)}</td><td class="perf-cph">${perfFmtCph(r.dayCph)}</td>
+        <td>${perfFmtNum(r.nightIn)}</td><td>${perfFmtNum(r.nightHandled)}</td><td class="perf-rate">${perfFmtPct(r.nightRate)}</td><td class="perf-cph">${perfFmtCph(r.nightCph)}</td>
+        <td class="perf-total-metric">${perfFmtNum(r.totalIn)}</td><td class="perf-total-metric">${perfFmtNum(r.totalHandled)}</td><td class="perf-total-metric perf-rate">${perfFmtPct(r.totalRate)}</td><td class="perf-total-metric perf-cph">${perfFmtCph(r.totalCph)}</td>
+        <td class="perf-note">${r.note||"-"}${hol?`<span class="perf-holiday-name">${hol}</span>`:""}</td>
+      </tr>`;
+    }).join("");
+  }
+  perfRenderTrend(rows);
+}
+window.performanceDailyOpen=async function(){
+  if(currentRole!=="admin") return;
+  try{
+    await performanceDailyLoad();
+    if(performanceDailyRows.length && (!$("perfStartDate").value||!$("perfEndDate").value)) perfSetLatestYearRange();
+    performanceDailyRender();
+  }catch(err){
+    console.error(err);
+    $("perfTopStatus").textContent="일일현황 데이터 조회 실패: "+(err?.message||err);
+  }
+};
+
+async function performanceDailyUpload(file){
+  if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
+  if(!file) return;
+  const status=$("performanceDailyStatus");
+  status.textContent="Excel 읽는 중...";
+  try{
+    const buf=await file.arrayBuffer();
+    const wb=XLSX.read(buf,{type:"array",cellDates:false});
+    const parsed=[],sheetSummary=[];
+    wb.SheetNames.forEach(sheetName=>{
+      const ws=wb.Sheets[sheetName];
+      const a=XLSX.utils.sheet_to_json(ws,{header:1,defval:"",raw:true});
+      if(a.length<3) return;
+      const ym=String(sheetName).match(/(20\d{2})/),yearHint=ym?ym[1]:"";
+      let count=0;
+      for(let i=2;i<a.length;i++){
+        const r=a[i],date=perfParseDate(r[0],yearHint);
+        if(!date) continue;
+        const dayIn=perfToNum(r[2]),dayHandled=perfToNum(r[3]),nightIn=perfToNum(r[6]),nightHandled=perfToNum(r[7]);
+        const hasTotalIn=r[10]!==""&&r[10]!==null&&r[10]!==undefined;
+        const hasTotalHandled=r[11]!==""&&r[11]!==null&&r[11]!==undefined;
+        parsed.push(perfNormalizeRow({
+          date,
+          dayIn,dayHandled,dayRate:perfParseRate(r[4]),dayCph:perfToNum(r[5]),
+          nightIn,nightHandled,nightRate:perfParseRate(r[8]),nightCph:perfToNum(r[9]),
+          totalIn:hasTotalIn?perfToNum(r[10]):dayIn+nightIn,
+          totalHandled:hasTotalHandled?perfToNum(r[11]):dayHandled+nightHandled,
+          totalRate:perfParseRate(r[12]),totalCph:perfToNum(r[13]),
+          note:String(r[14]||"").trim(),sourceSheet:sheetName
+        }));
+        count++;
+      }
+      if(count) sheetSummary.push(`${sheetName} ${count}일`);
+    });
+    if(!parsed.length) throw new Error("유효한 일자 데이터가 없습니다. 2단 헤더 양식을 확인해 주세요.");
+
+    const dedup=new Map(); parsed.forEach(r=>dedup.set(r.date,r));
+    const rows=[...dedup.values()].sort((a,b)=>a.date.localeCompare(b.date));
+    const existingSnap=await getDocs(collection(firestore,PERFORMANCE_DAILY_COLLECTION));
+    const existing=new Map(existingSnap.docs.map(d=>[d.id,d.data()]));
+    const changed=rows.filter(r=>{
+      const old=existing.get(r.date);
+      if(!old) return true;
+      const a={...r}; delete a.date;
+      const b={...old}; delete b.updatedAt; delete b.uploadedBy;
+      return JSON.stringify(a)!==JSON.stringify(b);
+    });
+
+    for(let i=0;i<changed.length;i+=400){
+      const batch=writeBatch(firestore);
+      changed.slice(i,i+400).forEach(r=>{
+        const payload={...r,updatedAt:new Date().toISOString(),uploadedBy:currentUser?.email||""};
+        delete payload.date;
+        batch.set(doc(firestore,PERFORMANCE_DAILY_COLLECTION,r.date),payload,{merge:true});
+      });
+      await batch.commit();
+    }
+    performanceDailyLoaded=false;
+    await performanceDailyLoad(true);
+    perfSetLatestYearRange();
+    performanceDailyRender();
+    status.textContent=`등록 완료: ${sheetSummary.join(" · ")} · 전체 ${rows.length}일 · Firestore 신규/변경 ${changed.length}일`;
+  }catch(err){
+    console.error(err);
+    status.textContent="등록 실패: "+(err?.message||err);
+  }
+}
+function performanceDailySample(){
+  const h1=["일자","요일","주간(소싱)","","","","야간(소싱+본사)","","","","총합","","","","비고"];
+  const h2=["","","인입","처리","응답률","CPH","인입","처리","응답률","CPH","인입","처리","응답률","CPH",""];
+  const makeSheet=(year)=>{
+    const rows=[h1,h2,[`${year}-09-01`,"화",676,664,0.982,8.1,234,229,0.979,7.2,910,893,0.981,7.8,""]];
+    const ws=XLSX.utils.aoa_to_sheet(rows);
+    ["E3","I3","M3"].forEach(c=>{if(ws[c])ws[c].z="0.0%"});
+    ws["!merges"]=[
+      XLSX.utils.decode_range("A1:A2"),XLSX.utils.decode_range("B1:B2"),
+      XLSX.utils.decode_range("C1:F1"),XLSX.utils.decode_range("G1:J1"),
+      XLSX.utils.decode_range("K1:N1"),XLSX.utils.decode_range("O1:O2")
+    ];
+    return ws;
+  };
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,makeSheet(2025),"2025");
+  XLSX.utils.book_append_sheet(wb,makeSheet(2026),"2026");
+  XLSX.writeFile(wb,"운영성과_일일현황_연도별_샘플.xlsx");
+}
+$("performanceDailyFile")?.addEventListener("change",e=>performanceDailyUpload(e.target.files?.[0]));
+$("performanceDailySampleBtn")?.addEventListener("click",performanceDailySample);
+$("perfSearchBtn")?.addEventListener("click",performanceDailyRender);
+$("perfCompareBasis")?.addEventListener("change",performanceDailyRender);
+$("perfLast7Btn")?.addEventListener("click",()=>{perfSetLast7Range();performanceDailyRender()});
+$("perfYearBtn")?.addEventListener("click",()=>{perfSetLatestYearRange();performanceDailyRender()});
+$("perfMonthBtn")?.addEventListener("click",()=>{perfSetLatestMonthRange();performanceDailyRender()});
+
+
 const ACCESS_COLLECTION="dashboardAccess";
 const normalizeEmail=email=>String(email||"").trim().toLowerCase();
 const accessRef=email=>doc(firestore,ACCESS_COLLECTION,normalizeEmail(email));
@@ -9696,7 +10224,7 @@ function applyRoleUI(){
   }
   if($("sessionEmail")) $("sessionEmail").textContent=currentUser?.email||"-";
   if($("adminUserText") && currentUser) $("adminUserText").textContent=`로그인: ${currentUser.email} · ${isAdmin?"관리자":"일반"}`;
-  if(!isAdmin && document.getElementById("admin")?.classList.contains("active")){
+  if(!isAdmin && (document.getElementById("admin")?.classList.contains("active") || document.getElementById("performanceDaily")?.classList.contains("active"))){
     document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
     document.getElementById("overview")?.classList.add("active");
     document.querySelectorAll('.menu button[data-target]').forEach(x=>x.classList.toggle('active',x.dataset.target==='overview'));
