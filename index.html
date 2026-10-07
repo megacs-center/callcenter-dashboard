@@ -2539,6 +2539,72 @@ tr.saturday .perf-weekday-badge{background:#e3f1ff;color:#2672bb}tr.sunday .perf
 @media(max-width:1050px){.perf-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.performance-daily-head{flex-direction:column}.performance-daily-filters{justify-content:flex-start}}
 @media(max-width:650px){.perf-kpis{grid-template-columns:1fr}}
 
+
+/* v129 일일현황 색상 보정 */
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday) td:first-child,
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday) td:nth-child(2){
+  background:#f8fafc !important;
+}
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday) .perf-total-metric{
+  background:#f3faf7 !important;
+}
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday) .perf-note{
+  background:#fbfcfe !important;
+}
+
+.perf-daily-table tbody tr.saturday td,
+.perf-daily-table tbody tr.saturday td:first-child,
+.perf-daily-table tbody tr.saturday td:nth-child(2),
+.perf-daily-table tbody tr.saturday .perf-total-metric,
+.perf-daily-table tbody tr.saturday .perf-note{
+  background:#eef7ff !important;
+}
+
+.perf-daily-table tbody tr.sunday td,
+.perf-daily-table tbody tr.sunday td:first-child,
+.perf-daily-table tbody tr.sunday td:nth-child(2),
+.perf-daily-table tbody tr.sunday .perf-total-metric,
+.perf-daily-table tbody tr.sunday .perf-note{
+  background:#fff1f1 !important;
+}
+
+.perf-daily-table tbody tr.holiday td,
+.perf-daily-table tbody tr.holiday td:first-child,
+.perf-daily-table tbody tr.holiday td:nth-child(2),
+.perf-daily-table tbody tr.holiday .perf-total-metric,
+.perf-daily-table tbody tr.holiday .perf-note{
+  background:#fff8df !important;
+}
+
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday):hover td,
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday):hover .perf-total-metric,
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday):hover .perf-note{
+  background:#f4f8fd !important;
+}
+.perf-daily-table tbody tr.saturday:hover td,
+.perf-daily-table tbody tr.saturday:hover .perf-total-metric,
+.perf-daily-table tbody tr.saturday:hover .perf-note{
+  background:#e5f2ff !important;
+}
+.perf-daily-table tbody tr.sunday:hover td,
+.perf-daily-table tbody tr.sunday:hover .perf-total-metric,
+.perf-daily-table tbody tr.sunday:hover .perf-note{
+  background:#ffe9e9 !important;
+}
+.perf-daily-table tbody tr.holiday:hover td,
+.perf-daily-table tbody tr.holiday:hover .perf-total-metric,
+.perf-daily-table tbody tr.holiday:hover .perf-note{
+  background:#fff2c9 !important;
+}
+
+.perf-daily-table .perf-total-metric{
+  font-weight:950;
+  color:#163e68 !important;
+}
+.perf-daily-table .perf-note{
+  color:#5b6e83 !important;
+}
+
 </style>
 
 <style>
@@ -10016,8 +10082,34 @@ function perfRenderTrend(rows){
   performanceDailyChart=new Chart(canvas,{
     type:"line",
     data:{labels,datasets:[
-      {label:`${$("perfStartDate")?.value?.slice(0,4)||"올해"} 총 인입`,data:cur,borderWidth:2.3,pointRadius:2.2,pointHoverRadius:4,tension:.25,fill:false},
-      {label:"전년 총 인입",data:prev,borderWidth:1.8,borderDash:[5,4],pointRadius:0,pointHoverRadius:4,tension:.25,fill:false,spanGaps:true}
+      {
+        label:`${$("perfStartDate")?.value?.slice(0,4)||"올해"} 총 인입`,
+        data:cur,
+        borderColor:"#2E86FF",
+        backgroundColor:"#2E86FF",
+        pointBackgroundColor:"#2E86FF",
+        pointBorderColor:"#2E86FF",
+        borderWidth:2.5,
+        pointRadius:2.3,
+        pointHoverRadius:4.5,
+        tension:.25,
+        fill:false
+      },
+      {
+        label:"전년 총 인입",
+        data:prev,
+        borderColor:"#FF6B6B",
+        backgroundColor:"#FF6B6B",
+        pointBackgroundColor:"#FF6B6B",
+        pointBorderColor:"#FF6B6B",
+        borderWidth:2,
+        borderDash:[6,4],
+        pointRadius:1.6,
+        pointHoverRadius:4,
+        tension:.25,
+        fill:false,
+        spanGaps:true
+      }
     ]},
     options:{
       responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
