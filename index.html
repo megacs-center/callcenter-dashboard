@@ -2605,6 +2605,41 @@ tr.saturday .perf-weekday-badge{background:#e3f1ff;color:#2672bb}tr.sunday .perf
   color:#5b6e83 !important;
 }
 
+
+/* v130 총합 고정 배경 제거: 행 색상과 동일하게 */
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday) .perf-total-metric{
+  background:#fff !important;
+}
+.perf-daily-table tbody tr.saturday .perf-total-metric{
+  background:#eef7ff !important;
+}
+.perf-daily-table tbody tr.sunday .perf-total-metric{
+  background:#fff1f1 !important;
+}
+.perf-daily-table tbody tr.holiday .perf-total-metric{
+  background:#fff8df !important;
+}
+
+/* 비고도 동일한 행 배경을 그대로 따름 */
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday) .perf-note{
+  background:#fff !important;
+}
+.perf-daily-table tbody tr.saturday .perf-note{
+  background:#eef7ff !important;
+}
+.perf-daily-table tbody tr.sunday .perf-note{
+  background:#fff1f1 !important;
+}
+.perf-daily-table tbody tr.holiday .perf-note{
+  background:#fff8df !important;
+}
+
+/* hover도 행 전체 동일 */
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday):hover .perf-total-metric,
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday):hover .perf-note{
+  background:#f4f8fd !important;
+}
+
 </style>
 
 <style>
