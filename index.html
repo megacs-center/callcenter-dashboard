@@ -2640,6 +2640,206 @@ tr.saturday .perf-weekday-badge{background:#e3f1ff;color:#2672bb}tr.sunday .perf
   background:#f4f8fd !important;
 }
 
+
+/* v131 성수기 / 비수기 분석 */
+.perf-season-card{overflow:hidden;margin-bottom:12px}
+.perf-season-head{align-items:flex-start}
+.perf-season-rule{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.perf-season-rule span{font-size:9px;font-weight:900;border-radius:999px;padding:4px 7px;border:1px solid transparent;white-space:nowrap}
+.perf-season-rule .peak{background:#fff0f0;color:#d23b3b;border-color:#ffd1d1}
+.perf-season-rule .semi{background:#fff6e8;color:#b96a00;border-color:#ffe0ad}
+.perf-season-rule .normal{background:#f4f6f9;color:#66758a;border-color:#e3e8ef}
+.perf-season-rule .low{background:#edf5ff;color:#1767d9;border-color:#cfe2ff}
+.perf-season-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(320px,.8fr);gap:12px;padding:12px 14px 10px}
+.perf-season-chartbox{height:270px;min-width:0}
+.perf-season-summary{border:1px solid #e4eaf1;border-radius:10px;padding:10px;background:#fbfcfe;min-width:0}
+.perf-season-summary-title{font-size:11px;font-weight:900;color:#34506d;margin-bottom:8px}
+.perf-season-summary-grid{display:grid;grid-template-columns:1fr;gap:7px}
+.perf-season-mini{border:1px solid #e4eaf1;border-radius:9px;background:#fff;padding:9px 10px}
+.perf-season-mini-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.perf-season-mini-title{font-size:10.5px;font-weight:950;color:#284561}
+.perf-season-mini-count{font-size:9px;color:#7b8b9d}
+.perf-season-mini-values{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.perf-season-mini-values span{display:block;font-size:8.5px;color:#8a98a8;margin-bottom:2px}
+.perf-season-mini-values b{display:block;font-size:10.5px;color:#263d57;white-space:nowrap}
+.perf-season-mini.peak{border-left:4px solid #ef5350}
+.perf-season-mini.semi{border-left:4px solid #f3a43b}
+.perf-season-mini.normal{border-left:4px solid #94a3b8}
+.perf-season-mini.low{border-left:4px solid #3b82f6}
+.perf-season-table-wrap{overflow:auto;border-top:1px solid #e8edf3}
+.perf-season-table{width:100%;border-collapse:separate;border-spacing:0;min-width:1500px;font-size:10px}
+.perf-season-table th{position:sticky;background:#f6f8fb;color:#4d6279;font-weight:900;text-align:center;padding:8px;border-right:1px solid #e1e7ee;border-bottom:1px solid #d9e1ea;white-space:nowrap}.perf-season-table thead tr:first-child th{top:0;z-index:5;background:#eef3f8}.perf-season-table thead tr:nth-child(2) th{top:34px;z-index:4;background:#f8fafc}
+.perf-season-table td{padding:8px;border-right:1px solid #edf1f5;border-bottom:1px solid #e8edf2;text-align:right;color:#31475e}
+.perf-season-table td:first-child,.perf-season-table td:nth-child(8),.perf-season-table td:nth-child(9){text-align:center;font-weight:900}
+.perf-season-table tr.peak td{background:#fff7f7}
+.perf-season-table tr.semi td{background:#fffaf2}
+.perf-season-table tr.normal td{background:#fff}
+.perf-season-table tr.low td{background:#f5f9ff}
+.perf-season-badge{display:inline-flex;align-items:center;justify-content:center;min-width:54px;padding:3px 7px;border-radius:999px;font-size:9px;font-weight:950}
+.perf-season-badge.peak{background:#ffe5e5;color:#cf3e3e}
+.perf-season-badge.semi{background:#fff0d7;color:#ae6800}
+.perf-season-badge.normal{background:#eef1f5;color:#68778b}
+.perf-season-badge.low{background:#e4f0ff;color:#1767d9}
+.perf-season-diff.up{color:#ef3340;font-weight:900}
+.perf-season-diff.down{color:#1267de;font-weight:900}
+@media(max-width:1100px){.perf-season-grid{grid-template-columns:1fr}.perf-season-summary-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.perf-season-summary-grid{grid-template-columns:1fr}}
+
+
+/* v132 월별 수요 강도: 표 전년비교 */
+.perf-season-table th small{
+  display:block;
+  margin-top:3px;
+  color:#8a98a8;
+  font-size:8px;
+  font-weight:700;
+}
+.perf-season-compare-cell{
+  line-height:1.25;
+  text-align:right;
+}
+.perf-season-compare-cell .cur{
+  display:block;
+  color:#243e59;
+  font-weight:900;
+  white-space:nowrap;
+}
+.perf-season-compare-cell .prev{
+  display:block;
+  margin-top:3px;
+  color:#7a899a;
+  font-size:9px;
+  white-space:nowrap;
+}
+.perf-season-compare-cell .chg{
+  display:block;
+  margin-top:2px;
+  font-size:9px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.perf-season-compare-cell .chg.up{color:#ef3340}
+.perf-season-compare-cell .chg.down{color:#1267de}
+.perf-season-compare-cell .chg.neutral{color:#718096}
+.perf-season-class-stack{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+.perf-season-prev-label{
+  font-size:8.5px;
+  color:#8492a4;
+  font-weight:800;
+}
+
+
+/* v134 월별 수요강도 그룹형 표 */
+.perf-season-table td{white-space:nowrap}
+.perf-season-table td:nth-child(4),
+.perf-season-table td:nth-child(7),
+.perf-season-table td:nth-child(9),
+.perf-season-table td:nth-child(12),
+.perf-season-table td:nth-child(15),
+.perf-season-table td:nth-child(18){
+  border-right:2px solid #c3d0de;
+}
+.perf-season-table thead tr:first-child th:not(:last-child){
+  border-right:2px solid #c3d0de;
+}
+.perf-season-table thead tr:nth-child(2) th:nth-child(3),
+.perf-season-table thead tr:nth-child(2) th:nth-child(6),
+.perf-season-table thead tr:nth-child(2) th:nth-child(8),
+.perf-season-table thead tr:nth-child(2) th:nth-child(11),
+.perf-season-table thead tr:nth-child(2) th:nth-child(14),
+.perf-season-table thead tr:nth-child(2) th:nth-child(17){
+  border-right:2px solid #c3d0de;
+}
+.perf-season-table tbody tr.total-row td{
+  background:#f3f6fa !important;
+  font-weight:900;
+  border-top:2px solid #aebdce;
+  border-bottom:2px solid #aebdce;
+}
+.perf-season-table tbody tr.total-row td:first-child{
+  color:#17324d;
+}
+.perf-season-table .season-up{color:#ef3340;font-weight:900}
+.perf-season-table .season-down{color:#1267de;font-weight:900}
+.perf-season-table .season-neutral{color:#718096;font-weight:800}
+
+
+/* v136 월별 수요강도 표 테두리 = 일일 현황 표 기준 */
+.perf-season-table{
+  border-collapse:separate;
+  border-spacing:0;
+}
+.perf-season-table th{
+  border-right:1px solid #dde5ed !important;
+  border-bottom:1px solid #d9e2ec !important;
+}
+.perf-season-table td{
+  border-right:1px solid #edf1f5 !important;
+  border-bottom:1px solid #e8edf2 !important;
+}
+/* 기존 굵은 그룹 구분선 제거 */
+.perf-season-table td:nth-child(4),
+.perf-season-table td:nth-child(7),
+.perf-season-table td:nth-child(9),
+.perf-season-table td:nth-child(12),
+.perf-season-table td:nth-child(15),
+.perf-season-table td:nth-child(18),
+.perf-season-table thead tr:first-child th:not(:last-child),
+.perf-season-table thead tr:nth-child(2) th:nth-child(3),
+.perf-season-table thead tr:nth-child(2) th:nth-child(6),
+.perf-season-table thead tr:nth-child(2) th:nth-child(8),
+.perf-season-table thead tr:nth-child(2) th:nth-child(11),
+.perf-season-table thead tr:nth-child(2) th:nth-child(14),
+.perf-season-table thead tr:nth-child(2) th:nth-child(17){
+  border-right:1px solid #dde5ed !important;
+}
+
+
+/* v137 월/올해 헤더 선 위치 보정 */
+.perf-season-table thead tr:first-child th{
+  height:34px;
+  box-sizing:border-box;
+  vertical-align:middle;
+}
+.perf-season-table thead tr:nth-child(2) th{
+  top:34px;
+  height:32px;
+  box-sizing:border-box;
+  vertical-align:middle;
+}
+/* '월'은 2행 병합이므로 중간 가로선이 지나가지 않도록 전체 높이 기준으로 처리 */
+.perf-season-table thead tr:first-child th[rowspan="2"]{
+  height:66px;
+  vertical-align:middle;
+  border-bottom:1px solid #d9e2ec !important;
+}
+/* 일평균 인입 > 올해 시작선과 월 우측선 정확히 일치 */
+.perf-season-table thead tr:first-child th[rowspan="2"],
+.perf-season-table tbody td:first-child{
+  border-right:1px solid #dde5ed !important;
+}
+.perf-season-table thead tr:nth-child(2) th:first-child{
+  border-left:0 !important;
+}
+
+
+/* v138 일일현황 기본 조회/평일 고정열 수정 */
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday) td:first-child,
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday) td:nth-child(2){
+  background:#fff !important;
+}
+/* 평일 요일 배지도 회색 면 대신 흰색 + 얇은 테두리 */
+.perf-daily-table tbody tr:not(.saturday):not(.sunday):not(.holiday) .perf-weekday-badge{
+  background:#fff !important;
+  border:1px solid #e2e8f0;
+  color:#51667e;
+}
+
 </style>
 
 <style>
@@ -4052,6 +4252,58 @@ tbody tr:hover{background:#fbfdff}
           </thead>
           <tbody id="perfDailyBody">
             <tr><td colspan="15" class="perf-empty">관리자에서 Excel 데이터를 등록해 주세요.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card perf-season-card">
+      <div class="perf-card-head perf-season-head">
+        <div>
+          <h3>월별 수요 강도 분석</h3>
+          <div class="sub" id="perfSeasonSub">월별 일평균 인입을 연간 일평균과 비교해 성수기·비수기를 분류하고 전년과 비교합니다.</div>
+        </div>
+        <div class="perf-season-rule">
+          <span class="peak">성수기 ≥ +15%</span>
+          <span class="semi">준성수기 +5~15%</span>
+          <span class="normal">평시</span>
+          <span class="low">비수기 ≤ -10%</span>
+        </div>
+      </div>
+
+      <div class="perf-season-grid">
+        <div class="perf-season-chartbox">
+          <canvas id="perfSeasonChart"></canvas>
+        </div>
+        <div class="perf-season-summary">
+          <div class="perf-season-summary-title">구간별 평균</div>
+          <div class="perf-season-summary-grid" id="perfSeasonSummary"></div>
+        </div>
+      </div>
+
+      <div class="perf-season-table-wrap">
+        <table class="perf-season-table">
+          <thead>
+            <tr>
+              <th rowspan="2">월</th>
+              <th colspan="3">일평균 인입</th>
+              <th colspan="3">연평균 대비</th>
+              <th colspan="2">구분</th>
+              <th colspan="3">일평균 처리</th>
+              <th colspan="3">응답률</th>
+              <th colspan="3">CPH</th>
+            </tr>
+            <tr>
+              <th>올해</th><th>전년</th><th>증감</th>
+              <th>올해</th><th>전년</th><th>증감</th>
+              <th>올해</th><th>전년</th>
+              <th>올해</th><th>전년</th><th>증감</th>
+              <th>올해</th><th>전년</th><th>증감</th>
+              <th>올해</th><th>전년</th><th>증감</th>
+            </tr>
+          </thead>
+          <tbody id="perfSeasonBody">
+            <tr><td colspan="18" class="perf-empty">일일현황 데이터 등록 후 분석됩니다.</td></tr>
           </tbody>
         </table>
       </div>
@@ -10170,6 +10422,250 @@ function perfRenderTrend(rows){
     }
   });
 }
+
+let performanceSeasonChart=null;
+
+function perfSeasonClass(diffPct){
+  if(diffPct>=15) return {key:"peak",label:"성수기"};
+  if(diffPct>=5) return {key:"semi",label:"준성수기"};
+  if(diffPct<=-10) return {key:"low",label:"비수기"};
+  return {key:"normal",label:"평시"};
+}
+function perfSeasonMetrics(rows){
+  const days=rows.length;
+  const totalIn=rows.reduce((a,r)=>a+Number(r.totalIn||0),0);
+  const totalHandled=rows.reduce((a,r)=>a+Number(r.totalHandled||0),0);
+  return {
+    days,
+    avgIn:days?totalIn/days:0,
+    avgHandled:days?totalHandled/days:0,
+    rate:totalIn?totalHandled/totalIn*100:NaN,
+    cph:perfWeightedCph(rows,"totalCph","totalHandled")
+  };
+}
+function perfSeasonAnalysisYear(){
+  const start=$("perfStartDate")?.value||"";
+  if(start) return start.slice(0,4);
+  if(performanceDailyRows.length) return performanceDailyRows.at(-1).date.slice(0,4);
+  return "";
+}
+
+function perfSeasonYoyPct(cur,prev){
+  if(!Number.isFinite(cur)||!Number.isFinite(prev)||prev===0) return {text:"-",cls:"neutral"};
+  const v=(cur-prev)/prev*100;
+  return {text:`${v>0?"▲":v<0?"▼":""} ${Math.abs(v).toFixed(1)}%`,cls:v>0?"up":v<0?"down":"neutral"};
+}
+function perfSeasonYoyPoint(cur,prev,suffix="%p"){
+  if(!Number.isFinite(cur)||!Number.isFinite(prev)) return {text:"-",cls:"neutral"};
+  const v=cur-prev;
+  return {text:`${v>0?"▲":v<0?"▼":""} ${Math.abs(v).toFixed(1)}${suffix}`,cls:v>0?"up":v<0?"down":"neutral"};
+}
+function perfSeasonCompareCell(curText,prevText,change){
+  return `<div class="perf-season-compare-cell">
+    <span class="cur">${curText}</span>
+    <span class="prev">전년 ${prevText}</span>
+    ${change?`<span class="chg ${change.cls}">${change.text}</span>`:""}
+  </div>`;
+}
+
+function perfRenderSeasonAnalysis(){
+  const body=$("perfSeasonBody"),summary=$("perfSeasonSummary"),sub=$("perfSeasonSub");
+  if(!body||!summary) return;
+
+  const year=perfSeasonAnalysisYear();
+  const prevYear=String(Number(year)-1);
+  const yearRows=performanceDailyRows.filter(r=>r.date.startsWith(year+"-")).sort((a,b)=>a.date.localeCompare(b.date));
+  const prevYearRows=performanceDailyRows.filter(r=>r.date.startsWith(prevYear+"-")).sort((a,b)=>a.date.localeCompare(b.date));
+
+  if(!year||!yearRows.length){
+    body.innerHTML='<tr><td colspan="18" class="perf-empty">분석할 연도 데이터가 없습니다.</td></tr>';
+    summary.innerHTML='';
+    if(performanceSeasonChart){performanceSeasonChart.destroy();performanceSeasonChart=null;}
+    return;
+  }
+
+  // 올해는 현재 보유 데이터 기준, 전년은 1~12월 전체 데이터를 그대로 사용
+  const annual=perfSeasonMetrics(yearRows);
+  const prevAnnual=perfSeasonMetrics(prevYearRows);
+  const months=[];
+
+  for(let m=1;m<=12;m++){
+    const mm=perfPad(m);
+    const ym=`${year}-${mm}`;
+    const pym=`${prevYear}-${mm}`;
+    const rows=yearRows.filter(r=>r.date.startsWith(ym+"-"));
+    const prevRows=prevYearRows.filter(r=>r.date.startsWith(pym+"-"));
+
+    const metrics=perfSeasonMetrics(rows);
+    const prevMetrics=perfSeasonMetrics(prevRows);
+
+    const diff=rows.length&&annual.avgIn?((metrics.avgIn/annual.avgIn)-1)*100:NaN;
+    const prevDiff=prevRows.length&&prevAnnual.avgIn?((prevMetrics.avgIn/prevAnnual.avgIn)-1)*100:NaN;
+
+    const cls=Number.isFinite(diff)?perfSeasonClass(diff):{key:"normal",label:"-"};
+    const prevCls=Number.isFinite(prevDiff)?perfSeasonClass(prevDiff):{key:"normal",label:"-"};
+
+    months.push({
+      month:m,ym,pym,rows,prevRows,metrics,prevMetrics,diff,prevDiff,
+      key:cls.key,label:cls.label,prevKey:prevCls.key,prevLabel:prevCls.label
+    });
+  }
+
+  if(sub){
+    sub.textContent=`${year}년 월별 분석 · ${prevYear}년 1~12월 표시 · 총합계는 전년 동일기간 비교`;
+  }
+
+  const diffCell=(obj)=>{
+    if(!obj) return '<span class="season-neutral">-</span>';
+    const cls=obj.cls==="up"?"season-up":obj.cls==="down"?"season-down":"season-neutral";
+    return `<span class="${cls}">${obj.text}</span>`;
+  };
+
+  const rowHtml=(x)=>{
+    const currentAvailable=x.rows.length>0;
+    const prevAvailable=x.prevRows.length>0;
+    const inYoy=currentAvailable&&prevAvailable?perfSeasonYoyPct(x.metrics.avgIn,x.prevMetrics.avgIn):null;
+    const handledYoy=currentAvailable&&prevAvailable?perfSeasonYoyPct(x.metrics.avgHandled,x.prevMetrics.avgHandled):null;
+    const rateYoy=currentAvailable&&prevAvailable?perfSeasonYoyPoint(x.metrics.rate,x.prevMetrics.rate,"%p"):null;
+    const cphYoy=currentAvailable&&prevAvailable?perfSeasonYoyPoint(x.metrics.cph,x.prevMetrics.cph,""):null;
+    const annualDiffYoy=currentAvailable&&prevAvailable&&Number.isFinite(x.diff)&&Number.isFinite(x.prevDiff)
+      ? perfSeasonYoyPoint(x.diff,x.prevDiff,"%p")
+      : null;
+    const rowClass=x.rowClass || (currentAvailable?x.key:(prevAvailable?x.prevKey:"normal"));
+    const monthLabel=x.monthLabel || `${x.month}월`;
+
+    return `<tr class="${rowClass}">
+      <td>${monthLabel}</td>
+
+      <td>${currentAvailable?Math.round(x.metrics.avgIn).toLocaleString("ko-KR")+"건":"-"}</td>
+      <td>${prevAvailable?Math.round(x.prevMetrics.avgIn).toLocaleString("ko-KR")+"건":"-"}</td>
+      <td>${diffCell(inYoy)}</td>
+
+      <td>${currentAvailable&&Number.isFinite(x.diff)?`${x.diff>=0?"+":""}${x.diff.toFixed(1)}%`:"-"}</td>
+      <td>${prevAvailable&&Number.isFinite(x.prevDiff)?`${x.prevDiff>=0?"+":""}${x.prevDiff.toFixed(1)}%`:"-"}</td>
+      <td>${diffCell(annualDiffYoy)}</td>
+
+      <td>${currentAvailable?(x.currentLabelHtml || `<span class="perf-season-badge ${x.key}">${x.label}</span>`):"-"}</td>
+      <td>${prevAvailable?(x.prevLabelHtml || `<span class="perf-season-badge ${x.prevKey}">${x.prevLabel}</span>`):"-"}</td>
+
+      <td>${currentAvailable?Math.round(x.metrics.avgHandled).toLocaleString("ko-KR")+"건":"-"}</td>
+      <td>${prevAvailable?Math.round(x.prevMetrics.avgHandled).toLocaleString("ko-KR")+"건":"-"}</td>
+      <td>${diffCell(handledYoy)}</td>
+
+      <td>${currentAvailable&&Number.isFinite(x.metrics.rate)?x.metrics.rate.toFixed(1)+"%":"-"}</td>
+      <td>${prevAvailable&&Number.isFinite(x.prevMetrics.rate)?x.prevMetrics.rate.toFixed(1)+"%":"-"}</td>
+      <td>${diffCell(rateYoy)}</td>
+
+      <td>${currentAvailable&&Number.isFinite(x.metrics.cph)?x.metrics.cph.toFixed(1):"-"}</td>
+      <td>${prevAvailable&&Number.isFinite(x.prevMetrics.cph)?x.prevMetrics.cph.toFixed(1):"-"}</td>
+      <td>${diffCell(cphYoy)}</td>
+    </tr>`;
+  };
+
+  body.innerHTML=months.map(rowHtml).join("");
+
+  const order=[
+    {key:"peak",label:"성수기"},
+    {key:"semi",label:"준성수기"},
+    {key:"normal",label:"평시"},
+    {key:"low",label:"비수기"}
+  ];
+
+  // 구간별 평균은 올해 실제 데이터가 있는 월만 계산
+  summary.innerHTML=order.map(g=>{
+    const monthSet=new Set(months.filter(x=>x.rows.length&&x.key===g.key).map(x=>x.ym));
+    const rows=yearRows.filter(r=>monthSet.has(r.date.slice(0,7)));
+    const m=perfSeasonMetrics(rows);
+    return `<div class="perf-season-mini ${g.key}">
+      <div class="perf-season-mini-head">
+        <div class="perf-season-mini-title">${g.label}</div>
+        <div class="perf-season-mini-count">${monthSet.size}개월</div>
+      </div>
+      <div class="perf-season-mini-values">
+        <div><span>일평균 인입</span><b>${m.days?Math.round(m.avgIn).toLocaleString("ko-KR")+"건":"-"}</b></div>
+        <div><span>일평균 처리</span><b>${m.days?Math.round(m.avgHandled).toLocaleString("ko-KR")+"건":"-"}</b></div>
+        <div><span>응답률</span><b>${m.days&&Number.isFinite(m.rate)?m.rate.toFixed(1)+"%":"-"}</b></div>
+        <div><span>CPH</span><b>${m.days&&Number.isFinite(m.cph)?m.cph.toFixed(1):"-"}</b></div>
+      </div>
+    </div>`;
+  }).join("");
+
+  const canvas=$("perfSeasonChart");
+  if(canvas && typeof Chart!=="undefined"){
+    if(performanceSeasonChart) performanceSeasonChart.destroy();
+    const colorMap={peak:"#ef5350",semi:"#f3a43b",normal:"#94a3b8",low:"#3b82f6"};
+
+    performanceSeasonChart=new Chart(canvas,{
+      type:"bar",
+      data:{
+        labels:months.map(x=>`${x.month}월`),
+        datasets:[
+          {
+            type:"bar",
+            label:`${year} 일평균 인입`,
+            data:months.map(x=>x.rows.length?Math.round(x.metrics.avgIn):null),
+            backgroundColor:months.map(x=>x.rows.length?colorMap[x.key]:"#d9e1ea"),
+            borderRadius:5,
+            maxBarThickness:30,
+            pointStyle:"rectRounded"
+          },
+          {
+            type:"line",
+            label:`${prevYear} 일평균 인입`,
+            data:months.map(x=>x.prevRows.length?Math.round(x.prevMetrics.avgIn):null),
+            borderColor:"#FF6B6B",
+            backgroundColor:"#FF6B6B",
+            borderWidth:2,
+            borderDash:[6,4],
+            pointStyle:"line",
+            pointRadius:2.3,
+            pointHoverRadius:4,
+            tension:.25,
+            spanGaps:true
+          },
+          {
+            type:"line",
+            label:`${year} 연간 일평균`,
+            data:months.map(x=>x.rows.length?Math.round(annual.avgIn):null),
+            borderColor:"#334155",
+            backgroundColor:"#334155",
+            borderWidth:1.5,
+            borderDash:[3,3],
+            pointStyle:"dash",
+            pointRadius:0,
+            tension:0,
+            spanGaps:false
+          }
+        ]
+      },
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{
+          legend:{position:"top",align:"end",labels:{usePointStyle:true,boxWidth:14,boxHeight:8,padding:14,color:"#52657c",font:{size:10,weight:"700"}}},
+          tooltip:{callbacks:{
+            afterBody:(items)=>{
+              const idx=items?.[0]?.dataIndex??-1;
+              const x=months[idx];
+              if(!x) return "";
+              const out=[];
+              if(x.rows.length&&Number.isFinite(x.diff)) out.push(`${x.label} · 올해 연평균 대비 ${x.diff>=0?"+":""}${x.diff.toFixed(1)}%`);
+              else out.push("올해 데이터 없음");
+              if(x.prevRows.length&&Number.isFinite(x.prevDiff)) out.push(`전년 ${x.prevLabel} · 전년 연평균 대비 ${x.prevDiff>=0?"+":""}${x.prevDiff.toFixed(1)}%`);
+              else out.push("전년 데이터 없음");
+              return out;
+            }
+          }}
+        },
+        scales:{
+          x:{grid:{display:false},ticks:{color:"#66778b",font:{size:10,weight:"700"}}},
+          y:{beginAtZero:true,grid:{color:"#edf1f5"},ticks:{color:"#718398",font:{size:9},callback:v=>Number(v).toLocaleString("ko-KR")}}
+        }
+      }
+    });
+  }
+}
 function performanceDailyRender(){
   if(currentRole!=="admin") return;
   const rows=perfCurrentRows(),prevRows=perfPreviousRows();
@@ -10210,12 +10706,13 @@ function performanceDailyRender(){
     }).join("");
   }
   perfRenderTrend(rows);
+  perfRenderSeasonAnalysis();
 }
 window.performanceDailyOpen=async function(){
   if(currentRole!=="admin") return;
   try{
     await performanceDailyLoad();
-    if(performanceDailyRows.length && (!$("perfStartDate").value||!$("perfEndDate").value)) perfSetLatestYearRange();
+    if(performanceDailyRows.length && (!$("perfStartDate").value||!$("perfEndDate").value)) perfSetLast7Range();
     performanceDailyRender();
   }catch(err){
     console.error(err);
@@ -10282,7 +10779,7 @@ async function performanceDailyUpload(file){
     }
     performanceDailyLoaded=false;
     await performanceDailyLoad(true);
-    perfSetLatestYearRange();
+    perfSetLast7Range();
     performanceDailyRender();
     status.textContent=`등록 완료: ${sheetSummary.join(" · ")} · 전체 ${rows.length}일 · Firestore 신규/변경 ${changed.length}일`;
   }catch(err){
