@@ -10523,7 +10523,7 @@ function communitySelectedMonthlyRows(item=null){
 }
 function communityIssueHtml(content){
   const groups=communitySplitContent(content);
-  if(!groups.length) return '<div class="community-empty">등록된 주요 내용이 없습니다.</div>';
+  if(!groups.length) return '<div class="community-empty">선택기간의 월별 상세 데이터에 등록된 주요 내용이 없습니다.</div>';
   return groups.map((g,i)=>`<div class="community-issue-item">
     <div class="community-issue-num">${i+1}</div>
     <div><div class="community-issue-title">${communityEsc(g.title)}</div>
@@ -10591,11 +10591,11 @@ function communityRender(){
   $("communityKpiOtherRate").textContent=agg.total?`${agg.otherRate.toFixed(0)}%`:"-";
   $("communityPosBar").style.width=`${agg.positiveRate}%`; $("communityNegBar").style.width=`${agg.negativeRate}%`; $("communityOtherBar").style.width=`${agg.otherRate}%`;
 
-  const fullSummary=item==="전체"?null:communityRows.find(r=>String(r.year)===year&&r.item===item&&r.period==="총합");
-  const useSummary=item!=="전체" && Number(s)===1 && rows.length && Number(e)===Math.max(...rows.map(r=>communityMonthNo(r.period)));
-  const posContent=useSummary&&fullSummary?.positiveContent?fullSummary.positiveContent:communityCombineContent(rows,"positiveContent");
-  const negContent=useSummary&&fullSummary?.negativeContent?fullSummary.negativeContent:communityCombineContent(rows,"negativeContent");
-  const othContent=useSummary&&fullSummary?.otherContent?fullSummary.otherContent:communityCombineContent(rows,"otherContent");
+  // 상단 주요내용은 항상 현재 조회기간의 월별 상세 데이터와 동일한 원천을 사용
+  // 총합 요약행(period="총합")은 상단 주요내용 계산에 사용하지 않음
+  const posContent=communityCombineContent(rows,"positiveContent");
+  const negContent=communityCombineContent(rows,"negativeContent");
+  const othContent=communityCombineContent(rows,"otherContent");
   $("communityPosIssues").innerHTML=communityIssueHtml(posContent);
   $("communityNegIssues").innerHTML=communityIssueHtml(negContent);
   $("communityOtherIssues").innerHTML=communityIssueHtml(othContent);
