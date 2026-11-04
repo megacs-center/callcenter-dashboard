@@ -2901,6 +2901,16 @@ tr.saturday .perf-weekday-badge{background:#e3f1ff;color:#2672bb}tr.sunday .perf
 @media(max-width:1200px){.community-chart-grid{grid-template-columns:1fr 1fr}.community-compare-card{grid-column:1/-1}.community-issue-grid{grid-template-columns:1fr}.community-kpis{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.community-kpis,.community-chart-grid{grid-template-columns:1fr}.community-compare-card{grid-column:auto}.community-head{flex-direction:column}.community-filter-note{width:100%;margin-left:0}}
 
+
+/* v3 커뮤니티 전체 항목 + 주요내용 가독성 */
+.community-issue-head{font-size:12.5px !important;padding:11px 14px !important;}
+.community-issue-list{padding:12px 14px 14px !important;}
+.community-issue-item{grid-template-columns:26px minmax(0,1fr) !important;gap:10px !important;margin-bottom:14px !important;}
+.community-issue-num{width:24px !important;height:24px !important;font-size:10.5px !important;}
+.community-issue-title{font-size:12.5px !important;line-height:1.45 !important;letter-spacing:-.15px;}
+.community-issue-lines{font-size:11.5px !important;line-height:1.65 !important;margin-top:5px !important;color:#50667e !important;}
+.community-issue-card{min-height:260px !important;}
+
 </style>
 
 <style>
@@ -10476,29 +10486,40 @@ function communityPopulateFilters(){
   const yearSel=$("communityYear"),itemSel=$("communityItem");
   if(!yearSel||!itemSel) return;
   const years=[...new Set(communityRows.map(r=>String(r.year||"")).filter(Boolean))].sort();
-  const items=[...new Set(communityRows.map(r=>String(r.item||"")).filter(Boolean))];
-  const oldYear=yearSel.value,oldItem=itemSel.value;
+  const oldYear=yearSel.value;
   yearSel.innerHTML=years.map(y=>`<option value="${communityEsc(y)}">${communityEsc(y)}년</option>`).join("");
-  if(years.includes(oldYear)) yearSel.value=oldYear;
-  else if(years.length) yearSel.value=years.at(-1);
-  itemSel.innerHTML=items.map(x=>`<option value="${communityEsc(x)}">${communityEsc(x)}</option>`).join("");
-  if(items.includes(oldItem)) itemSel.value=oldItem;
-  else if(items.length) itemSel.value=items[0];
-
+  if(years.includes(oldYear)) yearSel.value=oldYear; else if(years.length) yearSel.value=years.at(-1);
+  const items=[...new Set(communityRows.filter(r=>String(r.year||"")===yearSel.value).map(r=>String(r.item||"")).filter(Boolean))];
+  const oldItem=itemSel.value;
+  itemSel.innerHTML=`<option value="전체">전체</option>`+items.map(x=>`<option value="${communityEsc(x)}">${communityEsc(x)}</option>`).join("");
+  if(oldItem==="전체"||items.includes(oldItem)) itemSel.value=oldItem||"전체"; else itemSel.value="전체";
   const sm=$("communityStartMonth"),em=$("communityEndMonth");
   const opts=Array.from({length:12},(_,i)=>`<option value="${i+1}">${i+1}월</option>`).join("");
   if(!sm.options.length) sm.innerHTML=opts;
   if(!em.options.length) em.innerHTML=opts;
-  sm.value="1";
-  const available=communityRows.filter(r=>String(r.year)===yearSel.value&&r.item===itemSel.value&&r.period!=="총합").map(r=>communityMonthNo(r.period)).filter(Boolean);
-  em.value=String(available.length?Math.max(...available):12);
+  if(!sm.value) sm.value="1";
+  const selectedItem=itemSel.value;
+  const available=communityRows.filter(r=>String(r.year)===yearSel.value&&r.period!=="총합"&&(selectedItem==="전체"||r.item===selectedItem)).map(r=>communityMonthNo(r.period)).filter(Boolean);
+  if(!em.value) em.value=String(available.length?Math.max(...available):12);
+}
+function communityRawMonthlyRows(item){
+  const year=$("communityYear")?.value||"";
+  const s=Number($("communityStartMonth")?.value||1),e=Number($("communityEndMonth")?.value||12);
+  return communityRows.filter(r=>String(r.year)===year&&r.period!=="총합"&&(item==="전체"||r.item===item)&&communityMonthNo(r.period)>=s&&communityMonthNo(r.period)<=e);
 }
 function communitySelectedMonthlyRows(item=null){
-  const year=$("communityYear")?.value||"";
-  const selectedItem=item||$("communityItem")?.value||"";
-  const s=Number($("communityStartMonth")?.value||1),e=Number($("communityEndMonth")?.value||12);
-  return communityRows.filter(r=>String(r.year)===year&&r.item===selectedItem&&r.period!=="총합"&&communityMonthNo(r.period)>=s&&communityMonthNo(r.period)<=e)
-    .sort((a,b)=>communityMonthNo(a.period)-communityMonthNo(b.period));
+  const selectedItem=item ?? ($("communityItem")?.value||"전체");
+  const raw=communityRawMonthlyRows(selectedItem);
+  if(selectedItem!=="전체") return raw.sort((a,b)=>communityMonthNo(a.period)-communityMonthNo(b.period));
+  const byMonth=new Map();
+  raw.forEach(r=>{
+    const m=communityMonthNo(r.period); if(!m) return;
+    if(!byMonth.has(m)) byMonth.set(m,{item:"전체",year:r.year,period:`${m}월`,total:0,positiveCount:0,negativeCount:0,otherCount:0,positiveContent:"",negativeContent:"",otherContent:""});
+    const x=byMonth.get(m);
+    x.total+=Number(r.total||0);x.positiveCount+=Number(r.positiveCount||0);x.negativeCount+=Number(r.negativeCount||0);x.otherCount+=Number(r.otherCount||0);
+    for(const key of ["positiveContent","negativeContent","otherContent"]){const v=String(r[key]||"").trim();if(v)x[key]+=(x[key]?"\n":"")+`[ ${r.item} ]\n`+v;}
+  });
+  return [...byMonth.values()].sort((a,b)=>communityMonthNo(a.period)-communityMonthNo(b.period)).map(r=>({...r,positiveRate:r.total?r.positiveCount/r.total*100:0,negativeRate:r.total?r.negativeCount/r.total*100:0,otherRate:r.total?r.otherCount/r.total*100:0}));
 }
 function communityIssueHtml(content){
   const groups=communitySplitContent(content);
@@ -10551,8 +10572,8 @@ function communityRenderCharts(rows,agg,item){
       options:{responsive:true,maintainAspectRatio:false,cutout:"63%",plugins:{legend:{position:"right",labels:{boxWidth:8,boxHeight:8,font:{size:9}}},tooltip:{callbacks:{label:(ctx)=>`${ctx.label}: ${ctx.raw.toLocaleString("ko-KR")}건 (${agg.total?(ctx.raw/agg.total*100).toFixed(1):"0.0"}%)`}}}}
     });
   }
-  if($("communityTrendItem")) $("communityTrendItem").textContent=`(${item})`;
-  if($("communityRatioItem")) $("communityRatioItem").textContent=`(${item})`;
+  if($("communityTrendItem")) $("communityTrendItem").textContent=item==="전체"?"(전체 항목)":`(${item})`;
+  if($("communityRatioItem")) $("communityRatioItem").textContent=item==="전체"?"(전체 항목)":`(${item})`;
 }
 function communityRender(){
   const item=$("communityItem")?.value||"";
@@ -10570,8 +10591,8 @@ function communityRender(){
   $("communityKpiOtherRate").textContent=agg.total?`${agg.otherRate.toFixed(0)}%`:"-";
   $("communityPosBar").style.width=`${agg.positiveRate}%`; $("communityNegBar").style.width=`${agg.negativeRate}%`; $("communityOtherBar").style.width=`${agg.otherRate}%`;
 
-  const fullSummary=communityRows.find(r=>String(r.year)===year&&r.item===item&&r.period==="총합");
-  const useSummary=Number(s)===1 && rows.length && Number(e)===Math.max(...rows.map(r=>communityMonthNo(r.period)));
+  const fullSummary=item==="전체"?null:communityRows.find(r=>String(r.year)===year&&r.item===item&&r.period==="총합");
+  const useSummary=item!=="전체" && Number(s)===1 && rows.length && Number(e)===Math.max(...rows.map(r=>communityMonthNo(r.period)));
   const posContent=useSummary&&fullSummary?.positiveContent?fullSummary.positiveContent:communityCombineContent(rows,"positiveContent");
   const negContent=useSummary&&fullSummary?.negativeContent?fullSummary.negativeContent:communityCombineContent(rows,"negativeContent");
   const othContent=useSummary&&fullSummary?.otherContent?fullSummary.otherContent:communityCombineContent(rows,"otherContent");
@@ -10585,7 +10606,7 @@ function communityRender(){
   communityRenderCharts(rows,agg,item);
   communityRenderCompare();
 
-  if($("communityDetailItem")) $("communityDetailItem").textContent=`(${item})`;
+  if($("communityDetailItem")) $("communityDetailItem").textContent=item==="전체"?"(전체 항목)":`(${item})`;
   const detail=$("communityDetailBody");
   detail.innerHTML=rows.length?rows.slice().reverse().map(r=>`<tr>
     <td>${communityMonthNo(r.period)}월</td><td>${Number(r.total||0).toLocaleString("ko-KR")}</td>
@@ -10660,8 +10681,8 @@ function communitySampleDownload(){
 $("communityFile")?.addEventListener("change",e=>communityUpload(e.target.files?.[0]));
 $("communitySampleBtn")?.addEventListener("click",communitySampleDownload);
 $("communitySearchBtn")?.addEventListener("click",communityRender);
-$("communityYear")?.addEventListener("change",()=>{communityPopulateFilters();communityRender();});
-$("communityItem")?.addEventListener("change",()=>{communityPopulateFilters();communityRender();});
+$("communityYear")?.addEventListener("change",()=>{if($("communityStartMonth")) $("communityStartMonth").value="1";if($("communityEndMonth")) $("communityEndMonth").value="";communityPopulateFilters();communityRender();});
+$("communityItem")?.addEventListener("change",()=>{const year=$("communityYear")?.value||"";const item=$("communityItem")?.value||"전체";const available=communityRows.filter(r=>String(r.year)===year&&r.period!=="총합"&&(item==="전체"||r.item===item)).map(r=>communityMonthNo(r.period)).filter(Boolean);if($("communityStartMonth")) $("communityStartMonth").value="1";if($("communityEndMonth")) $("communityEndMonth").value=String(available.length?Math.max(...available):12);communityRender();});
 $("communityStartMonth")?.addEventListener("change",communityRender);
 $("communityEndMonth")?.addEventListener("change",communityRender);
 
