@@ -2840,6 +2840,67 @@ tr.saturday .perf-weekday-badge{background:#e3f1ff;color:#2672bb}tr.sunday .perf
   color:#51667e;
 }
 
+
+/* ===== 커뮤니티 ===== */
+.community-page{padding-bottom:24px}
+.community-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin:3px 0 10px}
+.community-title{font-size:19px;font-weight:950;color:#0f2c52}
+.community-sub{font-size:10.5px;color:#75859a;margin-top:4px}
+.community-filterbar{display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:10px;flex-wrap:wrap}
+.community-filter-unit{display:flex;align-items:center;gap:7px}
+.community-filter-unit label{font-size:10.5px;font-weight:900;color:#394f69}
+.community-filter-unit select{height:36px;border:1px solid #d9e2ec;border-radius:8px;background:#fff;padding:0 10px;color:#243a55;font-weight:800;min-width:120px}
+.community-period-unit select{min-width:90px}.community-period-unit span{color:#718198}
+.community-filter-note{margin-left:auto;font-size:9.5px;color:#8390a2}
+.community-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:10px}
+.community-kpi{padding:13px 15px;min-height:105px;position:relative;overflow:hidden}
+.community-kpi-label{font-size:11px;color:#52677f;font-weight:900}
+.community-kpi-value{font-size:26px;font-weight:950;color:#12345d;margin-top:8px}
+.community-kpi-rate{position:absolute;right:15px;top:47px;font-size:13px;font-weight:950}
+.community-kpi.positive .community-kpi-rate{color:#24a05a}.community-kpi.negative .community-kpi-rate{color:#ee3d48}.community-kpi.other .community-kpi-rate{color:#557296}
+.community-kpi-sub{position:absolute;right:14px;bottom:12px;font-size:9px;color:#8b98a9}
+.community-progress{height:7px;background:#edf1f5;border-radius:999px;overflow:hidden;margin-top:10px}
+.community-progress i{display:block;height:100%;border-radius:999px;width:0}
+.community-kpi.positive .community-progress i{background:#55c47a}.community-kpi.negative .community-progress i{background:#ff737b}.community-kpi.other .community-progress i{background:#9aaec8}
+.community-issue-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:10px}
+.community-issue-card{overflow:hidden;min-height:230px}
+.community-issue-head{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;font-size:11px;font-weight:950;border-bottom:1px solid #e7edf4}
+.community-issue-card.positive .community-issue-head{background:#eefbf2;color:#198148}
+.community-issue-card.negative .community-issue-head{background:#fff0f1;color:#d92d39}
+.community-issue-card.other .community-issue-head{background:#eef5ff;color:#255fa8}
+.community-issue-list{padding:9px 12px 12px}
+.community-issue-item{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;margin-bottom:10px}
+.community-issue-num{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:9px;font-weight:950;background:#f0f4f8;color:#4f6782}
+.community-issue-title{font-size:10.5px;font-weight:900;color:#243d59;line-height:1.35}
+.community-issue-lines{font-size:9.2px;color:#5f7287;line-height:1.45;margin-top:3px}
+.community-chart-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.55fr) minmax(360px,.85fr);gap:10px;margin-bottom:10px}
+.community-chart-card,.community-compare-card{padding:12px 13px;min-width:0}
+.community-card-title{font-size:12px;font-weight:950;color:#193956}
+.community-card-title span{font-size:9px;color:#75869a;font-weight:750}
+.community-chart-box{height:205px;margin-top:7px}
+.community-compare-head,.community-compare-row{display:grid;grid-template-columns:100px 70px minmax(190px,1fr);gap:8px;align-items:center}
+.community-compare-head{margin-top:8px;padding:7px 5px;border-bottom:1px solid #e3e9f0;color:#66788d;font-size:9px;font-weight:900}
+.community-compare-row{padding:7px 5px;border-bottom:1px solid #eef2f6;font-size:9.5px}
+.community-compare-name{font-weight:900;color:#294360}.community-compare-total{text-align:right;font-weight:900;color:#203c5c}
+.community-sentiment-bar{height:16px;display:flex;overflow:hidden;border-radius:3px;background:#eef2f6}
+.community-sentiment-bar span{display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:#fff;min-width:0}
+.community-sentiment-bar .p{background:#58c47d}.community-sentiment-bar .n{background:#ff7b82}.community-sentiment-bar .o{background:#a9b8cb;color:#27415f}
+.community-detail-card{overflow:hidden}
+.community-detail-head{padding:11px 13px;border-bottom:1px solid #e6ecf3}
+.community-detail-sub{font-size:9px;color:#8190a1;margin-top:3px}
+.community-detail-wrap{overflow:auto;max-height:390px}
+.community-detail-table{width:100%;min-width:1380px;border-collapse:separate;border-spacing:0;font-size:9px}
+.community-detail-table th{position:sticky;background:#f3f7fb;color:#334d68;text-align:center;font-weight:900;padding:7px;border-right:1px solid #dde5ed;border-bottom:1px solid #d9e2ec;z-index:2}
+.community-detail-table thead tr:first-child th{top:0}.community-detail-table thead tr:nth-child(2) th{top:31px}
+.community-detail-table th.pos{background:#eefaf2}.community-detail-table th.neg{background:#fff1f2}.community-detail-table th.oth{background:#eef5ff}
+.community-detail-table td{padding:7px;border-right:1px solid #edf1f5;border-bottom:1px solid #e8edf2;color:#3a5069;vertical-align:top;text-align:right}
+.community-detail-table td:first-child,.community-detail-table td:nth-child(2){text-align:center;font-weight:900}
+.community-detail-table td.content{text-align:left;white-space:normal;min-width:260px;line-height:1.45}
+.community-empty{text-align:center!important;padding:30px!important;color:#8a98aa!important}
+.community-upload{border:1px solid #d6e4f6!important;background:#fbfdff}
+@media(max-width:1200px){.community-chart-grid{grid-template-columns:1fr 1fr}.community-compare-card{grid-column:1/-1}.community-issue-grid{grid-template-columns:1fr}.community-kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.community-kpis,.community-chart-grid{grid-template-columns:1fr}.community-compare-card{grid-column:auto}.community-head{flex-direction:column}.community-filter-note{width:100%;margin-left:0}}
+
 </style>
 
 <style>
@@ -3236,6 +3297,7 @@ tbody tr:hover{background:#fbfdff}
     <button data-target="refund">↻　<span>환불 현황</span></button>
     <button data-target="issues">⚑　<span>공지사항 및 주요 이슈</span></button>
     <button data-target="ai">✦　<span>AI 분석</span></button>
+    <button data-target="community">💬　<span>커뮤니티</span></button>
     <div class="sep"></div>
     <button data-target="performanceDaily" data-role="admin" style="display:none">▣　<span>일일현황</span></button>
     <button data-target="admin" data-role="admin" style="display:none">🔒　<span>관리자</span></button>
@@ -4146,6 +4208,117 @@ tbody tr:hover{background:#fbfdff}
 </section>
 
 
+
+<section id="community" class="section">
+  <div class="community-page">
+    <div class="community-head">
+      <div>
+        <div class="community-title">💬 커뮤니티</div>
+        <div class="community-sub">교육 서비스 관련 커뮤니티 언급을 긍정·부정·기타로 구분하여 항목별 동향을 분석합니다.</div>
+      </div>
+    </div>
+
+    <div class="card community-filterbar">
+      <div class="community-filter-unit"><label>연도</label><select id="communityYear"></select></div>
+      <div class="community-filter-unit"><label>항목</label><select id="communityItem"></select></div>
+      <div class="community-filter-unit community-period-unit">
+        <label>기간</label>
+        <select id="communityStartMonth"></select><span>~</span><select id="communityEndMonth"></select>
+      </div>
+      <button class="btn primary" id="communitySearchBtn" type="button">조회</button>
+      <div class="community-filter-note" id="communityStatus">데이터 로딩 전</div>
+    </div>
+
+    <div class="community-kpis">
+      <div class="card community-kpi">
+        <div class="community-kpi-label">총 언급</div>
+        <div class="community-kpi-value" id="communityKpiTotal">-</div>
+        <div class="community-kpi-sub">선택기간 기준</div>
+      </div>
+      <div class="card community-kpi positive">
+        <div class="community-kpi-label">긍정 언급</div>
+        <div class="community-kpi-value" id="communityKpiPos">-</div>
+        <div class="community-kpi-rate" id="communityKpiPosRate">-</div>
+        <div class="community-progress"><i id="communityPosBar"></i></div>
+      </div>
+      <div class="card community-kpi negative">
+        <div class="community-kpi-label">부정 언급</div>
+        <div class="community-kpi-value" id="communityKpiNeg">-</div>
+        <div class="community-kpi-rate" id="communityKpiNegRate">-</div>
+        <div class="community-progress"><i id="communityNegBar"></i></div>
+      </div>
+      <div class="card community-kpi other">
+        <div class="community-kpi-label">기타 언급</div>
+        <div class="community-kpi-value" id="communityKpiOther">-</div>
+        <div class="community-kpi-rate" id="communityKpiOtherRate">-</div>
+        <div class="community-progress"><i id="communityOtherBar"></i></div>
+      </div>
+    </div>
+
+    <div class="community-issue-grid">
+      <div class="card community-issue-card positive">
+        <div class="community-issue-head"><span>긍정 주요 내용</span><b id="communityPosHead">-</b></div>
+        <div id="communityPosIssues" class="community-issue-list"></div>
+      </div>
+      <div class="card community-issue-card negative">
+        <div class="community-issue-head"><span>부정 주요 내용</span><b id="communityNegHead">-</b></div>
+        <div id="communityNegIssues" class="community-issue-list"></div>
+      </div>
+      <div class="card community-issue-card other">
+        <div class="community-issue-head"><span>기타 주요 내용</span><b id="communityOtherHead">-</b></div>
+        <div id="communityOtherIssues" class="community-issue-list"></div>
+      </div>
+    </div>
+
+    <div class="community-chart-grid">
+      <div class="card community-chart-card trend">
+        <div class="community-card-title">월별 언급량 추이 <span id="communityTrendItem"></span></div>
+        <div class="community-chart-box"><canvas id="communityTrendChart"></canvas></div>
+      </div>
+      <div class="card community-chart-card ratio">
+        <div class="community-card-title">감성 비율 <span id="communityRatioItem"></span></div>
+        <div class="community-chart-box"><canvas id="communityRatioChart"></canvas></div>
+      </div>
+      <div class="card community-compare-card">
+        <div class="community-card-title">항목별 현황 <span>(선택기간)</span></div>
+        <div class="community-compare-head">
+          <span>항목</span><span>총 언급</span><span>감성 비율</span>
+        </div>
+        <div id="communityCompareBody"></div>
+      </div>
+    </div>
+
+    <div class="card community-detail-card">
+      <div class="community-detail-head">
+        <div>
+          <div class="community-card-title">월별 상세 분석 <span id="communityDetailItem"></span></div>
+          <div class="community-detail-sub">엑셀의 월별 긍정·부정·기타 주요 내용을 그대로 확인합니다.</div>
+        </div>
+      </div>
+      <div class="community-detail-wrap">
+        <table class="community-detail-table">
+          <thead>
+            <tr>
+              <th rowspan="2">월</th><th rowspan="2">총합</th>
+              <th colspan="3" class="pos">긍정</th>
+              <th colspan="3" class="neg">부정</th>
+              <th colspan="3" class="oth">기타</th>
+            </tr>
+            <tr>
+              <th>건수</th><th>비율</th><th>주요 내용</th>
+              <th>건수</th><th>비율</th><th>주요 내용</th>
+              <th>건수</th><th>비율</th><th>주요 내용</th>
+            </tr>
+          </thead>
+          <tbody id="communityDetailBody">
+            <tr><td colspan="11" class="community-empty">관리자에서 커뮤니티 Excel 데이터를 등록해 주세요.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="performanceDaily" class="section">
   <div class="performance-daily-page">
     <div class="performance-daily-head">
@@ -4371,6 +4544,18 @@ tbody tr:hover{background:#fbfdff}
       </div>
 
       <div class="uploadgrid integrated-uploadgrid">
+        <div class="card upload community-upload">
+          <h3>커뮤니티</h3>
+          <div class="sub">항목별 총합 및 월별 긍정·부정·기타 건수/비율/주요내용을 등록합니다.</div>
+          <div class="drop">
+            <div class="upload-file-row">
+              <input id="communityFile" type="file" accept=".xlsx,.xls">
+              <button class="btn secondary" id="communitySampleBtn" type="button">샘플 Excel</button>
+            </div>
+          </div>
+          <div id="communityUploadStatus" class="status">등록 전</div>
+        </div>
+
         <div class="card upload performance-daily-upload">
           <h3>운영·성과 일일현황</h3>
           <div class="sub">연도별 Sheet(예: 2025, 2026)의 주간·야간·총합 데이터를 한 번에 등록합니다.</div>
@@ -4529,13 +4714,14 @@ tbody tr:hover{background:#fbfdff}
       target.classList.add('active');
 
       const topFilters=document.querySelector('.top .filters');
-      if(topFilters) topFilters.style.display=(targetId==='consulttype'||targetId==='consultgrade'||targetId==='ai'||targetId==='report'||targetId==='performanceDaily')?'none':'flex';
+      if(topFilters) topFilters.style.display=(targetId==='consulttype'||targetId==='consultgrade'||targetId==='ai'||targetId==='report'||targetId==='performanceDaily'||targetId==='community')?'none':'flex';
 
       const pop=document.getElementById('dataInfoPopover');
       if(pop){ pop.classList.remove('open'); pop.setAttribute('aria-hidden','true'); }
       if(targetId==='consultgrade' && typeof renderConsultGradePage==='function') renderConsultGradePage();
       if(targetId==='report' && typeof window.renderOperationReport==='function') window.renderOperationReport();
       if(targetId==='performanceDaily' && typeof window.performanceDailyOpen==='function') window.performanceDailyOpen();
+      if(targetId==='community' && typeof window.communityOpen==='function') window.communityOpen();
 
       window.dispatchEvent(new Event('resize'));
     });
@@ -10205,6 +10391,281 @@ function consultTypeSample(){
 
 
 /* ===== 관리자 전용 운영·성과 일일현황 ===== */
+
+/* ===== 커뮤니티 ===== */
+const COMMUNITY_COLLECTION="communityTrends";
+let communityRows=[];
+let communityLoaded=false;
+let communityTrendChart=null;
+let communityRatioChart=null;
+
+function communityNum(v){
+  if(v===null||v===undefined||v==="") return 0;
+  const n=Number(String(v).replace(/,/g,"").replace(/%/g,"").trim());
+  return Number.isFinite(n)?n:0;
+}
+function communityRate(v,count,total){
+  if(v!==null&&v!==undefined&&String(v).trim()!==""){
+    const s=String(v).trim();
+    const n=Number(s.replace("%",""));
+    if(Number.isFinite(n)) return s.includes("%")?n:(Math.abs(n)<=1?n*100:n);
+  }
+  return total?count/total*100:0;
+}
+function communityMonthNo(v){
+  const s=String(v||"").trim();
+  const m=s.match(/(\d{1,2})/);
+  return m?Math.max(1,Math.min(12,Number(m[1]))):0;
+}
+function communityEsc(v){
+  return String(v??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+}
+function communitySplitContent(v){
+  const lines=String(v||"").split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  const groups=[];
+  let current=null;
+  for(const line of lines){
+    const clean=line.replace(/^[•·\-]\s*/,"").trim();
+    const m=clean.match(/^\[\s*(.+?)\s*\]$/);
+    if(m){
+      current={title:m[1],lines:[]}; groups.push(current);
+    }else{
+      if(!current){current={title:clean,lines:[]};groups.push(current);}
+      else current.lines.push(clean);
+    }
+  }
+  return groups.slice(0,4);
+}
+function communityCombineContent(rows,key){
+  const seen=new Set(),out=[];
+  rows.forEach(r=>{
+    String(r[key]||"").split(/\r?\n/).forEach(line=>{
+      const s=line.trim();
+      if(s&&!seen.has(s)){seen.add(s);out.push(s);}
+    });
+  });
+  return out.join("\n");
+}
+function communityAggregate(rows){
+  const total=rows.reduce((a,r)=>a+Number(r.total||0),0);
+  const positive=rows.reduce((a,r)=>a+Number(r.positiveCount||0),0);
+  const negative=rows.reduce((a,r)=>a+Number(r.negativeCount||0),0);
+  const other=rows.reduce((a,r)=>a+Number(r.otherCount||0),0);
+  return {
+    total,positive,negative,other,
+    positiveRate:total?positive/total*100:0,
+    negativeRate:total?negative/total*100:0,
+    otherRate:total?other/total*100:0
+  };
+}
+async function communityLoad(force=false){
+  if(communityLoaded&&!force) return;
+  try{
+    const snap=await getDocs(collection(firestore,COMMUNITY_COLLECTION));
+    communityRows=snap.docs.map(d=>({__id:d.id,...d.data()})).filter(r=>r.item&&r.period);
+    communityRows.sort((a,b)=>String(a.year||"").localeCompare(String(b.year||""))||String(a.item).localeCompare(String(b.item))||communityMonthNo(a.period)-communityMonthNo(b.period));
+    communityLoaded=true;
+  }catch(err){
+    console.error("communityTrends 조회 실패",err);
+    communityRows=[];
+    communityLoaded=true;
+    throw err;
+  }
+}
+function communityPopulateFilters(){
+  const yearSel=$("communityYear"),itemSel=$("communityItem");
+  if(!yearSel||!itemSel) return;
+  const years=[...new Set(communityRows.map(r=>String(r.year||"")).filter(Boolean))].sort();
+  const items=[...new Set(communityRows.map(r=>String(r.item||"")).filter(Boolean))];
+  const oldYear=yearSel.value,oldItem=itemSel.value;
+  yearSel.innerHTML=years.map(y=>`<option value="${communityEsc(y)}">${communityEsc(y)}년</option>`).join("");
+  if(years.includes(oldYear)) yearSel.value=oldYear;
+  else if(years.length) yearSel.value=years.at(-1);
+  itemSel.innerHTML=items.map(x=>`<option value="${communityEsc(x)}">${communityEsc(x)}</option>`).join("");
+  if(items.includes(oldItem)) itemSel.value=oldItem;
+  else if(items.length) itemSel.value=items[0];
+
+  const sm=$("communityStartMonth"),em=$("communityEndMonth");
+  const opts=Array.from({length:12},(_,i)=>`<option value="${i+1}">${i+1}월</option>`).join("");
+  if(!sm.options.length) sm.innerHTML=opts;
+  if(!em.options.length) em.innerHTML=opts;
+  sm.value="1";
+  const available=communityRows.filter(r=>String(r.year)===yearSel.value&&r.item===itemSel.value&&r.period!=="총합").map(r=>communityMonthNo(r.period)).filter(Boolean);
+  em.value=String(available.length?Math.max(...available):12);
+}
+function communitySelectedMonthlyRows(item=null){
+  const year=$("communityYear")?.value||"";
+  const selectedItem=item||$("communityItem")?.value||"";
+  const s=Number($("communityStartMonth")?.value||1),e=Number($("communityEndMonth")?.value||12);
+  return communityRows.filter(r=>String(r.year)===year&&r.item===selectedItem&&r.period!=="총합"&&communityMonthNo(r.period)>=s&&communityMonthNo(r.period)<=e)
+    .sort((a,b)=>communityMonthNo(a.period)-communityMonthNo(b.period));
+}
+function communityIssueHtml(content){
+  const groups=communitySplitContent(content);
+  if(!groups.length) return '<div class="community-empty">등록된 주요 내용이 없습니다.</div>';
+  return groups.map((g,i)=>`<div class="community-issue-item">
+    <div class="community-issue-num">${i+1}</div>
+    <div><div class="community-issue-title">${communityEsc(g.title)}</div>
+    ${g.lines.length?`<div class="community-issue-lines">${g.lines.slice(0,4).map(x=>"• "+communityEsc(x)).join("<br>")}</div>`:""}</div>
+  </div>`).join("");
+}
+function communityRenderCompare(){
+  const body=$("communityCompareBody"); if(!body) return;
+  const year=$("communityYear")?.value||"";
+  const items=[...new Set(communityRows.filter(r=>String(r.year)===year).map(r=>r.item))];
+  body.innerHTML=items.map(item=>{
+    const a=communityAggregate(communitySelectedMonthlyRows(item));
+    const p=a.positiveRate,n=a.negativeRate,o=a.otherRate;
+    return `<div class="community-compare-row">
+      <div class="community-compare-name">${communityEsc(item)}</div>
+      <div class="community-compare-total">${a.total.toLocaleString("ko-KR")}</div>
+      <div class="community-sentiment-bar" title="긍정 ${p.toFixed(0)}% · 부정 ${n.toFixed(0)}% · 기타 ${o.toFixed(0)}%">
+        <span class="p" style="width:${p}%">${p>=10?p.toFixed(0)+"%":""}</span>
+        <span class="n" style="width:${n}%">${n>=10?n.toFixed(0)+"%":""}</span>
+        <span class="o" style="width:${o}%">${o>=10?o.toFixed(0)+"%":""}</span>
+      </div>
+    </div>`;
+  }).join("")||'<div class="community-empty">데이터 없음</div>';
+}
+function communityRenderCharts(rows,agg,item){
+  const labels=rows.map(r=>`${communityMonthNo(r.period)}월`);
+  if(communityTrendChart) communityTrendChart.destroy();
+  const trendCanvas=$("communityTrendChart");
+  if(trendCanvas){
+    communityTrendChart=new Chart(trendCanvas,{
+      type:"bar",
+      data:{labels,datasets:[
+        {label:"긍정",data:rows.map(r=>Number(r.positiveCount||0)),backgroundColor:"#58c47d",stack:"sent"},
+        {label:"부정",data:rows.map(r=>Number(r.negativeCount||0)),backgroundColor:"#ff7b82",stack:"sent"},
+        {label:"기타",data:rows.map(r=>Number(r.otherCount||0)),backgroundColor:"#a9b8cb",stack:"sent"}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"top",align:"end",labels:{boxWidth:8,boxHeight:8,font:{size:9}}}},scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,grid:{color:"#edf1f5"},ticks:{font:{size:9}}}}}
+    });
+  }
+  if(communityRatioChart) communityRatioChart.destroy();
+  const ratioCanvas=$("communityRatioChart");
+  if(ratioCanvas){
+    communityRatioChart=new Chart(ratioCanvas,{
+      type:"doughnut",
+      data:{labels:["긍정","부정","기타"],datasets:[{data:[agg.positive,agg.negative,agg.other],backgroundColor:["#58c47d","#ff7b82","#a9b8cb"],borderWidth:0}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:"63%",plugins:{legend:{position:"right",labels:{boxWidth:8,boxHeight:8,font:{size:9}}},tooltip:{callbacks:{label:(ctx)=>`${ctx.label}: ${ctx.raw.toLocaleString("ko-KR")}건 (${agg.total?(ctx.raw/agg.total*100).toFixed(1):"0.0"}%)`}}}}
+    });
+  }
+  if($("communityTrendItem")) $("communityTrendItem").textContent=`(${item})`;
+  if($("communityRatioItem")) $("communityRatioItem").textContent=`(${item})`;
+}
+function communityRender(){
+  const item=$("communityItem")?.value||"";
+  const year=$("communityYear")?.value||"";
+  const rows=communitySelectedMonthlyRows();
+  const agg=communityAggregate(rows);
+  const s=$("communityStartMonth")?.value||"1",e=$("communityEndMonth")?.value||"12";
+
+  $("communityKpiTotal").textContent=agg.total?`${agg.total.toLocaleString("ko-KR")}건`:"-";
+  $("communityKpiPos").textContent=agg.total?`${agg.positive.toLocaleString("ko-KR")}건`:"-";
+  $("communityKpiNeg").textContent=agg.total?`${agg.negative.toLocaleString("ko-KR")}건`:"-";
+  $("communityKpiOther").textContent=agg.total?`${agg.other.toLocaleString("ko-KR")}건`:"-";
+  $("communityKpiPosRate").textContent=agg.total?`${agg.positiveRate.toFixed(0)}%`:"-";
+  $("communityKpiNegRate").textContent=agg.total?`${agg.negativeRate.toFixed(0)}%`:"-";
+  $("communityKpiOtherRate").textContent=agg.total?`${agg.otherRate.toFixed(0)}%`:"-";
+  $("communityPosBar").style.width=`${agg.positiveRate}%`; $("communityNegBar").style.width=`${agg.negativeRate}%`; $("communityOtherBar").style.width=`${agg.otherRate}%`;
+
+  const fullSummary=communityRows.find(r=>String(r.year)===year&&r.item===item&&r.period==="총합");
+  const useSummary=Number(s)===1 && rows.length && Number(e)===Math.max(...rows.map(r=>communityMonthNo(r.period)));
+  const posContent=useSummary&&fullSummary?.positiveContent?fullSummary.positiveContent:communityCombineContent(rows,"positiveContent");
+  const negContent=useSummary&&fullSummary?.negativeContent?fullSummary.negativeContent:communityCombineContent(rows,"negativeContent");
+  const othContent=useSummary&&fullSummary?.otherContent?fullSummary.otherContent:communityCombineContent(rows,"otherContent");
+  $("communityPosIssues").innerHTML=communityIssueHtml(posContent);
+  $("communityNegIssues").innerHTML=communityIssueHtml(negContent);
+  $("communityOtherIssues").innerHTML=communityIssueHtml(othContent);
+  $("communityPosHead").textContent=agg.total?`${agg.positive.toLocaleString("ko-KR")}건  ${agg.positiveRate.toFixed(0)}%`:"-";
+  $("communityNegHead").textContent=agg.total?`${agg.negative.toLocaleString("ko-KR")}건  ${agg.negativeRate.toFixed(0)}%`:"-";
+  $("communityOtherHead").textContent=agg.total?`${agg.other.toLocaleString("ko-KR")}건  ${agg.otherRate.toFixed(0)}%`:"-";
+
+  communityRenderCharts(rows,agg,item);
+  communityRenderCompare();
+
+  if($("communityDetailItem")) $("communityDetailItem").textContent=`(${item})`;
+  const detail=$("communityDetailBody");
+  detail.innerHTML=rows.length?rows.slice().reverse().map(r=>`<tr>
+    <td>${communityMonthNo(r.period)}월</td><td>${Number(r.total||0).toLocaleString("ko-KR")}</td>
+    <td>${Number(r.positiveCount||0).toLocaleString("ko-KR")}</td><td>${Number(r.positiveRate||0).toFixed(0)}%</td><td class="content">${communityEsc(r.positiveContent||"-").replace(/\n/g,"<br>")}</td>
+    <td>${Number(r.negativeCount||0).toLocaleString("ko-KR")}</td><td>${Number(r.negativeRate||0).toFixed(0)}%</td><td class="content">${communityEsc(r.negativeContent||"-").replace(/\n/g,"<br>")}</td>
+    <td>${Number(r.otherCount||0).toLocaleString("ko-KR")}</td><td>${Number(r.otherRate||0).toFixed(0)}%</td><td class="content">${communityEsc(r.otherContent||"-").replace(/\n/g,"<br>")}</td>
+  </tr>`).join(""):'<tr><td colspan="11" class="community-empty">선택기간에 데이터가 없습니다.</td></tr>';
+  $("communityStatus").textContent=`${year}년 · ${item} · ${s}월~${e}월 · ${rows.length}개월`;
+}
+window.communityOpen=async function(){
+  try{
+    await communityLoad();
+    communityPopulateFilters();
+    communityRender();
+  }catch(err){
+    if($("communityStatus")) $("communityStatus").textContent="커뮤니티 데이터 조회 실패: "+(err?.message||err);
+  }
+};
+
+async function communityUpload(file){
+  if(currentRole!=="admin") return alert("관리자 권한이 필요합니다.");
+  if(!file) return;
+  const status=$("communityUploadStatus");
+  status.textContent="Excel 읽는 중...";
+  try{
+    const buf=await file.arrayBuffer();
+    const wb=XLSX.read(buf,{type:"array",cellDates:false});
+    const ws=wb.Sheets[wb.SheetNames[0]];
+    const arr=XLSX.utils.sheet_to_json(ws,{defval:"",raw:true});
+    const rows=[];
+    arr.forEach(o=>{
+      const item=String(o["구분"]??o["항목"]??"").trim();
+      const year=String(o["연도"]??"").trim();
+      const period=String(o["기간"]??"").trim();
+      if(!item||!year||!period) return;
+      const total=communityNum(o["총합"]);
+      const positiveCount=communityNum(o["긍정 건수"]??o["긍정"]);
+      const negativeCount=communityNum(o["부정 건수"]??o["부정"]);
+      const otherCount=communityNum(o["기타 건수"]??o["기타"]);
+      rows.push({
+        item,year,period,total,
+        positiveCount,positiveRate:communityRate(o["긍정 비율"],positiveCount,total),positiveContent:String(o["긍정 내용"]??"").trim(),
+        negativeCount,negativeRate:communityRate(o["부정 비율"],negativeCount,total),negativeContent:String(o["부정 내용"]??"").trim(),
+        otherCount,otherRate:communityRate(o["기타 비율"],otherCount,total),otherContent:String(o["기타 내용"]??"").trim()
+      });
+    });
+    if(!rows.length) throw new Error("구분·연도·기간 컬럼을 확인해 주세요.");
+    for(let i=0;i<rows.length;i+=400){
+      const batch=writeBatch(firestore);
+      rows.slice(i,i+400).forEach(r=>{
+        const id=`${r.year}_${r.item}_${r.period}`.replace(/[\/\\.#$\[\]]/g,"_");
+        batch.set(doc(firestore,COMMUNITY_COLLECTION,id),{...r,updatedAt:new Date().toISOString(),uploadedBy:currentUser?.email||""},{merge:true});
+      });
+      await batch.commit();
+    }
+    communityLoaded=false;
+    await communityLoad(true);
+    communityPopulateFilters();
+    communityRender();
+    status.textContent=`등록 완료: ${rows.length}건`;
+  }catch(err){
+    console.error(err);
+    status.textContent="등록 실패: "+(err?.message||err);
+  }
+}
+function communitySampleDownload(){
+  const a=document.createElement("a");
+  a.href="커뮤니티_동향_업로드_샘플.xlsx";
+  a.download="커뮤니티_동향_업로드_샘플.xlsx";
+  document.body.appendChild(a);a.click();a.remove();
+}
+$("communityFile")?.addEventListener("change",e=>communityUpload(e.target.files?.[0]));
+$("communitySampleBtn")?.addEventListener("click",communitySampleDownload);
+$("communitySearchBtn")?.addEventListener("click",communityRender);
+$("communityYear")?.addEventListener("change",()=>{communityPopulateFilters();communityRender();});
+$("communityItem")?.addEventListener("change",()=>{communityPopulateFilters();communityRender();});
+$("communityStartMonth")?.addEventListener("change",communityRender);
+$("communityEndMonth")?.addEventListener("change",communityRender);
+
+
 const PERFORMANCE_DAILY_COLLECTION="performanceDaily";
 let performanceDailyRows=[];
 let performanceDailyLoaded=false;
