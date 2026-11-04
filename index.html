@@ -2917,7 +2917,7 @@ tr.saturday .perf-weekday-badge{background:#e3f1ff;color:#2672bb}tr.sunday .perf
   max-height:none !important;
 }
 .community-issue-card::after{
-  content:"조회기간 월별 상세내용 기준 자동 요약";
+  content:"조회기간 전체 월별 상세내용을 주제별로 묶어 반복 이슈 우선 요약";
   display:block;
   padding:0 14px 10px;
   font-size:8.5px;
@@ -10587,62 +10587,149 @@ function communityIssueSimilarity(a,b){
 function communityBuildIssueSummary(rows,key){
   if(!rows.length) return [];
 
-  // 1개월 조회는 월별 상세 내용과 동일하게 표시
+  // 1개월 조회는 월별 상세내용 그대로
   if(rows.length===1){
     return communityIssueGroupsFromRow(rows[0][key]).slice(0,5);
   }
 
   const maxGroups=rows.length<=3?5:3;
-  const clusters=[];
 
-  // 최신월부터 훑되, 같은 주제는 하나로 통합
-  rows.slice().sort((a,b)=>communityMonthNo(b.period)-communityMonthNo(a.period)).forEach(r=>{
-    const month=communityMonthNo(r.period);
-    const groups=communityIssueGroupsFromRow(r[key]);
-    groups.forEach(g=>{
-      const seed=[g.title,...g.lines].join(" ");
-      let best=null,bestScore=0;
-      clusters.forEach(c=>{
-        const score=communityIssueSimilarity(c.seed,seed);
-        if(score>bestScore){bestScore=score;best=c;}
-      });
-      if(best&&bestScore>=0.34){
-        best.count++;
-        best.months.add(month);
-        [...g.lines,g.title].forEach(line=>{
-          const clean=communityNormalizeIssueText(line);
-          if(clean && !best.lines.some(x=>communityIssueSimilarity(x,clean)>=0.72)) best.lines.push(clean);
-        });
-        if(best.title.length>g.title.length+12 && g.title.length>=4) best.title=g.title;
-        best.seed+=" "+seed;
-      }else{
-        clusters.push({
-          title:g.title,
-          seed,
-          count:1,
-          months:new Set([month]),
-          lines:[...g.lines].map(communityNormalizeIssueText).filter(Boolean)
-        });
-      }
-    });
+  // 기간 전체를 업무 주제군으로 묶는다.
+  const topicRules=[
+    {
+      key:"teacher",
+      title:"강사진·강의 및 커리큘럼",
+      words:["강사","강사진","강의력","강의","커리큘럼","라인업","선생님","설명","개념","수업","강좌"]
+    },
+    {
+      key:"exam",
+      title:"입시·모의평가·등급컷",
+      words:["모의평가","모평","등급컷","수능","입시","정답","난이도","9평","6평","시험","모의고사","채점"]
+    },
+    {
+      key:"service",
+      title:"서비스·앱·플레이어",
+      words:["앱","플레이어","서버","접속","재생","로그인","사이트","스마트러닝","E-BOOK","EBOOK","e-book","UI","오류","로딩","버퍼","화질","녹화"]
+    },
+    {
+      key:"book",
+      title:"교재·배송 및 구매",
+      words:["교재","배송","택배","포장","파손","교환","구매","책","도서","수령","배송지"]
+    },
+    {
+      key:"price",
+      title:"가격·상품·패스·환급",
+      words:["가격","패스","메가패스","환급","환불","할인","상품","결제","혜택","무료체험","구매시기","적정구매"]
+    },
+    {
+      key:"marketing",
+      title:"마케팅·프로모션 및 브랜드",
+      words:["이벤트","프로모션","광고","브랜드","캠페인","모델","티저","평판","기사","희망이름","QCC"]
+    },
+    {
+      key:"policy",
+      title:"정책·운영 및 이용제한",
+      words:["정책","기기등록","계정","제한","차단","고객센터","운영","대응","삭제","중복","절차","변경","규정","관리"]
+    }
+  ];
+
+  const topicMap=new Map();
+  topicRules.forEach(t=>topicMap.set(t.key,{
+    ...t,
+    months:new Set(),
+    lines:[],
+    hits:0
+  }));
+  topicMap.set("etc",{
+    key:"etc",
+    title:"기타 주요 이슈",
+    words:[],
+    months:new Set(),
+    lines:[],
+    hits:0
   });
 
-  // 반복 월 수 → 발생 횟수 → 세부내용 수 순으로 핵심 우선
-  clusters.sort((a,b)=>
+  function topicFor(text){
+    const s=String(text||"").toLowerCase();
+    let best=null,bestScore=0;
+    topicRules.forEach(t=>{
+      let score=0;
+      t.words.forEach(w=>{
+        const ww=String(w).toLowerCase();
+        if(s.includes(ww)) score++;
+      });
+      if(score>bestScore){bestScore=score;best=t;}
+    });
+    return bestScore>0?best.key:"etc";
+  }
+
+  // 모든 월의 모든 문장을 사용한다. 최신월 우선이 아니라 기간 전체를 동일하게 본다.
+  rows.slice()
+    .sort((a,b)=>communityMonthNo(a.period)-communityMonthNo(b.period))
+    .forEach(r=>{
+      const month=communityMonthNo(r.period);
+      const groups=communityIssueGroupsFromRow(r[key]);
+
+      groups.forEach(g=>{
+        const candidates=[g.title,...g.lines]
+          .map(communityNormalizeIssueText)
+          .filter(Boolean);
+
+        candidates.forEach(line=>{
+          const tk=topicFor(line);
+          const bucket=topicMap.get(tk);
+          bucket.hits++;
+          bucket.months.add(month);
+
+          // 같은 내용은 한 번만 저장
+          if(!bucket.lines.some(x=>communityIssueSimilarity(x.text,line)>=0.72)){
+            bucket.lines.push({text:line,month});
+          }
+        });
+      });
+    });
+
+  let topics=[...topicMap.values()].filter(t=>t.hits>0);
+
+  // 핵심 기준:
+  // 1) 여러 달 반복된 주제
+  // 2) 전체 언급 횟수
+  // 3) 기타보다 명확한 주제 우선
+  topics.sort((a,b)=>
     b.months.size-a.months.size ||
-    b.count-a.count ||
-    b.lines.length-a.lines.length
+    b.hits-a.hits ||
+    (a.key==="etc"?1:0)-(b.key==="etc"?1:0)
   );
 
-  return clusters.slice(0,maxGroups).map(c=>({
-    title:c.title,
-    lines:[
-      ...(c.months.size>=2?[`${[...c.months].sort((a,b)=>a-b).join("·")}월 반복 언급`]:[]),
-      ...c.lines.slice(0,3)
-    ]
-  }));
-}
+  return topics.slice(0,maxGroups).map(t=>{
+    // 대표 문장은 특정 최신월에 치우치지 않게 서로 다른 월에서 우선 선택
+    const reps=[];
+    const usedMonths=new Set();
 
+    for(const x of t.lines){
+      if(reps.length>=3) break;
+      if(!usedMonths.has(x.month)){
+        reps.push(x.text);
+        usedMonths.add(x.month);
+      }
+    }
+    if(reps.length<3){
+      for(const x of t.lines){
+        if(reps.length>=3) break;
+        if(!reps.some(r=>communityIssueSimilarity(r,x.text)>=0.72)) reps.push(x.text);
+      }
+    }
+
+    const monthList=[...t.months].sort((a,b)=>a-b);
+    return {
+      title:t.title,
+      lines:[
+        ...(monthList.length>=2?[`${monthList.join("·")}월 등 ${monthList.length}개월에서 언급`]:[]),
+        ...reps
+      ]
+    };
+  });
+}
 function communityIssueHtmlFromRows(rows,key){
   const groups=communityBuildIssueSummary(rows,key);
   if(!groups.length) return '<div class="community-empty">선택기간의 월별 상세 데이터에 등록된 주요 내용이 없습니다.</div>';
