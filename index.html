@@ -2911,6 +2911,20 @@ tr.saturday .perf-weekday-badge{background:#e3f1ff;color:#2672bb}tr.sunday .perf
 .community-issue-lines{font-size:11.5px !important;line-height:1.65 !important;margin-top:5px !important;color:#50667e !important;}
 .community-issue-card{min-height:260px !important;}
 
+
+/* v5 커뮤니티 주요내용 자동 요약 */
+.community-issue-lines{
+  max-height:none !important;
+}
+.community-issue-card::after{
+  content:"조회기간 월별 상세내용 기준 자동 요약";
+  display:block;
+  padding:0 14px 10px;
+  font-size:8.5px;
+  color:#9aa6b5;
+  text-align:right;
+}
+
 </style>
 
 <style>
@@ -10521,6 +10535,124 @@ function communitySelectedMonthlyRows(item=null){
   });
   return [...byMonth.values()].sort((a,b)=>communityMonthNo(a.period)-communityMonthNo(b.period)).map(r=>({...r,positiveRate:r.total?r.positiveCount/r.total*100:0,negativeRate:r.total?r.negativeCount/r.total*100:0,otherRate:r.total?r.otherCount/r.total*100:0}));
 }
+
+function communityNormalizeIssueText(s){
+  return String(s||"")
+    .replace(/^[•·\-]\s*/,"")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+function communityIssueGroupsFromRow(content){
+  const lines=String(content||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+  const groups=[];
+  let current=null;
+  for(const line of lines){
+    const heading=line.match(/^\[\s*(.+?)\s*\]$/);
+    if(heading){
+      current={title:communityNormalizeIssueText(heading[1]),lines:[]};
+      groups.push(current);
+      continue;
+    }
+    const clean=communityNormalizeIssueText(line);
+    if(!clean) continue;
+    if(!current){
+      // 별도 [카테고리]가 없는 월별 내용은 첫 문장을 해당 월의 핵심 문장으로 취급
+      current={title:clean,lines:[]};
+      groups.push(current);
+    }else{
+      current.lines.push(clean);
+    }
+  }
+  return groups;
+}
+
+function communityIssueKeywords(text){
+  const stop=new Set(["관련","문의","반응","언급","대한","경우","다수","등","및","관련된","관련해","통해","사용","이용","서비스","문제","불만"]);
+  return communityNormalizeIssueText(text)
+    .replace(/[()[\]{}"'“”‘’,.·:;!?/\\\-]/g," ")
+    .split(/\s+/)
+    .filter(w=>w.length>=2&&!stop.has(w))
+    .slice(0,8);
+}
+
+function communityIssueSimilarity(a,b){
+  const A=new Set(communityIssueKeywords(a)),B=new Set(communityIssueKeywords(b));
+  if(!A.size||!B.size) return 0;
+  let inter=0;
+  A.forEach(x=>{if(B.has(x)) inter++;});
+  return inter/Math.min(A.size,B.size);
+}
+
+function communityBuildIssueSummary(rows,key){
+  if(!rows.length) return [];
+
+  // 1개월 조회는 월별 상세 내용과 동일하게 표시
+  if(rows.length===1){
+    return communityIssueGroupsFromRow(rows[0][key]).slice(0,5);
+  }
+
+  const maxGroups=rows.length<=3?5:3;
+  const clusters=[];
+
+  // 최신월부터 훑되, 같은 주제는 하나로 통합
+  rows.slice().sort((a,b)=>communityMonthNo(b.period)-communityMonthNo(a.period)).forEach(r=>{
+    const month=communityMonthNo(r.period);
+    const groups=communityIssueGroupsFromRow(r[key]);
+    groups.forEach(g=>{
+      const seed=[g.title,...g.lines].join(" ");
+      let best=null,bestScore=0;
+      clusters.forEach(c=>{
+        const score=communityIssueSimilarity(c.seed,seed);
+        if(score>bestScore){bestScore=score;best=c;}
+      });
+      if(best&&bestScore>=0.34){
+        best.count++;
+        best.months.add(month);
+        [...g.lines,g.title].forEach(line=>{
+          const clean=communityNormalizeIssueText(line);
+          if(clean && !best.lines.some(x=>communityIssueSimilarity(x,clean)>=0.72)) best.lines.push(clean);
+        });
+        if(best.title.length>g.title.length+12 && g.title.length>=4) best.title=g.title;
+        best.seed+=" "+seed;
+      }else{
+        clusters.push({
+          title:g.title,
+          seed,
+          count:1,
+          months:new Set([month]),
+          lines:[...g.lines].map(communityNormalizeIssueText).filter(Boolean)
+        });
+      }
+    });
+  });
+
+  // 반복 월 수 → 발생 횟수 → 세부내용 수 순으로 핵심 우선
+  clusters.sort((a,b)=>
+    b.months.size-a.months.size ||
+    b.count-a.count ||
+    b.lines.length-a.lines.length
+  );
+
+  return clusters.slice(0,maxGroups).map(c=>({
+    title:c.title,
+    lines:[
+      ...(c.months.size>=2?[`${[...c.months].sort((a,b)=>a-b).join("·")}월 반복 언급`]:[]),
+      ...c.lines.slice(0,3)
+    ]
+  }));
+}
+
+function communityIssueHtmlFromRows(rows,key){
+  const groups=communityBuildIssueSummary(rows,key);
+  if(!groups.length) return '<div class="community-empty">선택기간의 월별 상세 데이터에 등록된 주요 내용이 없습니다.</div>';
+  return groups.map((g,i)=>`<div class="community-issue-item">
+    <div class="community-issue-num">${i+1}</div>
+    <div><div class="community-issue-title">${communityEsc(g.title)}</div>
+    ${g.lines.length?`<div class="community-issue-lines">${g.lines.map(x=>"• "+communityEsc(x)).join("<br>")}</div>`:""}</div>
+  </div>`).join("");
+}
+
 function communityIssueHtml(content){
   const groups=communitySplitContent(content);
   if(!groups.length) return '<div class="community-empty">선택기간의 월별 상세 데이터에 등록된 주요 내용이 없습니다.</div>';
@@ -10591,14 +10723,11 @@ function communityRender(){
   $("communityKpiOtherRate").textContent=agg.total?`${agg.otherRate.toFixed(0)}%`:"-";
   $("communityPosBar").style.width=`${agg.positiveRate}%`; $("communityNegBar").style.width=`${agg.negativeRate}%`; $("communityOtherBar").style.width=`${agg.otherRate}%`;
 
-  // 상단 주요내용은 항상 현재 조회기간의 월별 상세 데이터와 동일한 원천을 사용
-  // 총합 요약행(period="총합")은 상단 주요내용 계산에 사용하지 않음
-  const posContent=communityCombineContent(rows,"positiveContent");
-  const negContent=communityCombineContent(rows,"negativeContent");
-  const othContent=communityCombineContent(rows,"otherContent");
-  $("communityPosIssues").innerHTML=communityIssueHtml(posContent);
-  $("communityNegIssues").innerHTML=communityIssueHtml(negContent);
-  $("communityOtherIssues").innerHTML=communityIssueHtml(othContent);
+  // 주요내용: 조회기간 길이에 따라 월별 상세 원문을 핵심 이슈로 자동 압축
+  // 1개월 = 해당 월 원문 구조, 2~3개월 = 최대 5개, 4개월 이상 = 최대 3개
+  $("communityPosIssues").innerHTML=communityIssueHtmlFromRows(rows,"positiveContent");
+  $("communityNegIssues").innerHTML=communityIssueHtmlFromRows(rows,"negativeContent");
+  $("communityOtherIssues").innerHTML=communityIssueHtmlFromRows(rows,"otherContent");
   $("communityPosHead").textContent=agg.total?`${agg.positive.toLocaleString("ko-KR")}건  ${agg.positiveRate.toFixed(0)}%`:"-";
   $("communityNegHead").textContent=agg.total?`${agg.negative.toLocaleString("ko-KR")}건  ${agg.negativeRate.toFixed(0)}%`:"-";
   $("communityOtherHead").textContent=agg.total?`${agg.other.toLocaleString("ko-KR")}건  ${agg.otherRate.toFixed(0)}%`:"-";
